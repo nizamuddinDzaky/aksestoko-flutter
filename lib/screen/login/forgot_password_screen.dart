@@ -65,7 +65,7 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                       focusedErrorBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: MyColor.lineTxtField),
                       ),
-                      errorText: 'Masukkan Email Anda',
+                      errorText: 'Masukkan ID Bisnis Kokoh Anda',
                       errorStyle: TextStyle(
                         color: MyColor.txtField,
                         fontStyle: FontStyle.italic,
@@ -92,7 +92,7 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                       focusedErrorBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: MyColor.lineTxtField),
                       ),
-                      errorText: 'Masukkan Email Anda',
+                      errorText: 'Masukan 4 Digit No Telepon Anda',
                       errorStyle: TextStyle(
                         color: MyColor.txtField,
                         fontStyle: FontStyle.italic,
