@@ -25,7 +25,7 @@ class MyColor {
   static Color getBgField() => Color(0xFFFCFCFC);
 
 //  Custom AT Color Elements
-  static Color greenWhatsAp = Color(0xff26D044);
+  static Color greenWhatsApp = Color(0xff26D044);
   static Color redAT = Color(0xffB20838);
   static Color greyButtonOtp = Color(0xff767676);
 }
