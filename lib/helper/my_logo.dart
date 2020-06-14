@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MyLogo {
   static Widget logoForcaPoS({large = false}) {
     return Image.asset(
-      kLogoForcaPoS,
+      kLogoAT,
       width: large ? 200 : 120,
       height: large ? null : 56,
       color: Colors.white,
@@ -14,7 +14,7 @@ class MyLogo {
 
   static Widget logoForcaPoSColor({double width, double height}) {
     return Image.asset(
-      kLogoForcaPoS,
+      kLogoAT,
       fit: BoxFit.cover,
       width: width,
       height: height,

@@ -1,19 +1,21 @@
 import 'package:aksestokomobile/helper/my_divider.dart';
+import 'package:aksestokomobile/helper/empty_app_bar.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/helper/my_text.dart';
 import 'package:aksestokomobile/screen/login/otp_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class requestOtpScreen extends StatefulWidget{
+class RequestOtpScreen extends StatefulWidget{
   @override
-  _OtpCodeScreenState createState() => _OtpCodeScreenState();
+  _RequestOtpScreenState createState() => _RequestOtpScreenState();
 }
 
-class _OtpCodeScreenState extends OtpCodeController{
+class _RequestOtpScreenState extends RequestOtpController{
   @override
   Widget build(BuildContext context) {
     var formLayout = Container(
@@ -25,6 +27,7 @@ class _OtpCodeScreenState extends OtpCodeController{
               key: formKey,
             child: Column(
               children: <Widget>[
+                MyDivider.spaceDividerLogin(custom: 40),
                 Container(
                   padding: MyDimen.marginLayout(),
                   child: TextFormField(
@@ -51,7 +54,18 @@ class _OtpCodeScreenState extends OtpCodeController{
                     ),
                   ),
                 ),
-                MyDivider.spaceDividerLogin(),
+                MyDivider.spaceDividerLogin(custom: 50),
+                Container(
+                  padding: MyDimen.marginLayout(),
+                  child: Text(
+                    "Estimasi 00:30",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                MyDivider.spaceDividerLogin(custom: 20),
                 Container(
                   margin: MyDimen.marginButtonRegister(),
                   width: double.maxFinite,
@@ -62,32 +76,23 @@ class _OtpCodeScreenState extends OtpCodeController{
                       "Request OTP",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: null,
+                      onPressed: () {
+                        Get.toNamed(requestOtpScreen);
+                      },
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                   ),
                 ),
               ],
             ),
-          )
+          ),
+
         ],
       ),
     );
 
-    
+
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: MyColor.lineTxtField,
-        ),
-        brightness: Brightness.light,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Hero(
-          tag: 'logoForcaPoS',
-          child: MyLogo.logoForcaPoSColor(width: 150),
-        ),
-      ),
+      appBar: EmptyAppBar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -109,7 +114,7 @@ class _OtpCodeScreenState extends OtpCodeController{
                           child: Center(
                             child: Hero(
                               tag: 'logoForcaPoS2',
-                              child: MyLogo.forgotPassword(),
+                              child: MyLogo.logoForcaPoSColor(),
                             ),
                           ),
                         ),

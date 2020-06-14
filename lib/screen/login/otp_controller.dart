@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-abstract class OtpCodeController extends State<requestOtpScreen>{
+abstract class RequestOtpController extends State<RequestOtpScreen>{
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String otp;
 }

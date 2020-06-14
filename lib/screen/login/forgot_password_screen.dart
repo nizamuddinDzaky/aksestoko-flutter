@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/helper/my_text.dart';
@@ -111,7 +112,10 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                       'Perbarui Kata Sandi',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: showDialogProgress,
+//                    onPressed: showDialogProgress,
+                      onPressed: () {
+                        Get.toNamed(requestOtpScreen);
+                      },
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                   ),
                 ),
