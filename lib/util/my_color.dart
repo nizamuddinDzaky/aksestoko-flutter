@@ -5,7 +5,6 @@ class MyColor {
   static Color mainGreen = Color(0xFF1CA865);
   static Color mainOrange = Color(0xFFFEAE17);
   static Color mainRed = Color(0xFFAE0D28);
-  static Color redAT = Color(0xffB20838);
 
   static Color mainBg2 = Color(0xFFCACACA);
   static Color mainBg = Color(0xFFE5E5E5);
@@ -24,4 +23,9 @@ class MyColor {
   static Color getAqua() => Color(0xFF00C5FF);
   static Color getBgFieldBorder() => Color(0xFFD3D3D3);
   static Color getBgField() => Color(0xFFFCFCFC);
+
+//  Custom Dio
+  static Color greenWhatsAp = Color(0xff26D044);
+  static Color redAT = Color(0xffB20838);
+  static Color greyButtonOtp = Color(0xff767676);
 }

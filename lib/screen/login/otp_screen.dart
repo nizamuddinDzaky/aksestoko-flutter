@@ -11,11 +11,87 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RequestOtpScreen extends StatefulWidget{
+
   @override
   _RequestOtpScreenState createState() => _RequestOtpScreenState();
+
 }
 
+
 class _RequestOtpScreenState extends RequestOtpController{
+
+  createAlertDialog(BuildContext context){
+    return showDialog(context: context, builder: (context){
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        elevation: 16,
+        child: Container(
+          height: 250.0,
+          width: 360.0,
+          child: ListView(
+              children: <Widget>[
+                SizedBox(height: 40),
+                Container(
+                  margin: MyDimen.marginButtonRegister(),
+                  width: double.maxFinite,
+                  height: 46,
+                  child: FlatButton(
+                      color: MyColor.greenWhatsAp,
+                      child: Text(
+                        "WA +628912345678",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Get.toNamed(requestOtpScreen);
+                      },
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  margin: MyDimen.marginButtonRegister(),
+                  width: double.maxFinite,
+                  height: 46,
+                  child: FlatButton(
+                      color: MyColor.greyButtonOtp,
+                      child: Text(
+                        "SMS +628912345678",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Get.toNamed(requestOtpScreen);
+                      },
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  margin: MyDimen.marginButtonRegister(),
+                  width: double.maxFinite,
+                  height: 46,
+                  child: FlatButton(
+                      color: MyColor.greyButtonOtp,
+                      child: Text(
+                        "Mail lorem@mail.com",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Get.toNamed(requestOtpScreen);
+                      },
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                  ),
+                ),
+                SizedBox(height: 40),
+              ],
+          ),
+        ),
+      );
+    });
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     var formLayout = Container(
@@ -77,7 +153,7 @@ class _RequestOtpScreenState extends RequestOtpController{
                       style: TextStyle(color: Colors.white),
                     ),
                       onPressed: () {
-                        Get.toNamed(requestOtpScreen);
+                        createAlertDialog(context);
                       },
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                   ),
