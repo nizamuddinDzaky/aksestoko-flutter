@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'POSku',
+      title: 'AksesToko',
       theme: ThemeData(
         primaryColor: MyColor.mainRed,
         accentColor: MyColor.mainRed,

@@ -5,6 +5,7 @@ class MyColor {
   static Color mainGreen = Color(0xFF1CA865);
   static Color mainOrange = Color(0xFFFEAE17);
   static Color mainRed = Color(0xFFAE0D28);
+  static Color redAT = Color(0xffB20838);
 
   static Color mainBg2 = Color(0xFFCACACA);
   static Color mainBg = Color(0xFFE5E5E5);

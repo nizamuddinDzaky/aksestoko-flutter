@@ -17,6 +17,7 @@ class _RegisterScreenState extends RegisterController {
   @override
   Widget build(BuildContext context) {
     var formLayout = Container(
+      margin: EdgeInsets.symmetric(vertical: 30),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,15 +75,17 @@ class _RegisterScreenState extends RegisterController {
                 ),
                 MyDivider.spaceDividerLogin(custom: 22),
                 Container(
-                  margin: MyDimen.marginLayout(),
+                  margin: MyDimen.marginButtonRegister(),
                   width: double.maxFinite,
+                  height: 46,
                   child: FlatButton(
-                    color: MyColor.mainGreen,
+                    color: MyColor.redAT,
                     child: Text(
                       'Daftar',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: showDialogProgress,
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                   ),
                 ),
               ],

@@ -1,6 +1,6 @@
 //final String kLogoForcaPoS = "assets/images/logo_forcapos.png";
 final String kLogoForcaPoS = "assets/images/logo_aksestoko_1.png";
-final String kForgotPassword = "assets/images/forgot_password.png";
+final String kForgotPassword = "assets/images/forgot_password_red.png";
 final String kAvatar = "assets/images/avatar_account.png";
 final String kImageDynamix = "assets/images/dynamix.jpg";
 final String kIconSale = "assets/icons/icon_sales.png";

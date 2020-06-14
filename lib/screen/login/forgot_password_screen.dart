@@ -38,14 +38,14 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 22),
                   margin: EdgeInsets.symmetric(horizontal: 30),
-                  child: Text(
-                    'Masukan email yang terdaftar di akun POS Anda dan kami akan '
-                        'mengirimkan email untuk mengatur ulang kata sandi Anda.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: MyColor.txtField,
-                    ),
-                  ),
+//                  child: Text(
+//                    'Masukan email yang terdaftar di akun POS Anda dan kami akan '
+//                        'mengirimkan email untuk mengatur ulang kata sandi Anda.',
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(
+//                      color: MyColor.txtField,
+//                    ),
+//                  ),
                 ),
                 Container(
                   padding: MyDimen.marginLayout(),
@@ -54,7 +54,34 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       contentPadding: MyDimen.paddingTxtField(),
-                      labelText: 'Email',
+                      labelText: 'ID Bisnis Kokoh',
+                      labelStyle: TextStyle(
+                        color: MyColor.txtField,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: MyColor.txtField),
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: MyColor.lineTxtField),
+                      ),
+                      errorText: 'Masukkan Email Anda',
+                      errorStyle: TextStyle(
+                        color: MyColor.txtField,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ),
+                MyDivider.spaceDividerLogin(),
+                Container(
+                  padding: MyDimen.marginLayout(),
+                  child: TextFormField(
+                    onSaved: (value) => email = value,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      contentPadding: MyDimen.paddingTxtField(),
+                      labelText: '4 Digit Terakhir No Telepon',
                       labelStyle: TextStyle(
                         color: MyColor.txtField,
                         fontWeight: FontWeight.bold,
@@ -75,15 +102,17 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                 ),
                 MyDivider.spaceDividerLogin(custom: 22),
                 Container(
-                  margin: MyDimen.marginLayout(),
+                  margin: MyDimen.marginButtonRegister(),
                   width: double.maxFinite,
+                  height: 46,
                   child: FlatButton(
-                    color: MyColor.mainGreen,
+                    color: MyColor.redAT,
                     child: Text(
                       'Perbarui Kata Sandi',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: showDialogProgress,
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                   ),
                 ),
               ],

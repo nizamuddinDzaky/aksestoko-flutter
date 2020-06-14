@@ -146,15 +146,17 @@ class _LoginScreenState extends LoginScreenController {
             ),
           ),
           Container(
-            margin: MyDimen.marginLayout(),
+            margin: MyDimen.marginButtonLoginCustom(),
             width: double.maxFinite,
+            height: 46,
             child: FlatButton(
-              color: MyColor.mainGreen,
+              color: MyColor.redAT,
               child: Text(
                 'MASUK',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: showDialogProgress,
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
             ),
           ),
           Center(
@@ -167,7 +169,7 @@ class _LoginScreenState extends LoginScreenController {
                   child: Text(
                     'Daftar',
                     style: TextStyle(
-                      color: MyColor.mainBlue,
+                      color: MyColor.redAT,
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
