@@ -12,6 +12,17 @@ class MyLogo {
     );
   }
 
+  static Widget logoATWhite({double width, double height}) {
+    return Image.asset(
+      kLogoAT,
+      width: width,
+      height: height,
+      color: Colors.white,
+      fit: BoxFit.cover,
+    );
+  }
+
+
   static Widget logoForcaPoSColor({double width, double height}) {
     return Image.asset(
       kLogoAT,

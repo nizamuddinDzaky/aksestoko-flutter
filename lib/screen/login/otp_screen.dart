@@ -36,7 +36,7 @@ class _RequestOtpScreenState extends RequestOtpController{
                   width: double.maxFinite,
                   height: 46,
                   child: FlatButton(
-                      color: MyColor.greenWhatsAp,
+                      color: MyColor.greenWhatsApp,
                       child: Text(
                         "WA +628912345678",
                         style: TextStyle(color: Colors.white),
