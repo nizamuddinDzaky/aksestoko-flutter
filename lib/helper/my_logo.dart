@@ -22,7 +22,6 @@ class MyLogo {
     );
   }
 
-
   static Widget logoForcaPoSColor({double width, double height}) {
     return Image.asset(
       kLogoAT,
