@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
+import 'package:aksestokomobile/app/my_router.dart';
 
 class SelectProductScreen extends StatefulWidget {
   @override
@@ -142,7 +143,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
               IconButton(
                 icon: Icon(Icons.shopping_cart),
                 onPressed: () {
-                  print('klik notif');
+                  Get.toNamed(cartScreen);
                 },
               ),
               Positioned(
