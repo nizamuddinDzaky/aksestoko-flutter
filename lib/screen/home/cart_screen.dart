@@ -162,7 +162,7 @@ class _CartScreenState extends State<CartScreen> {
                               'Semen PCC Lorem Ipsum 50 KG',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff999999),
+                                  color: Color(0xff333333),
                                   fontSize: 16),
                             ),
                           ),
