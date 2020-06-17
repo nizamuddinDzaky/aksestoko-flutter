@@ -28,4 +28,5 @@ class MyColor {
   static Color greenWhatsApp = Color(0xff26D044);
   static Color redAT = Color(0xffB20838);
   static Color greyButtonOtp = Color(0xff767676);
+  static Color greyAT = Color(0xFFEAEAEA);
 }

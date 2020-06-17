@@ -1,6 +1,4 @@
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
-import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -144,7 +142,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
               IconButton(
                 icon: Icon(Icons.shopping_cart),
                 onPressed: () {
-                  print('klik shoping cart');
+                  print('klik notif');
                 },
               ),
               Positioned(
