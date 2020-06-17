@@ -15,6 +15,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   int _currentIndex = 0;
+  bool CheckBoxValue = false;
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -56,6 +57,26 @@ class _CartScreenState extends State<CartScreen> {
         title: Hero(
           tag: 'logoForcaPoS',
           child: Text("Keranjang"),
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48.0),
+          child: Container(
+            color: Colors.white,
+            height: 48,
+            child: Row(
+              children: <Widget>[
+                Checkbox(
+                  value: CheckBoxValue,
+                  onChanged: (bool value){
+                    setState(() {
+                      CheckBoxValue = value;
+                    });
+                  },
+                ),
+                Text("Pilih Semua"),
+              ],
+            ),
+          ),
         ),
       ),
       body: GestureDetector(
@@ -126,7 +147,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 )
               ],
-            
+
             ),
           ),
         ],
@@ -139,9 +160,23 @@ class _CartScreenState extends State<CartScreen> {
       elevation: 4,
       child: Column(
         children: <Widget>[
+          Container(
+            height: 20,
+            margin: EdgeInsets.only(top: 5, left: 0, bottom: 0),
+            child: Checkbox(
+              value: CheckBoxValue,
+              onChanged: (bool value){
+                setState(() {
+                  CheckBoxValue = value;
+                });
+              },
+            ),
+            alignment: Alignment(-1.0, 0.0),
+          ),
           Expanded(
             child: Container(
               //color: Colors.blue,
+              padding: EdgeInsets.only(bottom: 10),
               child: Row(
                 children: <Widget>[
                   Center(
@@ -157,13 +192,25 @@ class _CartScreenState extends State<CartScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            child: Text(
-                              'Semen PCC Lorem Ipsum 50 KG',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff333333),
-                                  fontSize: 16),
+                          Expanded(
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    child: Text(
+                                      'Semen PCC Lorem Ipsum 50 KG',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff333333),
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                    icon: Icon(Icons.delete,color: MyColor.redAT,),
+                                    onPressed: null
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(height: 5),
@@ -231,7 +278,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border(
@@ -241,18 +288,20 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "SUBTOTAL",
-                  style: TextStyle(color: Color(0xff999999), fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Rp 10.000.000",
-                  style: TextStyle(color: Color(0xff333333), fontWeight: FontWeight.bold),
-                ),
-              ],
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "SUBTOTAL",
+                    style: TextStyle(color: Color(0xff999999), fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Rp 10.000.000",
+                    style: TextStyle(color: Color(0xff333333), fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
