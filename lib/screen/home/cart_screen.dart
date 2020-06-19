@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
         child: Stack(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
               child: GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 1,
@@ -139,7 +139,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       onPressed: (){
-                        print('You tapped on RaisedButton');
+                        Get.toNamed(checkoutScreen);
                       },
                         shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20.0))
                     ),

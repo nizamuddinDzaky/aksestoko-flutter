@@ -19,7 +19,6 @@ class MyColor {
 
   static Color getBlue() => Color(0xFF007FFF);
   static Color getRed() => Color(0xFFeb2d4c);
-//  static Color getRed() => Color(0xFFe61c3d);
   static Color getAqua() => Color(0xFF00C5FF);
   static Color getBgFieldBorder() => Color(0xFFD3D3D3);
   static Color getBgField() => Color(0xFFFCFCFC);
@@ -29,4 +28,6 @@ class MyColor {
   static Color redAT = Color(0xffB20838);
   static Color greyButtonOtp = Color(0xff767676);
   static Color greyAT = Color(0xFFEAEAEA);
+  static Color blackTextAT = Color(0xFF333333);
+  static Color greyTextAT = Color(0xFF999999);
 }

@@ -32,7 +32,7 @@ class MyDimen {
 
   // Custom Dio
   static EdgeInsets marginButtonLoginCustom() =>
-      EdgeInsets.only(left: 46.0, right: 46.0, top: 20.0);
+      EdgeInsets.only(left: 46.0, right: 46.0, top: 50);
 
   static EdgeInsetsGeometry marginButtonRegister() =>
       EdgeInsets.symmetric(horizontal: 46);

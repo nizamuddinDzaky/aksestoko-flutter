@@ -186,6 +186,7 @@ class _LoginScreenState extends LoginScreenController {
     );
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: EmptyAppBar(),
       body: GestureDetector(
         onTap: () {
