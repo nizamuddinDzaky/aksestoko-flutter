@@ -272,7 +272,236 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                     Container(
                       margin: EdgeInsets.only(top: 5, bottom: 5,),
                       child: Text(
-                        "Tanggal Ekspetasi Pengiriman",
+                        "Produk",
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.only(top: 15,),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: MyColor.greyTextAT,
+                              spreadRadius: 0,
+                              blurRadius: 8 ,
+                              offset: Offset(0, 2), // changes position of shadow
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    child: Image.asset(
+                                      kImageDynamix,
+                                      width: 100,
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Expanded(
+                                                  child: Text(
+                                                    "Semen PCC ZAK 50",
+                                                    style: TextStyle(
+                                                      color: MyColor.blackTextAT,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                    icon: Icon(Icons.delete,color: MyColor.redAT,),
+                                                    onPressed: null
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(bottom: 20),
+                                            child: Text(
+                                              "121-301-0060",
+                                              style: TextStyle(
+                                                color: MyColor.greyTextAT,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Expanded(
+                                                  child: Text(
+                                                    "Rp 60.000",
+                                                    style: TextStyle(
+                                                      color: MyColor.blackTextAT,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                    child: Image.asset(
+                                                      atMinus,
+                                                      width: 20,
+                                                    )
+                                                ),
+                                                Column(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10),
+                                                      child: Text(
+                                                        "5",
+                                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10),
+                                                      child: Text(
+                                                        "SAK",
+                                                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  child: Image.asset(
+                                                    atPlus,
+                                                    width: 20,
+                                                  )
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 3,
+                              color: Color(0xffEAEAEA),
+                              margin: EdgeInsets.symmetric(vertical: 0),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    "SUBTOTAL",
+                                    style: TextStyle(color: Color(0xff999999), fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Rp 10.000.000",
+                                    style: TextStyle(color: Color(0xff333333), fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 20),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 5, bottom: 15,),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Distributor",
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Kode Distributor",
+                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Text(
+                        "Nama Distributor",
+                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5, bottom: 15,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "0000088976",
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                      ),
+                      Text(
+                        "Lorem Ipsum",
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 20),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 5,),
+                      child: Text(
+                        "Pengiriman",
                         style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
@@ -303,7 +532,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                           ),
                         ),
                       ),
-                      child: Icon(Icons.date_range,color: MyColor.redAT,),
+                      child: Icon(Icons.train,color: MyColor.redAT,),
                     ),
                     Expanded(
                       child: TextField(
@@ -459,4 +688,5 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
       ),
     );
   }
+
 }

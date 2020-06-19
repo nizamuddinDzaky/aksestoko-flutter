@@ -8,3 +8,6 @@ final String kIconPurchase = "assets/icons/icon_purchase.png";
 final String kIconMaster = "assets/icons/icon_master.png";
 final String kLogoAT = "assets/images/logo_aksestoko_1.png";
 final String kDistributor = "assets/images/distributor.png";
+//Custom New
+final String atMinus = "assets/icons/icon_minus_at.png";
+final String atPlus = "assets/icons/icon_plus_at.png";
