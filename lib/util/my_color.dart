@@ -18,9 +18,13 @@ class MyColor {
   static Color gradient2 = Color(0xFFF1FBFF);
 
   static Color getBlue() => Color(0xFF007FFF);
+
   static Color getRed() => Color(0xFFeb2d4c);
+
   static Color getAqua() => Color(0xFF00C5FF);
+
   static Color getBgFieldBorder() => Color(0xFFD3D3D3);
+
   static Color getBgField() => Color(0xFFFCFCFC);
 
 //  Custom AT Color Elements
@@ -30,4 +34,5 @@ class MyColor {
   static Color greyAT = Color(0xFFEAEAEA);
   static Color blackTextAT = Color(0xFF333333);
   static Color greyTextAT = Color(0xFF999999);
+  static Color greenAT = Color(0xff27561E);
 }

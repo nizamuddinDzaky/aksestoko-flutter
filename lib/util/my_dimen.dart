@@ -36,4 +36,5 @@ class MyDimen {
 
   static EdgeInsetsGeometry marginButtonRegister() =>
       EdgeInsets.symmetric(horizontal: 46);
+
 }

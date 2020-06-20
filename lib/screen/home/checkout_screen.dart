@@ -27,7 +27,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                   margin: EdgeInsets.only(top: 30, bottom: 15,),
                   child: Text(
                     "Alamat Pengiriman",
-                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
               ],
@@ -59,7 +59,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       ),
                       Text(
                         "PT Lorem Ipsum",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -71,13 +71,13 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       Container(
                         child: Text(
                           "Nama Lengkap, ",
-                          style: TextStyle(fontSize: 18, color: MyColor.greyTextAT),
+                          style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
                         ),
                       ),
                       Container(
                         child: Text(
                           "08912321313",
-                          style: TextStyle(fontSize: 18, color: MyColor.greyTextAT),
+                          style: TextStyle(fontSize: 15, color: MyColor.greyTextAT),
                         ),
                       ),
                     ],
@@ -90,7 +90,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       Expanded(
                         child: Text(
                           "Jl. Lorem Ipsum Dolor Ismet No 29, Lorem Ipsum Dolor Ismet Kabupaten Gresik Jawa Timur Indonesia",
-                          style: TextStyle(fontSize: 18, color: MyColor.greyTextAT),
+                          style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
                         ),
                       ),
                     ],
@@ -115,7 +115,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                   child: FlatButton(
                     child: Text(
                       "Ganti Alamat",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                     ),
                     onPressed: null,
                   ),
@@ -138,7 +138,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       margin: EdgeInsets.only(top: 5, bottom: 5,),
                       child: Text(
                         "Tanggal Ekspetasi Pengiriman",
-                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                   ],
@@ -149,7 +149,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       child: Expanded(
                         child: Text(
                           "Pemesanan di atas jam 12 siang dan tanggal ekspetasi pada hari itu juga akan, berpotensi dikirimkan di hari selanjutnya.",
-                          style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                          style: TextStyle(color: MyColor.greyTextAT, fontSize: 14),
                         ),
                       ),
                     ),
@@ -221,7 +221,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       margin: EdgeInsets.only(top: 5, bottom: 5,),
                       child: Text(
                         "Catatan",
-                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                   ],
@@ -273,7 +273,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       margin: EdgeInsets.only(top: 5, bottom: 5,),
                       child: Text(
                         "Produk",
-                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                   ],
@@ -323,7 +323,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                                                     style: TextStyle(
                                                       color: MyColor.blackTextAT,
                                                       fontWeight: FontWeight.bold,
-                                                      fontSize: 18,
+                                                      fontSize: 16,
                                                     ),
                                                   ),
                                                 ),
@@ -340,7 +340,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                                               "121-301-0060",
                                               style: TextStyle(
                                                 color: MyColor.greyTextAT,
-                                                fontSize: 18,
+                                                fontSize: 16,
                                               ),
                                             ),
                                           ),
@@ -353,7 +353,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                                                     style: TextStyle(
                                                       color: MyColor.blackTextAT,
                                                       fontWeight: FontWeight.bold,
-                                                      fontSize: 18,
+                                                      fontSize: 16,
                                                     ),
                                                   ),
                                                 ),
@@ -447,7 +447,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                     children: <Widget>[
                       Text(
                         "Distributor",
-                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ],
                   ),
@@ -459,11 +459,11 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                     children: <Widget>[
                       Text(
                         "Kode Distributor",
-                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       Text(
                         "Nama Distributor",
-                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ],
                   ),
@@ -475,11 +475,11 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                     children: <Widget>[
                       Text(
                         "0000088976",
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
                       ),
                       Text(
                         "Lorem Ipsum",
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
                       ),
                     ],
                   ),
@@ -502,7 +502,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                       margin: EdgeInsets.only(top: 5, bottom: 5,),
                       child: Text(
                         "Pengiriman",
-                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                   ],
@@ -563,6 +563,118 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
               ],
             ),
           ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 20),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 5, bottom: 15,),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Ringkasan",
+                        style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Jumlah Barang",
+                        style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                      ),
+                      Text(
+                        "250",
+                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Total Harga",
+                        style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                      ),
+                      Text(
+                        "Rp 10.300.000",
+                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Penambahan Harga Pengiriman",
+                        style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                      ),
+                      Text(
+                        "Rp 10.300.000",
+                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Total Harga Akhir",
+                        style: TextStyle(color: MyColor.greyTextAT , fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Rp 10.300.000",
+                        style: TextStyle(color: MyColor.redAT, fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 20),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 25, right: 25),
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              color: MyColor.greenAT,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: FlatButton(
+              child: Text(
+                "Lanjut Pembayaran",
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+              ),
+              onPressed: null,
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.only(top: 20),
+          ),
         ],
       ),
     ),
@@ -581,7 +693,10 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
           ),
           child: Expanded(
             child: Container(
-              child: Text("Checkout"),
+              child: Text(
+                "Checkout",
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ),
         ),
@@ -639,17 +754,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
         },
         child: formLayout,
       ),
-
-      floatingActionButton: Container(
-        child: FittedBox(
-          child: FloatingActionButton(
-            onPressed: null,
-            backgroundColor: MyColor.redAT,
-            child: Icon(Icons.add_shopping_cart, color: Colors.white, size: 25,),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
