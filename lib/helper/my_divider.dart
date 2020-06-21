@@ -6,6 +6,9 @@ class MyDivider {
   static spaceDividerLogin({double custom}) {
     return Padding(padding: EdgeInsets.symmetric(vertical: custom ?? 6));
   }
+  static spaceDividerElementsAT({double custom}) {
+    return Padding(padding: EdgeInsets.symmetric(vertical: custom ?? 6));
+  }
 
   static lineDivider({
     double custom,

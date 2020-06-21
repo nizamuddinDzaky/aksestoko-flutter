@@ -667,7 +667,9 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
                 "Lanjut Pembayaran",
                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
               ),
-              onPressed: null,
+              onPressed: (){
+                Get.toNamed(paymentScreen);
+              },
             ),
           ),
           Container(
@@ -724,7 +726,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>{
               ),
             ],
           ),
-
         ],
       ),
       body: GestureDetector(

@@ -11,3 +11,10 @@ final String kDistributor = "assets/images/distributor.png";
 //Custom New
 final String atMinus = "assets/icons/icon_minus_at.png";
 final String atPlus = "assets/icons/icon_plus_at.png";
+final String atBankExample = "assets/images/bank_example.png";
+//Payment Icon
+final String atPaymentKreditPro = "assets/icons/mobile_kreditpro.png";
+final String atPaymentTempoDistributor = "assets/icons/mobile_kredit.png";
+final String atPaymentCOD = "assets/icons/mobile_cod.png";
+final String atPaymentCBD = "assets/icons/mobile_cbd.png";
+

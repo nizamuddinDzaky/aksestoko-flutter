@@ -117,7 +117,7 @@ class _CartScreenState extends State<CartScreen> {
                       SizedBox(height: 5),
                       Expanded(
                         child: Text(
-                          "RP 200.000.000.000",
+                          "Rp 200.000.000.000",
                           style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
                       )
