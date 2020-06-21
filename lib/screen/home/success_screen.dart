@@ -115,7 +115,7 @@ class _SuccessScreenState extends State<SuccessScreen>{
               margin: EdgeInsets.only(left: 0, right: 0, top: 50),
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: MyColor.greenAT,
+                color: MyColor.redAT,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: FlatButton(
