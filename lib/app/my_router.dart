@@ -3,6 +3,7 @@ import 'package:aksestokomobile/screen/home/select_distributor.dart';
 import 'package:aksestokomobile/screen/home/select_product.dart';
 import 'package:aksestokomobile/screen/home/cart_screen.dart';
 import 'package:aksestokomobile/screen/home/checkout_screen.dart';
+import 'package:aksestokomobile/screen/home/success_screen.dart';
 import 'package:aksestokomobile/screen/home/payment_screen.dart';
 import 'package:aksestokomobile/screen/login/forgot_password_screen.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
@@ -23,6 +24,7 @@ const selectProductScreen = "/SelectProductScreen";
 const cartScreen ="/CartScreen";
 const checkoutScreen = "/CheckoutScreen";
 const paymentScreen = "/PaymentScreen";
+const successScreen = "/SuccessScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -31,6 +33,12 @@ class MyRouter {
         return GetRouteBase(
           page: SplashScreen(),
           settings: settings,
+        );
+      case successScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: SuccessScreen(),
         );
       case paymentScreen:
         return GetRouteBase(

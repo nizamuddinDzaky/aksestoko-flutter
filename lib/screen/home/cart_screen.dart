@@ -1,7 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
-import 'package:aksestokomobile/helper/my_logo.dart';
-import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -14,7 +12,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int _currentIndex = 0;
   bool CheckBoxValue = false;
   @override
   Widget build(BuildContext context) {
@@ -47,9 +44,6 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: MyColor.lineTxtField,
-        ),
 //        brightness: Brightness.light,
         backgroundColor: Colors.black,
         elevation: 0,
@@ -64,16 +58,54 @@ class _CartScreenState extends State<CartScreen> {
             color: Colors.white,
             height: 48,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Checkbox(
-                  value: CheckBoxValue,
-                  onChanged: (bool value){
-                    setState(() {
-                      CheckBoxValue = value;
-                    });
-                  },
+                Row(
+                  children: <Widget>[
+                    Checkbox(
+                      value: CheckBoxValue,
+                      onChanged: (bool value){
+                        setState(() {
+                          CheckBoxValue = value;
+                        });
+                      },
+                    ),
+                    Text("Pilih Semua"),
+                  ],
                 ),
-                Text("Pilih Semua"),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(right: 15),
+                      child: CupertinoButton(
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(right: 2),
+                              child: Text(
+                                'Hapus',
+                                style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '(3)',
+                              style: TextStyle(
+                                  color: MyColor.blackTextAT,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: null,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

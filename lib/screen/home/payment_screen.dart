@@ -222,7 +222,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                     "Seleseikan",
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                                   ),
-                                  onPressed: null,
+                                  onPressed: (){
+                                    Get.toNamed(successScreen);
+                                  },
                                 ),
                               ),
                             ],
@@ -465,7 +467,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                     "Seleseikan",
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                                   ),
-                                  onPressed: null,
+                                  onPressed: (){
+                                    Get.toNamed(successScreen);
+                                  },
                                 ),
                               ),
                             ],
@@ -798,7 +802,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                     "Seleseikan",
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                                   ),
-                                  onPressed: null,
+                                  onPressed: (){
+                                    Get.toNamed(successScreen);
+                                  },
                                 ),
                               ),
                             ],
@@ -1011,7 +1017,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                     "Seleseikan",
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                                   ),
-                                  onPressed: null,
+                                  onPressed: (){
+                                    Get.toNamed(successScreen);
+                                  },
                                 ),
                               ),
                             ],
@@ -1040,7 +1048,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                 ),
                 onPressed: (){
-                  Get.toNamed(paymentScreen);
+                  Get.toNamed(successScreen);
                 },
               ),
             ),

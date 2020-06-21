@@ -17,4 +17,5 @@ final String atPaymentKreditPro = "assets/icons/mobile_kreditpro.png";
 final String atPaymentTempoDistributor = "assets/icons/mobile_kredit.png";
 final String atPaymentCOD = "assets/icons/mobile_cod.png";
 final String atPaymentCBD = "assets/icons/mobile_cbd.png";
+final String atSuccessIcon = "assets/icons/ic_success.png";
 
