@@ -10,6 +10,7 @@ import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/screen/login/register_screen.dart';
 import 'package:aksestokomobile/screen/login/otp_screen.dart';
 import 'package:aksestokomobile/screen/splash_screen.dart';
+import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,7 @@ const cartScreen ="/CartScreen";
 const checkoutScreen = "/CheckoutScreen";
 const paymentScreen = "/PaymentScreen";
 const successScreen = "/SuccessScreen";
+const historyOrderScreen = "/HistoryOrderScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -99,6 +101,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.rightToLeft,
           page: HomeScreen(),
+        );
+      case historyOrderScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: HistoryOrderScreen(),
         );
       default:
         return GetRouteBase(

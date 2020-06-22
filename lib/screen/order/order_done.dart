@@ -272,36 +272,36 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
             ),
             SizedBox(height: 10),
             Expanded(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: FlatButton(
-                      color: Color(0xFF387C2B),
-                      onPressed: () {},
-                      shape: CircleBorder(),
-                      child: Text('-', style: TextStyle(color: Colors.white, fontSize: 24),),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      child: FlatButton(
+                        color: Color(0xFF387C2B),
+                        onPressed: () {},
+                        shape: CircleBorder(),
+                        child: Text('-', style: TextStyle(color: Colors.white, fontSize: 24),),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Container(
-                        child: Text(
-                          "5",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    Expanded(
+                      child: Center(
+                        child: Container(
+                          child: Text(
+                            "5",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: FlatButton(
-                      color: Color(0xFF387C2B),
-                      onPressed: () {},
-                      shape: CircleBorder(),
+                    Container(
+                      child: FlatButton(
+                        color: Color(0xFF387C2B),
+                        onPressed: () {},
+                        shape: CircleBorder(),
 //                      padding: EdgeInsets.all(5),
-                      child: Text('+', style: TextStyle(color: Colors.white, fontSize: 24),),
+                        child: Text('+', style: TextStyle(color: Colors.white, fontSize: 24),),
+                      ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                )
             ),
             SizedBox(height: 10),
           ],
