@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/screen/order/in_proses.dart' as inProses;
+import 'package:aksestokomobile/screen/order/order_done.dart' as done;
+
 
 class HistoryOrderScreen extends StatefulWidget {
   @override
@@ -9,46 +11,44 @@ class HistoryOrderScreen extends StatefulWidget {
       _HistoryOrderScreenState();
 }
 
-class _HistoryOrderScreenState extends State<HistoryOrderScreen>{
+class _HistoryOrderScreenState extends State<HistoryOrderScreen> with SingleTickerProviderStateMixin {
   TabController controller;
-
-//  @override
-//  void initState() {
-//    super.initState();
-//    controller = TabController(vsync: this,length: 5);
-//  }
-//  @override
-//  void dispose(){
-//    controller.dispose();
-//    super.dispose();
-//  }
-
+  @override
+  void initState() {
+    controller = TabController(vsync: this, length: 2);
+    super.initState();
+  }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: MyColor.lineTxtField,
+        ),
+//        brightness: Brightness.light,
         backgroundColor: Colors.black,
+        elevation: 0,
+        centerTitle: false,
         title: Container(
           //color: Colors.white,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
           child: Expanded(
-            child: TextField(
-              style: TextStyle(textBaseline: TextBaseline.alphabetic),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(top: 15.0),
-                hintText: 'Cari Produk',
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
+            child: Container(
+              child: Text(
+                "Pemesanan",
+                style: TextStyle(fontSize: 20),
               ),
             ),
           ),
         ),
-        centerTitle: false,
         actions: <Widget>[
           Stack(
             children: <Widget>[
@@ -72,32 +72,28 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>{
               ),
             ],
           ),
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  Get.toNamed(cartScreen);
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ],
-//        bottom: TabBar(
-//
-//        ),
+        bottom: TabBar(
+
+          controller: controller,
+          tabs: <Widget>[
+            Tab(text: "Dalam Proses",),
+            Tab(text: "Selesei",),
+          ],
+        ),
+      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: TabBarView(
+          physics: BouncingScrollPhysics(),
+          controller: controller,
+          children: <Widget>[
+            inProses.InProsesScreen(),
+            done.OrderDoneScreen(),
+          ],
+        ),
       ),
     );
   }

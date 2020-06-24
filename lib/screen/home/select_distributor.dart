@@ -12,8 +12,7 @@ class SelectDistributorScreen extends StatefulWidget {
       _SelectDistributorScreenState();
 }
 
-class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
-  int _currentIndex = 0;
+class _SelectDistributorScreenState extends State<SelectDistributorScreen> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -22,7 +21,7 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
           children: <Widget>[
             Container(
               padding:
-                  EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
+              EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
               width: Get.width,
               color: Color(0xFFB20838),
               child: Column(
@@ -64,7 +63,6 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
         ),
       ),
     );
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -85,43 +83,8 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
         },
         child: formLayout,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Distributor'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity),
-            title: Text('Promo'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Beranda'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            title: Text('Pesanan'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('Akun'),
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        iconSize: 25,
-        currentIndex: _currentIndex,
-        selectedItemColor: MyColor.redAT,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
     );
   }
-
   Widget listDistributor() {
     return Card(
       elevation:2,
@@ -156,7 +119,7 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
                         child: Text(
                           'SBJ',
                           style:
-                              TextStyle(color: Color(0xff999999), fontSize: 16),
+                          TextStyle(color: Color(0xff999999), fontSize: 16),
                         ),
                       ),
                       SizedBox(height: 15),
@@ -164,7 +127,7 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
                         child: Text(
                           'Jl. Lorem Ipsum No 40 Gresik Jawa Timur',
                           style:
-                              TextStyle(color: Color(0xff999999), fontSize: 16),
+                          TextStyle(color: Color(0xff999999), fontSize: 16),
                         ),
                       ),
                       SizedBox(height: 5),
@@ -172,7 +135,7 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> {
                         child: Text(
                           '081335789789',
                           style:
-                              TextStyle(color: Color(0xff999999), fontSize: 18),
+                          TextStyle(color: Color(0xff999999), fontSize: 18),
                         ),
                       ),
                     ],

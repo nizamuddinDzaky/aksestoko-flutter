@@ -124,7 +124,7 @@ class _SuccessScreenState extends State<SuccessScreen>{
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
                 ),
                 onPressed: (){
-                  Get.toNamed(selectProductScreen);
+                  Get.toNamed(parentScreen);
                 },
               ),
             ),

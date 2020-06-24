@@ -12,7 +12,6 @@ class SelectProductScreen extends StatefulWidget {
 }
 
 class _SelectProductScreenState extends State<SelectProductScreen> {
-  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -168,7 +167,6 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
         },
         child: formLayout,
       ),
-
       floatingActionButton: Container(
         child: FittedBox(
           child: FloatingActionButton(
@@ -179,41 +177,6 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Distributor'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity),
-            title: Text('Promo'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Beranda'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            title: Text('Pesanan'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('Akun'),
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        iconSize: 25,
-        currentIndex: _currentIndex,
-        selectedItemColor: MyColor.redAT,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
     );
 
   }

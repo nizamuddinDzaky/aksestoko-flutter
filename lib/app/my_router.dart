@@ -5,6 +5,7 @@ import 'package:aksestokomobile/screen/home/cart_screen.dart';
 import 'package:aksestokomobile/screen/home/checkout_screen.dart';
 import 'package:aksestokomobile/screen/home/success_screen.dart';
 import 'package:aksestokomobile/screen/home/payment_screen.dart';
+import 'package:aksestokomobile/screen/home/parent_screen.dart';
 import 'package:aksestokomobile/screen/login/forgot_password_screen.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/screen/login/register_screen.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 
 const String root = "/";
 const loginScreen = "/LoginScreen";
+const parentScreen ="/ParentScreen";
 const registerScreen = "/RegisterScreen";
 const forgotPasswordScreen = "/ForgotPasswordScreen";
 const homeScreen = "/HomeScreen";
@@ -35,6 +37,12 @@ class MyRouter {
         return GetRouteBase(
           page: SplashScreen(),
           settings: settings,
+        );
+      case parentScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: ParentScreen(),
         );
       case successScreen:
         return GetRouteBase(
