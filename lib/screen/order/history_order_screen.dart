@@ -27,9 +27,6 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> with SingleTick
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: MyColor.lineTxtField,
-        ),
 //        brightness: Brightness.light,
         backgroundColor: Colors.black,
         elevation: 0,

@@ -35,4 +35,6 @@ class MyColor {
   static Color blackTextAT = Color(0xFF333333);
   static Color greyTextAT = Color(0xFF999999);
   static Color greenAT = Color(0xff27561E);
+  static Color warningTextAT = Color(0xfff38f1d);
+  static Color successTextAT = Color(0xff387c2b);
 }
