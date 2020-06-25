@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 
 class ListProductDetailOrderScreen extends StatefulWidget {
-  _ListProductDetailOrderScreenState createState() => _ListProductDetailOrderScreenState();
+  _ListProductDetailOrderScreenState createState() =>
+      _ListProductDetailOrderScreenState();
 }
 
-class _ListProductDetailOrderScreenState extends State<ListProductDetailOrderScreen>{
+class _ListProductDetailOrderScreenState
+    extends State<ListProductDetailOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,8 +77,7 @@ class _ListProductDetailOrderScreenState extends State<ListProductDetailOrderScr
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             "Jumlah",
@@ -96,8 +97,7 @@ class _ListProductDetailOrderScreenState extends State<ListProductDetailOrderScr
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 2),
+                                padding: EdgeInsets.symmetric(horizontal: 2),
                               ),
                               Text(
                                 "SAK",
@@ -113,14 +113,11 @@ class _ListProductDetailOrderScreenState extends State<ListProductDetailOrderScr
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal:
-                            MediaQuery.of(context).size.width /
-                                16),
+                            horizontal: MediaQuery.of(context).size.width / 16),
                       ),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               "Harga",
