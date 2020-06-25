@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/screen/home/list_product_item_screen.dart' as listProduct;
+import 'package:aksestokomobile/screen/home/list_product_item_screen.dart'
+    as listProduct;
 
 class SelectProductScreen extends StatefulWidget {
   @override

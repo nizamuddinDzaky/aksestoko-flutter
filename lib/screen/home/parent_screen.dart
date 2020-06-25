@@ -1,37 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:aksestokomobile/screen/home/select_distributor.dart' as selectDistributor;
-import 'package:aksestokomobile/screen/home/select_product.dart' as selectProduct;
-import 'package:aksestokomobile/screen/order/history_order_screen.dart' as historyOrder;
+import 'package:aksestokomobile/screen/home/select_distributor.dart'
+    as selectDistributor;
+import 'package:aksestokomobile/screen/home/select_product.dart'
+    as selectProduct;
+import 'package:aksestokomobile/screen/order/history_order_screen.dart'
+    as historyOrder;
 
 class ParentScreen extends StatefulWidget {
   @override
-  _ParentScreenState createState() =>
-      _ParentScreenState();
+  _ParentScreenState createState() => _ParentScreenState();
 }
 
-class _ParentScreenState extends State<ParentScreen> with SingleTickerProviderStateMixin {
+class _ParentScreenState extends State<ParentScreen>
+    with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   final tabs = [
     selectDistributor.SelectDistributorScreen(),
-    Center(child: Text("Promo"),),
+    Center(
+      child: Text("Promo"),
+    ),
     selectProduct.SelectProductScreen(),
     historyOrder.HistoryOrderScreen(),
-    Center(child: Text("Lima"),),
+    Center(
+      child: Text("Lima"),
+    ),
   ];
 
   TabController controller;
+
   @override
   void initState() {
     controller = TabController(vsync: this, length: 3);
     super.initState();
   }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

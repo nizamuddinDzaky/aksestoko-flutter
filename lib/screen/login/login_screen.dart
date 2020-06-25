@@ -150,14 +150,14 @@ class _LoginScreenState extends LoginScreenController {
             width: double.maxFinite,
             height: 46,
             child: FlatButton(
-              color: MyColor.redAT,
-              child: Text(
-                'MASUK',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: showDialogProgress,
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-            ),
+                color: MyColor.redAT,
+                child: Text(
+                  'MASUK',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: showDialogProgress,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0))),
           ),
           Center(
             child: Row(
@@ -221,8 +221,7 @@ class _LoginScreenState extends LoginScreenController {
                                 padding: EdgeInsets.only(bottom: 8),
                                 child: MyText.textBlackSmall(
                                     'Ⓒ 2020 PT SISI, All Right Reserved.'),
-                              )
-                          ),
+                              )),
                         ),
                       ],
                     ),

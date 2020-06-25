@@ -6,23 +6,18 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 
-class SuccessScreen extends StatefulWidget{
+class SuccessScreen extends StatefulWidget {
   @override
   _SuccessScreenState createState() => _SuccessScreenState();
 }
 
-class _SuccessScreenState extends State<SuccessScreen>{
-  int _currentIndex = 0;
-  bool CashOnDelivery = false;
-  bool CashBeforeDelivery = false;
-  bool KreditPro = false;
-  bool TempoDistributor = false;
+class _SuccessScreenState extends State<SuccessScreen> {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
-      child:  Container(
+      child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        margin: EdgeInsets.only(top: MediaQuery.of(context).size.width/6.0),
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.width / 6.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,14 +27,18 @@ class _SuccessScreenState extends State<SuccessScreen>{
               child: Center(
                 child: Text(
                   "Berhasil",
-                  style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 36),
+                  style: TextStyle(
+                      color: MyColor.blackTextAT,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 36),
                 ),
               ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 30),
               child: Center(
-                child: Image.asset(atSuccessIcon, height: 200,fit:BoxFit.fill),
+                child:
+                    Image.asset(atSuccessIcon, height: 200, fit: BoxFit.fill),
               ),
             ),
             Container(
@@ -47,7 +46,7 @@ class _SuccessScreenState extends State<SuccessScreen>{
               child: Center(
                 child: Text(
                   "Terimakasih atas pemesanan Anda. Segera lakukan penerimaaan barang di menu Pemesanan ketika barang telah sampai di toko Anda",
-                  style: TextStyle(color: MyColor.greyTextAT,fontSize: 18),
+                  style: TextStyle(color: MyColor.greyTextAT, fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -61,7 +60,7 @@ class _SuccessScreenState extends State<SuccessScreen>{
                   BoxShadow(
                     color: MyColor.greyTextAT,
                     spreadRadius: 0,
-                    blurRadius: 8 ,
+                    blurRadius: 8,
                     offset: Offset(0, 2), // changes position of shadow
                   )
                 ],
@@ -76,13 +75,17 @@ class _SuccessScreenState extends State<SuccessScreen>{
                         Container(
                           child: Text(
                             "ID Pemesanan",
-                            style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                            style: TextStyle(
+                                fontSize: 16, color: MyColor.greyTextAT),
                           ),
                         ),
                         Container(
                           child: Text(
                             "SALE/AT/2020/06/0003",
-                            style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: MyColor.greyTextAT,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -96,13 +99,17 @@ class _SuccessScreenState extends State<SuccessScreen>{
                         Container(
                           child: Text(
                             "Cara Pembayaran",
-                            style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                            style: TextStyle(
+                                fontSize: 16, color: MyColor.greyTextAT),
                           ),
                         ),
                         Container(
                           child: Text(
                             "Tempo Dengan Distributor",
-                            style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: MyColor.greyTextAT,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -121,9 +128,12 @@ class _SuccessScreenState extends State<SuccessScreen>{
               child: FlatButton(
                 child: Text(
                   "OK",
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
                 ),
-                onPressed: (){
+                onPressed: () {
                   Get.toNamed(parentScreen);
                 },
               ),
@@ -132,8 +142,6 @@ class _SuccessScreenState extends State<SuccessScreen>{
         ),
       ),
     );
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -162,7 +170,10 @@ class _SuccessScreenState extends State<SuccessScreen>{
                   backgroundColor: MyColor.redAT,
                   child: Text(
                     '20',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -176,43 +187,6 @@ class _SuccessScreenState extends State<SuccessScreen>{
         },
         child: formLayout,
       ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Distributor'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity),
-            title: Text('Promo'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Beranda'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            title: Text('Pesanan'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('Akun'),
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        iconSize: 25,
-        currentIndex: _currentIndex,
-        selectedItemColor: MyColor.redAT,
-
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
     );
   }
-
 }

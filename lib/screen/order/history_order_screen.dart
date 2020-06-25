@@ -4,25 +4,27 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/screen/order/in_proses.dart' as inProses;
 import 'package:aksestokomobile/screen/order/order_done.dart' as done;
 
-
 class HistoryOrderScreen extends StatefulWidget {
   @override
-  _HistoryOrderScreenState createState() =>
-      _HistoryOrderScreenState();
+  _HistoryOrderScreenState createState() => _HistoryOrderScreenState();
 }
 
-class _HistoryOrderScreenState extends State<HistoryOrderScreen> with SingleTickerProviderStateMixin {
+class _HistoryOrderScreenState extends State<HistoryOrderScreen>
+    with SingleTickerProviderStateMixin {
   TabController controller;
+
   @override
   void initState() {
     controller = TabController(vsync: this, length: 2);
     super.initState();
   }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +61,10 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> with SingleTick
                   backgroundColor: MyColor.redAT,
                   child: Text(
                     '20',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -67,11 +72,14 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> with SingleTick
           ),
         ],
         bottom: TabBar(
-
           controller: controller,
           tabs: <Widget>[
-            Tab(text: "Dalam Proses",),
-            Tab(text: "Selesei",),
+            Tab(
+              text: "Dalam Proses",
+            ),
+            Tab(
+              text: "Selesei",
+            ),
           ],
         ),
       ),

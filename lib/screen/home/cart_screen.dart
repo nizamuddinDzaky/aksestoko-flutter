@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 
 class CartScreen extends StatefulWidget {
   @override
-  _CartScreenState createState() =>
-      _CartScreenState();
+  _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
   bool CheckBoxValue = false;
+
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -28,7 +28,7 @@ class _CartScreenState extends State<CartScreen> {
                 mainAxisSpacing: 15,
                 padding: EdgeInsets.only(top: 20),
                 physics: NeverScrollableScrollPhysics(),
-                  childAspectRatio: 16 / 9,
+                childAspectRatio: 16 / 9,
                 children: <Widget>[
                   listProductCart(),
                   listProductCart(),
@@ -44,7 +44,6 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-//        brightness: Brightness.light,
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -64,7 +63,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: <Widget>[
                     Checkbox(
                       value: CheckBoxValue,
-                      onChanged: (bool value){
+                      onChanged: (bool value) {
                         setState(() {
                           CheckBoxValue = value;
                         });
@@ -87,8 +86,7 @@ class _CartScreenState extends State<CartScreen> {
                                 style: TextStyle(
                                     color: MyColor.blackTextAT,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.bold
-                                ),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             Text(
@@ -96,8 +94,7 @@ class _CartScreenState extends State<CartScreen> {
                               style: TextStyle(
                                   color: MyColor.blackTextAT,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                              ),
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -119,7 +116,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
       bottomNavigationBar: new Stack(
         overflow: Overflow.visible,
-//        alignment: new FractionalOffset(.5, 1.0),
         children: [
           new Container(
             padding: EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
@@ -144,7 +140,10 @@ class _CartScreenState extends State<CartScreen> {
                     children: <Widget>[
                       Text(
                         "Total",
-                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
                       ),
                       SizedBox(height: 5),
                       Expanded(
@@ -158,7 +157,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(left:0),
+                    margin: EdgeInsets.only(left: 0),
                     width: double.maxFinite,
                     height: 50,
                     child: RaisedButton(
@@ -170,16 +169,15 @@ class _CartScreenState extends State<CartScreen> {
                           fontSize: 16,
                         ),
                       ),
-                      onPressed: (){
+                      onPressed: () {
                         Get.toNamed(checkoutScreen);
                       },
-                        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20.0))
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20.0)),
                     ),
-//                    alignment: FractionalOffset(1.0, 0),
                   ),
                 )
               ],
-
             ),
           ),
         ],
@@ -197,7 +195,7 @@ class _CartScreenState extends State<CartScreen> {
             margin: EdgeInsets.only(top: 5, left: 0, bottom: 0),
             child: Checkbox(
               value: CheckBoxValue,
-              onChanged: (bool value){
+              onChanged: (bool value) {
                 setState(() {
                   CheckBoxValue = value;
                 });
@@ -213,7 +211,8 @@ class _CartScreenState extends State<CartScreen> {
                 children: <Widget>[
                   Center(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: Image.asset(kImageDynamix),
                     ),
                   ),
@@ -239,9 +238,11 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                    icon: Icon(Icons.delete,color: MyColor.redAT,),
-                                    onPressed: null
-                                ),
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: MyColor.redAT,
+                                    ),
+                                    onPressed: null),
                               ],
                             ),
                           ),
@@ -249,8 +250,8 @@ class _CartScreenState extends State<CartScreen> {
                           Container(
                             child: Text(
                               '121-301-0060',
-                              style:
-                              TextStyle(color: Color(0xff999999), fontSize: 16),
+                              style: TextStyle(
+                                  color: Color(0xff999999), fontSize: 16),
                             ),
                           ),
                           SizedBox(height: 15),
@@ -263,15 +264,18 @@ class _CartScreenState extends State<CartScreen> {
                                     Container(
                                       child: Text(
                                         'Harga',
-                                        style:
-                                        TextStyle(color: Color(0xff999999), fontSize: 16),
+                                        style: TextStyle(
+                                            color: Color(0xff999999),
+                                            fontSize: 16),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         'Rp 60.000',
-                                        style:
-                                        TextStyle(color: Color(0xff333333), fontSize: 16, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -284,15 +288,18 @@ class _CartScreenState extends State<CartScreen> {
                                     Container(
                                       child: Text(
                                         'Jumlah',
-                                        style:
-                                        TextStyle(color: Color(0xff999999), fontSize: 16),
+                                        style: TextStyle(
+                                            color: Color(0xff999999),
+                                            fontSize: 16),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         '5 SAK',
-                                        style:
-                                        TextStyle(color: Color(0xff333333), fontSize: 16, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -300,7 +307,6 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -314,7 +320,8 @@ class _CartScreenState extends State<CartScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border(
-                top: BorderSide( //                   <--- left side
+                top: BorderSide(
+                  //                   <--- left side
                   color: MyColor.greyAT,
                   width: 3.0,
                 ),
@@ -326,11 +333,13 @@ class _CartScreenState extends State<CartScreen> {
                 children: <Widget>[
                   Text(
                     "SUBTOTAL",
-                    style: TextStyle(color: Color(0xff999999), fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Color(0xff999999), fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "Rp 10.000.000",
-                    style: TextStyle(color: Color(0xff333333), fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Color(0xff333333), fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
-import 'package:aksestokomobile/screen/home/list_distributor_screen.dart' as listDistributor ;
+import 'package:aksestokomobile/screen/home/list_distributor_screen.dart'
+    as listDistributor;
 
 class SelectDistributorScreen extends StatefulWidget {
   @override

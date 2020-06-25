@@ -6,7 +6,6 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -79,14 +78,14 @@ class _RegisterScreenState extends RegisterController {
                   width: double.maxFinite,
                   height: 46,
                   child: FlatButton(
-                    color: MyColor.redAT,
-                    child: Text(
-                      'Daftar',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: showDialogProgress,
-                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-                  ),
+                      color: MyColor.redAT,
+                      child: Text(
+                        'Daftar',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: showDialogProgress,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0))),
                 ),
               ],
             ),
@@ -133,8 +132,7 @@ class _RegisterScreenState extends RegisterController {
                                 padding: EdgeInsets.only(bottom: 8),
                                 child: MyText.textBlackSmall(
                                     'Ⓒ 2020 PT SISI, All Right Reserved.'),
-                              )
-                          ),
+                              )),
                         ),
                       ],
                     ),
