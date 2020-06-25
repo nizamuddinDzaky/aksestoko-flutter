@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class ListHistoryOrderScreen extends StatelessWidget {
   @override
@@ -361,7 +363,9 @@ class ListHistoryOrderScreen extends StatelessWidget {
                         fontSize: 14,
                       ),
                     ),
-                    onPressed: null,
+                    onPressed: () {
+                      Get.toNamed(detailOrderScreen);
+                    },
                   ),
                 ),
               ],

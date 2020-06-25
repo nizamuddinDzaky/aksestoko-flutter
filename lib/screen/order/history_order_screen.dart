@@ -29,7 +29,6 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-//        brightness: Brightness.light,
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: false,

@@ -37,4 +37,5 @@ class MyColor {
   static Color greenAT = Color(0xff27561E);
   static Color warningTextAT = Color(0xfff38f1d);
   static Color successTextAT = Color(0xff387c2b);
+  static Color orangeAT = Color(0xffd71417);
 }
