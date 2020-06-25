@@ -61,6 +61,7 @@ class _OrderDoneScreenState extends State<OrderDoneScreen>{
             ),
             Container(
               child: ListView(
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: <Widget>[
                   listOrder.ListHistoryOrderDoneScreen(),
