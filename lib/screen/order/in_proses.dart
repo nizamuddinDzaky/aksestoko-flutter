@@ -62,6 +62,7 @@ class _InProsesScreenState extends State<InProsesScreen>{
             Container(
               child: ListView(
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   listOrder.ListHistoryOrderScreen(),
                   listOrder.ListHistoryOrderScreen(),

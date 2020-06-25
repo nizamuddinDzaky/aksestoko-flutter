@@ -8,7 +8,9 @@ class ListHistoryOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.only(top: 15,),
+      padding: EdgeInsets.only(
+        top: 15,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
@@ -16,7 +18,7 @@ class ListHistoryOrderScreen extends StatelessWidget {
           BoxShadow(
             color: MyColor.greyTextAT,
             spreadRadius: 0,
-            blurRadius: 8 ,
+            blurRadius: 8,
             offset: Offset(0, 2), // changes position of shadow
           )
         ],
@@ -35,7 +37,8 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "ID Pemesanan",
-                          style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 16),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4),
@@ -50,7 +53,10 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "SALE/AT/2020/06/0023",
-                          style: TextStyle(color: MyColor.redAT, fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: MyColor.redAT,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -60,7 +66,8 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "Status Pesanan",
-                          style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 16),
                         ),
                       ],
                     ),
@@ -68,7 +75,10 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "Menunggu Konfirmasi",
-                          style: TextStyle(color: MyColor.warningTextAT, fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: MyColor.warningTextAT,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -83,7 +93,8 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "ID Pemesanan",
-                          style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 16),
                         ),
                       ],
                     ),
@@ -91,7 +102,10 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "21 Juni 2020",
-                          style: TextStyle(color: MyColor.blackTextAT, fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: MyColor.blackTextAT,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -101,7 +115,8 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "Status Pembayaran",
-                          style: TextStyle(color: MyColor.greyTextAT, fontSize: 16),
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 16),
                         ),
                       ],
                     ),
@@ -109,7 +124,10 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "Belum Dibayar",
-                          style: TextStyle(color: MyColor.warningTextAT, fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: MyColor.warningTextAT,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -126,8 +144,10 @@ class ListHistoryOrderScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 10),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-            padding: EdgeInsets.only(top: 15,),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: EdgeInsets.only(
+              top: 15,
+            ),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
@@ -135,7 +155,7 @@ class ListHistoryOrderScreen extends StatelessWidget {
                 BoxShadow(
                   color: MyColor.greyTextAT,
                   spreadRadius: 0,
-                  blurRadius: 8 ,
+                  blurRadius: 8,
                   offset: Offset(0, 2), // changes position of shadow
                 )
               ],
@@ -152,106 +172,75 @@ class ListHistoryOrderScreen extends StatelessWidget {
                           width: 100,
                         ),
                       ),
-                      Container(
-                        child: Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Text(
-                                        "Semen PCC ZAK 50",
-                                        style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                "Semen PCC ZAK 50",
+                                style: TextStyle(
+                                  color: MyColor.blackTextAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 20),
-                                child: Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "121-301-0060",
+                                    style: TextStyle(
+                                      color: MyColor.greyTextAT,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Rp 50.000",
+                                    style: TextStyle(
+                                      color: MyColor.greyTextAT,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "121-301-0060",
+                                        "Jumlah",
                                         style: TextStyle(
-                                          color: MyColor.greyTextAT,
+                                          color: MyColor.blackTextAT,
                                           fontSize: 16,
                                         ),
                                       ),
-                                      Text(
-                                        "Rp 50.000",
-                                        style: TextStyle(
-                                          color: MyColor.greyTextAT,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          "Jumlah",
-                                          style: TextStyle(
-                                            color: MyColor.blackTextAT,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              "2",
-                                              style: TextStyle(
-                                                color: MyColor.blackTextAT,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 2),
-                                            ),
-                                            Text(
-                                              "SAK",
-                                              style: TextStyle(
-                                                color: MyColor.blackTextAT,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/16),),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                      Row(
                                         children: <Widget>[
                                           Text(
-                                            "Harga",
+                                            "2",
                                             style: TextStyle(
                                               color: MyColor.blackTextAT,
+                                              fontWeight: FontWeight.bold,
                                               fontSize: 16,
                                             ),
                                           ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 2),
+                                          ),
                                           Text(
-                                            "Rp 100.000.000",
+                                            "SAK",
                                             style: TextStyle(
                                               color: MyColor.blackTextAT,
                                               fontWeight: FontWeight.bold,
@@ -260,13 +249,41 @@ class ListHistoryOrderScreen extends StatelessWidget {
                                           ),
                                         ],
                                       ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            MediaQuery.of(context).size.width /
+                                                16),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Harga",
+                                          style: TextStyle(
+                                            color: MyColor.blackTextAT,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Rp 100.000.000",
+                                          style: TextStyle(
+                                            color: MyColor.blackTextAT,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -278,7 +295,8 @@ class ListHistoryOrderScreen extends StatelessWidget {
                   margin: EdgeInsets.symmetric(vertical: 0),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
@@ -288,11 +306,15 @@ class ListHistoryOrderScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         "SUBTOTAL",
-                        style: TextStyle(color: Color(0xff999999), fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Color(0xff999999),
+                            fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Rp 10.000.000",
-                        style: TextStyle(color: Color(0xff333333), fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -322,7 +344,9 @@ class ListHistoryOrderScreen extends StatelessWidget {
                       ),
                       Text(
                         "Rp 1.000.000",
-                        style: TextStyle(color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: MyColor.greyTextAT,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

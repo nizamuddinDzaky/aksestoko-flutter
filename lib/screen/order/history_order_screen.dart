@@ -37,13 +37,9 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> with SingleTick
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
-          child: Expanded(
-            child: Container(
-              child: Text(
-                "Pemesanan",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
+          child: Text(
+            "Pemesanan",
+            style: TextStyle(fontSize: 20),
           ),
         ),
         actions: <Widget>[
