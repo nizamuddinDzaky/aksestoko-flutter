@@ -1,10 +1,9 @@
-import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
+import 'package:aksestokomobile/screen/home/list_distributor_screen.dart' as listDistributor ;
 
 class SelectDistributorScreen extends StatefulWidget {
   @override
@@ -12,7 +11,8 @@ class SelectDistributorScreen extends StatefulWidget {
       _SelectDistributorScreenState();
 }
 
-class _SelectDistributorScreenState extends State<SelectDistributorScreen> with SingleTickerProviderStateMixin {
+class _SelectDistributorScreenState extends State<SelectDistributorScreen>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -21,7 +21,7 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> with 
           children: <Widget>[
             Container(
               padding:
-              EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
+                  EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
               width: Get.width,
               color: Color(0xFFB20838),
               child: Column(
@@ -50,12 +50,9 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> with 
                 physics: NeverScrollableScrollPhysics(),
                 childAspectRatio: 16 / 7,
                 children: <Widget>[
-                  listDistributor(),
-                  listDistributor(),
-                  listDistributor(),
-                  listDistributor(),
-                  listDistributor(),
-                  listDistributor(),
+                  listDistributor.ListDistributorScreen(),
+                  listDistributor.ListDistributorScreen(),
+                  listDistributor.ListDistributorScreen(),
                 ],
               ),
             ),
@@ -68,7 +65,6 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> with 
         iconTheme: IconThemeData(
           color: MyColor.lineTxtField,
         ),
-//        brightness: Brightness.light,
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -82,72 +78,6 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen> with 
           FocusScope.of(context).unfocus();
         },
         child: formLayout,
-      ),
-    );
-  }
-  Widget listDistributor() {
-    return Card(
-      elevation:2,
-      child: InkWell(
-        child: Container(
-          //color: Colors.blue,
-          child: Row(
-            children: <Widget>[
-              Center(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: Image.asset(kDistributor),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          'Distributor Name',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff999999),
-                              fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        child: Text(
-                          'SBJ',
-                          style:
-                          TextStyle(color: Color(0xff999999), fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Container(
-                        child: Text(
-                          'Jl. Lorem Ipsum No 40 Gresik Jawa Timur',
-                          style:
-                          TextStyle(color: Color(0xff999999), fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        child: Text(
-                          '081335789789',
-                          style:
-                          TextStyle(color: Color(0xff999999), fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        onTap: (){
-          Get.toNamed(selectProductScreen);
-        },
       ),
     );
   }

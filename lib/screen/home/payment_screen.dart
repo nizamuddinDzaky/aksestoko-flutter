@@ -6,16 +6,17 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 
-class PaymentScreen extends StatefulWidget{
+class PaymentScreen extends StatefulWidget {
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen>{
+class _PaymentScreenState extends State<PaymentScreen> {
   bool CashOnDelivery = false;
   bool CashBeforeDelivery = false;
   bool KreditPro = false;
   bool TempoDistributor = false;
+
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -27,10 +28,16 @@ class _PaymentScreenState extends State<PaymentScreen>{
               child: Row(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 15,),
+                    margin: EdgeInsets.only(
+                      top: 30,
+                      bottom: 15,
+                    ),
                     child: Text(
                       "Silahkan Pilih Methode Pembayaran",
-                      style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(
+                          color: MyColor.blackTextAT,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
                     ),
                   ),
                 ],
@@ -44,9 +51,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                     color: MyColor.redAT,
                     child: Text(
                       "Tunai",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       Get.toNamed(paymentScreen);
                     },
                   ),
@@ -88,7 +98,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               children: <Widget>[
                                 Checkbox(
                                   value: CashOnDelivery,
-                                  onChanged: (bool value){
+                                  onChanged: (bool value) {
                                     setState(() {
                                       CashOnDelivery = value;
                                     });
@@ -96,13 +106,22 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(atPaymentCOD,width: 18,),
+                                  child: Image.asset(
+                                    atPaymentCOD,
+                                    width: 18,
+                                  ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 15, bottom: 15,),
+                                  margin: EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 15,
+                                  ),
                                   child: Text(
                                     "Bayar Ditempat",
-                                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -110,8 +129,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                             Text(
                               "Rp 20.000.000",
                               style: TextStyle(
-                                  color: MyColor.redAT, fontWeight: FontWeight.bold, fontSize: 16
-                              ),
+                                  color: MyColor.redAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
                             )
                           ],
                         ),
@@ -129,8 +149,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               BoxShadow(
                                 color: MyColor.greyTextAT,
                                 spreadRadius: 0,
-                                blurRadius: 8 ,
-                                offset: Offset(0, 2), // changes position of shadow
+                                blurRadius: 8,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
                               )
                             ],
                           ),
@@ -139,18 +160,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Harga",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -159,18 +186,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Pengiriman Ditributor",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -184,18 +217,25 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Yang Perlu Dibayar",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.redAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.redAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -219,9 +259,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 child: FlatButton(
                                   child: Text(
                                     "Seleseikan",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
-                                  onPressed: (){
+                                  onPressed: () {
                                     Get.toNamed(successScreen);
                                   },
                                 ),
@@ -230,8 +273,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                           ),
                         ),
                       ],
-                    )
-                ),
+                    )),
                 Container(
                   height: 3,
                   color: Color(0xffEAEAEA),
@@ -252,7 +294,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               children: <Widget>[
                                 Checkbox(
                                   value: CashBeforeDelivery,
-                                  onChanged: (bool value){
+                                  onChanged: (bool value) {
                                     setState(() {
                                       CashBeforeDelivery = value;
                                     });
@@ -260,13 +302,22 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(atPaymentCBD,width: 18,),
+                                  child: Image.asset(
+                                    atPaymentCBD,
+                                    width: 18,
+                                  ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 15, bottom: 15,),
+                                  margin: EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 15,
+                                  ),
                                   child: Text(
                                     "Bayar Sebelum Dikirim",
-                                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -274,8 +325,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                             Text(
                               "Rp 20.000.000",
                               style: TextStyle(
-                                  color: MyColor.redAT, fontWeight: FontWeight.bold, fontSize: 16
-                              ),
+                                  color: MyColor.redAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
                             )
                           ],
                         ),
@@ -292,9 +344,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 color: MyColor.redAT,
                                 child: Text(
                                   "Mandiri",
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                 ),
-                                onPressed: (){
+                                onPressed: () {
                                   Get.toNamed(paymentScreen);
                                 },
                               ),
@@ -346,15 +401,26 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Nomor Rekening Tujuan",style: TextStyle(fontWeight: FontWeight.bold, color: MyColor.greyTextAT, fontSize: 16),
+                                    "Nomor Rekening Tujuan",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: MyColor.greyTextAT,
+                                        fontSize: 16),
                                   ),
                                   MyDivider.spaceDividerElementsAT(custom: 5),
                                   Text(
-                                    "19827364",style: TextStyle(fontWeight: FontWeight.bold, color: MyColor.blackTextAT, fontSize: 16),
+                                    "19827364",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: MyColor.blackTextAT,
+                                        fontSize: 16),
                                   ),
                                   MyDivider.spaceDividerElementsAT(custom: 5),
                                   Text(
-                                    "a/n Lorem Ipsum",style: TextStyle(color: MyColor.blackTextAT, fontSize: 16),
+                                    "a/n Lorem Ipsum",
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -374,8 +440,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               BoxShadow(
                                 color: MyColor.greyTextAT,
                                 spreadRadius: 0,
-                                blurRadius: 8 ,
-                                offset: Offset(0, 2), // changes position of shadow
+                                blurRadius: 8,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
                               )
                             ],
                           ),
@@ -384,18 +451,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Harga",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -404,18 +477,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Pengiriman Ditributor",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -429,18 +508,25 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Yang Perlu Dibayar",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.redAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.redAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -464,9 +550,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 child: FlatButton(
                                   child: Text(
                                     "Seleseikan",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
-                                  onPressed: (){
+                                  onPressed: () {
                                     Get.toNamed(successScreen);
                                   },
                                 ),
@@ -475,8 +564,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                           ),
                         ),
                       ],
-                    )
-                ),
+                    )),
                 Container(
                   height: 3,
                   color: Color(0xffEAEAEA),
@@ -497,7 +585,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               children: <Widget>[
                                 Checkbox(
                                   value: KreditPro,
-                                  onChanged: (bool value){
+                                  onChanged: (bool value) {
                                     setState(() {
                                       KreditPro = value;
                                     });
@@ -505,13 +593,22 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(atPaymentTempoDistributor,width: 18,),
+                                  child: Image.asset(
+                                    atPaymentTempoDistributor,
+                                    width: 18,
+                                  ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 15, bottom: 15,),
+                                  margin: EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 15,
+                                  ),
                                   child: Text(
                                     "Tempo Distributor",
-                                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -521,14 +618,16 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 Text(
                                   "Rp 200.000.000.000",
                                   style: TextStyle(
-                                      color: MyColor.redAT, fontWeight: FontWeight.bold, fontSize: 16
-                                  ),
+                                      color: MyColor.redAT,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                                 Text(
                                   "30 Hari",
                                   style: TextStyle(
-                                      color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16
-                                  ),
+                                      color: MyColor.greyTextAT,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 )
                               ],
                             ),
@@ -547,9 +646,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 color: MyColor.redAT,
                                 child: Text(
                                   "Mandiri",
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                 ),
-                                onPressed: (){
+                                onPressed: () {
                                   Get.toNamed(paymentScreen);
                                 },
                               ),
@@ -601,15 +703,26 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Nomor Rekening Tujuan",style: TextStyle(fontWeight: FontWeight.bold, color: MyColor.greyTextAT, fontSize: 16),
+                                    "Nomor Rekening Tujuan",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: MyColor.greyTextAT,
+                                        fontSize: 16),
                                   ),
                                   MyDivider.spaceDividerElementsAT(custom: 5),
                                   Text(
-                                    "19827364",style: TextStyle(fontWeight: FontWeight.bold, color: MyColor.blackTextAT, fontSize: 16),
+                                    "19827364",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: MyColor.blackTextAT,
+                                        fontSize: 16),
                                   ),
                                   MyDivider.spaceDividerElementsAT(custom: 5),
                                   Text(
-                                    "a/n Lorem Ipsum",style: TextStyle(color: MyColor.blackTextAT, fontSize: 16),
+                                    "a/n Lorem Ipsum",
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -629,8 +742,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               BoxShadow(
                                 color: MyColor.greyTextAT,
                                 spreadRadius: 0,
-                                blurRadius: 8 ,
-                                offset: Offset(0, 2), // changes position of shadow
+                                blurRadius: 8,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
                               )
                             ],
                           ),
@@ -639,18 +753,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Harga",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -659,18 +779,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Pengiriman Ditributor",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -684,18 +810,25 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Yang Perlu Dibayar",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.redAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.redAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -710,10 +843,16 @@ class _PaymentScreenState extends State<PaymentScreen>{
                             Row(
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsets.only(top: 5, bottom: 5,),
+                                  margin: EdgeInsets.only(
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
                                   child: Text(
                                     "Tanggal Ekspetasi Pengiriman",
-                                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -724,7 +863,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                   child: Expanded(
                                     child: Text(
                                       "Hanya sebagai pengingat Toko, tidak berimbas menjadi batas pembayaran Toko",
-                                      style: TextStyle(color: MyColor.greyTextAT, fontSize: 14),
+                                      style: TextStyle(
+                                          color: MyColor.greyTextAT,
+                                          fontSize: 14),
                                     ),
                                   ),
                                 ),
@@ -734,28 +875,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               children: <Widget>[
                                 Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
                                   decoration: BoxDecoration(
                                     border: Border(
                                       top: BorderSide(
-                                          color: Color(0xffC8C8C8),
-                                          width: 2
-                                      ),
+                                          color: Color(0xffC8C8C8), width: 2),
                                       bottom: BorderSide(
-                                          color: Color(0xffC8C8C8),
-                                          width: 2
-                                      ),
+                                          color: Color(0xffC8C8C8), width: 2),
                                       left: BorderSide(
-                                          color: Color(0xffC8C8C8),
-                                          width: 2
-                                      ),
+                                          color: Color(0xffC8C8C8), width: 2),
                                       right: BorderSide(
-                                          color: Color(0xffC8C8C8),
-                                          width: 0
-                                      ),
+                                          color: Color(0xffC8C8C8), width: 0),
                                     ),
                                   ),
-                                  child: Icon(Icons.date_range,color: MyColor.redAT,),
+                                  child: Icon(
+                                    Icons.date_range,
+                                    color: MyColor.redAT,
+                                  ),
                                 ),
                                 Expanded(
                                   child: TextField(
@@ -763,16 +900,20 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                       filled: true,
                                       fillColor: Color(0xffEEEEEE),
                                       hintText: "30 Hari",
-                                      contentPadding: const EdgeInsets.only(left: 20),
+                                      contentPadding:
+                                          const EdgeInsets.only(left: 20),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Color(0xffC8C8C8), width: 2.0),
+                                        borderSide: BorderSide(
+                                            color: Color(0xffC8C8C8),
+                                            width: 2.0),
                                         borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(5.0),
                                           bottomRight: Radius.circular(5.0),
                                         ),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: MyColor.redAT, width: 1),
+                                        borderSide: BorderSide(
+                                            color: MyColor.redAT, width: 1),
                                         borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(5.0),
                                           bottomRight: Radius.circular(5.0),
@@ -799,9 +940,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 child: FlatButton(
                                   child: Text(
                                     "Seleseikan",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
-                                  onPressed: (){
+                                  onPressed: () {
                                     Get.toNamed(successScreen);
                                   },
                                 ),
@@ -810,8 +954,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                           ),
                         ),
                       ],
-                    )
-                ),
+                    )),
                 Container(
                   height: 3,
                   color: Color(0xffEAEAEA),
@@ -832,7 +975,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               children: <Widget>[
                                 Checkbox(
                                   value: KreditPro,
-                                  onChanged: (bool value){
+                                  onChanged: (bool value) {
                                     setState(() {
                                       KreditPro = value;
                                     });
@@ -840,13 +983,22 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(atPaymentKreditPro,width: 40,),
+                                  child: Image.asset(
+                                    atPaymentKreditPro,
+                                    width: 40,
+                                  ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 15, bottom: 15,),
+                                  margin: EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 15,
+                                  ),
                                   child: Text(
                                     "KreditPro",
-                                    style: TextStyle(color: MyColor.blackTextAT, fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -856,14 +1008,16 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 Text(
                                   "Rp 200.000.000.000",
                                   style: TextStyle(
-                                      color: MyColor.redAT, fontWeight: FontWeight.bold, fontSize: 16
-                                  ),
+                                      color: MyColor.redAT,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                                 Text(
                                   "30 Hari",
                                   style: TextStyle(
-                                      color: MyColor.greyTextAT, fontWeight: FontWeight.bold, fontSize: 16
-                                  ),
+                                      color: MyColor.greyTextAT,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 )
                               ],
                             ),
@@ -882,9 +1036,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 color: MyColor.redAT,
                                 child: Text(
                                   "30 Hari",
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                 ),
-                                onPressed: (){
+                                onPressed: () {
                                   Get.toNamed(paymentScreen);
                                 },
                               ),
@@ -924,8 +1081,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               BoxShadow(
                                 color: MyColor.greyTextAT,
                                 spreadRadius: 0,
-                                blurRadius: 8 ,
-                                offset: Offset(0, 2), // changes position of shadow
+                                blurRadius: 8,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
                               )
                             ],
                           ),
@@ -934,18 +1092,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Harga",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -954,18 +1118,24 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Pengiriman Ditributor",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 20.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -979,18 +1149,25 @@ class _PaymentScreenState extends State<PaymentScreen>{
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Text(
                                         "Yang Perlu Dibayar",
-                                        style: TextStyle(fontSize: 16, color: MyColor.greyTextAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.greyTextAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         "Rp 200.000.000.000",
-                                        style: TextStyle(fontSize: 16, color: MyColor.redAT, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColor.redAT,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -1014,9 +1191,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
                                 child: FlatButton(
                                   child: Text(
                                     "Seleseikan",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
-                                  onPressed: (){
+                                  onPressed: () {
                                     Get.toNamed(successScreen);
                                   },
                                 ),
@@ -1025,8 +1205,7 @@ class _PaymentScreenState extends State<PaymentScreen>{
                           ),
                         ),
                       ],
-                    )
-                ),
+                    )),
                 Container(
                   height: 3,
                   color: Color(0xffEAEAEA),
@@ -1044,9 +1223,12 @@ class _PaymentScreenState extends State<PaymentScreen>{
               child: FlatButton(
                 child: Text(
                   "Selesaikan",
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 14),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
                 ),
-                onPressed: (){
+                onPressed: () {
                   Get.toNamed(successScreen);
                 },
               ),
@@ -1061,8 +1243,6 @@ class _PaymentScreenState extends State<PaymentScreen>{
       ),
     );
 
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -1072,13 +1252,9 @@ class _PaymentScreenState extends State<PaymentScreen>{
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
-          child: Expanded(
-            child: Container(
-              child: Text(
-                "Methode Pembayaran",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
+          child: Text(
+            "Methode Pembayaran",
+            style: TextStyle(fontSize: 20),
           ),
         ),
         centerTitle: false,
@@ -1099,7 +1275,10 @@ class _PaymentScreenState extends State<PaymentScreen>{
                   backgroundColor: MyColor.redAT,
                   child: Text(
                     '20',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -1115,5 +1294,4 @@ class _PaymentScreenState extends State<PaymentScreen>{
       ),
     );
   }
-
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:aksestokomobile/screen/order/list_history_order_done_screen.dart' as listOrder;
+import 'package:aksestokomobile/screen/order/list_history_order_done_screen.dart'
+    as listOrder;
 
-class OrderDoneScreen extends StatefulWidget{
+class OrderDoneScreen extends StatefulWidget {
   @override
   _OrderDoneScreenState createState() => _OrderDoneScreenState();
 }
 
-class _OrderDoneScreenState extends State<OrderDoneScreen>{
+class _OrderDoneScreenState extends State<OrderDoneScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -25,7 +26,7 @@ class _OrderDoneScreenState extends State<OrderDoneScreen>{
                   BoxShadow(
                     color: MyColor.greyTextAT,
                     spreadRadius: 0,
-                    blurRadius: 8 ,
+                    blurRadius: 8,
                     offset: Offset(0, 2), // changes position of shadow
                   )
                 ],
@@ -37,7 +38,8 @@ class _OrderDoneScreenState extends State<OrderDoneScreen>{
                   contentPadding: EdgeInsets.only(top: 15.0),
                   hintText: 'Cari Pesanan Anda',
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xffC8C8C8), width: 2.0),
+                    borderSide:
+                        BorderSide(color: Color(0xffC8C8C8), width: 2.0),
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(5.0),
                       bottomRight: Radius.circular(5.0),
