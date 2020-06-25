@@ -120,11 +120,13 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
               ],
             ),
           ),
+
           Container(
             height: 3,
             color: Color(0xffEAEAEA),
             margin: EdgeInsets.symmetric(vertical: 10),
           ),
+
           Container(
             margin: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
             padding: EdgeInsets.only(top: 15,),
@@ -158,44 +160,36 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Text(
-                                        "Semen PCC ZAK 50",
-                                        style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                child: Text(
+                                  "Semen PCC ZAK 50",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(bottom: 20),
-                                child: Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "121-301-0060",
-                                        style: TextStyle(
-                                          color: MyColor.greyTextAT,
-                                          fontSize: 16,
-                                        ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "121-301-0060",
+                                      style: TextStyle(
+                                        color: MyColor.greyTextAT,
+                                        fontSize: 16,
                                       ),
-                                      Text(
-                                        "Rp 50.000",
-                                        style: TextStyle(
-                                          color: MyColor.greyTextAT,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    ),
+                                    Text(
+                                      "Rp 50.000",
+                                      style: TextStyle(
+                                        color: MyColor.greyTextAT,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Container(
@@ -300,11 +294,13 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
               ],
             ),
           ),
+
           Container(
             height: 3,
             color: Color(0xffEAEAEA),
             margin: EdgeInsets.only(top: 10, bottom: 0),
           ),
+
           Container(
             margin: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
             child: Row(
