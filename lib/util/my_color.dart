@@ -38,4 +38,5 @@ class MyColor {
   static Color warningTextAT = Color(0xfff38f1d);
   static Color successTextAT = Color(0xff387c2b);
   static Color orangeAT = Color(0xffd71417);
+  static Color infoAT = Color(0xff17a2b8);
 }

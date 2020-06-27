@@ -14,7 +14,7 @@ class _OrderDoneScreenState extends State<OrderDoneScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Column(
           children: <Widget>[
             Container(

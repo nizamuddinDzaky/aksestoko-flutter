@@ -14,7 +14,7 @@ class _InProsesScreenState extends State<InProsesScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: <Widget>[
             Container(
@@ -67,10 +67,7 @@ class _InProsesScreenState extends State<InProsesScreen> {
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   listOrder.ListHistoryOrderScreen(),
-                  listOrder.ListHistoryOrderScreen(),
-                  listOrder.ListHistoryOrderScreen(),
-                  listOrder.ListHistoryOrderScreen(),
-                  listOrder.ListHistoryOrderScreen(),
+                  listOrder.ListHistoryOrderMuchProductScreen(),
                 ],
               ),
             ),
