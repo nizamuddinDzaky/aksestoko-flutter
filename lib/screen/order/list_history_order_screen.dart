@@ -691,7 +691,9 @@ class ListHistoryOrderMuchProductScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 12),
                     ),
-                    onPressed: null,
+                    onPressed: (){
+                      Get.toNamed(confirmationAcceptScreen);
+                    },
                   ),
                 ),
               ],
