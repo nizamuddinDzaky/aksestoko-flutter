@@ -1,12 +1,11 @@
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/material.dart';
-//import 'package:image_picker/image_picker.dart';
 
-class ConfirmationAcceptScreen extends StatefulWidget{
+class ConfirmationAcceptScreen extends StatefulWidget {
   _ConfirmationAcceptScreen createState() => _ConfirmationAcceptScreen();
 }
 
-class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen>{
+class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -167,108 +166,95 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen>{
                     child: DataTable(
                       columns: [
                         DataColumn(
-                            label: Text(
-                              "Nama Barang",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
-                            ),
+                          label: Text("Nama Barang",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
                         ),
                         DataColumn(
-                          label: Text(
-                              "Unit",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
-                          ),
+                          label: Text("Unit",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
                         ),
                         DataColumn(
-                          label: Text(
-                              "Qty",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
-                          ),
+                          label: Text("Qty",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
                         ),
                         DataColumn(
-                          label: Text(
-                              "Barang Baik",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
-                          ),
+                          label: Text("Barang Baik",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
                         ),
                         DataColumn(
-                          label: Text(
-                              "Barang Buruk",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
-                          ),
+                          label: Text("Barang Buruk",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
                         ),
                       ],
                       rows: [
                         DataRow(cells: [
-                          DataCell(
-                              Container(
-                                width: 150,
-                                child: Text("121-301-0050 - SEMEN PCC ZAK 40KG"),
-                              )
-                          ),
-                          DataCell(
-                              Text("SAK")
-                          ),
-                          DataCell(
-                              Text("200")
-                          ),
-                          DataCell(
-                            Container(
-                              child: TextFormField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color(0xffEEEEEE),
-                                  hintText: "100",
-                                  contentPadding: const EdgeInsets.only(left: 20, right: 20),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Color(0xffC8C8C8), width: 2.0),
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
-                                    ),
+                          DataCell(Container(
+                            width: 150,
+                            child: Text("121-301-0050 - SEMEN PCC ZAK 40KG"),
+                          )),
+                          DataCell(Text("SAK")),
+                          DataCell(Text("200")),
+                          DataCell(Container(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xffEEEEEE),
+                                hintText: "100",
+                                contentPadding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xffC8C8C8), width: 2.0),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: MyColor.redAT, width: 1),
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
-                                    ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: MyColor.redAT, width: 1),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
                                   ),
                                 ),
                               ),
-                            )
-                          ),
-                          DataCell(
-                              Container(
-                                child: TextFormField(
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color(0xffEEEEEE),
-                                    hintText: "100",
-                                    contentPadding: const EdgeInsets.only(left: 20, right: 20),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Color(0xffC8C8C8), width: 2.0),
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: MyColor.redAT, width: 1),
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0),
-                                      ),
-                                    ),
+                            ),
+                          )),
+                          DataCell(Container(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xffEEEEEE),
+                                hintText: "100",
+                                contentPadding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xffC8C8C8), width: 2.0),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
                                   ),
                                 ),
-                              )
-                          ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: MyColor.redAT, width: 1),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
                         ]),
                       ],
                     ),
@@ -302,10 +288,11 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen>{
                             filled: true,
                             fillColor: Color(0xffEEEEEE),
                             hintText: "Catatan",
-                            contentPadding: const EdgeInsets.only(left: 20, top: 30),
+                            contentPadding:
+                                const EdgeInsets.only(left: 20, top: 30),
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Color(0xffC8C8C8), width: 2.0),
+                              borderSide: BorderSide(
+                                  color: Color(0xffC8C8C8), width: 2.0),
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5.0),
                                 bottomRight: Radius.circular(5.0),
@@ -314,7 +301,8 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen>{
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: MyColor.redAT, width: 1),
+                              borderSide:
+                                  BorderSide(color: MyColor.redAT, width: 1),
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5.0),
                                 bottomRight: Radius.circular(5.0),
@@ -363,7 +351,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen>{
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Container (
+            Container(
               padding: EdgeInsets.all(15),
               margin: EdgeInsets.symmetric(horizontal: 25),
               decoration: BoxDecoration(
@@ -484,7 +472,6 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen>{
         ),
       ),
     );
-
 
     return Scaffold(
       appBar: AppBar(

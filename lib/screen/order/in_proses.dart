@@ -62,13 +62,13 @@ class _InProsesScreenState extends State<InProsesScreen> {
               ),
             ),
             Container(
-              child: ListView(
+              child: ListView.builder(
+                itemCount: 2,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  listOrder.ListHistoryOrderScreen(),
-                  listOrder.ListHistoryOrderMuchProductScreen(),
-                ],
+                itemBuilder: (buildcontext, index) {
+                  return listOrder.ListHistoryOrderProductScreen(index);
+                },
               ),
             ),
           ],
