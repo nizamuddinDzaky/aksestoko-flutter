@@ -12,6 +12,26 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+
+  DateTime _date = DateTime.now();
+  TimeOfDay _time = TimeOfDay.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2030),
+    );
+
+    if (picked != null && picked != _date){
+      print("Date Selected: ${_date.toString()}");
+      setState(() {
+        _date = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -200,26 +220,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       ),
                       Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0xffEEEEEE),
-                            hintText: "(DD/MM/YYYY)",
-                            contentPadding: const EdgeInsets.only(left: 20),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color(0xffC8C8C8), width: 2.0),
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(5.0),
-                                bottomRight: Radius.circular(5.0),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: MyColor.redAT, width: 1),
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(5.0),
-                                bottomRight: Radius.circular(5.0),
+                        child: InkWell(
+                          onTap: (){
+                            _selectDate(context);
+                          },
+                          child: IgnorePointer(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xffEEEEEE),
+                              hintText: "${_date.day} / ${_date.month} / ${_date.year}",
+//                              hintText: "${_date.toString()}",
+                                contentPadding: const EdgeInsets.only(left: 20),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xffC8C8C8), width: 2.0),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: MyColor.redAT, width: 1),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
