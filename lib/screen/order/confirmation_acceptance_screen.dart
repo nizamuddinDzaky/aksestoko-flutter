@@ -1,11 +1,68 @@
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class ConfirmationAcceptScreen extends StatefulWidget {
   _ConfirmationAcceptScreen createState() => _ConfirmationAcceptScreen();
 }
 
 class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
+
+  File imageFile;
+
+  _openGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      imageFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  _openCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      imageFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _showChoiceDialog(BuildContext context){
+    return showDialog(context: context,builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Silahkan Pilih"),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              GestureDetector(
+                child: Text("Gallery"),
+                onTap: (){
+                  _openGallery(context);
+                },
+              ),
+              Padding(padding: EdgeInsets.all(15)),
+              GestureDetector(
+                child: Text("Camera"),
+                onTap: (){
+                  _openCamera(context);
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _decideImageView(){
+    if(imageFile == null){
+      return Text("Belum ada gambar terpilih", style: TextStyle(color: MyColor.greyTextAT, fontStyle: FontStyle.italic),);
+    }else{
+      return Image.file(imageFile, width: 200, height: 200,);
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -316,21 +373,75 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 25, right: 25),
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      color: MyColor.greenAT,
-                      borderRadius: BorderRadius.circular(30),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          "Unggah SPJ",
+                          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
                     ),
-                    child: FlatButton(
-                      child: Text(
-                        "Upload Image",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      color: Color(0xfff5f5f5),
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        width: 1,
+                        color: MyColor.greyTextAT
                       ),
-                      onPressed: null,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 15),
+                          padding: EdgeInsets.only(top: 15, bottom: 15),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+//                      color: Color(0xfff5f5f5),
+//                      borderRadius: BorderRadius.circular(5),
+//                            border: Border(
+//                              bottom: BorderSide(width: 1, color: MyColor.greyTextAT,),
+//                            ),
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              _decideImageView(),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 25, right: 25),
+                          width: double.maxFinite,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: MyColor.redAT,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: FlatButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.camera_alt, color: Colors.white, size: 18,),
+                                Padding(padding: EdgeInsets.only(right: 5)),
+                                Text(
+                                  "Pilih File",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                              ],
+                            ),
+                            onPressed: (){
+                              _showChoiceDialog(context);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
