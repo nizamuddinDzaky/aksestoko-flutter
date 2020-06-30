@@ -632,38 +632,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 25),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-//                          border: Border(
-//                            top: BorderSide(color: Color(0xffC8C8C8), width: 2),
-//                            bottom:
-//                                BorderSide(color: Color(0xffC8C8C8), width: 2),
-//                            left:
-//                                BorderSide(color: Color(0xffC8C8C8), width: 2),
-//                            right:
-//                                BorderSide(color: Color(0xffC8C8C8), width: 0),
-//                          ),
-                        ),
-                        child: Icon(
-                          Icons.train,
-                          color: MyColor.redAT,
-                        ),
-                      ),
                       Expanded(
-                        child: DropDownField(
-                          controller: shipingSelected,
-                          hintText: "Pilih Pengiriman",
-                          enabled: true,
-                          itemsVisibleInDropdown: 3,
-                          items: shiping,
-                          onValueChanged: (value) {
-                            setState(() {
-                              selectShipping = value;
-                            });
-                          },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 25),
+                          child: DropDownField(
+                            controller: shipingSelected,
+                            hintText: "Pilih Pengiriman",
+                            enabled: true,
+                            itemsVisibleInDropdown: 3,
+                            items: shiping,
+                            onValueChanged: (value) {
+                              setState(() {
+                                selectShipping = value;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
