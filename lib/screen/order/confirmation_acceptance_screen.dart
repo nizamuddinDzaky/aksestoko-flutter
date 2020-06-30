@@ -566,7 +566,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
 
   Widget ListProductShipment() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       decoration: BoxDecoration(
         color: Colors.white,
