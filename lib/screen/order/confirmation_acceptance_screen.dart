@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -8,7 +9,6 @@ class ConfirmationAcceptScreen extends StatefulWidget {
 }
 
 class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
-
   File imageFile;
 
   _openGallery(BuildContext context) async {
@@ -27,40 +27,49 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _showChoiceDialog(BuildContext context){
-    return showDialog(context: context,builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Silahkan Pilih"),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              GestureDetector(
-                child: Text("Gallery"),
-                onTap: (){
-                  _openGallery(context);
-                },
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Silahkan Pilih"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text("Gallery"),
+                    onTap: () {
+                      _openGallery(context);
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.all(15)),
+                  GestureDetector(
+                    child: Text("Camera"),
+                    onTap: () {
+                      _openCamera(context);
+                    },
+                  ),
+                ],
               ),
-              Padding(padding: EdgeInsets.all(15)),
-              GestureDetector(
-                child: Text("Camera"),
-                onTap: (){
-                  _openCamera(context);
-                },
-              ),
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          );
+        });
   }
 
-  Widget _decideImageView(){
-    if(imageFile == null){
-      return Text("Belum ada gambar terpilih", style: TextStyle(color: MyColor.greyTextAT, fontStyle: FontStyle.italic),);
-    }else{
-      return Image.file(imageFile, width: 200, height: 200,);
+  Widget _decideImageView() {
+    if (imageFile == null) {
+      return Text(
+        "Belum ada gambar terpilih",
+        style:
+            TextStyle(color: MyColor.greyTextAT, fontStyle: FontStyle.italic),
+      );
+    } else {
+      return Image.file(
+        imageFile,
+        width: 200,
+        height: 200,
+      );
     }
-
   }
 
   @override
@@ -219,101 +228,15 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                     ),
                   ),
                   SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: [
-                        DataColumn(
-                          label: Text("Nama Barang",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
-                        DataColumn(
-                          label: Text("Unit",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
-                        DataColumn(
-                          label: Text("Qty",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
-                        DataColumn(
-                          label: Text("Barang Baik",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
-                        DataColumn(
-                          label: Text("Barang Buruk",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
-                      ],
-                      rows: [
-                        DataRow(cells: [
-                          DataCell(Container(
-                            width: 150,
-                            child: Text("121-301-0050 - SEMEN PCC ZAK 40KG"),
-                          )),
-                          DataCell(Text("SAK")),
-                          DataCell(Text("200")),
-                          DataCell(Container(
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xffEEEEEE),
-                                hintText: "100",
-                                contentPadding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xffC8C8C8), width: 2.0),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(5.0),
-                                    bottomRight: Radius.circular(5.0),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: MyColor.redAT, width: 1),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(5.0),
-                                    bottomRight: Radius.circular(5.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )),
-                          DataCell(Container(
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xffEEEEEE),
-                                hintText: "100",
-                                contentPadding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xffC8C8C8), width: 2.0),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(5.0),
-                                    bottomRight: Radius.circular(5.0),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: MyColor.redAT, width: 1),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(5.0),
-                                    bottomRight: Radius.circular(5.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )),
-                        ]),
-                      ],
+                    child: Container(
+                      child: ListView(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          ListProductShipment(),
+                          ListProductShipment(),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -377,7 +300,10 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                       children: <Widget>[
                         Text(
                           "Unggah SPJ",
-                          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -389,10 +315,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                     decoration: BoxDecoration(
                       color: Color(0xfff5f5f5),
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        width: 1,
-                        color: MyColor.greyTextAT
-                      ),
+                      border: Border.all(width: 1, color: MyColor.greyTextAT),
                     ),
                     child: Column(
                       children: <Widget>[
@@ -406,7 +329,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
 //                            border: Border(
 //                              bottom: BorderSide(width: 1, color: MyColor.greyTextAT,),
 //                            ),
-                          ),
+                              ),
                           child: Column(
                             children: <Widget>[
                               _decideImageView(),
@@ -425,7 +348,11 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Icon(Icons.camera_alt, color: Colors.white, size: 18,),
+                                Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                                 Padding(padding: EdgeInsets.only(right: 5)),
                                 Text(
                                   "Pilih File",
@@ -436,7 +363,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                                 ),
                               ],
                             ),
-                            onPressed: (){
+                            onPressed: () {
                               _showChoiceDialog(context);
                             },
                           ),
@@ -633,6 +560,167 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
           FocusScope.of(context).unfocus();
         },
         child: formLayout,
+      ),
+    );
+  }
+
+  Widget ListProductShipment() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: MyColor.greyTextAT,
+            spreadRadius: 0,
+            blurRadius: 8,
+            offset: Offset(0, 2), // changes position of shadow
+          )
+        ],
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: 60,
+                height: 60,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: MyColor.redAT,
+                ),
+                child: Text(
+                  "S",
+                  style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "SEMEN PCC ZAK 40KG",
+                      style: TextStyle(
+                          color: MyColor.redAT,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "121-030-0050",
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.left,
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "100",
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.left,
+                        ),
+                        Padding(padding: EdgeInsets.only(left: 4)),
+                        Text(
+                          "SAK",
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 10),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                flex: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Barang Baik"),
+                    Padding(padding: EdgeInsets.all(5)),
+                    TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xffEEEEEE),
+                        hintText: "100",
+                        contentPadding: const EdgeInsets.only(left: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color(0xffC8C8C8), width: 1.0),
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(5.0),
+                            bottomRight: Radius.circular(5.0),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: MyColor.redAT, width: 1),
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(5.0),
+                            bottomRight: Radius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(padding: EdgeInsets.all(10)),
+              Expanded(
+                flex: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Barang Rusak"),
+                    Padding(padding: EdgeInsets.all(5)),
+                    TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xffEEEEEE),
+                        hintText: "100",
+                        contentPadding: const EdgeInsets.only(left: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color(0xffC8C8C8), width: 1.0),
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(5.0),
+                            bottomRight: Radius.circular(5.0),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: MyColor.redAT, width: 1),
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(5.0),
+                            bottomRight: Radius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
