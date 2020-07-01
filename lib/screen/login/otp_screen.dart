@@ -90,7 +90,11 @@ class _RequestOtpScreenState extends RequestOtpController {
 
   @override
   Widget build(BuildContext context) {
+    dynamic screenHeight = MediaQuery.of(context).size.height;
+    dynamic screenwidth = MediaQuery.of(context).size.width;
+
     var formLayout = Container(
+      margin: EdgeInsets.symmetric(vertical: screenHeight * .1),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

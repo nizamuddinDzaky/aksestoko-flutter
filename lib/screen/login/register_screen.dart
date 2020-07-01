@@ -15,82 +15,316 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends RegisterController {
   @override
   Widget build(BuildContext context) {
-    var formLayout = Container(
-      margin: EdgeInsets.symmetric(vertical: 30),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Form(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'Pendaftaran',
-                    style: TextStyle(
-                      color: MyColor.txtField,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+    dynamic screenHeight = MediaQuery.of(context).size.height;
+    dynamic screenwidth = MediaQuery.of(context).size.width;
+
+    var formLayout = SingleChildScrollView(
+      child: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: Hero(
+                      tag: 'logoForcaPoS',
+                      child: MyLogo.logoForcaPoSColor(),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 22),
-                  margin: EdgeInsets.symmetric(horizontal: 30),
-                  child: Text(
-                    'Silahkan isi formulir di bawah ini untuk membuat akun. Sudah punya akun? silahkan Login.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: MyColor.txtField,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Pendaftaran',
+                          style: TextStyle(
+                            color: MyColor.txtField,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Container(
-                  padding: MyDimen.marginLayout(),
-                  child: TextFormField(
-                    onSaved: (value) => idBK = value,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      contentPadding: MyDimen.paddingTxtField(),
-                      labelText: 'ID BK',
-                      labelStyle: TextStyle(
-                        color: MyColor.txtField,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      errorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: MyColor.txtField),
-                      ),
-                      focusedErrorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: MyColor.lineTxtField),
-                      ),
-                      errorText: 'Masukkan ID Bisnis Kokoh',
-                      errorStyle: TextStyle(
-                        color: MyColor.txtField,
-                        fontStyle: FontStyle.italic,
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 22),
+                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Silahkan isi formulir di bawah ini untuk membuat akun. Sudah punya akun? silahkan Login.',
+                          style: TextStyle(
+                            color: MyColor.txtField,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => idBK = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'ID BK',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Masukkan ID Bisnis Kokoh',
+                        errorStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                MyDivider.spaceDividerLogin(custom: 22),
-                Container(
-                  margin: MyDimen.marginButtonRegister(),
-                  width: double.maxFinite,
-                  height: 46,
-                  child: FlatButton(
-                      color: MyColor.redAT,
-                      child: Text(
-                        'Daftar',
-                        style: TextStyle(color: Colors.white),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => storeName = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'Nama Toko',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Masukkan Nama Toko Anda',
+                        errorStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
-                      onPressed: showDialogProgress,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0))),
-                ),
-              ],
-            ),
-          )
-        ],
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => email = value,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'Nama Toko',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Masukkan Nama Toko Anda',
+                        errorStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => tlp = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'No Telepon',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                        errorStyle: TextStyle(
+                          color: MyColor.redAT,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => firstName = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'Nama Depan',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Masukan nama depan anda',
+                        errorStyle: TextStyle(
+                          color: MyColor.txtField ,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => lastName = value,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'Nama Belakang',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Masukan nama belakang anda',
+                        errorStyle: TextStyle(
+                          color: MyColor.txtField ,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => password = value,
+                      maxLength: 30,
+                      obscureText: !isShow,
+                      textInputAction: TextInputAction.go,
+                      onFieldSubmitted: (val) {
+                        showDialogProgress();
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'Kata Sandi',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+                        errorText: 'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka',
+                        errorStyle: TextStyle(
+                          color: MyColor.redAT,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isShow ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isShow = !isShow;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: MyDimen.marginLayout(),
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      onSaved: (value) => repeatPassword = value,
+                      maxLength: 30,
+                      obscureText: !isShowRepeatPassword,
+                      textInputAction: TextInputAction.go,
+                      onFieldSubmitted: (val) {
+                        showDialogProgress();
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: MyDimen.paddingTxtField(),
+                        labelText: 'Ulangi Kata Sandi',
+                        labelStyle: TextStyle(
+                          color: MyColor.txtField,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.txtField),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: MyColor.lineTxtField),
+                        ),
+
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isShowRepeatPassword ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isShowRepeatPassword = !isShowRepeatPassword;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  MyDivider.spaceDividerLogin(custom: 22),
+                  Container(
+                    margin: MyDimen.marginButtonRegister(),
+                    width: double.maxFinite,
+                    height: 46,
+                    child: FlatButton(
+                        color: MyColor.redAT,
+                        child: Text(
+                          'Daftar',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: showDialogProgress,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0))),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
 
@@ -103,45 +337,12 @@ class _RegisterScreenState extends RegisterController {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Hero(
-          tag: 'logoForcaPoS',
-          child: MyLogo.logoForcaPoSColor(width: 150),
-        ),
       ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: constraints.copyWith(
-                  minHeight: constraints.maxHeight,
-                  maxHeight: double.infinity,
-                ),
-                child: SafeArea(
-                  child: IntrinsicHeight(
-                    child: Column(
-                      children: <Widget>[
-                        formLayout,
-                        Expanded(
-                          child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: 8),
-                                child: MyText.textBlackSmall(
-                                    'Ⓒ 2020 PT SISI, All Right Reserved.'),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
+        child: formLayout,
       ),
     );
   }

@@ -18,6 +18,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends LoginScreenController {
   @override
   Widget build(BuildContext context) {
+    dynamic screenHeight = MediaQuery.of(context).size.height;
+    dynamic screenwidth = MediaQuery.of(context).size.width;
+
     var formLayout = Container(
       child: Column(
         mainAxisSize: MainAxisSize.max,

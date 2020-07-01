@@ -8,6 +8,17 @@ import 'package:get/get.dart';
 abstract class RegisterController extends State<RegisterScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String idBK;
+  String storeName;
+  String email;
+  String tlp;
+  String firstName;
+  String lastName;
+  String password;
+  String repeatPassword;
+
+  var isShow = false;
+  var isShowRepeatPassword = false;
+
 
   _dialogSuccess() {
     showDialog(
