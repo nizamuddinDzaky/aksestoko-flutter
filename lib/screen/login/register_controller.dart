@@ -4,6 +4,7 @@ import 'package:aksestokomobile/screen/login/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 
 abstract class RegisterController extends State<RegisterScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -16,9 +17,24 @@ abstract class RegisterController extends State<RegisterScreen> {
   String password;
   String repeatPassword;
 
+  List<Principal> principals;
+  Principal selectPrincipal;
   var isShow = false;
   var isShowRepeatPassword = false;
 
+  int selectedRadioTile;
+  @override
+  void initState(){
+    super.initState();
+    selectedRadioTile = 0;
+    principals = Principal.getPrincipals();
+  }
+
+  setSelectedPrincipal(Principal principal){
+    setState(() {
+      selectPrincipal = principal;
+    });
+  }
 
   _dialogSuccess() {
     showDialog(
@@ -106,5 +122,22 @@ abstract class RegisterController extends State<RegisterScreen> {
           );
         });
     await _actionSubmit();
+  }
+}
+
+class Principal{
+  int principalId;
+  String name;
+  String iconPrincipal1;
+  String iconPrincipal2;
+  String iconPrincipal3;
+
+  Principal({this.principalId, this.name, this.iconPrincipal1, this.iconPrincipal2, this.iconPrincipal3});
+
+  static List<Principal> getPrincipals(){
+    return <Principal>[
+      Principal(principalId: 1, name: "SIG", iconPrincipal1: sgIcon, iconPrincipal2: stIcon, iconPrincipal3: spIcon ),
+      Principal(principalId: 2, name: "SBI", iconPrincipal1: dynamixIcon),
+    ];
   }
 }

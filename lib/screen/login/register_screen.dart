@@ -1,6 +1,5 @@
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
-import 'package:aksestokomobile/helper/my_text.dart';
 import 'package:aksestokomobile/screen/login/register_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
@@ -13,11 +12,49 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends RegisterController {
+  bool aprove = false;
+
+  List<Widget> createRadioListPrincipals(){
+    List<Widget> widgets = [];
+    for(Principal principal in principals){
+      widgets.add(RadioListTile(
+        value: principal,
+        groupValue: selectPrincipal,
+        title: Row(
+          children: <Widget>[
+            Text(principal.name),
+            Padding(padding: EdgeInsets.only(left: 5)),
+            if (principal.iconPrincipal1 != null)
+            Image.asset(
+              principal.iconPrincipal1,
+              height: 30,
+            ),
+            Padding(padding: EdgeInsets.only(left: 5)),
+            if (principal.iconPrincipal2 != null)
+            Image.asset(
+              principal.iconPrincipal2,
+              height: 30,
+            ),
+            Padding(padding: EdgeInsets.only(left: 5)),
+            if (principal.iconPrincipal3 != null)
+            Image.asset(
+              principal.iconPrincipal3,
+              height: 30,
+            ),
+          ],
+        ),
+        onChanged: (currentPrincipal){
+          print("${currentPrincipal.name}");
+          setSelectedPrincipal(currentPrincipal);
+        },
+        selected: selectPrincipal == principal,
+      ));
+    }
+    return widgets;
+  }
+
   @override
   Widget build(BuildContext context) {
-    dynamic screenHeight = MediaQuery.of(context).size.height;
-    dynamic screenwidth = MediaQuery.of(context).size.width;
-
     var formLayout = SingleChildScrollView(
       child: Container(
         child: Column(
@@ -305,6 +342,106 @@ class _RegisterScreenState extends RegisterController {
                       ),
                     ),
                   ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Didaftarkan Oleh",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: MyColor.txtField),
+                        ),
+                        Icon(Icons.info, color: MyColor.redAT, size: 20,),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: createRadioListPrincipals(),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "Punya kode referal Salesperson ?",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: MyColor.txtField),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 20),
+                                child: TextFormField(
+                                  onSaved: (value) => idBK = value,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    contentPadding: MyDimen.paddingTxtField(),
+                                    labelStyle: TextStyle(
+                                      color: MyColor.txtField,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: MyColor.txtField),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: MyColor.lineTxtField),
+                                    ),
+                                    errorText: 'Silahkan isi jika memiliki kode sales, jika tidak ada silahkan lewati',
+                                    errorStyle: TextStyle(
+                                      color: MyColor.txtField,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Checkbox(
+                            value: aprove,
+                            onChanged: (bool value) {
+                              setState(() {
+                                aprove = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'Saya sudah membaca dan menyetujui ',
+                              style: TextStyle(color: MyColor.txtField, fontSize: 16),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Syarat dan Ketentuan ', style: TextStyle(color: MyColor.redAT)),
+                                TextSpan(
+                                    text: '& ', ),
+                                TextSpan(
+                                    text: 'Kebijakan Privasi', style: TextStyle(color: MyColor.redAT)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   MyDivider.spaceDividerLogin(custom: 22),
                   Container(
                     margin: MyDimen.marginButtonRegister(),
@@ -320,6 +457,7 @@ class _RegisterScreenState extends RegisterController {
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0))),
                   ),
+                  MyDivider.spaceDividerLogin(custom: 22),
                 ],
               ),
             )

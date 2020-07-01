@@ -19,3 +19,9 @@ final String atPaymentCOD = "assets/icons/mobile_cod.png";
 final String atPaymentCBD = "assets/icons/mobile_cbd.png";
 final String atSuccessIcon = "assets/icons/ic_success.png";
 
+final String sgIcon = "assets/icons/sg.png";
+final String stIcon = "assets/icons/st.png";
+final String spIcon = "assets/icons/sp.png";
+final String dynamixIcon = "assets/icons/dynamix.png";
+
+
