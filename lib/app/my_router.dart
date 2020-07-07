@@ -15,6 +15,7 @@ import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
 import 'package:aksestokomobile/screen/order/confirmation_acceptance_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_payment.dart';
+import 'package:aksestokomobile/screen/account/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,6 +36,7 @@ const historyOrderScreen = "/HistoryOrderScreen";
 const detailOrderScreen = "/DetailOrderScreen";
 const confirmationAcceptScreen ="/ConfirmationAcceptScreen";
 const detailPaymentScreen = "/DetailPaymentScreen";
+const updateProfileScreen = "/UpdateProfileScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -139,6 +141,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: DetailPaymentScreen(),
+        );
+      case updateProfileScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: UpdateProfileScreen(),
         );
       default:
         return GetRouteBase(

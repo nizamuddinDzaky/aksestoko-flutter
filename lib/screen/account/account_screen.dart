@@ -1,7 +1,9 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:get/get.dart';
 
 class AccountScreen extends StatefulWidget {
   _AccountScreenState createState() => _AccountScreenState();
@@ -10,7 +12,6 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
 
     var formLayout = Scaffold(
       body: SingleChildScrollView(
@@ -20,8 +21,8 @@ class _AccountScreenState extends State<AccountScreen> {
               height: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(100),
-                    bottomRight: Radius.circular(100)),
+                    bottomLeft: Radius.circular(80),
+                    bottomRight: Radius.circular(80)),
                 boxShadow: [
                   BoxShadow(
                     spreadRadius: 5,
@@ -98,7 +99,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: null,
+                              onPressed: (){
+                                Get.toNamed(updateProfileScreen);
+                              },
                               icon: Icon(Icons.account_circle),
                               label: Text(
                                 "Perbarui Profil",
