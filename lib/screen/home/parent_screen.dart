@@ -7,6 +7,7 @@ import 'package:aksestokomobile/screen/home/select_product.dart'
     as selectProduct;
 import 'package:aksestokomobile/screen/order/history_order_screen.dart'
     as historyOrder;
+import 'package:aksestokomobile/screen/account/account_screen.dart' as Account;
 
 class ParentScreen extends StatefulWidget {
   @override
@@ -23,9 +24,7 @@ class _ParentScreenState extends State<ParentScreen>
     ),
     selectProduct.SelectProductScreen(),
     historyOrder.HistoryOrderScreen(),
-    Center(
-      child: Text("Lima"),
-    ),
+    Account.AccountScreen(),
   ];
 
   TabController controller;
