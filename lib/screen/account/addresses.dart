@@ -1,6 +1,8 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:get/get.dart';
 
 class ListAddress extends StatefulWidget {
   _ListAddressState createState() => _ListAddressState();
@@ -107,7 +109,7 @@ class _ListAddressState extends State<ListAddress> {
                 ),
               ),
               onPressed: (){
-                print("Perbarui Alamat");
+                Get.toNamed(addAddressScreen);
               },
             ),
           ),

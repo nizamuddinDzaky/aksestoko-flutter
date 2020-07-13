@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/screen/account/addresses.dart' as listAddress;
@@ -37,7 +38,7 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.only(top: 10),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -54,15 +55,37 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                   ),
                 ],
               ),
-              child: Container(
-                padding: EdgeInsets.only(top: 10),
-                child: ListView(
-                  shrinkWrap: true,
+              child: SingleChildScrollView(
+                child: Column(
                   children: <Widget>[
-                    listAddress.ListAddress(),
-                    listAddress.ListAddress(),
-                    listAddress.ListAddress(),
-                    listAddress.ListAddress(),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: ListView(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          listAddress.ListAddress(),
+                          listAddress.ListAddress(),
+                          listAddress.ListAddress(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 46,
+                        child: FlatButton(
+                            color: MyColor.redAT,
+                            child: Text(
+                              'Tambah Alamat',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: (){},
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0))),
+                      ),
+                    ),
                   ],
                 ),
               ),
