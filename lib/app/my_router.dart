@@ -18,6 +18,7 @@ import 'package:aksestokomobile/screen/order/detail_payment.dart';
 import 'package:aksestokomobile/screen/account/update_profile_screen.dart';
 import 'package:aksestokomobile/screen/account/list_address_screen.dart';
 import 'package:aksestokomobile/screen/account/add_address_screen.dart';
+import 'package:aksestokomobile/screen/account/edit_address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +42,7 @@ const detailPaymentScreen = "/DetailPaymentScreen";
 const updateProfileScreen = "/UpdateProfileScreen";
 const listAddressScreen = "/ListAddressScreen";
 const addAddressScreen = "/AddAddressScreen";
+const editAddressScreen = "/EditAddressScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -163,6 +165,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: AddAddressScreen(),
+        );
+      case editAddressScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: EditAddressScreen(),
         );
       default:
         return GetRouteBase(

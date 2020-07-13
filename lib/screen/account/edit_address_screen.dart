@@ -5,11 +5,11 @@ import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 
-class AddAddressScreen extends StatefulWidget {
-  _AddAddressScreenState createState() => _AddAddressScreenState();
+class EditAddressScreen extends StatefulWidget {
+  _EditAddressScreenState createState() => _EditAddressScreenState();
 }
 
-class _AddAddressScreenState extends AddAddressController {
+class _EditAddressScreenState extends EditAddressController {
   @override
   Widget build(BuildContext context) {
 
@@ -23,7 +23,7 @@ class _AddAddressScreenState extends AddAddressController {
               children: <Widget>[
                 Center(
                   child: Text(
-                    "Tambah Alamat Toko",
+                    "Perbarui Alamat Toko",
                     style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),

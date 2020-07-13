@@ -1,6 +1,8 @@
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:get/get.dart';
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/screen/account/addresses.dart' as listAddress;
 
 class ListAddressScreen extends StatefulWidget {
@@ -81,7 +83,9 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                               'Tambah Alamat',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: (){},
+                            onPressed: (){
+                              Get.toNamed(addAddressScreen);
+                            },
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(30.0))),
                       ),

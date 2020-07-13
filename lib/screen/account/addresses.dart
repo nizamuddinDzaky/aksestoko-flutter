@@ -109,7 +109,7 @@ class _ListAddressState extends State<ListAddress> {
                 ),
               ),
               onPressed: (){
-                Get.toNamed(addAddressScreen);
+                Get.toNamed(editAddressScreen);
               },
             ),
           ),
