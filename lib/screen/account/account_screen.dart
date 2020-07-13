@@ -116,7 +116,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: null,
+                              onPressed: () {
+                                Get.toNamed(listAddressScreen);
+                              },
                               icon: Icon(Icons.person_pin_circle),
                               label: Text(
                                 "Daftar Alamat",
