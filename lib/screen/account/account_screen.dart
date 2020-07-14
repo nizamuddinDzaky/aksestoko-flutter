@@ -133,7 +133,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: null,
+                              onPressed: (){
+                                Get.toNamed(salesPersonScreen);
+                              },
                               icon: Icon(Icons.supervised_user_circle),
                               label: Text(
                                 "Sales Person",
