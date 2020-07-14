@@ -6,6 +6,7 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
+import 'package:flutter/services.dart';
 
 class CheckoutScreen extends StatefulWidget {
   @override
@@ -13,11 +14,19 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = "0"; // Setting the initial value for the field.
+  }
+
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
 
   String selectShipping = "";
-  final shipingSelected  = TextEditingController();
+  final shipingSelected = TextEditingController();
 
   List<String> shiping = [
     "Pengiriman Distributor",
@@ -426,6 +435,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             ),
                                             Container(
                                               child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: <Widget>[
                                                   Expanded(
                                                     child: Text(
@@ -439,47 +451,124 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                      child: Image.asset(
-                                                    atMinus,
-                                                    width: 20,
-                                                  )),
-                                                  Column(
-                                                    children: <Widget>[
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10),
-                                                        child: Text(
-                                                          "5",
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                  Expanded(
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        SizedBox(
+                                                          width: 30,
+                                                          height: 30,
+                                                          child: RaisedButton(
+                                                            color: Color(
+                                                                0xFF387C2B),
+                                                            shape:
+                                                                CircleBorder(),
+                                                            child: Text(
+                                                              '-',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 24),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            onPressed: () {
+                                                              int currentValue =
+                                                                  int.parse(
+                                                                      _controller
+                                                                          .text);
+                                                              setState(() {
+                                                                print(
+                                                                    "tes minus");
+                                                                currentValue--;
+                                                                _controller
+                                                                    .text = (currentValue >
+                                                                            0
+                                                                        ? currentValue
+                                                                        : 0)
+                                                                    .toString();
+                                                              });
+                                                            },
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10),
-                                                        child: Text(
-                                                          "SAK",
-                                                          style: TextStyle(
-                                                              color: MyColor
-                                                                  .greyTextAT,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                        Expanded(
+                                                          child: Center(
+                                                            child: Container(
+                                                              child:
+                                                                  TextFormField(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 18,
+                                                                  color: Color(
+                                                                      0xFF333333),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  contentPadding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              0.0),
+                                                                ),
+                                                                controller:
+                                                                    _controller,
+                                                                keyboardType:
+                                                                    TextInputType
+                                                                        .numberWithOptions(
+                                                                  decimal:
+                                                                      false,
+                                                                  signed: true,
+                                                                ),
+                                                                inputFormatters: <
+                                                                    TextInputFormatter>[
+                                                                  WhitelistingTextInputFormatter
+                                                                      .digitsOnly
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                        SizedBox(
+                                                          width: 30,
+                                                          height: 30,
+                                                          child: RaisedButton(
+                                                            color: Color(
+                                                                0xFF387C2B),
+                                                            shape:
+                                                                CircleBorder(),
+                                                            child: Text(
+                                                              '+',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 24),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            onPressed: () {
+                                                              int currentValue =
+                                                                  int.parse(
+                                                                      _controller
+                                                                          .text);
+                                                              setState(() {
+                                                                currentValue++;
+                                                                _controller
+                                                                        .text =
+                                                                    (currentValue)
+                                                                        .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  Container(
-                                                      child: Image.asset(
-                                                    atPlus,
-                                                    width: 20,
-                                                  )),
                                                 ],
                                               ),
                                             ),
