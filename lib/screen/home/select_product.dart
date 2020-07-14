@@ -28,7 +28,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Daftar Produk Dio',
+                    'Daftar Produk',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
