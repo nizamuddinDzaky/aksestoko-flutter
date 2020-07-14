@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:flutter/services.dart';
 
 class ListProductScreen extends StatefulWidget {
   _ListProductScreenState createState() => _ListProductScreenState();
 }
 
 class _ListProductScreenState extends State<ListProductScreen> {
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = "0"; // Setting the initial value for the field.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -60,37 +69,68 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Expanded(
                 child: Row(
               children: <Widget>[
-                Container(
-                  child: FlatButton(
-                    color: Color(0xFF387C2B),
-                    onPressed: () {},
-                    shape: CircleBorder(),
-                    child: Text(
-                      '-',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    ),
-                  ),
-                ),
                 Expanded(
-                  child: Center(
-                    child: Container(
+                  child: Container(
+                    child: FlatButton(
+                      color: Color(0xFF387C2B),
+                      onPressed: () {
+                        int currentValue = int.parse(_controller.text);
+                        setState(() {
+                          print("tes minus");
+                          currentValue--;
+                          _controller.text =
+                              (currentValue > 0 ? currentValue : 0).toString();
+                        });
+                      },
+                      shape: CircleBorder(),
                       child: Text(
-                        "5",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                        '-',
+                        style: TextStyle(color: Colors.white, fontSize: 24),
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  child: FlatButton(
-                    color: Color(0xFF387C2B),
-                    onPressed: () {},
-                    shape: CircleBorder(),
+                Center(
+                  child: Container(
+                    width: 50,
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFF333333),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(0.0),
+                      ),
+                      controller: _controller,
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: false,
+                        signed: true,
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: FlatButton(
+                      color: Color(0xFF387C2B),
+                      onPressed: () {
+                        int currentValue = int.parse(_controller.text);
+                        setState(() {
+                          currentValue++;
+                          _controller.text = (currentValue).toString();
+                        });
+                      },
+                      shape: CircleBorder(),
 //                      padding: EdgeInsets.all(5),
-                    child: Text(
-                      '+',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                      child: Text(
+                        '+',
+                        style: TextStyle(color: Colors.white, fontSize: 24),
+                      ),
                     ),
                   ),
                 ),
