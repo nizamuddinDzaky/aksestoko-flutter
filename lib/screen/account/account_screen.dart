@@ -150,7 +150,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: null,
+                              onPressed: () {
+                                Get.toNamed(changePasswordScreen);
+                              },
                               icon: Icon(Icons.settings),
                               label: Text(
                                 "Ganti Password",

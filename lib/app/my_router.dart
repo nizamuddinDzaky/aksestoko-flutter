@@ -20,6 +20,7 @@ import 'package:aksestokomobile/screen/account/list_address_screen.dart';
 import 'package:aksestokomobile/screen/account/add_address_screen.dart';
 import 'package:aksestokomobile/screen/account/edit_address_screen.dart';
 import 'package:aksestokomobile/screen/account/sales_person_screen.dart';
+import 'package:aksestokomobile/screen/account/change_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +46,7 @@ const listAddressScreen = "/ListAddressScreen";
 const addAddressScreen = "/AddAddressScreen";
 const editAddressScreen = "/EditAddressScreen";
 const salesPersonScreen = "/SalesPersonScreen";
+const changePasswordScreen = "/ChangePasswordScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -179,6 +181,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: SalesPersonScreen(),
+        );
+      case changePasswordScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: ChangePasswordScreen(),
         );
       default:
         return GetRouteBase(
