@@ -25,5 +25,4 @@ final String spIcon = "assets/icons/sp.png";
 final String dynamixIcon = "assets/icons/dynamix.png";
 
 final String bgHeaderTop = "assets/images/bg-top.png";
-final String bgHeaderTopLarge = "assets/images/bg-top-large.png";
-final String bgProfile = "assets/images/bg-large.png";
+final String bgLarge = "assets/images/bg-large.png";

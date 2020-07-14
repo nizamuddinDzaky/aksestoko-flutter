@@ -33,7 +33,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
                 image: DecorationImage(
                   alignment: Alignment.topCenter,
-                  image: AssetImage(bgHeaderTopLarge),
+                  image: AssetImage(bgHeaderTop),
                   fit: BoxFit.cover,
                 ),
               ),

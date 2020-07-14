@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/screen/home/list_distributor_screen.dart'
     as listDistributor;
 
@@ -23,8 +24,13 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen>
             Container(
               padding:
                   EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
-              width: Get.width,
-              color: Color(0xFFB20838),
+              width: MediaQuery.of(context).size.width * 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(bgHeaderTop),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

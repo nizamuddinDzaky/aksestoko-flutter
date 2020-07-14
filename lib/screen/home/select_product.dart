@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/screen/home/list_product_item_screen.dart'
     as listProduct;
 
@@ -21,8 +22,14 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
             Container(
               padding:
                   EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
-              width: Get.width,
-              color: Color(0xFFB20838),
+              width: MediaQuery.of(context).size.width * 100,
+//              color: MyColor.redAT,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(bgHeaderTop),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

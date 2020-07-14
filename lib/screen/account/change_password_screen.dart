@@ -192,7 +192,7 @@ class _ChangePasswordScreenState extends ChangePasswordController {
     return Stack(
       children: <Widget>[
         Image.asset(
-          bgProfile,
+          bgLarge,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
