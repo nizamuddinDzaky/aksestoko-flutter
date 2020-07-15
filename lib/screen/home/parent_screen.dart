@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/at_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -82,7 +83,7 @@ class _ParentScreenState extends State<ParentScreen>
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(IconAT.warehouse, size: 20,),
             title: Text('Distributor'),
           ),
           BottomNavigationBarItem(
@@ -90,7 +91,7 @@ class _ParentScreenState extends State<ParentScreen>
             title: Text('Promo'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(IconAT.home, size: 25,),
             title: Text('Beranda'),
           ),
           BottomNavigationBarItem(
