@@ -83,23 +83,23 @@ class _ParentScreenState extends State<ParentScreen>
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(IconAT.warehouse, size: 20,),
+            icon: Icon(IconAT.distributor, size: 24,),
             title: Text('Distributor'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity),
+            icon: Icon(Icons.local_activity, size: 28,),
             title: Text('Promo'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(IconAT.home, size: 25,),
+            icon: Icon(IconAT.home,),
             title: Text('Beranda'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
+            icon: Icon(IconAT.list_sales, size: 24),
             title: Text('Pesanan'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(IconAT.store),
             title: Text('Akun'),
           ),
         ],
