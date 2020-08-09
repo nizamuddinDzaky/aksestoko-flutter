@@ -68,6 +68,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8),
+              margin: EdgeInsets.only(bottom: 100),
               child: GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 2,
@@ -171,20 +172,45 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
         },
         child: formLayout,
       ),
+//      floatingActionButton: Container(
+//        child: FittedBox(
+//          child: FloatingActionButton(
+//            onPressed: null,
+//            backgroundColor: MyColor.redAT,
+//            child: Icon(
+//              Icons.add_shopping_cart,
+//              color: Colors.white,
+//              size: 25,
+//            ),
+//          ),
+//        ),
+//      ),
       floatingActionButton: Container(
-        child: FittedBox(
-          child: FloatingActionButton(
-            onPressed: null,
-            backgroundColor: MyColor.redAT,
-            child: Icon(
-              Icons.add_shopping_cart,
-              color: Colors.white,
-              size: 25,
-            ),
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric( horizontal: 15, vertical: 10 ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: MyColor.greyTextAT,
+              spreadRadius: 0,
+              blurRadius: 8,
+              offset:
+              Offset(0, 2), // changes position of shadow
+            )
+          ],
+        ),
+        child: FloatingActionButton.extended(
+          onPressed: () {},
+          backgroundColor: MyColor.greenAT,
+          icon: Icon(Icons.add_shopping_cart),
+          label: Text(
+              "Lanjutkan",
+              style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
