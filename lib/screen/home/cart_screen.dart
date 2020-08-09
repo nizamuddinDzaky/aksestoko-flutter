@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -11,6 +12,14 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = "0"; // Setting the initial value for the field.
+  }
+
   bool CheckBoxValue = false;
 
   @override
@@ -30,9 +39,6 @@ class _CartScreenState extends State<CartScreen> {
                 physics: NeverScrollableScrollPhysics(),
                 childAspectRatio: 16 / 9,
                 children: <Widget>[
-                  listProductCart(),
-                  listProductCart(),
-                  listProductCart(),
                   listProductCart(),
                 ],
               ),
@@ -90,7 +96,7 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             ),
                             Text(
-                              '(3)',
+                              '(1)',
                               style: TextStyle(
                                   color: MyColor.blackTextAT,
                                   fontSize: 14,
@@ -282,24 +288,66 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                child: Row(
                                   children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        'Jumlah',
-                                        style: TextStyle(
-                                            color: Color(0xff999999),
-                                            fontSize: 16),
+                                    SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: RaisedButton(
+                                        color: Color(0xFF387C2B),
+                                        shape:
+                                        CircleBorder(),
+                                        child: Text(
+                                          '-',
+                                          style: TextStyle(color: Colors.white, fontSize: 24),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        onPressed: () {
+                                          int currentValue = int.parse(_controller.text);
+                                          setState(() {
+                                            print("tes minus");
+                                            currentValue--;
+                                            _controller.text = (currentValue > 0 ? currentValue : 0).toString();
+                                          });
+                                        },
                                       ),
                                     ),
-                                    Container(
-                                      child: Text(
-                                        '5 SAK',
-                                        style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                                    Expanded(
+                                      child: Center(
+                                        child: Container(
+                                          child: TextFormField(
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18, color: Color(0xFF333333),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            decoration: InputDecoration(
+                                              contentPadding: EdgeInsets.all(0.0),
+                                            ),
+                                            controller: _controller,
+                                            keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
+                                            inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: RaisedButton(
+                                        color: Color(0xFF387C2B),
+                                        shape: CircleBorder(),
+                                        child: Text(
+                                          '+',
+                                          style: TextStyle(color: Colors.white, fontSize: 24),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        onPressed: () {
+                                          int currentValue = int.parse(_controller.text);
+                                          setState(() {
+                                            currentValue++;
+                                            _controller.text = (currentValue).toString();
+                                          });
+                                        },
                                       ),
                                     ),
                                   ],

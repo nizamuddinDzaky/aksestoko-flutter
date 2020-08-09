@@ -14,14 +14,6 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.text = "0"; // Setting the initial value for the field.
-  }
-
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
 
@@ -413,12 +405,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  IconButton(
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: MyColor.redAT,
-                                                      ),
-                                                      onPressed: null),
                                                 ],
                                               ),
                                             ),
@@ -452,118 +438,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    child: Row(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: <Widget>[
-                                                        SizedBox(
-                                                          width: 30,
-                                                          height: 30,
-                                                          child: RaisedButton(
-                                                            color: Color(
-                                                                0xFF387C2B),
-                                                            shape:
-                                                                CircleBorder(),
-                                                            child: Text(
-                                                              '-',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 24),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                            onPressed: () {
-                                                              int currentValue =
-                                                                  int.parse(
-                                                                      _controller
-                                                                          .text);
-                                                              setState(() {
-                                                                print(
-                                                                    "tes minus");
-                                                                currentValue--;
-                                                                _controller
-                                                                    .text = (currentValue >
-                                                                            0
-                                                                        ? currentValue
-                                                                        : 0)
-                                                                    .toString();
-                                                              });
-                                                            },
+                                                        Container(
+                                                          child: Text(
+                                                            'Jumlah',
+                                                            style: TextStyle(
+                                                                color: Color(0xff999999),
+                                                                fontSize: 16),
                                                           ),
                                                         ),
-                                                        Expanded(
-                                                          child: Center(
-                                                            child: Container(
-                                                              child:
-                                                                  TextFormField(
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 18,
-                                                                  color: Color(
-                                                                      0xFF333333),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0.0),
-                                                                ),
-                                                                controller:
-                                                                    _controller,
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .numberWithOptions(
-                                                                  decimal:
-                                                                      false,
-                                                                  signed: true,
-                                                                ),
-                                                                inputFormatters: <
-                                                                    TextInputFormatter>[
-                                                                  WhitelistingTextInputFormatter
-                                                                      .digitsOnly
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 30,
-                                                          height: 30,
-                                                          child: RaisedButton(
-                                                            color: Color(
-                                                                0xFF387C2B),
-                                                            shape:
-                                                                CircleBorder(),
-                                                            child: Text(
-                                                              '+',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 24),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                            onPressed: () {
-                                                              int currentValue =
-                                                                  int.parse(
-                                                                      _controller
-                                                                          .text);
-                                                              setState(() {
-                                                                currentValue++;
-                                                                _controller
-                                                                        .text =
-                                                                    (currentValue)
-                                                                        .toString();
-                                                              });
-                                                            },
+                                                        Container(
+                                                          child: Text(
+                                                            '5 SAK',
+                                                            style: TextStyle(
+                                                                color: Color(0xff333333),
+                                                                fontSize: 16,
+                                                                fontWeight: FontWeight.bold),
                                                           ),
                                                         ),
                                                       ],
