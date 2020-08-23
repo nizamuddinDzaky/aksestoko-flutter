@@ -16,78 +16,77 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              padding:
-                  EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
-              width: MediaQuery.of(context).size.width * 100,
-//              color: MyColor.redAT,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(bgHeaderTop),
-                  fit: BoxFit.cover,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            padding:
+                EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
+            width: MediaQuery.of(context).size.width * 100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(bgHeaderTop),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Daftar Produk',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    'Daftar Produk',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                Row(
+                  children: <Widget>[
+                    Text(
+                      'Daftar Distributor',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Pada Distributor',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Get.toNamed(selectDistributorScreen);
+                      },
+                      icon: Icon(
+                        Icons.settings,
+                        color: Colors.white,
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.info_outline,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              margin: EdgeInsets.only(bottom: 100),
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 20,
-                padding: EdgeInsets.only(top: 102),
-                physics: NeverScrollableScrollPhysics(),
-                childAspectRatio: 3 / 4,
-                children: <Widget>[
-                  listProduct.ListProductScreen(),
-                  listProduct.ListProductScreen(),
-                  listProduct.ListProductScreen(),
-                  listProduct.ListProductScreen(),
-                  listProduct.ListProductScreen(),
-                ],
-              ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            margin: EdgeInsets.only(bottom: 100),
+            child: GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              crossAxisSpacing: 4,
+              mainAxisSpacing: 20,
+              padding: EdgeInsets.only(top: 102),
+              physics: NeverScrollableScrollPhysics(),
+              childAspectRatio: 3 / 4,
+              children: <Widget>[
+                listProduct.ListProductScreen(),
+                listProduct.ListProductScreen(),
+                listProduct.ListProductScreen(),
+                listProduct.ListProductScreen(),
+                listProduct.ListProductScreen(),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
 
@@ -201,9 +200,11 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
           ],
         ),
         child: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(checkoutScreen);
+          },
           backgroundColor: MyColor.greenAT,
-          icon: Icon(Icons.add_shopping_cart),
+          icon: Icon(Icons.payment),
           label: Text(
               "Lanjutkan",
               style: TextStyle(fontWeight: FontWeight.bold),

@@ -14,7 +14,7 @@ abstract class LoginScreenController extends State<LoginScreen> {
   _actionSubmit() async {
     await Future.delayed(Duration(seconds: 2));
     Get.back();
-    Get.offNamed(parentScreen);
+    Get.offNamed(selectDistributorScreen);
   }
 
   showDialogProgress() async {

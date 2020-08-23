@@ -19,11 +19,10 @@ class _ParentScreenState extends State<ParentScreen>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   final tabs = [
-    selectDistributor.SelectDistributorScreen(),
+    selectProduct.SelectProductScreen(),
     Center(
       child: Text("Promo"),
     ),
-    selectProduct.SelectProductScreen(),
     historyOrder.HistoryOrderScreen(),
     Account.AccountScreen(),
   ];
@@ -83,17 +82,14 @@ class _ParentScreenState extends State<ParentScreen>
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(IconAT.distributor, size: 24,),
-            title: Text('Distributor'),
+            icon: Icon(IconAT.home,),
+            title: Text('Beranda'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_activity, size: 28,),
             title: Text('Promo'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(IconAT.home,),
-            title: Text('Beranda'),
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(IconAT.list_sales, size: 24),
             title: Text('Pesanan'),

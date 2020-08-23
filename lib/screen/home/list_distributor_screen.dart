@@ -1,6 +1,8 @@
+//import 'package:aksestokomobile/app/my_router.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
-
+//import 'package:get/get.dart';
+import 'package:aksestokomobile/screen/home/parent_screen.dart';
 class ListDistributorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,15 +33,7 @@ class ListDistributorScreen extends StatelessWidget {
                               fontSize: 16),
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Container(
-                        child: Text(
-                          'SBJ',
-                          style:
-                              TextStyle(color: Color(0xff999999), fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 25),
                       Container(
                         child: Text(
                           'Jl. Lorem Ipsum No 40 Gresik Jawa Timur',
@@ -62,7 +56,12 @@ class ListDistributorScreen extends StatelessWidget {
             ],
           ),
         ),
-        onTap: null,
+        onTap: (){
+          Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(
+            builder: (context) => ParentScreen()),
+                (Route<dynamic> route) => false,
+          );
+        },
       ),
     );
   }
