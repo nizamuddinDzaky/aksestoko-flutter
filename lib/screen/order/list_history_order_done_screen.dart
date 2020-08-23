@@ -32,110 +32,120 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "ID Pemesanan",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                        ),
-                        Text(
-                          "(Forca POS)",
-                          style: TextStyle(color: MyColor.redAT),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "SALE/AT/2020/06/0023",
-                          style: TextStyle(
-                              color: MyColor.redAT,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Status Pesanan",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Diterima",
-                          style: TextStyle(
-                              color: MyColor.successTextAT,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                  ],
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "ID Pemesanan",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 15),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "SALE/AT/2020/06/0023",
+                            style: TextStyle(
+                                color: MyColor.redAT,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "(Forca POS)",
+                            style: TextStyle(color: MyColor.redAT),
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Status Pesanan",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Diterima",
+                            style: TextStyle(
+                                color: MyColor.successTextAT,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "ID Pemesanan",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "21 Juni 2020",
-                          style: TextStyle(
-                              color: MyColor.blackTextAT,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Status Pembayaran",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Sudah Dibayar",
-                          style: TextStyle(
-                              color: MyColor.successTextAT,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                  ],
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Tanggal",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "21 Juni 2020",
+                            style: TextStyle(
+                                color: MyColor.blackTextAT,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Status Pembayaran",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Sudah Dibayar",
+                            style: TextStyle(
+                                color: MyColor.successTextAT,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -889,11 +889,13 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 ],
               ),
             ),
+            if (index == 0)
             Container(
               height: 3,
               color: Color(0xffEAEAEA),
               margin: EdgeInsets.symmetric(vertical: 20),
             ),
+            if (index == 0)
             Container(
               margin: EdgeInsets.only(left: 25, right: 25),
               width: double.maxFinite,
