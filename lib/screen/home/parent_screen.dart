@@ -2,8 +2,6 @@ import 'package:aksestokomobile/at_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:aksestokomobile/screen/home/select_distributor.dart'
-    as selectDistributor;
 import 'package:aksestokomobile/screen/home/select_product.dart'
     as selectProduct;
 import 'package:aksestokomobile/screen/order/history_order_screen.dart'
@@ -44,40 +42,11 @@ class _ParentScreenState extends State<ParentScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        iconTheme: IconThemeData(
-//          color: MyColor.lineTxtField,
-//        ),
-////        brightness: Brightness.light,
-//        backgroundColor: Colors.black,
-//        elevation: 0,
-//        centerTitle: true,
-//        title: Hero(
-//          tag: 'logoForcaPoS',
-//          child: MyLogo.logoATWhite(width: 100),
-//        ),
-//        bottom: TabBar(
-//          controller: controller,
-//          tabs: <Widget>[
-//            Tab(icon: Icon(Icons.headset), text: "Komputer",),
-//            Tab(icon: Icon(Icons.settings),),
-//            Tab(icon: Icon(Icons.train),),
-//          ],
-//        ),
-//      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: tabs[_currentIndex],
-//        TabBarView(
-//          controller: controller,
-//          children: <Widget>[
-//            halSatu.HalKomputer(),
-//            halDua.HalDua(),
-//            halTiga.HalTiga(),
-//          ],
-//        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

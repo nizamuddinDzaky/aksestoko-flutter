@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/screen/home/select_product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -12,15 +13,14 @@ class SelectProductScreen extends StatefulWidget {
   _SelectProductScreenState createState() => _SelectProductScreenState();
 }
 
-class _SelectProductScreenState extends State<SelectProductScreen> {
+class _SelectProductScreenState extends selectProductModel {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
-      child: Stack(
+      child: Column(
         children: <Widget>[
           Container(
-            padding:
-                EdgeInsets.only(top: 23, left: 25, right: 25, bottom: 48),
+            padding: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 20),
             width: MediaQuery.of(context).size.width * 100,
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -54,7 +54,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Get.toNamed(selectDistributorScreen);
+                       Get.toNamed(selectDistributorScreen);
                       },
                       icon: Icon(
                         Icons.settings,
@@ -74,7 +74,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
               crossAxisCount: 2,
               crossAxisSpacing: 4,
               mainAxisSpacing: 20,
-              padding: EdgeInsets.only(top: 102),
+              padding: EdgeInsets.only(top: 10),
               physics: NeverScrollableScrollPhysics(),
               childAspectRatio: 3 / 4,
               children: <Widget>[
@@ -171,19 +171,6 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
         },
         child: formLayout,
       ),
-//      floatingActionButton: Container(
-//        child: FittedBox(
-//          child: FloatingActionButton(
-//            onPressed: null,
-//            backgroundColor: MyColor.redAT,
-//            child: Icon(
-//              Icons.add_shopping_cart,
-//              color: Colors.white,
-//              size: 25,
-//            ),
-//          ),
-//        ),
-//      ),
       floatingActionButton: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric( horizontal: 15, vertical: 10 ),
