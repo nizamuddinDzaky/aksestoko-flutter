@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var isLogin = token != null && token.isNotEmpty;
     print('forcatoken $token');
     Future.delayed(Duration(seconds: MyDimen.timerSplash), () {
-      Get.offNamed(isLogin ? homeScreen : loginScreen);
+      Get.offNamed(isLogin ? selectDistributorScreen : loginScreen);
     });
   }
 

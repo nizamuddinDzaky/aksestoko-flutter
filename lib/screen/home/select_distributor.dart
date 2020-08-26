@@ -1,11 +1,11 @@
+import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
-import 'package:aksestokomobile/screen/home/list_distributor_screen.dart'
-    as listDistributor;
+import 'package:aksestokomobile/screen/home/list_distributor_screen.dart';
 
 class SelectDistributorScreen extends StatefulWidget {
   @override
@@ -13,8 +13,7 @@ class SelectDistributorScreen extends StatefulWidget {
       _SelectDistributorScreenState();
 }
 
-class _SelectDistributorScreenState extends State<SelectDistributorScreen>
-    with SingleTickerProviderStateMixin {
+class _SelectDistributorScreenState extends SelectDistributorController {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -48,19 +47,13 @@ class _SelectDistributorScreenState extends State<SelectDistributorScreen>
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 25),
-              child: GridView.count(
+              child: ListView.builder(
                 shrinkWrap: true,
-                crossAxisCount: 1,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
+                itemCount: listDistributor.length,
+                itemBuilder: (context, index)=>ListDistributorScreen(),
                 padding: EdgeInsets.only(top: 65),
                 physics: NeverScrollableScrollPhysics(),
-                childAspectRatio: 16 / 7,
-                children: <Widget>[
-                  listDistributor.ListDistributorScreen(),
-                  listDistributor.ListDistributorScreen(),
-                  listDistributor.ListDistributorScreen(),
-                ],
+
               ),
             ),
           ],
