@@ -2,7 +2,7 @@ import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/empty_app_bar.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/helper/my_text.dart';
-import 'package:aksestokomobile/screen/login/otp_controller.dart';
+import 'file:///C:/Users/hp/StudioProjects/aksestoko/lib/controller/login/otp_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';

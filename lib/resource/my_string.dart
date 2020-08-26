@@ -1,8 +1,12 @@
 class MyString {
   static const KEY_FORCA_TOKEN = "Forca-Token";
+  static const KEY_TOKEN = "token";
   static const KEY_IS_REMEMBER = "isRemember";
   static const KEY_USERNAME = "username";
   static const KEY_PASSWORD = "password";
+
+  //
+  static const KEY_ID_BK = "id_bk";
 
   // sales booking
   static const KEY_ID_SALES_BOOKING = "id_sales_booking";

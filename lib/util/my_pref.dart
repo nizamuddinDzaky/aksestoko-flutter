@@ -45,11 +45,12 @@ class MyPref {
   //action
   static logout() {
     //setRemember(false, null);
-    setForcaToken(null);
+    setIdBk(null);
   }
 
   //get value
   static String getForcaToken() => getString(MyString.KEY_FORCA_TOKEN);
+  static int getIdBk() => getInt(MyString.KEY_ID_BK);
 
   static setForcaToken(String value) {
     setString(MyString.KEY_FORCA_TOKEN, value);
@@ -77,6 +78,9 @@ class MyPref {
 
   static setRole(int roleId) {
     setInt(MyString.KEY_ROLE_USER, roleId);
+  }
+  static setIdBk(int idBk) {
+    setInt(MyString.KEY_ID_BK, idBk);
   }
 
   static int getRole() => getInt(MyString.KEY_ROLE_USER);

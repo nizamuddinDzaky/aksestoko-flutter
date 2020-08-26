@@ -1,7 +1,7 @@
 import 'package:aksestokomobile/model/data_response.dart';
 
 class BaseResponse {
-  String status;
+  int status;
   int code;
   String message;
   String requestTime;
