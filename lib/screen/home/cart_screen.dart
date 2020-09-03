@@ -1,4 +1,6 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,33 +23,34 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   bool CheckBoxValue = false;
-
-  @override
-  Widget build(BuildContext context) {
-    var formLayout = SingleChildScrollView(
+  Widget formLayout(SelectProductController controller){
+    return SingleChildScrollView(
       child: Container(
         child: Stack(
           children: <Widget>[
             Container(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: GridView.count(
+              child: GridView.builder(
                 shrinkWrap: true,
-                crossAxisCount: 1,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 15,
-                padding: EdgeInsets.only(top: 20),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 16 / 9
+                ),
+                padding: EdgeInsets.only(top: 10),
                 physics: NeverScrollableScrollPhysics(),
-                childAspectRatio: 16 / 9,
-                children: <Widget>[
-                  listProductCart(),
-                ],
+                itemCount: controller.listCart.length,
+                itemBuilder: (context, index)=>listProductCart(controller.listCart[index], controller)
               ),
             ),
           ],
         ),
       ),
     );
-
+  }
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -118,7 +121,10 @@ class _CartScreenState extends State<CartScreen> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: formLayout,
+
+        child: GetBuilder<SelectProductController>(
+          builder: (controller) => formLayout(controller),
+        ),
       ),
       bottomNavigationBar: new Stack(
         overflow: Overflow.visible,
@@ -191,7 +197,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget listProductCart() {
+  Widget listProductCart(Product _product, SelectProductController controller) {
     return Card(
       elevation: 4,
       child: Column(
@@ -235,7 +241,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Expanded(
                                   child: Container(
                                     child: Text(
-                                      'Semen PCC Lorem Ipsum 50 KG',
+                                      _product.nama,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xff333333),
@@ -248,14 +254,18 @@ class _CartScreenState extends State<CartScreen> {
                                       Icons.delete,
                                       color: MyColor.redAT,
                                     ),
-                                    onPressed: null),
+                                  onPressed: () {
+                                    controller.removeCart(_product);
+                                    }
+
+                                ),
                               ],
                             ),
                           ),
                           SizedBox(height: 5),
                           Container(
                             child: Text(
-                              '121-301-0060',
+                              _product.kodeUnit,
                               style: TextStyle(
                                   color: Color(0xff999999), fontSize: 16),
                             ),

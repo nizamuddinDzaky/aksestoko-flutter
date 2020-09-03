@@ -1,9 +1,11 @@
 import 'package:aksestokomobile/model/Distributor.dart';
+import 'package:aksestokomobile/model/Product.dart';
 
 class DataResponse {
   String token;
   int idBK;
   List<Distributor> listDistributor;
+  List<Product> listProduct;
 
   DataResponse({this.token});
 
@@ -38,6 +40,11 @@ class DataResponse {
     listDistributor = ifExistList(json, 'list_distributor', (obj) {
       return Distributor.fromJson(obj);
     });
+
+    listProduct = ifExistList(json, 'list_product', (obj) {
+      return Product.fromJson(obj);
+    });
+
   }
 
   Map<String, dynamic> toJson() {

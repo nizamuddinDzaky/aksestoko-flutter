@@ -1,11 +1,15 @@
 //import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
+import 'package:aksestokomobile/model/Distributor.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 //import 'package:get/get.dart';
 import 'package:aksestokomobile/screen/home/parent_screen.dart';
-class ListDistributorScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+import 'package:get/get.dart';
+class ListDistributorScreen extends SelectDistributorController {
+
+  listItem(BuildContext context, Distributor distributor, int index){
     return Card(
       elevation: 2,
       child: InkWell(
@@ -26,7 +30,7 @@ class ListDistributorScreen extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          'Distributor Name',
+                          distributor.nama,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color(0xff999999),
@@ -36,17 +40,17 @@ class ListDistributorScreen extends StatelessWidget {
                       SizedBox(height: 25),
                       Container(
                         child: Text(
-                          'Jl. Lorem Ipsum No 40 Gresik Jawa Timur',
+                          distributor.alamatLengkap,
                           style:
-                              TextStyle(color: Color(0xff999999), fontSize: 16),
+                          TextStyle(color: Color(0xff999999), fontSize: 16),
                         ),
                       ),
                       SizedBox(height: 5),
                       Container(
                         child: Text(
-                          '081335789789',
+                          distributor.noTlpn,
                           style:
-                              TextStyle(color: Color(0xff999999), fontSize: 18),
+                          TextStyle(color: Color(0xff999999), fontSize: 18),
                         ),
                       ),
                     ],
@@ -56,13 +60,21 @@ class ListDistributorScreen extends StatelessWidget {
             ],
           ),
         ),
-        onTap: (){
-          Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(
-            builder: (context) => ParentScreen()),
-                (Route<dynamic> route) => false,
-          );
+        onTap: () async {
+          await gotoParent(context, distributor);
         },
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+  /*@override
+  Widget build(BuildContext context) {
+
+  }*/
 }

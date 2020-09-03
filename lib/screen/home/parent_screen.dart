@@ -24,7 +24,6 @@ class _ParentScreenState extends State<ParentScreen>
     historyOrder.HistoryOrderScreen(),
     Account.AccountScreen(),
   ];
-
   TabController controller;
 
   @override

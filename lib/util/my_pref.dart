@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:aksestokomobile/resource/my_string.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPref {
@@ -45,12 +46,14 @@ class MyPref {
   //action
   static logout() {
     //setRemember(false, null);
-    setIdBk(null);
+    setIdDristributor(null);
+    setDisributorName(null);
   }
 
   //get value
   static String getForcaToken() => getString(MyString.KEY_FORCA_TOKEN);
   static int getIdBk() => getInt(MyString.KEY_ID_BK);
+  static int getIdDistributor() => getInt(MyString.KEY_ID_DISTRIBUTOR);
 
   static setForcaToken(String value) {
     setString(MyString.KEY_FORCA_TOKEN, value);
@@ -65,6 +68,7 @@ class MyPref {
   }
 
   static String getUsername() => getString(MyString.KEY_USERNAME);
+  static String getDistributorName() => getString(MyString.KEY_DISTRIBUTOR_NAME);
 
   static setUsername(String value) {
     setString(MyString.KEY_USERNAME, value);
@@ -76,11 +80,27 @@ class MyPref {
     setString(MyString.KEY_PASSWORD, value);
   }
 
+  static setDisributorName(String value){
+    setString(MyString.KEY_DISTRIBUTOR_NAME, value);
+  }
+
   static setRole(int roleId) {
     setInt(MyString.KEY_ROLE_USER, roleId);
   }
   static setIdBk(int idBk) {
     setInt(MyString.KEY_ID_BK, idBk);
+  }
+
+  static setIdDristributor(int idDistributor) {
+    setInt(MyString.KEY_ID_DISTRIBUTOR, idDistributor);
+  }
+
+  static bool isIdDistributorExist(){
+    if(getIdDistributor() == null){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   static int getRole() => getInt(MyString.KEY_ROLE_USER);

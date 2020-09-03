@@ -1,14 +1,22 @@
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/model/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
 
 class ListProductScreen extends StatefulWidget {
-  _ListProductScreenState createState() => _ListProductScreenState();
+  final Product _product;
+  final SelectProductController controller;
+  ListProductScreen(this._product, this.controller);
+  _ListProductScreenState createState() => _ListProductScreenState(_product, controller);
 }
 
 class _ListProductScreenState extends State<ListProductScreen> {
   TextEditingController _controller = TextEditingController();
+  final SelectProductController controller;
 
+  final Product _product;
+  _ListProductScreenState(this._product, this.controller);
   @override
   void initState() {
     super.initState();
@@ -37,7 +45,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                'Semen Lorem Ipsum Dolor Ismet PCC 50 KG',
+                _product.nama,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -50,14 +58,14 @@ class _ListProductScreenState extends State<ListProductScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      'Rp 5800',
+                      _product.satuanHargaCash,
                       style: TextStyle(
                         color: Color(0xffB20838),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      ' / SAK',
+                      ' / ${_product.kodeUnit}',
                       style: TextStyle(
                         color: Color(0xff999999),
                         fontWeight: FontWeight.bold,
@@ -120,6 +128,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                       color: Color(0xFF387C2B),
                       onPressed: () {
                         int currentValue = int.parse(_controller.text);
+                        controller.addToCart(_product, customQty: currentValue.toDouble());
                         setState(() {
                           currentValue++;
                           _controller.text = (currentValue).toString();
