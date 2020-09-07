@@ -10,6 +10,7 @@ class MyString {
   static const KEY_ID_DISTRIBUTOR = "id_distributor";
   static const KEY_ID_CART = "id_cart";
   static const KEY_DISTRIBUTOR_NAME = "distributor_name";
+  static const KEY_DISTRIBUTOR_CODE = "distributor_code";
 
   // sales booking
   static const KEY_ID_SALES_BOOKING = "id_sales_booking";

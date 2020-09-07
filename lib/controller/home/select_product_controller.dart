@@ -26,4 +26,20 @@ class SelectProductController extends GetController {
     /*if (!listCart.contains(p)) listCart.add(p);*/
     update();
   }
+
+  int getSumItem(){
+    int totalQty = 0;
+    this.listCart.forEach((cart) =>
+        totalQty += cart.qty.toInt()
+    );
+    return totalQty;
+  }
+
+  double getTotalHarga(){
+    double total = 0.0;
+    this.listCart.forEach((cart) =>
+      total += (cart.qty * int.parse(cart.satuanHargaCash))
+    );
+    return total;
+  }
 }

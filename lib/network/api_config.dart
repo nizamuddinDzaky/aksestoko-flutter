@@ -23,6 +23,8 @@ class ApiConfig {
   //cart
   static String urlCart = '${path}get_list_cart.php';
 
+  //address
+  static String urlDetailAddress = '${path}get_detail_alamat.php';
 
   //local
   static String urlListProvince = '${local}list_province';
