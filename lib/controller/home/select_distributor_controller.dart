@@ -1,5 +1,3 @@
-import 'file:///C:/Users/hp/StudioProjects/aksestoko/lib/view_model/home/select_distributor_view_model.dart';
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/model/Distributor.dart';
 import 'package:aksestokomobile/screen/home/parent_screen.dart';
 import 'package:aksestokomobile/screen/home/select_distributor.dart';
@@ -22,6 +20,8 @@ abstract class SelectDistributorController extends State<SelectDistributorScreen
     if(!MyPref.isIdDistributorExist()){
       MyPref.setIdDristributor(distributor.id);
       MyPref.setDisributorName(distributor.nama);
+      MyPref.setDisributorCode(distributor.kode);
+
       Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(
           builder: (context) => ParentScreen()),
               (Route<dynamic> route) => false

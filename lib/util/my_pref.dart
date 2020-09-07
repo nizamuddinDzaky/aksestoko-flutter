@@ -69,6 +69,7 @@ class MyPref {
 
   static String getUsername() => getString(MyString.KEY_USERNAME);
   static String getDistributorName() => getString(MyString.KEY_DISTRIBUTOR_NAME);
+  static String getDistributorCode() => getString(MyString.KEY_DISTRIBUTOR_CODE);
 
   static setUsername(String value) {
     setString(MyString.KEY_USERNAME, value);
@@ -82,6 +83,10 @@ class MyPref {
 
   static setDisributorName(String value){
     setString(MyString.KEY_DISTRIBUTOR_NAME, value);
+  }
+
+  static setDisributorCode(String value){
+    setString(MyString.KEY_DISTRIBUTOR_CODE, value);
   }
 
   static setRole(int roleId) {

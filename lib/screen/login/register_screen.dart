@@ -1,6 +1,6 @@
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
-import 'file:///C:/Users/hp/StudioProjects/aksestoko/lib/controller/login/register_controller.dart';
+import 'package:aksestokomobile/controller/login/register_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';

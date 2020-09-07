@@ -1,3 +1,8 @@
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -13,7 +18,7 @@ class CheckoutScreen extends StatefulWidget {
   _CheckoutScreenState createState() => _CheckoutScreenState();
 }
 
-class _CheckoutScreenState extends State<CheckoutScreen> {
+class _CheckoutScreenState extends CheckoutViewModel {
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
 
@@ -43,7 +48,230 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var formLayout = SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Container(
+          //color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+          ),
+          child: Container(
+            child: Text(
+              "Checkout",
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+        centerTitle: false,
+        actions: <Widget>[
+          Stack(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  print('klik notif');
+                },
+              ),
+              Positioned(
+                right: 5,
+                top: 4,
+                child: CircleAvatar(
+                  maxRadius: 10,
+                  backgroundColor: MyColor.redAT,
+                  child: Text(
+                    '20',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: GetBuilder<SelectProductController>(
+          builder: (controller) => _layout(controller),
+        ),
+      ),
+    );
+  }
+
+  Widget _item(BuildContext context, Product _product){
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(
+        top: 15,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: MyColor.greyTextAT,
+            spreadRadius: 0,
+            blurRadius: 8,
+            offset:
+            Offset(0, 2), // changes position of shadow
+          )
+        ],
+      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(
+                left: 15, right: 15, bottom: 15),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: Image.asset(
+                    kImageDynamix,
+                    width: 100,
+                  ),
+                ),
+                Container(
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  _product.nama,
+                                  style: TextStyle(
+                                    color:
+                                    MyColor.blackTextAT,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin:
+                          EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            _product.kodeUnit,
+                            style: TextStyle(
+                              color: MyColor.greyTextAT,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment
+                                .spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  "${MyNumber.toNumberRpStr(_product.satuanHargaCash)}",
+                                  style: TextStyle(
+                                    color:
+                                    MyColor.blackTextAT,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text(
+                                        'Jumlah',
+                                        style: TextStyle(
+                                            color: Color(0xff999999),
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        _product.qty.toInt().toString(),
+                                        style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 0),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+                left: 20, right: 20, top: 15, bottom: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            child: Row(
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "SUBTOTAL",
+                  style: TextStyle(
+                      color: Color(0xff999999),
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "${MyNumber.toNumberRpStr((_product.qty * int.tryParse(_product.satuanHargaCash)).toString())}",
+                  style: TextStyle(
+                      color: Color(0xff333333),
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listItem(SelectProductController controller){
+    return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index)=> _item(context, controller.listCart[index]),
+      itemCount: controller.listCart.length,
+      /*children: <Widget>[
+
+      ],*/
+    );
+  }
+  Widget _layout(SelectProductController controller){
+    return SingleChildScrollView(
       child: Container(
         child: Column(
           children: <Widget>[
@@ -57,7 +285,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       bottom: 15,
                     ),
                     child: Text(
-                      "Alamat Pengiriman123",
+                      "Alamat Pengiriman",
                       style: TextStyle(
                           color: MyColor.blackTextAT,
                           fontWeight: FontWeight.bold,
@@ -95,7 +323,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                         Text(
-                          "PT Lorem Ipsum",
+                          address != null ? "${address.namaPenerima}" : "",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -108,14 +336,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       children: <Widget>[
                         Container(
                           child: Text(
-                            "Nama Lengkap, ",
+                            address != null ? "${address.namaPenerima}, " : "",
                             style: TextStyle(
                                 fontSize: 16, color: MyColor.greyTextAT),
                           ),
                         ),
                         Container(
                           child: Text(
-                            "08912321313",
+                            address != null ? "${address.noTlpn}" : "",
                             style: TextStyle(
                                 fontSize: 15, color: MyColor.greyTextAT),
                           ),
@@ -129,7 +357,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            "Jl. Lorem Ipsum Dolor Ismet No 29, Lorem Ipsum Dolor Ismet Kabupaten Gresik Jawa Timur Indonesia",
+                            address != null ? "${address.alamat}, ${address.kecamatanName}, ${address.kabupatenName}, ${address.provinceName}" : "",
                             style: TextStyle(
                                 fontSize: 16, color: MyColor.greyTextAT),
                           ),
@@ -211,16 +439,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 25),
                         padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         decoration: BoxDecoration(
                           border: Border(
                             top: BorderSide(color: Color(0xffC8C8C8), width: 2),
                             bottom:
-                                BorderSide(color: Color(0xffC8C8C8), width: 2),
+                            BorderSide(color: Color(0xffC8C8C8), width: 2),
                             left:
-                                BorderSide(color: Color(0xffC8C8C8), width: 2),
+                            BorderSide(color: Color(0xffC8C8C8), width: 2),
                             right:
-                                BorderSide(color: Color(0xffC8C8C8), width: 0),
+                            BorderSide(color: Color(0xffC8C8C8), width: 0),
                           ),
                         ),
                         child: Icon(
@@ -239,7 +467,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 filled: true,
                                 fillColor: Color(0xffEEEEEE),
                                 hintText:
-                                    "${_date.day} / ${_date.month} / ${_date.year}",
+                                "${_date.day} / ${_date.month} / ${_date.year}",
 //                              hintText: "${_date.toString()}",
                                 contentPadding: const EdgeInsets.only(left: 20),
                                 enabledBorder: OutlineInputBorder(
@@ -300,7 +528,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       contentPadding: const EdgeInsets.only(left: 20, top: 30),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: Color(0xffC8C8C8), width: 2.0),
+                        BorderSide(color: Color(0xffC8C8C8), width: 2.0),
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(5.0),
                           bottomRight: Radius.circular(5.0),
@@ -349,164 +577,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ],
                   ),
                   Container(
-                    child: ListView(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          padding: EdgeInsets.only(
-                            top: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColor.greyTextAT,
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: 15, right: 15, bottom: 15),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      child: Image.asset(
-                                        kImageDynamix,
-                                        width: 100,
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Semen PCC ZAK 50",
-                                                      style: TextStyle(
-                                                        color:
-                                                            MyColor.blackTextAT,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(bottom: 20),
-                                              child: Text(
-                                                "121-301-0060",
-                                                style: TextStyle(
-                                                  color: MyColor.greyTextAT,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Rp 60.000",
-                                                      style: TextStyle(
-                                                        color:
-                                                            MyColor.blackTextAT,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                      children: <Widget>[
-                                                        Container(
-                                                          child: Text(
-                                                            'Jumlah',
-                                                            style: TextStyle(
-                                                                color: Color(0xff999999),
-                                                                fontSize: 16),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          child: Text(
-                                                            '5 SAK',
-                                                            style: TextStyle(
-                                                                color: Color(0xff333333),
-                                                                fontSize: 16,
-                                                                fontWeight: FontWeight.bold),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 3,
-                                color: Color(0xffEAEAEA),
-                                margin: EdgeInsets.symmetric(vertical: 0),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: 20, right: 20, top: 15, bottom: 15),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.white,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      "SUBTOTAL",
-                                      style: TextStyle(
-                                          color: Color(0xff999999),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "Rp 10.000.000",
-                                      style: TextStyle(
-                                          color: Color(0xff333333),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      child: _listItem(controller)
                   ),
                 ],
               ),
@@ -570,12 +641,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "0000088976",
+                          MyPref.getDistributorCode(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         Text(
-                          "Lorem Ipsum",
+                          MyPref.getDistributorName(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -674,7 +745,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               color: MyColor.greyTextAT, fontSize: 16),
                         ),
                         Text(
-                          "250",
+                          "${controller.getSumItem()}",
                           style: TextStyle(
                               color: MyColor.greyTextAT,
                               fontWeight: FontWeight.bold,
@@ -696,7 +767,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               color: MyColor.greyTextAT, fontSize: 16),
                         ),
                         Text(
-                          "Rp 10.300.000",
+                          "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
                           style: TextStyle(
                               color: MyColor.greyTextAT,
                               fontWeight: FontWeight.bold,
@@ -786,59 +857,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ],
         ),
-      ),
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Container(
-          //color: Colors.white,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-          ),
-          child: Container(
-            child: Text(
-              "Checkout",
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-        ),
-        centerTitle: false,
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  print('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: formLayout,
       ),
     );
   }

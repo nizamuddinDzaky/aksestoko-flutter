@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/model/Address.dart';
 import 'package:aksestokomobile/model/Distributor.dart';
 import 'package:aksestokomobile/model/Product.dart';
 
@@ -6,7 +7,7 @@ class DataResponse {
   int idBK;
   List<Distributor> listDistributor;
   List<Product> listProduct;
-
+  Address address;
   DataResponse({this.token});
 
   T ifExist<T>(json, key) {
@@ -43,6 +44,10 @@ class DataResponse {
 
     listProduct = ifExistList(json, 'list_product', (obj) {
       return Product.fromJson(obj);
+    });
+
+    address = ifExistObject(json, 'address', (obj){
+      return Address.fromJson(obj);
     });
 
   }
