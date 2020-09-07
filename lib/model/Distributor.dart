@@ -4,13 +4,16 @@ class Distributor {
   String alamatLengkap;
   String noTlpn;
   String imageUrl;
+  int id;
 
   Distributor(
       {this.nama,
         this.namaPrincipal,
         this.alamatLengkap,
         this.noTlpn,
-        this.imageUrl});
+        this.imageUrl,
+        this.id
+      });
 
   Distributor.fromJson(Map<String, dynamic> json) {
     nama = json['nama'];
@@ -18,6 +21,7 @@ class Distributor {
     alamatLengkap = json['alamat_lengkap'];
     noTlpn = json['no_tlpn'];
     imageUrl = json['image_url'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +31,7 @@ class Distributor {
     data['alamat_lengkap'] = this.alamatLengkap;
     data['no_tlpn'] = this.noTlpn;
     data['image_url'] = this.imageUrl;
+    data['id'] = this.id;
     return data;
   }
 }

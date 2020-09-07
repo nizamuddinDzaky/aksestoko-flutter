@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
+import 'package:aksestokomobile/view_model/home/select_distributor_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -13,9 +14,10 @@ class SelectDistributorScreen extends StatefulWidget {
       _SelectDistributorScreenState();
 }
 
-class _SelectDistributorScreenState extends SelectDistributorController {
+class _SelectDistributorScreenState extends SelectDistributorViewModel {
   @override
   Widget build(BuildContext context) {
+
     var formLayout = SingleChildScrollView(
       child: Container(
         child: Stack(
@@ -50,7 +52,7 @@ class _SelectDistributorScreenState extends SelectDistributorController {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: listDistributor.length,
-                itemBuilder: (context, index)=>ListDistributorScreen(),
+                itemBuilder: (context, index)=>ListDistributorScreen().listItem(context, listDistributor[index], index),
                 padding: EdgeInsets.only(top: 65),
                 physics: NeverScrollableScrollPhysics(),
 

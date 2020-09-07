@@ -15,10 +15,14 @@ class ApiConfig {
   static String urlProfileUpdate = '${path}auth/update_profile';
 
   //product
-  static String urlListProduct = '${path}products/list_products';
+  static String urlListProduct = '${path}get_list_product.php';
 
   //distributor
   static String urlListDistributor = '${path}get_list_distributor.php';
+
+  //cart
+  static String urlCart = '${path}get_list_cart.php';
+
 
   //local
   static String urlListProvince = '${local}list_province';
