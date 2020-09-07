@@ -57,7 +57,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       bottom: 15,
                     ),
                     child: Text(
-                      "Alamat Pengiriman",
+                      "Alamat Pengiriman123",
                       style: TextStyle(
                           color: MyColor.blackTextAT,
                           fontWeight: FontWeight.bold,

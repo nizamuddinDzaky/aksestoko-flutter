@@ -1,5 +1,7 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
@@ -7,20 +9,21 @@ import 'package:flutter/services.dart';
 class ListProductScreen extends StatefulWidget {
   final Product _product;
   final SelectProductController controller;
-  ListProductScreen(this._product, this.controller);
-  _ListProductScreenState createState() => _ListProductScreenState(_product, controller);
+  final SelectProductViewModel vm;
+  ListProductScreen(this._product, this.controller, this.vm);
+  _ListProductScreenState createState() => _ListProductScreenState(_product, controller, vm);
 }
 
 class _ListProductScreenState extends State<ListProductScreen> {
   TextEditingController _controller = TextEditingController();
   final SelectProductController controller;
-
+  final SelectProductViewModel vm;
   final Product _product;
-  _ListProductScreenState(this._product, this.controller);
+  _ListProductScreenState(this._product, this.controller, this.vm);
   @override
   void initState() {
     super.initState();
-    _controller.text = "0"; // Setting the initial value for the field.
+    _controller.text = _product.qty != null ? _product.qty.toString() : '0'; // Setting the initial value for the field.
   }
 
   @override
@@ -45,7 +48,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                _product.nama,
+                '${_product.qty} => ${_product.nama}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -58,7 +61,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      _product.satuanHargaCash,
+                      '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
                       style: TextStyle(
                         color: Color(0xffB20838),
                         fontWeight: FontWeight.bold,
@@ -82,13 +85,15 @@ class _ListProductScreenState extends State<ListProductScreen> {
                     child: FlatButton(
                       color: Color(0xFF387C2B),
                       onPressed: () {
-                        int currentValue = int.parse(_controller.text);
-                        setState(() {
-                          print("tes minus");
-                          currentValue--;
-                          _controller.text =
-                              (currentValue > 0 ? currentValue : 0).toString();
-                        });
+                        /*vm.confirmMinus();*/
+                        int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
+                        currentValue --;
+                        if(currentValue > 0){
+                          _controller.text =currentValue.toString();
+                          controller.reduceCart(_product, customQty: currentValue.toDouble());
+                        }else{
+                          _showAlertDialog(context, controller, _product);
+                        }
                       },
                       shape: CircleBorder(),
                       child: Text(
@@ -102,6 +107,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   child: Container(
                     width: 50,
                     child: TextFormField(
+                      /*initialValue: 'wkwk',*/
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
@@ -127,12 +133,10 @@ class _ListProductScreenState extends State<ListProductScreen> {
                     child: FlatButton(
                       color: Color(0xFF387C2B),
                       onPressed: () {
-                        int currentValue = int.parse(_controller.text);
+                        int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
+                        currentValue++;
                         controller.addToCart(_product, customQty: currentValue.toDouble());
-                        setState(() {
-                          currentValue++;
-                          _controller.text = (currentValue).toString();
-                        });
+                        _controller.text = (currentValue).toString();
                       },
                       shape: CircleBorder(),
 //                      padding: EdgeInsets.all(5),
@@ -149,6 +153,41 @@ class _ListProductScreenState extends State<ListProductScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showAlertDialog(BuildContext context, SelectProductController controller, Product _product) {
+    // set up the buttons
+
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget launchButton = FlatButton(
+      child: Text("Launch missile"),
+      onPressed:  () {
+        controller.removeCart(_product);
+        _controller.text = '0';
+        Navigator.of(context).pop();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Notice"),
+      content: Text("Apakah Anda Yakin Menghapus Barang Ini ?"),
+      actions: [
+        cancelButton,
+        launchButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

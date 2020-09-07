@@ -2,6 +2,7 @@ import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:aksestokomobile/util/my_number.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -14,14 +15,15 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  TextEditingController _controller = TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
-    _controller.text = "0"; // Setting the initial value for the field.
+    /*_controller.text = "0"; */// Setting the initial value for the field.
   }
 
+  // ignore: non_constant_identifier_names
   bool CheckBoxValue = false;
   Widget formLayout(SelectProductController controller){
     return SingleChildScrollView(
@@ -30,23 +32,28 @@ class _CartScreenState extends State<CartScreen> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 15,
-                    childAspectRatio: 16 / 9
-                ),
-                padding: EdgeInsets.only(top: 10),
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: controller.listCart.length,
-                itemBuilder: (context, index)=>listProductCart(controller.listCart[index], controller)
-              ),
+              child: controller.listCart == null || controller.listCart.length < 1 ?
+              new Text('Keranjang Kosong') : _gridCart(controller),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _gridCart(SelectProductController controller){
+    return GridView.builder(
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 15,
+            childAspectRatio: 16 / 9
+        ),
+        padding: EdgeInsets.only(top: 10),
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: controller.listCart.length,
+        itemBuilder: (context, index)=>listProductCart(controller.listCart[index], controller)
     );
   }
   @override
@@ -198,6 +205,8 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget listProductCart(Product _product, SelectProductController controller) {
+    TextEditingController _controller = TextEditingController();
+    _controller.text = _product.qty.toInt().toString();
     return Card(
       elevation: 4,
       child: Column(
@@ -241,7 +250,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Expanded(
                                   child: Container(
                                     child: Text(
-                                      _product.nama,
+                                      '${_product.qty} => ${_product.nama}',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xff333333),
@@ -287,7 +296,7 @@ class _CartScreenState extends State<CartScreen> {
                                     ),
                                     Container(
                                       child: Text(
-                                        'Rp 60.000',
+                                        '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
                                         style: TextStyle(
                                             color: Color(0xff333333),
                                             fontSize: 16,
@@ -313,12 +322,7 @@ class _CartScreenState extends State<CartScreen> {
                                           textAlign: TextAlign.center,
                                         ),
                                         onPressed: () {
-                                          int currentValue = int.parse(_controller.text);
-                                          setState(() {
-                                            print("tes minus");
-                                            currentValue--;
-                                            _controller.text = (currentValue > 0 ? currentValue : 0).toString();
-                                          });
+                                          controller.reduceCart(_product);
                                         },
                                       ),
                                     ),
@@ -326,6 +330,7 @@ class _CartScreenState extends State<CartScreen> {
                                       child: Center(
                                         child: Container(
                                           child: TextFormField(
+                                            /*initialValue: "12",*/
                                             textAlign: TextAlign.center,
                                             style: TextStyle(fontSize: 18, color: Color(0xFF333333),
                                               fontWeight: FontWeight.bold,
@@ -352,10 +357,11 @@ class _CartScreenState extends State<CartScreen> {
                                           textAlign: TextAlign.center,
                                         ),
                                         onPressed: () {
-                                          int currentValue = int.parse(_controller.text);
+                                          debugPrint("${_controller.text}");
+                                          int currentValue = _product.qty.toInt();
+                                          _product.qty = currentValue.toDouble();
+                                          controller.addToCart(_product, qty: currentValue.toDouble());
                                           setState(() {
-                                            currentValue++;
-                                            _controller.text = (currentValue).toString();
                                           });
                                         },
                                       ),

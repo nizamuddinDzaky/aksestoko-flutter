@@ -41,4 +41,33 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       status.execute();
     });
   }
+
+  void getDataCart() async {
+    var params = {
+      MyString.KEY_ID_CART: MyPref.getIdDistributor(),
+    };
+    var status = await ApiClient.methodGet(ApiConfig.urlCart, params: params, onBefore: (status) {
+//      Get.back();
+    }, onSuccess: (data, flag) {
+      var baseResponse = BaseResponse.fromJson(data);
+      var newListProduct = baseResponse?.data?.listProduct ?? [];
+      listProduct.clear();
+      listProduct.addAll(newListProduct);
+
+    }, onFailed: (title, message) {
+      Get.defaultDialog(title: title, content: Text(message));
+    }, onError: (title, message) {
+      Get.defaultDialog(title: title, content: Text(message));
+    }, onAfter: (status) {
+//      if (status == ResponseStatus.success)
+//        MyPref.setRemember(isRemember, currentData);
+    });
+    setState(() {
+      status.execute();
+    });
+  }
+
+  void confirmMinus(){
+
+  }
 }

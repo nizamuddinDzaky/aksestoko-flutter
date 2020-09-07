@@ -20,6 +20,10 @@ class ApiConfig {
   //distributor
   static String urlListDistributor = '${path}get_list_distributor.php';
 
+  //cart
+  static String urlCart = '${path}get_list_cart.php';
+
+
   //local
   static String urlListProvince = '${local}list_province';
   static String urlListCity = '${local}list_city';

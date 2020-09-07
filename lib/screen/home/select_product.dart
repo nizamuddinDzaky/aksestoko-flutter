@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
-import 'package:aksestokomobile/screen/home/select_product_model.dart';
+import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,7 +87,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                       maxRadius: 10,
                       backgroundColor: MyColor.redAT,
                       child: Text(
-                        '${vm.listCart?.length ?? '-'}',
+                        '${vm.listCart?.length ?? '0'}',
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -122,7 +122,11 @@ class _SelectProductScreenState extends SelectProductViewModel {
             ),
             child: FloatingActionButton.extended(
               onPressed: () {
-                Get.toNamed(checkoutScreen);
+                if(vm.listCart == null || vm.listCart.length < 1){
+                  _alertDialog();
+                }else{
+                  Get.toNamed(checkoutScreen);
+                }
               },
               backgroundColor: MyColor.greenAT,
               icon: Icon(Icons.payment),
@@ -149,7 +153,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
       padding: EdgeInsets.only(top: 10),
       physics: NeverScrollableScrollPhysics(),
       itemCount: listProduct.length,
-      itemBuilder: (context, index)=>ListProductScreen(listProduct[index], controller),
+      itemBuilder: (context, index)=>ListProductScreen(listProduct[index], controller, this),
     );
   }
 
@@ -223,4 +227,62 @@ class _SelectProductScreenState extends SelectProductViewModel {
       ),
     );
   }
+
+  void _alertDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Alert Dialog title"),
+          content: new Text("Alert Dialog body"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /*void _showAlertDialog(BuildContext context, SelectProductController controller, Product _product) {
+    // set up the buttons
+
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget launchButton = FlatButton(
+      child: Text("Launch missile"),
+      onPressed:  () {
+        controller.removeCart(_product);
+        _controller.text = '0';
+        Navigator.of(context).pop();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Notice"),
+      content: Text("Apakah Anda Yakin Menghapus Barang Ini ?"),
+      actions: [
+        cancelButton,
+        launchButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }*/
 }

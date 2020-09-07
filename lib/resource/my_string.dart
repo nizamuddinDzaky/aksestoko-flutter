@@ -8,6 +8,7 @@ class MyString {
   //
   static const KEY_ID_BK = "id_bk";
   static const KEY_ID_DISTRIBUTOR = "id_distributor";
+  static const KEY_ID_CART = "id_cart";
   static const KEY_DISTRIBUTOR_NAME = "distributor_name";
 
   // sales booking

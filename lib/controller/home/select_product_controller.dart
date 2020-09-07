@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/model/Product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SelectProductController extends GetController {
@@ -16,6 +17,13 @@ class SelectProductController extends GetController {
   void removeCart(Product p){
     p.qty = 0;
     listCart.remove(p);
+    update();
+  }
+
+  void reduceCart(Product p, {double qty = 1, double customQty}){
+    var order = p.qty;
+    p.qty = customQty ?? (order - qty);
+    /*if (!listCart.contains(p)) listCart.add(p);*/
     update();
   }
 }
