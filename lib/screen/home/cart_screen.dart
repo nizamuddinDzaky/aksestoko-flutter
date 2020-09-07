@@ -42,17 +42,10 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget _gridCart(SelectProductController controller){
-    return GridView.builder(
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 15,
-            childAspectRatio: 16 / 9
-        ),
-        padding: EdgeInsets.only(top: 10),
-        physics: NeverScrollableScrollPhysics(),
+    return ListView.builder(
         itemCount: controller.listCart.length,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index)=>listProductCart(controller.listCart[index], controller)
     );
   }
@@ -209,207 +202,239 @@ class _CartScreenState extends State<CartScreen> {
     _controller.text = _product.qty.toInt().toString();
     return Card(
       elevation: 4,
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 20,
-            margin: EdgeInsets.only(top: 5, left: 0, bottom: 0),
-            child: Checkbox(
-              value: CheckBoxValue,
-              onChanged: (bool value) {
-                setState(() {
-                  CheckBoxValue = value;
-                });
-              },
-            ),
-            alignment: Alignment(-1.0, 0.0),
-          ),
-          Expanded(
-            child: Container(
-              //color: Colors.blue,
-              padding: EdgeInsets.only(bottom: 10),
-              child: Row(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 0.0),
+        child: IntrinsicHeight(
+          child: Column(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Center(
-                    child: Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      child: Image.asset(kImageDynamix),
-                    ),
-                  ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: MyColor.greyAT,
+                            width: 3.0,
+                          ),
+                        ),
+                      ),
+                      height: 40,
+                      margin: EdgeInsets.only(top: 5, left: 0, bottom: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Expanded(
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    child: Text(
-                                      '${_product.qty} => ${_product.nama}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff333333),
-                                          fontSize: 16),
-                                    ),
-                                  ),
-                                ),
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: MyColor.redAT,
-                                    ),
-                                  onPressed: () {
-                                    controller.removeCart(_product);
-                                    }
-
-                                ),
-                              ],
-                            ),
+                          Checkbox(
+                            value: CheckBoxValue,
+                            onChanged: (bool value) {
+                              setState(() {
+                                CheckBoxValue = value;
+                              });
+                            },
                           ),
-                          SizedBox(height: 5),
-                          Container(
-                            child: Text(
-                              _product.kodeUnit,
-                              style: TextStyle(
-                                  color: Color(0xff999999), fontSize: 16),
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        'Harga',
-                                        style: TextStyle(
-                                            color: Color(0xff999999),
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
-                                        style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                          IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: MyColor.redAT,
                               ),
-                              Expanded(
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: RaisedButton(
-                                        color: Color(0xFF387C2B),
-                                        shape:
-                                        CircleBorder(),
-                                        child: Text(
-                                          '-',
-                                          style: TextStyle(color: Colors.white, fontSize: 24),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        onPressed: () {
-                                          controller.reduceCart(_product);
-                                        },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Container(
-                                          child: TextFormField(
-                                            /*initialValue: "12",*/
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18, color: Color(0xFF333333),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.all(0.0),
-                                            ),
-                                            controller: _controller,
-                                            keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
-                                            inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: RaisedButton(
-                                        color: Color(0xFF387C2B),
-                                        shape: CircleBorder(),
-                                        child: Text(
-                                          '+',
-                                          style: TextStyle(color: Colors.white, fontSize: 24),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        onPressed: () {
-                                          debugPrint("${_controller.text}");
-                                          int currentValue = _product.qty.toInt();
-                                          _product.qty = currentValue.toDouble();
-                                          controller.addToCart(_product, qty: currentValue.toDouble());
-                                          setState(() {
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              onPressed: () {
+                                controller.removeCart(_product);
+                              }
                           ),
                         ],
                       ),
+                      alignment: Alignment(-1.0, 0.0),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                top: BorderSide(
-                  //                   <--- left side
-                  color: MyColor.greyAT,
-                  width: 3.0,
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 120,
+//                color: Colors.amber,
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+//                        width image
+                        child: Image.asset(
+                          kImageDynamix,
+                          width: 90,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                            children: [
+                              Container(
+                                  height: 70,
+//                                color: Colors.blue,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Text(
+                                              '${_product.qty} => ${_product.nama}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xff333333),
+                                                  fontSize: 16),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10,),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              _product.kodeUnit,
+                                              style: TextStyle(
+                                                  color: Color(0xff999999), fontSize: 14),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                              ),
+                              Container(
+                                height: 40,
+//                                color: Colors.red,
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              'Harga',
+                                              style: TextStyle(
+                                                  color: Color(0xff999999),
+                                                  fontSize: 14),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
+                                              style: TextStyle(
+                                                  color: Color(0xff333333),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Container(
+                                                height: 20,
+                                                width: 20,
+                                                child: FittedBox(
+                                                  child: FloatingActionButton(
+                                                    heroTag: "btnMinus${_product.nama}",
+                                                    backgroundColor: Color(0xFF387C2B),
+                                                    onPressed: () {
+                                                      controller.reduceCart(_product);
+                                                    },
+                                                    child: Icon(Icons.remove),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 40,
+                                                width: 50,
+                                                child: TextFormField(
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(fontSize: 14, color: Color(0xFF333333),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    contentPadding: EdgeInsets.all(0.0),
+                                                  ),
+                                                  controller: _controller,
+                                                  keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
+                                                  inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                                                ),
+                                              ),
+
+                                              Container(
+                                                height: 20,
+                                                width: 20,
+                                                child: FittedBox(
+                                                  child: FloatingActionButton(
+                                                    heroTag: "btnPlus${_product.nama}",
+                                                    backgroundColor: Color(0xFF387C2B),
+                                                    onPressed: () {
+                                                      debugPrint("${_controller.text}");
+                                                      int currentValue = _product.qty.toInt();
+                                                      _product.qty = currentValue.toDouble();
+                                                      controller.addToCart(_product, qty: currentValue.toDouble());
+                                                      setState(() {
+                                                      });
+                                                    },
+                                                    child: Icon(Icons.add),
+                                                  ),
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ]),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: MyColor.greyAT,
+                      width: 3.0,
+                    ),
+                  ),
+                ),
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "SUBTOTAL",
+                        style: TextStyle(
+                            color: Color(0xff999999), fontWeight: FontWeight.bold, fontSize: 14,),
+                      ),
+                      Text(
+                        "Rp 10.000.000",
+                        style: TextStyle(
+                            color: Color(0xff333333), fontWeight: FontWeight.bold, fontSize: 14,),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "SUBTOTAL",
-                    style: TextStyle(
-                        color: Color(0xff999999), fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Rp 10.000.000",
-                    style: TextStyle(
-                        color: Color(0xff333333), fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
