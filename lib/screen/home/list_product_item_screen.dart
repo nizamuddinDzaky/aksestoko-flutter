@@ -2,6 +2,7 @@ import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
@@ -34,13 +35,14 @@ class _ListProductScreenState extends State<ListProductScreen> {
         //color: Colors.blue,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Center(
               child: Container(
                 //color: Colors.blue,
                 child: Image.asset(
                   kImageDynamix,
-                  height: 140,
+                  height: 120,
                 ),
               ),
             ),
