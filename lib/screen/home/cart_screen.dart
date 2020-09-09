@@ -364,6 +364,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   ),
                                                   decoration: InputDecoration(
                                                     contentPadding: EdgeInsets.all(0.0),
+                                                    border: InputBorder.none,
                                                   ),
                                                   controller: _controller,
                                                   keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
