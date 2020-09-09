@@ -7,6 +7,7 @@ class DataResponse {
   int idBK;
   List<Distributor> listDistributor;
   List<Product> listProduct;
+  List<Address> listAddress;
   Address address;
   DataResponse({this.token});
 
@@ -50,6 +51,9 @@ class DataResponse {
       return Address.fromJson(obj);
     });
 
+    listAddress = ifExistList(json, 'list_alamat', (obj) {
+      return Address.fromJson(obj);
+    });
   }
 
   Map<String, dynamic> toJson() {

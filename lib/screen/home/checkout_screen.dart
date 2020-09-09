@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -12,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:flutter/services.dart';
+
+import 'list_address_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   @override
@@ -25,10 +28,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
   String selectShipping = "";
   final shipingSelected = TextEditingController();
 
-  List<String> shiping = [
-    "Pengiriman Distributor",
-    "Pengambilan Sendiri",
-  ];
+
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -98,179 +98,13 @@ class _CheckoutScreenState extends CheckoutViewModel {
           FocusScope.of(context).unfocus();
         },
         child: GetBuilder<SelectProductController>(
-          builder: (controller) => _layout(controller),
+          builder: (controller) => _layout(controller, context),
         ),
       ),
     );
   }
 
-  Widget _item(BuildContext context, Product _product){
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.only(
-        top: 15,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: MyColor.greyTextAT,
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset:
-            Offset(0, 2), // changes position of shadow
-          )
-        ],
-      ),
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(
-                left: 15, right: 15, bottom: 15),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  child: Image.asset(
-                    kImageDynamix,
-                    width: 100,
-                  ),
-                ),
-                Container(
-                  child: Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Text(
-                                  _product.nama,
-                                  style: TextStyle(
-                                    color:
-                                    MyColor.blackTextAT,
-                                    fontWeight:
-                                    FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin:
-                          EdgeInsets.only(bottom: 20),
-                          child: Text(
-                            _product.kodeUnit,
-                            style: TextStyle(
-                              color: MyColor.greyTextAT,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Text(
-                                  "${MyNumber.toNumberRpStr(_product.satuanHargaCash)}",
-                                  style: TextStyle(
-                                    color:
-                                    MyColor.blackTextAT,
-                                    fontWeight:
-                                    FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        'Jumlah',
-                                        style: TextStyle(
-                                            color: Color(0xff999999),
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        _product.qty.toInt().toString(),
-                                        style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 3,
-            color: Color(0xffEAEAEA),
-            margin: EdgeInsets.symmetric(vertical: 0),
-          ),
-          Container(
-            padding: EdgeInsets.only(
-                left: 20, right: 20, top: 15, bottom: 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-            child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "SUBTOTAL",
-                  style: TextStyle(
-                      color: Color(0xff999999),
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "${MyNumber.toNumberRpStr((_product.qty * int.tryParse(_product.satuanHargaCash)).toString())}",
-                  style: TextStyle(
-                      color: Color(0xff333333),
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _listItem(SelectProductController controller){
-    return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, index)=> _item(context, controller.listCart[index]),
-      itemCount: controller.listCart.length,
-      /*children: <Widget>[
-
-      ],*/
-    );
-  }
-  Widget _layout(SelectProductController controller){
+  Widget _layout(SelectProductController controller, BuildContext context){
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -389,7 +223,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      onPressed: null,
+                      onPressed: () => _dialogListAddress(context, controller),
                     ),
                   ),
                 ],
@@ -687,16 +521,22 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.symmetric(vertical: 25),
-                          child: DropDownField(
-                            controller: shipingSelected,
-                            hintText: "Pilih Pengiriman",
-                            enabled: true,
-                            itemsVisibleInDropdown: 3,
+                          child: DropdownSearch(
                             items: shiping,
-                            onValueChanged: (value) {
-                              setState(() {
-                                selectShipping = value;
-                              });
+                            onChanged: print,
+                            showSearchBox: true,
+                            searchBoxDecoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                              labelText: "Search a country",
+                            ),
+                            validator: (String item) {
+                              if (item == null)
+                                return "Required field";
+                              else if (item == "Brazil")
+                                return "Invalid item";
+                              else
+                                return null;
                             },
                           ),
                         ),
@@ -859,5 +699,195 @@ class _CheckoutScreenState extends CheckoutViewModel {
         ),
       ),
     );
+  }
+
+  Widget _listItem(SelectProductController controller){
+    return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index)=> _item(context, controller.listCart[index]),
+      itemCount: controller.listCart.length,
+      /*children: <Widget>[
+
+      ],*/
+    );
+  }
+
+  Widget _item(BuildContext context, Product _product){
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(
+        top: 15,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: MyColor.greyTextAT,
+            spreadRadius: 0,
+            blurRadius: 8,
+            offset:
+            Offset(0, 2), // changes position of shadow
+          )
+        ],
+      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(
+                left: 15, right: 15, bottom: 15),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: Image.asset(
+                    kImageDynamix,
+                    width: 100,
+                  ),
+                ),
+                Container(
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  _product.nama,
+                                  style: TextStyle(
+                                    color:
+                                    MyColor.blackTextAT,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin:
+                          EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            _product.kodeUnit,
+                            style: TextStyle(
+                              color: MyColor.greyTextAT,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment
+                                .spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  "${MyNumber.toNumberRpStr(_product.satuanHargaCash)}",
+                                  style: TextStyle(
+                                    color:
+                                    MyColor.blackTextAT,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text(
+                                        'Jumlah',
+                                        style: TextStyle(
+                                            color: Color(0xff999999),
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        _product.qty.toInt().toString(),
+                                        style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 0),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+                left: 20, right: 20, top: 15, bottom: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            child: Row(
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "SUBTOTAL",
+                  style: TextStyle(
+                      color: Color(0xff999999),
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "${MyNumber.toNumberRpStr((_product.qty * int.tryParse(_product.satuanHargaCash)).toString())}",
+                  style: TextStyle(
+                      color: Color(0xff333333),
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _dialogListAddress(BuildContext context, SelectProductController controller) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Daftar Alamat Toko'),
+            content: Container(
+              width: double.maxFinite,
+              height: 300.0,
+              child: ListAddressScreen()
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }
