@@ -238,6 +238,7 @@ class _CartScreenState extends State<CartScreen> {
                               icon: Icon(
                                 Icons.delete,
                                 color: MyColor.redAT,
+                                size: 20,
                               ),
                               onPressed: () {
                                 controller.removeCart(_product);
