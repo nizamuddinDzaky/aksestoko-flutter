@@ -25,6 +25,7 @@ class ApiConfig {
 
   //address
   static String urlDetailAddress = '${path}get_detail_alamat.php';
+  static String urlListAddress = '${path}get_list_alamat.php';
 
   //local
   static String urlListProvince = '${local}list_province';
