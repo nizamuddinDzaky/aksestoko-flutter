@@ -80,77 +80,71 @@ class _ListProductScreenState extends State<ListProductScreen> {
                 )),
             SizedBox(height: 10),
             Expanded(
-                child: Row(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Expanded(
-                  child: Container(
-                    child: FlatButton(
-                      color: Color(0xFF387C2B),
-                      onPressed: () {
-                        /*vm.confirmMinus();*/
-                        int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
-                        currentValue --;
-                        if(currentValue > 0){
-                          _controller.text =currentValue.toString();
-                          controller.reduceCart(_product, customQty: currentValue.toDouble());
-                        }else{
-                          _showAlertDialog(context, controller, _product);
-                        }
-                      },
-                      shape: CircleBorder(),
-                      child: Text(
-                        '-',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+                  Container(
+                    height: 30,
+                    width: 30,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                        heroTag: "btnMinus${_product.nama}",
+                        backgroundColor: Color(0xFF387C2B),
+                        onPressed: () {
+                          int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
+                          currentValue --;
+                          if(currentValue > 0){
+                            _controller.text =currentValue.toString();
+                            controller.reduceCart(_product, customQty: currentValue.toDouble());
+                          }else{
+                            _showAlertDialog(context, controller, _product);
+                          }
+                        },
+                        child: Icon(Icons.remove),
                       ),
                     ),
                   ),
-                ),
-                Center(
-                  child: Container(
-                    width: 50,
-                    child: TextFormField(
-                      /*initialValue: 'wkwk',*/
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF333333),
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0.0),
-                      ),
-                      controller: _controller,
-                      keyboardType: TextInputType.numberWithOptions(
-                        decimal: false,
-                        signed: true,
-                      ),
-                      inputFormatters: <TextInputFormatter>[
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: FlatButton(
-                      color: Color(0xFF387C2B),
-                      onPressed: () {
-                        int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
-                        currentValue++;
-                        controller.addToCart(_product, customQty: currentValue.toDouble());
-                        _controller.text = (currentValue).toString();
-                      },
-                      shape: CircleBorder(),
-//                      padding: EdgeInsets.all(5),
-                      child: Text(
-                        '+',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+                  Expanded(
+                    child: Container(
+                      // height: 40,
+                      // width: 50,
+                      child: TextFormField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, color: Color(0xFF333333),
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(0.0),
+                          border: InputBorder.none,
+                        ),
+                        controller: _controller,
+                        keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
+                        inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
                       ),
                     ),
                   ),
-                ),
+                  Container(
+                    height: 30,
+                    width: 30,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                        heroTag: "btnPlus${_product.nama}",
+                        backgroundColor: Color(0xFF387C2B),
+                        onPressed: () {
+                          int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
+                          currentValue++;
+                          controller.addToCart(_product, customQty: currentValue.toDouble());
+                          _controller.text = (currentValue).toString();
+                        },
+                        child: Icon(Icons.add),
+                      ),
+                    ),
+                  ),
               ],
-            )),
+            ),
+                )),
             SizedBox(height: 10),
           ],
         ),

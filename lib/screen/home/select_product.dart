@@ -142,13 +142,18 @@ class _SelectProductScreenState extends SelectProductViewModel {
   }
 
   Widget _gridProduct(SelectProductController controller){
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = 255;
+    final double itemWidth = size.width / 2;
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 20,
-          childAspectRatio: 3 / 4
+        crossAxisCount: 2,
+        crossAxisSpacing: 4,
+        mainAxisSpacing: 20,
+        childAspectRatio: (itemWidth / itemHeight),
       ),
       padding: EdgeInsets.only(top: 10),
       physics: NeverScrollableScrollPhysics(),

@@ -238,6 +238,7 @@ class _CartScreenState extends State<CartScreen> {
                               icon: Icon(
                                 Icons.delete,
                                 color: MyColor.redAT,
+                                size: 20,
                               ),
                               onPressed: () {
                                 controller.removeCart(_product);
@@ -364,6 +365,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   ),
                                                   decoration: InputDecoration(
                                                     contentPadding: EdgeInsets.all(0.0),
+                                                    border: InputBorder.none,
                                                   ),
                                                   controller: _controller,
                                                   keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),

@@ -4,7 +4,6 @@ import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -891,19 +890,33 @@ class _CheckoutScreenState extends CheckoutViewModel {
         builder: (context) {
           return AlertDialog(
             title: Text('Daftar Alamat Toko'),
-            content: Container(
-              width: double.maxFinite,
-              height: 300.0,
-              child: ListAddressScreen()
+            content: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                      width: double.maxFinite,
+                      child: ListAddressScreen()
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text('Cancel'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('Tambah Alamat', style: TextStyle(color: MyColor.redAT),),
+                      onPressed: () {
+                        Get.toNamed(addAddressScreen);
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
           );
         });
   }
