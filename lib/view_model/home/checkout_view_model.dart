@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -16,6 +17,8 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
   }
   Address address;
   List<String> shiping = [];
+  var totalAkhir = 0.0;
+  var shipmentPrice = 0.0;
   void _getAddress() async{
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
@@ -35,5 +38,43 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
     setState(() {
       status.execute();
     });
+  }
+
+  void getShipmentPrice(String shipment, SelectProductController controller) async{
+    List<Map<String, dynamic>> cart = [];
+    controller.listCart?.forEach((p) {
+      cart.add({
+        'product_id': p.productId,
+        'price': p.satuanHargaCash,
+        'quantity': p.qty,
+      });
+    });
+    var body = {
+      'shipment': shipment,
+      'item': cart,
+    };
+    var status = await ApiClient.methodPost(
+        ApiConfig.urlListShipment, body, {},
+        onBefore: (status) {
+          Get.back();
+        }, onSuccess: (data, _) {
+      var baseResponse = BaseResponse.fromJson(data);
+      shipmentPrice = double.parse(baseResponse?.data?.shipmentPrice);
+      debugPrint(baseResponse?.data?.shipmentPrice);
+    }, onFailed: (title, message) {
+      Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+    }, onError: (title, message) {
+      Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+    }, onAfter: (status) {
+      /*if (status == ResponseStatus.success)
+        MyPref.setRemember(isRemember, currentData);*/
+    });
+    status.execute();
+  }
+
+  double getTotalAkhir(SelectProductController controller){
+    var harga = controller.getTotalHarga();
+    totalAkhir = harga.toDouble() + shipmentPrice;
+    return totalAkhir;
   }
 }

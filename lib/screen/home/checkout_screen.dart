@@ -46,6 +46,22 @@ class _CheckoutScreenState extends CheckoutViewModel {
     }
   }
 
+  void _changeShipment(String data, SelectProductController controller) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
+    await getShipmentPrice(data, controller);
+    setState((){});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -523,12 +539,13 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           margin: EdgeInsets.symmetric(vertical: 25),
                           child: DropdownSearch(
                             items: shiping,
-                            onChanged: print,
+                            hint: "Pilih Pengiriman",
+                            onChanged: (String data) => _changeShipment(data, controller),
                             showSearchBox: true,
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
-                              labelText: "Search a country",
+                              labelText: "Pilih Pengiriman",
                             ),
                             validator: (String item) {
                               if (item == null)
@@ -629,7 +646,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               color: MyColor.greyTextAT, fontSize: 16),
                         ),
                         Text(
-                          "Rp 10.300.000",
+                          "${MyNumber.toNumberRpStr(shipmentPrice.toString())}",
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
@@ -653,7 +670,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "Rp 10.300.000",
+                          "${MyNumber.toNumberRpStr(getTotalAkhir(controller).toString())}",
                           style: TextStyle(
                               color: MyColor.redAT,
                               fontWeight: FontWeight.bold,

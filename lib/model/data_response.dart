@@ -9,6 +9,7 @@ class DataResponse {
   List<Product> listProduct;
   List<Address> listAddress;
   Address address;
+  String shipmentPrice;
   DataResponse({this.token});
 
   T ifExist<T>(json, key) {
@@ -38,6 +39,7 @@ class DataResponse {
 
   DataResponse.fromJson(Map<String, dynamic> json) {
     token = ifExist(json, 'token');
+    shipmentPrice = ifExist(json, 'biaya_pengiriman');
     idBK = ifExist(json, 'id_bk_user');
     listDistributor = ifExistList(json, 'list_distributor', (obj) {
       return Distributor.fromJson(obj);
