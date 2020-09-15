@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/controller/home/payment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +12,8 @@ class PaymentScreen extends StatefulWidget {
   _PaymentScreenState createState() => _PaymentScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
-  bool CashOnDelivery = false;
-  bool CashBeforeDelivery = false;
-  bool KreditPro = false;
-  bool TempoDistributor = false;
+class _PaymentScreenState extends PaymentController {
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,30 +46,36 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   FlatButton(
-                    color: MyColor.redAT,
+                    color: currentTab == 0 ? MyColor.redAT : Colors.white,
                     child: Text(
                       "Tunai",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: currentTab == 0 ? Colors.white : Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
                     ),
                     onPressed: () {
-                      Get.toNamed(paymentScreen);
+                      setState(() {
+                        currentTab = 0;
+                      });
                     },
                   ),
-                  OutlineButton(
+                  FlatButton(
+                    color: currentTab == 1 ? MyColor.redAT : Colors.white,
                     child: Text(
                       "Kredit",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(
+                          color: currentTab == 1 ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
                     ),
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                      style: BorderStyle.solid,
-                      width: 0.8,
-                    ),
-                    onPressed: null,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 1;
+                      });
+                    },
                   ),
+
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
@@ -85,10 +89,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
               color: Color(0xffEAEAEA),
               margin: EdgeInsets.only(top: 20),
             ),
+            if (currentTab == 0)
             Column(
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -101,6 +106,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   onChanged: (bool value) {
                                     setState(() {
                                       CashOnDelivery = value;
+                                      if (CashOnDelivery){
+                                        CashBeforeDelivery = false;
+                                      }
                                     });
                                   },
                                 ),
@@ -140,6 +148,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           color: Color(0xffEAEAEA),
                           margin: EdgeInsets.only(top: 10, bottom: 20),
                         ),
+                        if (CashOnDelivery)
                         Container(
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -244,7 +253,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ],
                           ),
                         ),
+                        if (CashOnDelivery)
                         MyDivider.spaceDividerLogin(custom: 10),
+                        if (CashOnDelivery)
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -281,10 +292,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
+            if (currentTab == 0)
             Column(
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -297,6 +309,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   onChanged: (bool value) {
                                     setState(() {
                                       CashBeforeDelivery = value;
+                                      if (CashBeforeDelivery){
+                                        CashOnDelivery = false;
+                                      }
                                     });
                                   },
                                 ),
@@ -336,62 +351,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           color: Color(0xffEAEAEA),
                           margin: EdgeInsets.only(top: 10, bottom: 20),
                         ),
+                        if (CashBeforeDelivery)
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton(
-                                color: MyColor.redAT,
-                                child: Text(
-                                  "Mandiri",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                                onPressed: () {
-                                  Get.toNamed(paymentScreen);
-                                },
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "BCA",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "Danamon",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "Sumsel",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                            ],
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: listBank(),
                           ),
                         ),
+                        if (CashBeforeDelivery)
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
                           child: Row(
@@ -431,6 +399,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ],
                           ),
                         ),
+                        if (CashBeforeDelivery)
                         Container(
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -535,7 +504,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ],
                           ),
                         ),
+                        if (CashBeforeDelivery)
                         MyDivider.spaceDividerElementsAT(custom: 10),
+                        if (CashBeforeDelivery)
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -572,10 +543,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
+            if (currentTab == 1)
             Column(
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -584,10 +556,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             Row(
                               children: <Widget>[
                                 Checkbox(
-                                  value: KreditPro,
+                                  value: TempoDistributor,
                                   onChanged: (bool value) {
                                     setState(() {
-                                      KreditPro = value;
+                                      TempoDistributor = value;
                                     });
                                   },
                                 ),
@@ -638,62 +610,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           color: Color(0xffEAEAEA),
                           margin: EdgeInsets.only(top: 10, bottom: 20),
                         ),
+                        if(TempoDistributor)
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton(
-                                color: MyColor.redAT,
-                                child: Text(
-                                  "Mandiri",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                                onPressed: () {
-                                  Get.toNamed(paymentScreen);
-                                },
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "BCA",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "Danamon",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "Sumsel",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                            ],
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: listBank(),
                           ),
                         ),
+                        if(TempoDistributor)
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
                           child: Row(
@@ -733,6 +658,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ],
                           ),
                         ),
+                        if(TempoDistributor)
                         Container(
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -837,7 +763,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ],
                           ),
                         ),
+                        if(TempoDistributor)
                         MyDivider.spaceDividerElementsAT(custom: 20),
+                        if(TempoDistributor)
                         Column(
                           children: <Widget>[
                             Row(
@@ -926,6 +854,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ),
                           ],
                         ),
+                        if(TempoDistributor)
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -962,10 +891,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
+            if (currentTab == 1)
             Column(
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -1028,50 +958,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           color: Color(0xffEAEAEA),
                           margin: EdgeInsets.only(top: 10, bottom: 20),
                         ),
+                        if(KreditPro)
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton(
-                                color: MyColor.redAT,
-                                child: Text(
-                                  "30 Hari",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                                onPressed: () {
-                                  Get.toNamed(paymentScreen);
-                                },
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "45 Hari",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                              OutlineButton(
-                                child: Text(
-                                  "60 Hari",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                  style: BorderStyle.solid,
-                                  width: 0.8,
-                                ),
-                                onPressed: null,
-                              ),
-                            ],
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: listTempo(),
                           ),
                         ),
+                        if(KreditPro)
                         Container(
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -1176,7 +1071,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ],
                           ),
                         ),
+                        if(KreditPro)
                         MyDivider.spaceDividerElementsAT(custom: 20),
+                        if(KreditPro)
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -1244,6 +1141,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
 
     return Scaffold(
+      // key: _key,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Container(
@@ -1294,4 +1192,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
     );
   }
+
+
+
 }

@@ -59,24 +59,25 @@ class _ListProductScreenState extends State<ListProductScreen> {
             ),
             SizedBox(height: 5),
             Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: Text(
+                '${_product.kodeUnit}',
+                style: TextStyle(
+                  color: Color(0xff999999),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Container(
                 margin: EdgeInsets.only(left: 10, right: 10),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
-                      style: TextStyle(
-                        color: Color(0xffB20838),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      ' / ${_product.kodeUnit}',
-                      style: TextStyle(
-                        color: Color(0xff999999),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
+                  style: TextStyle(
+                    color: Color(0xffB20838),
+                    fontWeight: FontWeight.bold,
+                  ),
                 )),
             SizedBox(height: 10),
             Expanded(
