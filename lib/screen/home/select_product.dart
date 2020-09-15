@@ -206,6 +206,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                         });*/
                         Get.toNamed(selectDistributorScreen).then((value) {
                           getDataProduct();
+                          getDataCart();
                         });
                       },
                       icon: Icon(

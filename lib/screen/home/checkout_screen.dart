@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:flutter/services.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import 'list_address_screen.dart';
 
@@ -238,7 +239,17 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      onPressed: () => _dialogListAddress(context, controller),
+                      onPressed: () => _dialogListAddress(context, controller).then((value){
+                        setState(() {
+                          address.namaPenerima = value.namaPenerima;
+                          address.email = value.email;
+                          address.noTlpn = value.noTlpn;
+                          address.alamat = value.alamat;
+                          address.provinceName = value.provinceName;
+                          address.kabupatenName = value.kabupatenName;
+                          address.kecamatanName = value.kecamatanName;
+                        });
+                      }),
                     ),
                   ),
                 ],
@@ -554,6 +565,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               else
                                 return null;
                             },
+
                           ),
                         ),
                       ),

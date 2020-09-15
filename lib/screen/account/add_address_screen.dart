@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -196,17 +197,25 @@ class _AddAddressScreenState extends AddAddressController {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropDownField(
-                                    controller: provinceSelected,
-                                    hintText: "Pilih Provinsi",
-                                    enabled: true,
-                                    itemsVisibleInDropdown: 3,
+                                  child: DropdownSearch(
                                     items: province,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        selectProvince = value;
-                                      });
+                                    hint: "Pilih Provinsi",
+//                                    onChanged: (String data) => _changeShipment(data, controller),
+                                    showSearchBox: true,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      labelText: "Pilih Provinsi",
+                                    ),
+                                    validator: (String item) {
+                                      if (item == null)
+                                        return "Required field";
+                                      else if (item == "Brazil")
+                                        return "Invalid item";
+                                      else
+                                        return null;
                                     },
+
                                   ),
                                 ),
                               ),

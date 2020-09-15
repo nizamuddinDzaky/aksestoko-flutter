@@ -10,7 +10,12 @@ class SelectProductController extends GetController {
     if (listCart == null) listCart = [];
     var order = p.qty;
     p.qty = customQty ?? (order + qty);
-    if (!listCart.contains(p)) listCart.add(p);
+
+    if (!listCart.contains(p)) {
+      debugPrint("masukss ${listCart.contains(p)}");
+      listCart.add(p);
+    }
+    debugPrint("masukss ${listCart.length}");
     update();
   }
 

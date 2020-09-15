@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/model/Address.dart';
+import 'package:aksestokomobile/model/Cart.dart';
 import 'package:aksestokomobile/model/Distributor.dart';
 import 'package:aksestokomobile/model/Product.dart';
 
@@ -8,6 +9,7 @@ class DataResponse {
   List<Distributor> listDistributor;
   List<Product> listProduct;
   List<Address> listAddress;
+  List<Cart> listCart;
   Address address;
   String shipmentPrice;
   DataResponse({this.token});
@@ -47,6 +49,10 @@ class DataResponse {
 
     listProduct = ifExistList(json, 'list_product', (obj) {
       return Product.fromJson(obj);
+    });
+
+    listCart = ifExistList(json, 'list_cart', (obj) {
+      return Cart.fromJson(obj);
     });
 
     address = ifExistObject(json, 'address', (obj){

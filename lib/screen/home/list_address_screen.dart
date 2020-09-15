@@ -15,6 +15,7 @@ class _ListAddressScreenState extends ListAddressViewModel {
   Widget _address(Address address){
     return InkWell(
       onTap: (){
+        Get.back(result: address);
         print("ok");
       },
       child: Container(
