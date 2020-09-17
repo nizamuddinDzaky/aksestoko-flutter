@@ -5,6 +5,7 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -66,9 +67,12 @@ class _RegisterScreenState extends RegisterController {
               child: Column(
                 children: <Widget>[
                   Center(
-                    child: Hero(
-                      tag: 'logoForcaPoS',
-                      child: MyLogo.logoForcaPoSColor(),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                      child: Hero(
+                        tag: 'logoForcaPoS',
+                        child: MyLogo.logoForcaPoSColor(),
+                      ),
                     ),
                   ),
                   Container(

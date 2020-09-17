@@ -31,9 +31,12 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
               child: Column(
                 children: <Widget>[
                   Center(
-                    child: Hero(
-                      tag: 'logoForcaPoS',
-                      child: MyLogo.logoForcaPoSColor(),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                      child: Hero(
+                        tag: 'logoForcaPoS',
+                        child: MyLogo.logoForcaPoSColor(),
+                      ),
                     ),
                   ),
                   Container(
