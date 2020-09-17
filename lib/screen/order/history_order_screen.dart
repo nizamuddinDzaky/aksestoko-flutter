@@ -77,7 +77,7 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
               text: "Dalam Proses",
             ),
             Tab(
-              text: "Selesei",
+              text: "Selesai",
             ),
           ],
         ),

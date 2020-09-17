@@ -208,6 +208,7 @@ class _LoginScreenState extends LoginScreenController {
                     child: Column(
                       children: <Widget>[
                         Container(
+                          margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
                           height: Get.height * 0.25,
                           child: Center(
                             child: Hero(
