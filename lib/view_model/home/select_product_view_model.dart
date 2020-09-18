@@ -76,7 +76,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
   }
 
   void buildCart(){
-    final SelectProductController controller = Get.find();
+      final SelectProductController controller = Get.find();
     if(listCart != null && listProduct != null){
       listCart.forEach((cart) {
         listProduct.forEach((product) {

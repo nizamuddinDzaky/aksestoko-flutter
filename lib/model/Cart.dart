@@ -1,6 +1,6 @@
 class Cart {
   String nama;
-  int satuanHargaCash;
+  String satuanHargaCash;
   int qty;
   int itemCartId;
   String imageUrl;

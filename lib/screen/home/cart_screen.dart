@@ -282,7 +282,7 @@ class _CartScreenState extends State<CartScreen> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Text(
-                                              '${_product.qty} => ${_product.nama}',
+                                              '${_product.nama}',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Color(0xff333333),

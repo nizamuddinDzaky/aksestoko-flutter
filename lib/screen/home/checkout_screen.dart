@@ -1,8 +1,10 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
+import 'package:aksestokomobile/view_model/home/list_address_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -24,6 +26,7 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends CheckoutViewModel {
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
+  String shipment;
 
   String selectShipping = "";
   final shipingSelected = TextEditingController();
@@ -47,6 +50,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
   }
 
   void _changeShipment(String data, SelectProductController controller) async {
+    shipment = data;
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -241,13 +245,13 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       ),
                       onPressed: () => _dialogListAddress(context, controller).then((value){
                         setState(() {
-                          address.namaPenerima = value.namaPenerima;
-                          address.email = value.email;
-                          address.noTlpn = value.noTlpn;
-                          address.alamat = value.alamat;
-                          address.provinceName = value.provinceName;
-                          address.kabupatenName = value.kabupatenName;
-                          address.kecamatanName = value.kecamatanName;
+                          address.namaPenerima = value?.namaPenerima ?? address.namaPenerima;
+                          address.email = value?.email ?? address.email;
+                          address.noTlpn = value?.noTlpn ?? address.noTlpn;
+                          address.alamat = value?.alamat ?? address.alamat;
+                          address.provinceName = value?.provinceName ?? address.provinceName;
+                          address.kabupatenName = value?.kabupatenName ?? address.kabupatenName;
+                          address.kecamatanName = value?.kecamatanName ?? address.kecamatanName;
                         });
                       }),
                     ),
@@ -552,6 +556,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             hint: "Pilih Pengiriman",
                             onChanged: (String data) => _changeShipment(data, controller),
                             showSearchBox: true,
+                            selectedItem : shipment,
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
@@ -899,37 +904,43 @@ class _CheckoutScreenState extends CheckoutViewModel {
   _dialogListAddress(BuildContext context, SelectProductController controller) async {
     return showDialog(
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Daftar Alamat Toko'),
-            content: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                      width: double.maxFinite,
-                      child: ListAddressScreen()
+        child: GetBuilder<AddressController>(
+          init: AddressController(),
+          builder: (vm) {
+            return AlertDialog(
+              title: Text('Daftar Alamat Toko'),
+              content: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        width: double.maxFinite,
+                        child: ListAddressScreen(vm)
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text('Cancel'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text('Tambah Alamat', style: TextStyle(color: MyColor.redAT),),
-                      onPressed: () {
-                        Get.toNamed(addAddressScreen);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('Tambah Alamat', style: TextStyle(color: MyColor.redAT),),
+                        onPressed: () {
+                          Get.toNamed(addAddressScreen, arguments: vm).then((value){
+                            debugPrint("return dari form $value");
+                              vm.getListAddress();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }),
+        );
   }
 }

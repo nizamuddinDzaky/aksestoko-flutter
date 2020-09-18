@@ -12,10 +12,8 @@ class SelectProductController extends GetController {
     p.qty = customQty ?? (order + qty);
 
     if (!listCart.contains(p)) {
-      debugPrint("masukss ${listCart.contains(p)}");
       listCart.add(p);
     }
-    debugPrint("masukss ${listCart.length}");
     update();
   }
 

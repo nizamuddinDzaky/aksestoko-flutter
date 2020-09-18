@@ -11,6 +11,9 @@ class MyString {
   static const KEY_ID_CART = "id_cart";
   static const KEY_DISTRIBUTOR_NAME = "distributor_name";
   static const KEY_DISTRIBUTOR_CODE = "distributor_code";
+  static const KEY_ID_PROVINSI = "id_provinsi";
+  static const KEY_ID_KABUPATEN = "id_kabupaten";
+  static const KEY_ID_KECAMATAN = "id_kecamatan";
 
   // sales booking
   static const KEY_ID_SALES_BOOKING = "id_sales_booking";

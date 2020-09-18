@@ -50,7 +50,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                '${_product.qty} => ${_product.nama}',
+                '${_product.nama}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
