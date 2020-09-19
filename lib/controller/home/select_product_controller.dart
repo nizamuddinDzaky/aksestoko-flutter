@@ -10,6 +10,7 @@ class SelectProductController extends GetController {
     if (listCart == null) listCart = [];
     var order = p.qty;
     p.qty = customQty ?? (order + qty);
+    p.qty = p.qty < 1 ? 1 : p.qty;
     if (!listCart.contains(p)) listCart.add(p);
     update();
   }
@@ -23,6 +24,7 @@ class SelectProductController extends GetController {
   void reduceCart(Product p, {double qty = 1, double customQty}){
     var order = p.qty;
     p.qty = customQty ?? (order - qty);
+    p.qty = p.qty < 1 ? 1 : p.qty;
     /*if (!listCart.contains(p)) listCart.add(p);*/
     update();
   }

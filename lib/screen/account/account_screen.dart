@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -197,7 +198,10 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: null,
+                              onPressed: () {
+                                MyPref.logout();
+                                Get.offNamed(loginScreen);
+                              },
                               icon: Icon(Icons.not_interested, color: Colors.red,),
                               label: Text(
                                 "Keluar",

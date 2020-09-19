@@ -6,7 +6,7 @@ final String kIconSale = "assets/icons/icon_sales.png";
 final String kIconDelivery = "assets/icons/icon_delivery.png";
 final String kIconPurchase = "assets/icons/icon_purchase.png";
 final String kIconMaster = "assets/icons/icon_master.png";
-final String kLogoAT = "assets/images/logo-aksestoko.png";
+final String kLogoAT = "assets/images/logo-AksesToko.png";
 final String kDistributor = "assets/images/distributor.png";
 //Custom New
 final String atMinus = "assets/icons/icon_minus_at.png";

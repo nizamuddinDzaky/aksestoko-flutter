@@ -600,10 +600,12 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Total Harga",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
+                        Expanded(
+                          child: Text(
+                            "Total Harga",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 16),
+                          ),
                         ),
                         Text(
                           "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
@@ -622,13 +624,15 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Penambahan Harga Pengiriman",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
+                        Expanded(
+                          child: Text(
+                            "Penambahan Harga Pengiriman",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 16),
+                          ),
                         ),
                         Text(
-                          "Rp 10.300.000",
+                          "${MyNumber.toNumberRpStr("0")}",
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
@@ -644,15 +648,17 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Total Harga Akhir",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            "Total Harga Akhir",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Text(
-                          "Rp 10.300.000",
+                          "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
                           style: TextStyle(
                               color: MyColor.redAT,
                               fontWeight: FontWeight.bold,

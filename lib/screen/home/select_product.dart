@@ -80,6 +80,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                       });
                     },
                   ),
+                  if (vm.listCart?.isNotEmpty ?? false)
                   Positioned(
                     right: 5,
                     top: 4,
@@ -240,12 +241,12 @@ class _SelectProductScreenState extends SelectProductViewModel {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Alert Dialog title"),
-          content: new Text("Alert Dialog body"),
+          title: new Text("Perhatian"),
+          content: new Text("Keranjang masih kosong. Silahkan pilih produk."),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text("Tutup"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
