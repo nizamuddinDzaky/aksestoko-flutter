@@ -26,6 +26,15 @@ class ApiConfig {
   //address
   static String urlDetailAddress = '${path}get_detail_alamat.php';
   static String urlListAddress = '${path}get_list_alamat.php';
+  static String urlListProvinsi = '${path}get_list_province.php';
+  static String urlListKabupaten = '${path}get_list_kabupaten.php';
+  static String urlListKecamatan = '${path}get_list_kecamatan.php';
+  static String urlListDesa = '${path}get_list_kelurahan.php';
+  static String urlAddAddress = '${path}post_tambah_alamat.php';
+  static String urlEditAddress = '${path}put_update_alamat.php';
+
+  //shipment
+  static String urlListShipment = '${path}get_list_tipe_pengiriman.php';
 
   //local
   static String urlListProvince = '${local}list_province';

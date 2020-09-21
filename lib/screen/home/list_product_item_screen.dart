@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 
 class ListProductScreen extends StatefulWidget {
   final Product _product;
@@ -24,7 +25,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.text = _product.qty != null ? _product.qty.toString() : '0'; // Setting the initial value for the field.
+    _controller.text = _product?.qty?.toString()?.toNumId() ?? '0';
   }
 
   @override
@@ -50,7 +51,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                '${_product.qty} => ${_product.nama}',
+                '${_product.nama}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -157,13 +158,13 @@ class _ListProductScreenState extends State<ListProductScreen> {
     // set up the buttons
 
     Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
+      child: Text("Batal"),
       onPressed:  () {
         Navigator.of(context).pop();
       },
     );
     Widget launchButton = FlatButton(
-      child: Text("Launch missile"),
+      child: Text("YA"),
       onPressed:  () {
         controller.removeCart(_product);
         _controller.text = '0';
@@ -172,7 +173,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Notice"),
+      title: Text("Perhatian"),
       content: Text("Apakah Anda Yakin Menghapus Barang Ini ?"),
       actions: [
         cancelButton,

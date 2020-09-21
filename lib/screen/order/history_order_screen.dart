@@ -49,7 +49,7 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(

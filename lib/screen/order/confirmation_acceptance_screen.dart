@@ -533,7 +533,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(

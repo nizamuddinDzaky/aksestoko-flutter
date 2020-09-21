@@ -78,7 +78,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
       _actionResetPassword();
     } else {
       Get.back();
-      print("gagal");
+      debugPrint("gagal");
     }
   }
 

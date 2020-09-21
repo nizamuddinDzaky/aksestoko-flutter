@@ -105,7 +105,7 @@ abstract class RegisterController extends State<RegisterScreen> {
       _actionCekIDBK();
     } else {
       Get.back();
-      print("gagal");
+      debugPrint("gagal");
     }
   }
 

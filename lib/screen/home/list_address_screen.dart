@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/model/Address.dart';
+import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/view_model/home/list_address_view_model.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +7,29 @@ import 'package:aksestokomobile/app/my_router.dart';
 import 'package:get/get.dart';
 
 class ListAddressScreen extends StatefulWidget {
+  AddressController controller;
+  ListAddressScreen(AddressController controller){
+    this.controller = controller;
+  }
   @override
-  _ListAddressScreenState createState() => _ListAddressScreenState();
+  _ListAddressScreenState createState() => _ListAddressScreenState(controller);
 }
 
-class _ListAddressScreenState extends ListAddressViewModel {
-
+class _ListAddressScreenState extends State<ListAddressScreen> {
+  AddressController controller;
+  _ListAddressScreenState(AddressController controller){
+    this.controller = controller;
+  }
+  @override
+  void initState() {
+    super.initState();
+      controller.getListAddress();
+  }
   Widget _address(Address address){
     return InkWell(
       onTap: (){
-        print("ok");
+        Get.back(result: address);
+        debugPrint("ok");
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 2, vertical: 5),
@@ -119,7 +133,11 @@ class _ListAddressScreenState extends ListAddressViewModel {
                       style: TextStyle(color: MyColor.redAT),
                     ),
                     onPressed: () {
-                      Get.toNamed(editAddressScreen);
+                      Map<String, dynamic> param = {'controller' : controller, 'data' : address};
+                      Get.toNamed(editAddressScreen, arguments: param).then((value){
+//                        debugPrint("return dari form $value");
+                        controller.getListAddress();
+                      });
                     },
                   ),
                 ),
@@ -135,8 +153,8 @@ class _ListAddressScreenState extends ListAddressViewModel {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemBuilder: (context, index)=> _address(listAddress[index]),
-      itemCount: listAddress.length,
+      itemBuilder: (context, index)=> _address(controller.listAddress[index]),
+      itemCount: controller.listAddress.length,
     );
   }
 }

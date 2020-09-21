@@ -10,7 +10,10 @@ class SelectProductController extends GetController {
     if (listCart == null) listCart = [];
     var order = p.qty;
     p.qty = customQty ?? (order + qty);
-    if (!listCart.contains(p)) listCart.add(p);
+    p.qty = p.qty < 1 ? 1 : p.qty;
+    if (!listCart.contains(p)) {
+      listCart.add(p);
+    }
     update();
   }
 
@@ -23,23 +26,21 @@ class SelectProductController extends GetController {
   void reduceCart(Product p, {double qty = 1, double customQty}){
     var order = p.qty;
     p.qty = customQty ?? (order - qty);
+    p.qty = p.qty < 1 ? 1 : p.qty;
     /*if (!listCart.contains(p)) listCart.add(p);*/
     update();
   }
 
   int getSumItem(){
     int totalQty = 0;
-    this.listCart.forEach((cart) =>
-        totalQty += cart.qty.toInt()
-    );
+    this.listCart.forEach((cart) => totalQty += cart.qty.toInt());
     return totalQty;
   }
 
   double getTotalHarga(){
     double total = 0.0;
-    this.listCart.forEach((cart) =>
-      total += (cart.qty * int.parse(cart.satuanHargaCash))
-    );
+    this.listCart.forEach(
+        (cart) => total += (cart.qty * int.parse(cart.satuanHargaCash)));
     return total;
   }
 }

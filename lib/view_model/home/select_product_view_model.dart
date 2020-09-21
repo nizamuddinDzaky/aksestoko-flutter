@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/model/Cart.dart';
 import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -9,13 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class SelectProductViewModel extends State<SelectProductScreen> {
+  /*final SelectProductController controller = Get.find();*/
   @override
   void initState() {
     getDataProduct();
+    getDataCart();
     super.initState();
   }
 
   List<Product> listProduct = [];
+  List<Cart> listCart = [];
 
   void getDataProduct() async {
     var params = {
@@ -28,7 +33,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       var newListProduct = baseResponse?.data?.listProduct ?? [];
       listProduct.clear();
       listProduct.addAll(newListProduct);
-
+      buildCart();
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
@@ -47,13 +52,12 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       MyString.KEY_ID_CART: MyPref.getIdDistributor(),
     };
     var status = await ApiClient.methodGet(ApiConfig.urlCart, params: params, onBefore: (status) {
-//      Get.back();
     }, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
-      var newListProduct = baseResponse?.data?.listProduct ?? [];
-      listProduct.clear();
-      listProduct.addAll(newListProduct);
-
+      var newListCart = baseResponse?.data?.listCart ?? [];
+      listCart.clear();
+      listCart.addAll(newListCart);
+      buildCart();
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
@@ -69,5 +73,20 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
 
   void confirmMinus(){
 
+  }
+
+  void buildCart(){
+      final SelectProductController controller = Get.find();
+    if(listCart != null && listProduct != null){
+      listCart.forEach((cart) {
+        listProduct.forEach((product) {
+          if(cart.productId == product.productId){
+            debugPrint("product => ${product.productId}");
+            controller.addToCart(product, customQty: cart.qty.toDouble());
+          }
+        });
+      });
+    }
+    setState(() {});
   }
 }
