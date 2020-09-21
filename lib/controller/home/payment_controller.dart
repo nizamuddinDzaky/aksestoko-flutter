@@ -52,7 +52,7 @@ abstract class PaymentController extends State<PaymentScreen> {
             onSelected: (bool selected){
               setState(() {
                 _value = selected ? index : null;
-                print(_value);
+                debugPrint(_value?.toString());
               });
             },
           ),
@@ -81,7 +81,7 @@ abstract class PaymentController extends State<PaymentScreen> {
             onSelected: (bool selected){
               setState(() {
                 _tempo = selected ? index : null;
-                print(_tempo);
+                debugPrint(_tempo?.toString());
               });
             },
           ),

@@ -29,6 +29,7 @@ abstract class SelectDistributorController extends State<SelectDistributorScreen
     }else{
       MyPref.setIdDristributor(distributor.id);
       MyPref.setDisributorName(distributor.nama);
+      MyPref.setDisributorCode(distributor.kode);
       Get.back(result: distributor.id);
     }
   }

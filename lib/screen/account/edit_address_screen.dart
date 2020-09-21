@@ -1,15 +1,35 @@
+import 'package:aksestokomobile/model/Zone.dart';
+import 'package:aksestokomobile/view_model/account/address_view_model.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:dropdownfield/dropdownfield.dart';
+import 'package:get/get.dart';
 
 class EditAddressScreen extends StatefulWidget {
   _EditAddressScreenState createState() => _EditAddressScreenState();
 }
 
-class _EditAddressScreenState extends EditAddressController {
+class _EditAddressScreenState extends AddressViewModel {
+  var vm;
+  Map<String, dynamic> param;
+  @override
+  void initState(){
+    super.initState();
+    param = Get.arguments as Map<String, dynamic>;
+    vm = param['controller'];
+    vm.setAddress(param['data']);
+    address = vm.getAddress();
+    _setZone();
+  }
+
+  void _setZone() async{
+    await getProvinsi();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -53,13 +73,16 @@ class _EditAddressScreenState extends EditAddressController {
                 child: Column(
                   children: <Widget>[
                     Form(
-                      key: formKey,
+                      key: vm.formKey,
                       child: Column(
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => recipientsName = value,
+                              initialValue: address.namaPenerima,
+                              onSaved: (value) => {
+                                vm.saveForm(namaPenerima: value)
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -86,7 +109,10 @@ class _EditAddressScreenState extends EditAddressController {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => email = value,
+                              initialValue: address.email,
+                              onSaved: (value) => {
+                                vm.saveForm(email: value)
+                              },
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -113,7 +139,10 @@ class _EditAddressScreenState extends EditAddressController {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => tlp = value,
+                              initialValue: address.noTlpn,
+                              onSaved: (value) => {
+                                vm.saveForm(noTlpn: value)
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -140,7 +169,10 @@ class _EditAddressScreenState extends EditAddressController {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => address = value,
+                              initialValue: address.alamat,
+                              onSaved: (value) => {
+                                vm.saveForm(alamat: value)
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -167,7 +199,10 @@ class _EditAddressScreenState extends EditAddressController {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => postalCode = value,
+                              initialValue: address.kodePos == null || address.kodePos == '' ? null : address.kodePos.toString(),
+                              onSaved: (value) =>{
+                                vm.saveForm(kodePos: value == null || value == '' ? 0 : int.parse(value))
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -196,17 +231,24 @@ class _EditAddressScreenState extends EditAddressController {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropDownField(
-                                    controller: provinceSelected,
-                                    hintText: "Pilih Provinsi",
-                                    enabled: true,
-                                    itemsVisibleInDropdown: 3,
+                                  child: DropdownSearch<Zone>(
                                     items: province,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        selectProvince = value;
-                                      });
+                                    label: "Pilih Provinsi",
+                                    hint: "Pilih Provinsi",
+                                    onChanged: (Zone data) =>searchKabupaten(data),
+                                    onSaved: (Zone data)=>{
+                                      vm.saveForm(provinceName: data.name, provinceId: data.id)
                                     },
+                                    selectedItem : selectProvince,
+                                    showSearchBox: true,
+                                    itemAsString: (Zone prov) => prov.name,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      labelText: "Pilih Provinsi",
+                                    ),
+
+
                                   ),
                                 ),
                               ),
@@ -217,17 +259,23 @@ class _EditAddressScreenState extends EditAddressController {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropDownField(
-                                    controller: districtSelected,
-                                    hintText: "Pilih Kabupaten",
-                                    enabled: true,
-                                    itemsVisibleInDropdown: 3,
+                                  child: DropdownSearch<Zone>(
                                     items: district,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        selectDistrict = value;
-                                      });
+                                    label: "Pilih Kabupaten",
+                                    hint: "Pilih Kabupaten",
+                                    onChanged: (Zone data) =>searchKecamatan(data),
+                                    onSaved: (Zone data)=>{
+                                      vm.saveForm(kabupatenName: data.name, kabupatenId: data.id)
                                     },
+                                    showSearchBox: true,
+                                    selectedItem : selectDistrict,
+                                    itemAsString: (Zone prov) => prov.name,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      labelText: "Pilih Kabupaten",
+                                    ),
+
                                   ),
                                 ),
                               ),
@@ -238,17 +286,24 @@ class _EditAddressScreenState extends EditAddressController {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropDownField(
-                                    controller: subDistrictSelected,
-                                    hintText: "Pilih Kecamatan",
-                                    enabled: true,
-                                    itemsVisibleInDropdown: 3,
+                                  child: DropdownSearch<Zone>(
                                     items: subDistrict,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        selectSubDistrict = value;
-                                      });
+                                    label: "Pilih Kecamatan",
+                                    hint: "Pilih Kecamatan",
+                                    onChanged: (Zone data) =>searchDesa(data),
+                                    onSaved: (Zone data)=>{
+                                      vm.saveForm(kecamatanName: data.name, kecamatanId: data.id )
                                     },
+                                    selectedItem : selectSubDistrict,
+                                    showSearchBox: true,
+                                    itemAsString: (Zone prov) => prov.name,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      labelText: "Pilih Kecamatan",
+                                    ),
+
+
                                   ),
                                 ),
                               ),
@@ -259,17 +314,26 @@ class _EditAddressScreenState extends EditAddressController {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropDownField(
-                                    controller: villageSelected,
-                                    hintText: "Pilih Desa",
-                                    enabled: true,
-                                    itemsVisibleInDropdown: 3,
+                                  child: DropdownSearch<Zone>(
                                     items: village,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        selectVillage = value;
-                                      });
+                                    label: "Pilih Desa",
+                                    hint: "Pilih Desa",
+                                    onChanged: (Zone data) =>{
+                                      selectVillage = data
                                     },
+                                    onSaved: (Zone data)=>{
+                                      vm.saveForm(kecamatanName: data.name, kecamatanId: data.id)
+                                    },
+                                    selectedItem : selectVillage,
+                                    showSearchBox: true,
+                                    itemAsString: (Zone prov) => prov.name,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      labelText: "Pilih Desa",
+                                    ),
+
+
                                   ),
                                 ),
                               ),
@@ -285,7 +349,9 @@ class _EditAddressScreenState extends EditAddressController {
                                   'Simpan',
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onPressed: (){},
+                                onPressed: (){
+                                  vm.actionSubmit(context);
+                                },
                                 shape: new RoundedRectangleBorder(
                                     borderRadius: new BorderRadius.circular(30.0))),
                           ),

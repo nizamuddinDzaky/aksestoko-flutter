@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 
 class ListProductScreen extends StatefulWidget {
   final Product _product;
@@ -24,7 +25,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.text = _product.qty != null ? _product.qty.toString() : '0'; // Setting the initial value for the field.
+    _controller.text = _product?.qty?.toString()?.toNumId() ?? '0';
   }
 
   @override

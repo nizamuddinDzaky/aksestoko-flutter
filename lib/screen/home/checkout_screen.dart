@@ -1,8 +1,10 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
+import 'package:aksestokomobile/view_model/home/list_address_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -12,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:flutter/services.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import 'list_address_screen.dart';
 
@@ -23,6 +26,7 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends CheckoutViewModel {
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
+  String shipment;
 
   String selectShipping = "";
   final shipingSelected = TextEditingController();
@@ -38,11 +42,28 @@ class _CheckoutScreenState extends CheckoutViewModel {
     );
 
     if (picked != null && picked != _date) {
-      print("Date Selected: ${_date.toString()}");
+      debugPrint("Date Selected: ${_date.toString()}");
       setState(() {
         _date = picked;
       });
     }
+  }
+
+  void _changeShipment(String data, SelectProductController controller) async {
+    shipment = data;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
+    await getShipmentPrice(data, controller);
+    setState((){});
   }
 
   @override
@@ -70,7 +91,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(
@@ -222,7 +243,17 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      onPressed: () => _dialogListAddress(context, controller),
+                      onPressed: () => _dialogListAddress(context, controller).then((value){
+                        setState(() {
+                          address.namaPenerima = value?.namaPenerima ?? address.namaPenerima;
+                          address.email = value?.email ?? address.email;
+                          address.noTlpn = value?.noTlpn ?? address.noTlpn;
+                          address.alamat = value?.alamat ?? address.alamat;
+                          address.provinceName = value?.provinceName ?? address.provinceName;
+                          address.kabupatenName = value?.kabupatenName ?? address.kabupatenName;
+                          address.kecamatanName = value?.kecamatanName ?? address.kecamatanName;
+                        });
+                      }),
                     ),
                   ),
                 ],
@@ -522,12 +553,14 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           margin: EdgeInsets.symmetric(vertical: 25),
                           child: DropdownSearch(
                             items: shiping,
-                            onChanged: print,
+                            hint: "Pilih Pengiriman",
+                            onChanged: (String data) => _changeShipment(data, controller),
                             showSearchBox: true,
+                            selectedItem : shipment,
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
-                              labelText: "Search a country",
+                              labelText: "Pilih Pengiriman",
                             ),
                             validator: (String item) {
                               if (item == null)
@@ -537,6 +570,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               else
                                 return null;
                             },
+
                           ),
                         ),
                       ),
@@ -632,7 +666,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           ),
                         ),
                         Text(
-                          "${MyNumber.toNumberRpStr("0")}",
+                          "${MyNumber.toNumberRpStr(shipmentPrice.toString())}",
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
@@ -658,7 +692,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           ),
                         ),
                         Text(
-                          "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
+                          "${MyNumber.toNumberRpStr(getTotalAkhir(controller).toString())}",
                           style: TextStyle(
                               color: MyColor.redAT,
                               fontWeight: FontWeight.bold,
@@ -875,38 +909,44 @@ class _CheckoutScreenState extends CheckoutViewModel {
 
   _dialogListAddress(BuildContext context, SelectProductController controller) async {
     return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Daftar Alamat Toko'),
-            content: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                      width: double.maxFinite,
-                      child: ListAddressScreen()
+      context: context,
+      child: GetBuilder<AddressController>(
+          init: AddressController(),
+          builder: (vm) {
+            return AlertDialog(
+              title: Text('Daftar Alamat Toko'),
+              content: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        width: double.maxFinite,
+                        child: ListAddressScreen(vm)
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text('Cancel'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text('Tambah Alamat', style: TextStyle(color: MyColor.redAT),),
-                      onPressed: () {
-                        Get.toNamed(addAddressScreen);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('Tambah Alamat', style: TextStyle(color: MyColor.redAT),),
+                        onPressed: () {
+                          Get.toNamed(addAddressScreen, arguments: vm).then((value){
+                            debugPrint("return dari form $value");
+                            vm.getListAddress();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
   }
 }

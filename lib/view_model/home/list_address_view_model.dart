@@ -10,29 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class ListAddressViewModel extends State<ListAddressScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _getListAddress();
-  }
-  List<Address> listAddress = [];
-  void _getListAddress() async{
-    var params = {
-      MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
-    };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListAddress, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
-      var baseResponse = BaseResponse.fromJson(data);
-      listAddress.addAll(baseResponse?.data?.listAddress);
-    }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onError: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-    });
-    setState(() {
-      status.execute();
-    });
-  }
+
 }

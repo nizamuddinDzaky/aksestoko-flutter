@@ -48,7 +48,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                   IconButton(
                     icon: Icon(Icons.notifications),
                     onPressed: () {
-                      print('klik notif');
+                      debugPrint('klik notif');
                     },
                   ),
                   Positioned(
@@ -207,6 +207,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                         });*/
                         Get.toNamed(selectDistributorScreen).then((value) {
                           getDataProduct();
+                          getDataCart();
                         });
                       },
                       icon: Icon(

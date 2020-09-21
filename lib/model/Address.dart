@@ -9,6 +9,8 @@ class Address {
   int kabupatenId;
   String kecamatanName;
   int kecamatanId;
+  String kelurahanName;
+  int kelurahanId;
   int addressId;
   int kodePos;
 
@@ -23,6 +25,8 @@ class Address {
         this.kabupatenId,
         this.kecamatanName,
         this.kecamatanId,
+        this.kelurahanName,
+        this.kelurahanId,
         this.addressId,
         this.kodePos});
 
@@ -37,6 +41,8 @@ class Address {
     kabupatenId = json['kabupaten_id'];
     kecamatanName = json['kecamatan_name'];
     kecamatanId = json['kecamatan_id'];
+    kelurahanName = json['kelurahan'];
+    kelurahanId = json['kelurahan_id'];
     addressId = json['address_id'];
     kodePos = json['kode_pos'];
   }
@@ -53,6 +59,8 @@ class Address {
     data['kabupaten_id'] = this.kabupatenId;
     data['kecamatan_name'] = this.kecamatanName;
     data['kecamatan_id'] = this.kecamatanId;
+    data['kelurahan'] = this.kelurahanName;
+    data['kelurahan_id'] = this.kelurahanId;
     data['address_id'] = this.addressId;
     data['kode_pos'] = this.kodePos;
     return data;

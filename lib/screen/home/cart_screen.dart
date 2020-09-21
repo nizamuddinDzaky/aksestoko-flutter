@@ -52,156 +52,151 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SelectProductController>(
-        builder: (controller) => _rootView(controller),
-    );
-  }
-
-  Widget _rootView(SelectProductController controller) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: true,
-        title: Hero(
-          tag: 'logoForcaPoS',
-          child: Text("Keranjang"),
-        ),
-        bottom: controller.listCart?.isEmpty ?? true ? null : PreferredSize(
+      builder: (controller) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          elevation: 0,
+          centerTitle: true,
+          title: Hero(
+            tag: 'logoForcaPoS',
+            child: Text("Keranjang"),
+          ),
+          bottom: controller.listCart?.isEmpty ?? true ? null : PreferredSize(
           preferredSize: const Size.fromHeight(48.0),
-          child: Container(
-            color: Colors.white,
-            height: 48,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Checkbox(
-                      value: CheckBoxValue,
-                      onChanged: (bool value) {
-                        setState(() {
-                          CheckBoxValue = value;
-                        });
-                      },
-                    ),
-                    Text("Pilih Semua"),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(right: 15),
-                      child: CupertinoButton(
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(right: 2),
-                              child: Text(
-                                'Hapus',
+            child: Container(
+              color: Colors.white,
+              height: 48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                        value: CheckBoxValue,
+                        onChanged: (bool value) {
+                          setState(() {
+                            CheckBoxValue = value;
+                          });
+                        },
+                      ),
+                      Text("Pilih Semua"),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(right: 15),
+                        child: CupertinoButton(
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(right: 2),
+                                child: Text(
+                                  'Hapus',
+                                  style: TextStyle(
+                                      color: MyColor.blackTextAT,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                '(${controller.listCart?.length})',
                                 style: TextStyle(
                                     color: MyColor.blackTextAT,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
-                            ),
-                            Text(
-                              '(${controller.listCart?.length})',
-                              style: TextStyle(
-                                  color: MyColor.blackTextAT,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                            ],
+                          ),
+                          onPressed: null,
                         ),
-                        onPressed: null,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
 
-        child: formLayout(controller),
-        // child: GetBuilder<SelectProductController>(
-        //   builder: (controller) => formLayout(controller),
-        // ),
-      ),
-      bottomNavigationBar: new Stack(
-        overflow: Overflow.visible,
-        children: [
-          new Container(
-            padding: EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
-            height: 80,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  spreadRadius: 3,
-                  blurRadius: 10,
-                  offset: Offset(0, 9), // changes position of shadow
-                )
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Total",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                      SizedBox(height: 5),
-                      Expanded(
-                        child: Text(
-                          "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
+            child: formLayout(controller)
+
+        ),
+        bottomNavigationBar: new Stack(
+          overflow: Overflow.visible,
+          children: [
+            new Container(
+              padding: EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: Offset(0, 9), // changes position of shadow
+                  )
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Total",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 0),
-                    width: double.maxFinite,
-                    height: 50,
-                    child: RaisedButton(
-                      color: MyColor.redAT,
-                      child: Text(
-                        'Checkout',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onPressed: () {
-                        Get.toNamed(checkoutScreen);
-                      },
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20.0)),
+                        SizedBox(height: 5),
+                        Expanded(
+                          child: Text(
+                            "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                )
-              ],
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 0),
+                      width: double.maxFinite,
+                      height: 50,
+                      child: RaisedButton(
+                        color: MyColor.redAT,
+                        child: Text(
+                          'Checkout',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        onPressed: () {
+                          Get.toNamed(checkoutScreen);
+                        },
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(20.0)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+
   }
 
   Widget listProductCart(Product _product, SelectProductController controller) {
@@ -391,7 +386,6 @@ class _CartScreenState extends State<CartScreen> {
                                                       debugPrint("${_controller.text}");
                                                       int currentValue = _product.qty.toInt();
                                                       _product.qty = currentValue.toDouble();
-                                                      //controller.addToCart(_product, qty: currentValue.toDouble());
                                                       controller.addToCart(_product);
                                                       setState(() {
                                                       });
@@ -400,7 +394,6 @@ class _CartScreenState extends State<CartScreen> {
                                                   ),
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         ],
@@ -431,12 +424,12 @@ class _CartScreenState extends State<CartScreen> {
                       Text(
                         "SUBTOTAL",
                         style: TextStyle(
-                            color: Color(0xff999999), fontWeight: FontWeight.bold, fontSize: 14,),
+                          color: Color(0xff999999), fontWeight: FontWeight.bold, fontSize: 14,),
                       ),
                       Text(
                         count(_product.satuanHargaCash, _product.qty),
                         style: TextStyle(
-                            color: Color(0xff333333), fontWeight: FontWeight.bold, fontSize: 14,),
+                          color: Color(0xff333333), fontWeight: FontWeight.bold, fontSize: 14,),
                       ),
                     ],
                   ),
@@ -449,9 +442,9 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  String count(String satuanHarga, double qty) {
-    var harga = MyNumber.strUSToDouble(satuanHarga);
-    var total = harga * qty;
+  String count(String unitPrice, double qty) {
+    var price = MyNumber.strUSToDouble(unitPrice);
+    var total = price * qty;
     return "${MyNumber.toNumberRpStr(total.toString())}";
   }
 }

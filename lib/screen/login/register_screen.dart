@@ -45,7 +45,7 @@ class _RegisterScreenState extends RegisterController {
           ],
         ),
         onChanged: (currentPrincipal){
-          print("${currentPrincipal.name}");
+          debugPrint("${currentPrincipal.name}");
           setSelectedPrincipal(currentPrincipal);
         },
         selected: selectPrincipal == principal,

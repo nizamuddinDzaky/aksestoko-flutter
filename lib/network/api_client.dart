@@ -4,6 +4,7 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 var dio = Dio();
 
@@ -18,7 +19,7 @@ typedef APIFailedCallback = dynamic Function(String title, String message);
 
 class ApiClient {
   static addInterceptor() {
-    addInterceptor1();
+    // addInterceptor1();
     addInterceptor2();
   }
 
@@ -128,7 +129,7 @@ class ApiClient {
           responseApi._setFailed(
               title, 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
-          print('error gan $error ${error.response}');
+          debugPrint('error gan $error ${error.response}');
         }
       }
     }
@@ -186,7 +187,7 @@ class ApiClient {
           responseApi._setFailed(
               error.request.uri.toString(), 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
-          print('error gan $error ${error.response}');
+          debugPrint('error gan $error ${error.response}');
           responseApi._setFailed(title, error.response.toString());
         }
       }
