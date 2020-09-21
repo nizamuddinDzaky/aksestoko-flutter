@@ -108,13 +108,15 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           if (index == 0)
-                            Text(
-                              "Menunggu Konfirmasi",
-                              style: TextStyle(
-                                  color: MyColor.warningTextAT,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
+                            Expanded(
+                              child: Text(
+                                "Menunggu Konfirmasi",
+                                style: TextStyle(
+                                    color: MyColor.warningTextAT,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.left,
+                              ),
                             ),
                           if (index == 1)
                             Text(

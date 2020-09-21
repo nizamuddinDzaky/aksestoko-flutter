@@ -187,9 +187,12 @@ class _RequestOtpScreenState extends RequestOtpController {
                         Container(
                           height: Get.height * 0.2,
                           child: Center(
-                            child: Hero(
-                              tag: 'logoForcaPoS2',
-                              child: MyLogo.logoForcaPoSColor(),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                              child: Hero(
+                                tag: 'logoForcaPoS2',
+                                child: MyLogo.logoForcaPoSColor(),
+                              ),
                             ),
                           ),
                         ),

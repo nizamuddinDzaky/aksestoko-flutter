@@ -1162,7 +1162,7 @@ class _PaymentScreenState extends PaymentController {
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(

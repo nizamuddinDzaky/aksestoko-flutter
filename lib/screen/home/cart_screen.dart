@@ -61,8 +61,8 @@ class _CartScreenState extends State<CartScreen> {
             tag: 'logoForcaPoS',
             child: Text("Keranjang"),
           ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(48.0),
+          bottom: controller.listCart?.isEmpty ?? true ? null : PreferredSize(
+          preferredSize: const Size.fromHeight(48.0),
             child: Container(
               color: Colors.white,
               height: 48,
@@ -100,7 +100,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               Text(
-                                '(${controller.listCart.length})',
+                                '(${controller.listCart?.length})',
                                 style: TextStyle(
                                     color: MyColor.blackTextAT,
                                     fontSize: 14,
@@ -160,7 +160,7 @@ class _CartScreenState extends State<CartScreen> {
                         SizedBox(height: 5),
                         Expanded(
                           child: Text(
-                            "Rp 200.000.000.000",
+                            "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         )
@@ -424,12 +424,12 @@ class _CartScreenState extends State<CartScreen> {
                       Text(
                         "SUBTOTAL",
                         style: TextStyle(
-                            color: Color(0xff999999), fontWeight: FontWeight.bold, fontSize: 14,),
+                          color: Color(0xff999999), fontWeight: FontWeight.bold, fontSize: 14,),
                       ),
                       Text(
-                        "Rp 10.000.000",
+                        count(_product.satuanHargaCash, _product.qty),
                         style: TextStyle(
-                            color: Color(0xff333333), fontWeight: FontWeight.bold, fontSize: 14,),
+                          color: Color(0xff333333), fontWeight: FontWeight.bold, fontSize: 14,),
                       ),
                     ],
                   ),
@@ -440,5 +440,11 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
+  }
+
+  String count(String unitPrice, double qty) {
+    var price = MyNumber.strUSToDouble(unitPrice);
+    var total = price * qty;
+    return "${MyNumber.toNumberRpStr(total.toString())}";
   }
 }

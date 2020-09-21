@@ -159,7 +159,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(

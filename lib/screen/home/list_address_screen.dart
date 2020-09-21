@@ -29,7 +29,7 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
     return InkWell(
       onTap: (){
         Get.back(result: address);
-        print("ok");
+        debugPrint("ok");
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 2, vertical: 5),

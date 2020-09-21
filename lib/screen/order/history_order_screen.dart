@@ -49,7 +49,7 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(
@@ -77,7 +77,7 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
               text: "Dalam Proses",
             ),
             Tab(
-              text: "Selesei",
+              text: "Selesai",
             ),
           ],
         ),

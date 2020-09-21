@@ -96,7 +96,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   @override
   Widget build(BuildContext context) {
     var index = Get.arguments;
-    print("index = $index");
+    debugPrint("index = $index");
     var formLayout = SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 25),
@@ -943,7 +943,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(

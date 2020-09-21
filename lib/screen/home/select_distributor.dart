@@ -19,6 +19,7 @@ class _SelectDistributorScreenState extends SelectDistributorViewModel {
   Widget build(BuildContext context) {
 
     var formLayout = SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: 16),
       child: Container(
         child: Stack(
           children: <Widget>[

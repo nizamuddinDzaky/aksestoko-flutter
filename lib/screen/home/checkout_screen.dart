@@ -42,7 +42,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
     );
 
     if (picked != null && picked != _date) {
-      print("Date Selected: ${_date.toString()}");
+      debugPrint("Date Selected: ${_date.toString()}");
       setState(() {
         _date = picked;
       });
@@ -91,7 +91,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
               IconButton(
                 icon: Icon(Icons.notifications),
                 onPressed: () {
-                  print('klik notif');
+                  debugPrint('klik notif');
                 },
               ),
               Positioned(
@@ -634,10 +634,12 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Total Harga",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
+                        Expanded(
+                          child: Text(
+                            "Total Harga",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 16),
+                          ),
                         ),
                         Text(
                           "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
@@ -656,10 +658,12 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Penambahan Harga Pengiriman",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 16),
+                        Expanded(
+                          child: Text(
+                            "Penambahan Harga Pengiriman",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT, fontSize: 16),
+                          ),
                         ),
                         Text(
                           "${MyNumber.toNumberRpStr(shipmentPrice.toString())}",
@@ -678,12 +682,14 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Total Harga Akhir",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            "Total Harga Akhir",
+                            style: TextStyle(
+                                color: MyColor.greyTextAT,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Text(
                           "${MyNumber.toNumberRpStr(getTotalAkhir(controller).toString())}",
@@ -903,8 +909,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
 
   _dialogListAddress(BuildContext context, SelectProductController controller) async {
     return showDialog(
-        context: context,
-        child: GetBuilder<AddressController>(
+      context: context,
+      child: GetBuilder<AddressController>(
           init: AddressController(),
           builder: (vm) {
             return AlertDialog(
@@ -931,7 +937,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                         onPressed: () {
                           Get.toNamed(addAddressScreen, arguments: vm).then((value){
                             debugPrint("return dari form $value");
-                              vm.getListAddress();
+                            vm.getListAddress();
                           });
                         },
                       ),
@@ -941,6 +947,6 @@ class _CheckoutScreenState extends CheckoutViewModel {
               ),
             );
           }),
-        );
+    );
   }
 }

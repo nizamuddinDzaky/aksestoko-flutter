@@ -48,6 +48,7 @@ class MyPref {
     //setRemember(false, null);
     setIdDristributor(null);
     setDisributorName(null);
+    setForcaToken(null);
   }
 
   //get value

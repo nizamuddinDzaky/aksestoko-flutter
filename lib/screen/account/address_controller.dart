@@ -23,7 +23,7 @@ class AddressController extends GetController{
   setAddress(Address address) {
     this.address = address;
     this.isEdit = address != null;
-    print('terdeteksi ubah $isEdit');
+    debugPrint('terdeteksi ubah $isEdit');
   }
 
   Address getAddress(){
@@ -85,7 +85,7 @@ class AddressController extends GetController{
       'addressId': address?.addressId,
       'kodePos': address?.kodePos,
     };
-    print('action api ${isEdit ? 'edit' : 'add'} customer $body');
+    debugPrint('action api ${isEdit ? 'edit' : 'add'} customer $body');
     if (isEdit) {
       await actionPutEditAddress(body, context);
     } else {
