@@ -77,6 +77,64 @@ class ApiClient {
     }));
   }
 
+  static Future<ApiResponse> methodDelete(
+      String url, {
+        Map<String, dynamic> params,
+        APIBeforeCallback onBefore,
+        APISuccessCallback onSuccess,
+        APIErrorCallback onError,
+        APIFailedCallback onFailed,
+        APIAfterCallback onAfter,
+        bool customHandle = false,
+        dynamic tagOrFlag,
+      }) async {
+    var responseApi = ApiResponse(
+      ResponseStatus.progress,
+      onBefore,
+      onSuccess,
+      onFailed,
+      onError,
+      onAfter,
+      tagOrFlag: tagOrFlag,
+    );
+    try {
+      await dio
+          .delete<String>(url,
+          queryParameters: params,
+          options: Options(contentType: Headers.jsonContentType))
+          .then((response) {
+        var statusCode = response.statusCode;
+        if (onSuccess != null && statusCode == 200) {
+          var data = jsonDecode(response.data);
+          responseApi._setSuccess(data);
+        } else if (onFailed != null) {
+          responseApi._setFailed('', response.statusMessage);
+        }
+      });
+    } on DioError catch (error) {
+      var title = 'Komunikasi gagal';
+      if (error.type == DioErrorType.DEFAULT) {
+        responseApi._setError(title, 'Cek koneksi kemudian coba lagi.');
+      } else if (customHandle) {
+        responseApi._setFailed(
+            error.response.statusCode.toString(), error.response.toString());
+      } else {
+        var statusCode = error.response.statusCode;
+        if (statusCode == 405) {
+          responseApi._setFailed(title, 'Akses informasi tidak valid.');
+        } else if (statusCode == 404) {
+          responseApi._setSuccess({});
+        } else if (statusCode == 400) {
+          responseApi._setFailed(
+              title, 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
+        } else {
+          print('error gan $error ${error.response}');
+        }
+      }
+    }
+    return responseApi;
+  }
+
   static Future<ApiResponse> methodGet(
     String url, {
     Map<String, dynamic> params,

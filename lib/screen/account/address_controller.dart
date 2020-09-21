@@ -159,4 +159,44 @@ class AddressController extends GetController{
     status.execute();
     update();
   }
+
+  void deleteAddress(int idAddress, BuildContext context) async{
+    var params = {
+      MyString.KEY_ID_DISTRIBUTOR: idAddress,
+    };
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
+
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlAddAddress,
+      {},
+      {},
+      onBefore: (status) {},
+      onSuccess: (data, _) {
+        getListAddress();
+        Navigator.of(context).pop();
+//        Get.back(result: "qqww");
+
+      },
+      onFailed: (title, message) {
+        Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+      },
+      onError: (title, message) {
+        Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+      },
+      onAfter: (status) {},
+    );
+    status.execute();
+    update();
+  }
 }
