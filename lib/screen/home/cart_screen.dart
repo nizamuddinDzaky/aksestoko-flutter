@@ -182,7 +182,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Get.toNamed(checkoutScreen);
+                          Get.toNamed(checkoutScreen , arguments: controller.listCart);
                         },
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20.0)),

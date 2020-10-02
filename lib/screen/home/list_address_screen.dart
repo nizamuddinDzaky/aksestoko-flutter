@@ -78,7 +78,10 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                             size: 20,
                             color: MyColor.redAT,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.deleteAddress(address.addressId, context);
+                            /*debugPrint("asdasd");*/
+                          },
                         ),
                       ),
                     ],

@@ -74,9 +74,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                     icon: Icon(Icons.shopping_cart),
                     onPressed: () {
                       Get.toNamed(cartScreen).then((value){
-                        setState(() {
-                          debugPrint("refresh");
-                        });
+                        setState(() {});
                       });
                     },
                   ),
@@ -123,11 +121,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
             ),
             child: FloatingActionButton.extended(
               onPressed: () {
-                if(vm.listCart == null || vm.listCart.length < 1){
-                  _alertDialog();
-                }else{
-                  Get.toNamed(checkoutScreen);
-                }
+                confirm(vm, _alertDialog);
               },
               backgroundColor: MyColor.greenAT,
               icon: Icon(Icons.payment),

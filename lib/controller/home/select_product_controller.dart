@@ -1,5 +1,4 @@
 import 'package:aksestokomobile/model/Product.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SelectProductController extends GetController {
@@ -23,11 +22,7 @@ class SelectProductController extends GetController {
     update();
   }
 
-  void reduceCart(Product p, {double qty = 1, double customQty}){
-    var order = p.qty;
-    p.qty = customQty ?? (order - qty);
-    p.qty = p.qty < 1 ? 1 : p.qty;
-    /*if (!listCart.contains(p)) listCart.add(p);*/
+  void refresh(){
     update();
   }
 
@@ -37,10 +32,18 @@ class SelectProductController extends GetController {
     return totalQty;
   }
 
+  void reduceCart(Product p, {double qty = 1, double customQty}){
+    var order = p.qty;
+    p.qty = customQty ?? (order - qty);
+    p.qty = p.qty < 1 ? 1 : p.qty;
+    /*if (!listCart.contains(p)) listCart.add(p);*/
+    update();
+  }
+
   double getTotalHarga(){
     double total = 0.0;
     this.listCart.forEach(
-        (cart) => total += (cart.qty * int.parse(cart.satuanHargaCash)));
+            (cart) => total += (cart.qty * int.parse(cart.satuanHargaCash)));
     return total;
   }
 }

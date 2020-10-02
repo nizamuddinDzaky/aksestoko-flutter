@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/controller/home/checkout_controller.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
@@ -10,8 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class CheckoutViewModel extends State<CheckoutScreen> {
+  var cart;
+
+  String selectShipping = "";
   @override
   void initState() {
+    cart = Get.arguments;
+//    debugPrint("param => ${param[0].nama}");
     _getAddress();
     super.initState();
   }
@@ -40,7 +46,8 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
     });
   }
 
-  void getShipmentPrice(String shipment, SelectProductController controller) async{
+  void getShipmentPrice(String shipment) async{
+    final SelectProductController controller = Get.find();
     List<Map<String, dynamic>> cart = [];
     controller.listCart?.forEach((p) {
       cart.add({
@@ -60,6 +67,8 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
         }, onSuccess: (data, _) {
       var baseResponse = BaseResponse.fromJson(data);
       shipmentPrice = double.parse(baseResponse?.data?.shipmentPrice);
+      var harga = getTotalHarga();
+      totalAkhir = harga.toDouble() + shipmentPrice;
       debugPrint(baseResponse?.data?.shipmentPrice);
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
@@ -72,9 +81,22 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
     status.execute();
   }
 
-  double getTotalAkhir(SelectProductController controller){
-    var harga = controller.getTotalHarga();
-    totalAkhir = harga.toDouble() + shipmentPrice;
+  double getTotalHarga(){
+    double total = 0.0;
+    cart.forEach(
+            (cart) => total += (cart.qty * int.parse(cart.satuanHargaCash)));
+    return total;
+  }
+
+  double getTotalAkhir(){
+
+
     return totalAkhir;
+  }
+
+  int getSumItem(){
+    int totalQty = 0;
+    cart.forEach((cart) => totalQty += cart.qty.toInt());
+    return totalQty;
   }
 }

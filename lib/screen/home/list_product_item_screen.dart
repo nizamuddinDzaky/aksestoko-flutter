@@ -25,11 +25,11 @@ class _ListProductScreenState extends State<ListProductScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.text = _product?.qty?.toString()?.toNumId() ?? '0';
   }
 
   @override
   Widget build(BuildContext context) {
+    _controller.text = _product?.qty?.toString()?.toNumId() ?? '0';
     return Card(
       elevation: 4,
       child: Container(
