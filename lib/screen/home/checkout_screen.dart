@@ -1,10 +1,10 @@
-import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/controller/home/checkout_controller.dart';
 import 'package:aksestokomobile/model/Product.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
-import 'package:aksestokomobile/view_model/home/list_address_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:flutter/services.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import 'list_address_screen.dart';
 
@@ -24,33 +23,11 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends CheckoutViewModel {
-  DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
-  String shipment;
-
-  String selectShipping = "";
-  final shipingSelected = TextEditingController();
 
 
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(2015),
-      lastDate: DateTime(2030),
-    );
-
-    if (picked != null && picked != _date) {
-      debugPrint("Date Selected: ${_date.toString()}");
-      setState(() {
-        _date = picked;
-      });
-    }
-  }
-
-  void _changeShipment(String data, SelectProductController controller) async {
-    shipment = data;
+  void _changeShipment(String data, CheckoutController controller) async {
+    controller.shipment = data;
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -62,7 +39,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
             ),
           );
         });
-    await getShipmentPrice(data, controller);
+    await getShipmentPrice(data);
     setState((){});
   }
 
@@ -117,14 +94,15 @@ class _CheckoutScreenState extends CheckoutViewModel {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: GetBuilder<SelectProductController>(
+        child: GetBuilder<CheckoutController>(
+          init: CheckoutController(),
           builder: (controller) => _layout(controller, context),
         ),
       ),
     );
   }
 
-  Widget _layout(SelectProductController controller, BuildContext context){
+  Widget _layout(CheckoutController controller, BuildContext context){
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -243,7 +221,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      onPressed: () => _dialogListAddress(context, controller).then((value){
+                      onPressed: () => _dialogListAddress(context).then((value){
                         setState(() {
                           address.namaPenerima = value?.namaPenerima ?? address.namaPenerima;
                           address.email = value?.email ?? address.email;
@@ -322,8 +300,16 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       ),
                       Expanded(
                         child: InkWell(
-                          onTap: () {
-                            _selectDate(context);
+                          onTap: () async {
+                            DateTime picked = await showDatePicker(
+                              context: context,
+                              initialDate: controller.date,
+                              firstDate: DateTime(2015),
+                              locale: Locale('in', 'ID'),
+                              lastDate: DateTime(2030),
+                            );
+                            controller.setDate(picked);
+                            /*_selectDate(context, controller);*/
                           },
                           child: IgnorePointer(
                             child: TextField(
@@ -331,7 +317,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                 filled: true,
                                 fillColor: Color(0xffEEEEEE),
                                 hintText:
-                                "${_date.day} / ${_date.month} / ${_date.year}",
+                                strToDate(controller.date.toString()),
 //                              hintText: "${_date.toString()}",
                                 contentPadding: const EdgeInsets.only(left: 20),
                                 enabledBorder: OutlineInputBorder(
@@ -351,6 +337,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                   ),
                                 ),
                               ),
+
                             ),
                           ),
                         ),
@@ -381,10 +368,14 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       ),
                     ],
                   ),
-                  TextField(
+                  TextFormField(
+                    controller: controller.noteSales,
                     keyboardType: TextInputType.multiline,
                     maxLines: 5,
                     maxLength: 1000,
+                    onSaved: (value)=>{
+
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Color(0xffEEEEEE),
@@ -441,8 +432,9 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     ],
                   ),
                   Container(
-                      child: _listItem(controller)
-                  ),
+                      child: _listItem()
+                  )
+
                 ],
               ),
             ),
@@ -553,10 +545,13 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           margin: EdgeInsets.symmetric(vertical: 25),
                           child: DropdownSearch(
                             items: shiping,
+                            onSaved: (value)=>{
+
+                            },
                             hint: "Pilih Pengiriman",
                             onChanged: (String data) => _changeShipment(data, controller),
                             showSearchBox: true,
-                            selectedItem : shipment,
+                            selectedItem : controller.shipment,
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
@@ -586,7 +581,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
+
+              child:Column(
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(
@@ -618,7 +614,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               color: MyColor.greyTextAT, fontSize: 16),
                         ),
                         Text(
-                          "${controller.getSumItem()}",
+                          "${getSumItem()}",
                           style: TextStyle(
                               color: MyColor.greyTextAT,
                               fontWeight: FontWeight.bold,
@@ -642,7 +638,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           ),
                         ),
                         Text(
-                          "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
+                          "${MyNumber.toNumberRpStr(getTotalHarga().toString())}",
                           style: TextStyle(
                               color: MyColor.greyTextAT,
                               fontWeight: FontWeight.bold,
@@ -692,7 +688,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           ),
                         ),
                         Text(
-                          "${MyNumber.toNumberRpStr(getTotalAkhir(controller).toString())}",
+                          "${MyNumber.toNumberRpStr(totalAkhir.toString())}",
                           style: TextStyle(
                               color: MyColor.redAT,
                               fontWeight: FontWeight.bold,
@@ -702,7 +698,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     ),
                   ),
                 ],
-              ),
+              )
+
             ),
             Container(
               height: 3,
@@ -725,7 +722,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       fontSize: 14),
                 ),
                 onPressed: () {
-                  Get.toNamed(paymentScreen);
+                  controller.checkout(totalAkhir.toString());
+//                  Get.toNamed(paymentScreen);
                 },
               ),
             ),
@@ -740,12 +738,12 @@ class _CheckoutScreenState extends CheckoutViewModel {
     );
   }
 
-  Widget _listItem(SelectProductController controller){
+  Widget _listItem(){
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemBuilder: (context, index)=> _item(context, controller.listCart[index]),
-      itemCount: controller.listCart.length,
+      itemBuilder: (context, index)=> _item(context, cart[index]),
+      itemCount: cart.length,
       /*children: <Widget>[
 
       ],*/
@@ -907,7 +905,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
     );
   }
 
-  _dialogListAddress(BuildContext context, SelectProductController controller) async {
+  _dialogListAddress(BuildContext context) async {
     return showDialog(
       context: context,
       child: GetBuilder<AddressController>(
@@ -936,7 +934,6 @@ class _CheckoutScreenState extends CheckoutViewModel {
                         child: Text('Tambah Alamat', style: TextStyle(color: MyColor.redAT),),
                         onPressed: () {
                           Get.toNamed(addAddressScreen, arguments: vm).then((value){
-                            debugPrint("return dari form $value");
                             vm.getListAddress();
                           });
                         },

@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/payment_controller.dart';
+import 'package:aksestokomobile/model/Sales.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,91 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends PaymentController {
 
+  var rekening = '';
+  GlobalKey<ScaffoldState> _key ;
+  List<String> _dynamicBank;
+  List<String> _dynamicTempo;
+  List<Color> _colorBank;
+  int _value;
+  int _tempo;
+
+  bool CashOnDelivery = false;
+  bool CashBeforeDelivery = false;
+  bool KreditPro = false;
+  bool TempoDistributor = false;
+  int currentTab = 0;
+
+  listBank(){
+    return Wrap(
+      spacing: 6,
+      runSpacing: 6,
+      children: List<Widget>.generate(_dynamicBank.length, (int index) {
+        return Container(
+          margin: EdgeInsets.only(left: 4, right: 8, top:0, bottom: 8,),
+          child: ChoiceChip(
+            backgroundColor: _colorBank[index],
+            labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            label:  Text(_dynamicBank[index], style: TextStyle(color: _value != index ? Colors.black : Colors.white ),),
+            avatar: CircleAvatar(
+              backgroundColor: Colors.white,
+              maxRadius: 15,
+              child: _value!= index ? Text('') : Icon(Icons.check, color: Colors.green,),
+            ),
+            selected: _value == index,
+            selectedColor: _colorBank[index],
+            onSelected: (bool selected){
+              setState(() {
+                rekening = _dynamicBank[index];
+                _value = selected ? index : null;
+                debugPrint(_value?.toString());
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+
+  listTempo(){
+    return Wrap(
+      spacing: 6,
+      runSpacing: 6,
+      children: List<Widget>.generate(_dynamicTempo.length, (int index) {
+        return Container(
+          margin: EdgeInsets.only(left: 4, right: 8, top:0, bottom: 8,),
+          child: ChoiceChip(
+            labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            label:  Text(_dynamicTempo[index], style: TextStyle(color: _tempo != index ? Colors.black : Colors.white ),),
+            avatar: CircleAvatar(
+              backgroundColor: Colors.white,
+              maxRadius: 15,
+              child: _tempo!= index ? Text('') : Icon(Icons.check, color: Colors.green,),
+            ),
+            selected: _tempo == index,
+            selectedColor: MyColor.redAT,
+            onSelected: (bool selected){
+              setState(() {
+                _tempo = selected ? index : null;
+                debugPrint(_tempo?.toString());
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // _key = GlobalKey<ScaffoldState> ();
+    var sale = Get.arguments as Sales;
+    _dynamicBank = ['Mandiri', 'BCA', 'BNI', 'BRI'];
+    _dynamicTempo = ['30 Hari', '45 Hari', '60 Hari'];
+    _colorBank = [Color(0xFFff8a65), Color(0xFF4fc3f7), Color(0xFF9575cd), Color(0xFF4db6ac)];
+    _value = 0;
+    _tempo = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +463,7 @@ class _PaymentScreenState extends PaymentController {
                                   ),
                                   MyDivider.spaceDividerElementsAT(custom: 5),
                                   Text(
-                                    "19827364",
+                                    rekening,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: MyColor.blackTextAT,
@@ -1192,7 +1278,4 @@ class _PaymentScreenState extends PaymentController {
       ),
     );
   }
-
-
-
 }

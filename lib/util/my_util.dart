@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
@@ -63,5 +64,31 @@ extension StringExtension on String {
         .split('')
         .map((e) => e == ',' ? '.' : (e == '.' ? '' : e))
         .join();
+  }
+}
+
+String strToDate(String txtDate, {BuildContext context}) {
+//  debugPrint("asdasd => ${DateTime.tryParse(txtDate)}");
+  var dateFormatOut = DateFormat('dd MMMM yyyy');
+  if (txtDate == null) return '';
+  return dateFormatOut.format(DateTime.tryParse(txtDate));
+}
+
+extension DateTimeExtension on DateTime {
+  String toStr() {
+    if (this == null) return '';
+    var dateFormatOut = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return dateFormatOut.format(this);
+  }
+
+  String toMonthStr({bool showDiffYear = false}) {
+    if (this == null) return '';
+    var now = DateTime.now();
+    if (showDiffYear && now.year != this.year) {
+      var dateFormatOut = DateFormat('MMMM yyyy', 'in_ID');
+      return dateFormatOut.format(this);
+    }
+    var dateFormatOut = DateFormat('MMMM', 'in_ID');
+    return dateFormatOut.format(this);
   }
 }

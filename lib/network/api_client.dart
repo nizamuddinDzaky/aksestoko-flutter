@@ -19,7 +19,7 @@ typedef APIFailedCallback = dynamic Function(String title, String message);
 
 class ApiClient {
   static addInterceptor() {
-    // addInterceptor1();
+     addInterceptor1();
     addInterceptor2();
   }
 

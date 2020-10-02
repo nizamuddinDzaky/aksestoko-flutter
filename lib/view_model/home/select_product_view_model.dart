@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/Cart.dart';
 import 'package:aksestokomobile/model/Product.dart';
@@ -14,6 +15,8 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
   /*final SelectProductController controller = Get.find();*/
   @override
   void initState() {
+    /*final SelectProductController controller = Get.find();
+    controller.refresh();*/
     getDataProduct();
     getDataCart();
     super.initState();
@@ -88,5 +91,13 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       });
     }
     setState(() {});
+  }
+
+  void confirm(SelectProductController vm, _alertDialog()){
+    if(vm.listCart == null || vm.listCart.length < 1){
+      _alertDialog();
+    }else{
+      Get.toNamed(checkoutScreen, arguments: vm.listCart);
+    }
   }
 }
