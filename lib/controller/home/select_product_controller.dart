@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/model/product.dart';
 import 'package:get/get.dart';
 
 class SelectProductController extends GetController {

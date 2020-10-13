@@ -1,6 +1,6 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
-import 'package:aksestokomobile/model/Address.dart';
+import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';

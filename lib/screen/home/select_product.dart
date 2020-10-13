@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
-import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';

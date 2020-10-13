@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/Address.dart';
+import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/view_model/home/list_address_view_model.dart';

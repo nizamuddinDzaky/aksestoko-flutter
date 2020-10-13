@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
-import 'package:aksestokomobile/model/Distributor.dart';
+import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';

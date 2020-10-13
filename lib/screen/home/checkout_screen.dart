@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
-import 'package:aksestokomobile/model/Product.dart';
+import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';

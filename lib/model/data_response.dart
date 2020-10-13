@@ -1,8 +1,8 @@
-import 'package:aksestokomobile/model/Address.dart';
-import 'package:aksestokomobile/model/Cart.dart';
-import 'package:aksestokomobile/model/Distributor.dart';
-import 'package:aksestokomobile/model/Product.dart';
-import 'package:aksestokomobile/model/Zone.dart';
+import 'package:aksestokomobile/model/address.dart';
+import 'package:aksestokomobile/model/cart.dart';
+import 'package:aksestokomobile/model/distributor.dart';
+import 'package:aksestokomobile/model/product.dart';
+import 'package:aksestokomobile/model/zone.dart';
 
 class DataResponse {
   String token;

@@ -1,7 +1,7 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
-import 'package:aksestokomobile/model/Product.dart';
-import 'package:aksestokomobile/model/Sales.dart';
+import 'package:aksestokomobile/model/product.dart';
+import 'package:aksestokomobile/model/sales.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/home/payment_controller.dart';
-import 'package:aksestokomobile/model/Sales.dart';
+import 'package:aksestokomobile/model/sales.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';

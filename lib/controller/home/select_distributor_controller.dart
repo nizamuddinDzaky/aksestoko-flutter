@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/Distributor.dart';
+import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/screen/home/parent_screen.dart';
 import 'package:aksestokomobile/screen/home/select_distributor.dart';
 import 'package:aksestokomobile/util/my_pref.dart';

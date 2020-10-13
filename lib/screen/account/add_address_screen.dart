@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/Zone.dart';
+import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/view_model/account/address_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
