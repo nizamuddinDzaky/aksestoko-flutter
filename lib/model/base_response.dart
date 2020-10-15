@@ -1,7 +1,7 @@
 import 'package:aksestokomobile/model/data_response.dart';
 
 class BaseResponse {
-  int status;
+  String status;
   int code;
   String message;
   String requestTime;
@@ -9,14 +9,15 @@ class BaseResponse {
   int rows;
   DataResponse data;
 
-  BaseResponse(
-      {this.status,
-        this.code,
-        this.message,
-        this.requestTime,
-        this.responseTime,
-        this.rows,
-        this.data});
+  BaseResponse({
+    this.status,
+    this.code,
+    this.message,
+    this.requestTime,
+    this.responseTime,
+    this.rows,
+    this.data,
+  });
 
   BaseResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -25,7 +26,8 @@ class BaseResponse {
     requestTime = json['request_time'];
     responseTime = json['response_time'];
     rows = json['rows'];
-    data = json['data'] != null ? new DataResponse.fromJson(json['data']) : null;
+    data =
+        json['data'] != null ? new DataResponse.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,5 +47,6 @@ class BaseResponse {
 
 abstract class Copyable<T> {
   T copy();
+
   T copyWith();
 }

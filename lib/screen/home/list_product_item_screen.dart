@@ -12,8 +12,11 @@ class ListProductScreen extends StatefulWidget {
   final Product _product;
   final SelectProductController controller;
   final SelectProductViewModel vm;
+
   ListProductScreen(this._product, this.controller, this.vm);
-  _ListProductScreenState createState() => _ListProductScreenState(_product, controller, vm);
+
+  _ListProductScreenState createState() =>
+      _ListProductScreenState(_product, controller, vm);
 }
 
 class _ListProductScreenState extends State<ListProductScreen> {
@@ -21,7 +24,9 @@ class _ListProductScreenState extends State<ListProductScreen> {
   final SelectProductController controller;
   final SelectProductViewModel vm;
   final Product _product;
+
   _ListProductScreenState(this._product, this.controller, this.vm);
+
   @override
   void initState() {
     super.initState();
@@ -83,10 +88,10 @@ class _ListProductScreenState extends State<ListProductScreen> {
             SizedBox(height: 10),
             Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
                   Container(
                     height: 30,
                     width: 30,
@@ -95,12 +100,14 @@ class _ListProductScreenState extends State<ListProductScreen> {
                         heroTag: "btnMinus${_product.nama}",
                         backgroundColor: Color(0xFF387C2B),
                         onPressed: () {
-                          int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
-                          currentValue --;
-                          if(currentValue > 0){
-                            _controller.text =currentValue.toString();
-                            controller.reduceCart(_product, customQty: currentValue.toDouble());
-                          }else{
+                          int currentValue =
+                              (_product.qty != null ? _product.qty : 0).toInt();
+                          currentValue--;
+                          if (currentValue > 0) {
+                            _controller.text = currentValue.toString();
+                            controller.reduceCart(_product,
+                                customQty: currentValue.toDouble());
+                          } else {
                             _showAlertDialog(context, controller, _product);
                           }
                         },
@@ -114,7 +121,9 @@ class _ListProductScreenState extends State<ListProductScreen> {
                       // width: 50,
                       child: TextFormField(
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: Color(0xFF333333),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF333333),
                           fontWeight: FontWeight.bold,
                         ),
                         decoration: InputDecoration(
@@ -122,8 +131,13 @@ class _ListProductScreenState extends State<ListProductScreen> {
                           border: InputBorder.none,
                         ),
                         controller: _controller,
-                        keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
-                        inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                        keyboardType: TextInputType.numberWithOptions(
+                          decimal: false,
+                          signed: true,
+                        ),
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly
+                        ],
                       ),
                     ),
                   ),
@@ -135,18 +149,20 @@ class _ListProductScreenState extends State<ListProductScreen> {
                         heroTag: "btnPlus${_product.nama}",
                         backgroundColor: Color(0xFF387C2B),
                         onPressed: () {
-                          int currentValue = (_product.qty != null ? _product.qty : 0).toInt();
+                          int currentValue =
+                              (_product.qty != null ? _product.qty : 0).toInt();
                           currentValue++;
-                          controller.addToCart(_product, customQty: currentValue.toDouble());
+                          controller.addToCart(_product,
+                              customQty: currentValue.toDouble());
                           _controller.text = (currentValue).toString();
                         },
                         child: Icon(Icons.add),
                       ),
                     ),
                   ),
-              ],
-            ),
-                )),
+                ],
+              ),
+            )),
             SizedBox(height: 10),
           ],
         ),
@@ -154,18 +170,19 @@ class _ListProductScreenState extends State<ListProductScreen> {
     );
   }
 
-  void _showAlertDialog(BuildContext context, SelectProductController controller, Product _product) {
+  void _showAlertDialog(BuildContext context,
+      SelectProductController controller, Product _product) {
     // set up the buttons
 
     Widget cancelButton = FlatButton(
       child: Text("Batal"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget launchButton = FlatButton(
       child: Text("YA"),
-      onPressed:  () {
+      onPressed: () {
         controller.removeCart(_product);
         _controller.text = '0';
         Navigator.of(context).pop();

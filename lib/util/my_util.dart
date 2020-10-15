@@ -59,11 +59,16 @@ extension StringExtension on String {
     return MyNumber.tryStrUSToDouble(this);
   }
 
-  String changeComma() { //format ID
+  String changeComma() {
+    //format ID
     return this
         .split('')
         .map((e) => e == ',' ? '.' : (e == '.' ? '' : e))
         .join();
+  }
+
+  int toInt() {
+    return int.tryParse(this);
   }
 }
 
