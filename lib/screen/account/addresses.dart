@@ -1,16 +1,29 @@
-import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/model/alamat.dart';
+import 'package:aksestokomobile/screen/account/edit_alamat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
 
 class ListAddress extends StatefulWidget {
+  final Alamat address;
+
+  ListAddress(this.address);
+
   _ListAddressState createState() => _ListAddressState();
 }
 
 class _ListAddressState extends State<ListAddress> {
   @override
   Widget build(BuildContext context) {
+    List<String> line1 = [
+      widget.address?.addressName,
+      widget.address?.addressPhone,
+    ];
+    List<String> line2 = [
+      widget.address?.address,
+      widget.address?.addressPostalCode,
+    ];
     return Container(
       margin: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
       padding: EdgeInsets.all(15),
@@ -27,6 +40,7 @@ class _ListAddressState extends State<ListAddress> {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             child: Row(
@@ -42,9 +56,9 @@ class _ListAddressState extends State<ListAddress> {
                       ),
                     ),
                     Text(
-                      "Nama Toko",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
+                      "{{Nama Toko}}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -67,37 +81,16 @@ class _ListAddressState extends State<ListAddress> {
           ),
           Container(
             margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    "Nama Lengkap, ",
-                    style: TextStyle(
-                        fontSize: 16, color: MyColor.greyTextAT),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    "08912321313",
-                    style: TextStyle(
-                        fontSize: 15, color: MyColor.greyTextAT),
-                  ),
-                ),
-              ],
+            child: Text(
+              line1.join(', '),
+              style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
             ),
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10, left: 10),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    "Jl. Lorem Ipsum Dolor Ismet No 29, Lorem Ipsum Dolor Ismet Kabupaten Gresik Jawa Timur Indonesia",
-                    style: TextStyle(
-                        fontSize: 16, color: MyColor.greyTextAT),
-                  ),
-                ),
-              ],
+            child: Text(
+              line2.join(', '),
+              style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
             ),
           ),
           Container(
@@ -108,8 +101,8 @@ class _ListAddressState extends State<ListAddress> {
                   color: MyColor.redAT,
                 ),
               ),
-              onPressed: (){
-                Get.toNamed(editAddressScreen);
+              onPressed: () {
+                Get.to(EditAlamatScreen(widget.address));
               },
             ),
           ),

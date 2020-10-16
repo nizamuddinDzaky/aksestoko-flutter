@@ -1,38 +1,45 @@
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/view_model/account/list_store_address_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/screen/account/addresses.dart' as listAddress;
+import 'package:aksestokomobile/screen/account/addresses.dart'
+    as listAddressLayout;
 
 class ListAddressScreen extends StatefulWidget {
   _ListAddressScreenState createState() => _ListAddressScreenState();
 }
 
-class _ListAddressScreenState extends State<ListAddressScreen> {
+class _ListAddressScreenState extends ListStoreAddressViewModel {
   @override
   Widget build(BuildContext context) {
-
     var formLayout = Container(
       child: Column(
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height * .1,
+            // height: MediaQuery.of(context).size.height * .1,
+            padding: EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Center(
                   child: Text(
                     "Daftar Alamat Toko",
-                    style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      "Daftar alamat toko yang dimiliki atau menambah baru",
-                      style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
+                Center(
+                  child: Text(
+                    "Daftar alamat toko yang dimiliki atau menambah baru",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -57,42 +64,46 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: ListView(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
+              child: listAddress == null
+                  ? Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Column(
                         children: <Widget>[
-                          listAddress.ListAddress(),
-                          listAddress.ListAddress(),
-                          listAddress.ListAddress(),
+                          Container(
+                            padding: EdgeInsets.only(top: 10),
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (bc, idx) {
+                                return listAddressLayout.ListAddress(
+                                    listAddress[idx]);
+                              },
+                              itemCount: listAddress?.length ?? 0,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 30, horizontal: 25),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 46,
+                              child: FlatButton(
+                                  color: MyColor.redAT,
+                                  child: Text(
+                                    'Tambah Alamat',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {
+                                    Get.toNamed(addAddressScreen);
+                                  },
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0))),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 30, horizontal: 25),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 46,
-                        child: FlatButton(
-                            color: MyColor.redAT,
-                            child: Text(
-                              'Tambah Alamat',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: (){
-                              Get.toNamed(addAddressScreen);
-                            },
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0))),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ),
           ),
         ],
@@ -101,7 +112,8 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
 
     return SingleChildScrollView(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+        constraints:
+            BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
         child: Stack(
           children: <Widget>[
             Image.asset(
@@ -127,6 +139,5 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
         ),
       ),
     );
-
   }
 }
