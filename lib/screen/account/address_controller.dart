@@ -1,5 +1,4 @@
-
-import 'package:aksestokomobile/model/address.dart';
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
@@ -9,53 +8,52 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddressController extends GetController{
-  /*AddressController({Address address}){
-    this.isEdit = address != null;
-  }*/
+class AddressController extends GetController {
   static AddressController get to => Get.find();
   bool isEdit = false;
 
-  Address address;
+  Alamat address;
 
-  List<Address> listAddress = [];
+  List<Alamat> listAddress = [];
 
-  setAddress(Address address) {
+  setAddress(Alamat address) {
     this.address = address;
     this.isEdit = address != null;
     debugPrint('terdeteksi ubah $isEdit');
   }
 
-  Address getAddress(){
+  Alamat getAddress() {
     return this.address;
   }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  saveForm(
-      {namaPenerima,
-      email,
-      noTlpn,
-      alamat,
-      provinceName,
-      provinceId,
-      kabupatenName,
-      kabupatenId,
-      kecamatanName,
-      kecamatanId,
-      addressId,
-      kodePos,}) {
-    address = address ?? Address();
-    address.namaPenerima =namaPenerima ?? address.namaPenerima;
-    address.email =email ?? address.email;
-    address.noTlpn =noTlpn ?? address.noTlpn;
-    address.alamat =alamat ?? address.alamat;
-    address.provinceName =provinceName ?? address.provinceName;
-    address.provinceId =provinceId ?? address.provinceId;
-    address.kabupatenName =kabupatenName ?? address.kabupatenName;
-    address.kabupatenId =kabupatenId ?? address.kabupatenId;
-    address.kecamatanName =kecamatanName ?? address.kecamatanName;
-    address.kecamatanId =kecamatanId ?? address.kecamatanId;
-    address.kodePos =kodePos ?? address.kodePos;
+
+  saveForm({
+    namaPenerima,
+    email,
+    noTlpn,
+    alamat,
+    provinceName,
+    provinceId,
+    kabupatenName,
+    kabupatenId,
+    kecamatanName,
+    kecamatanId,
+    addressId,
+    kodePos,
+  }) {
+    address = address ?? Alamat();
+    // address.namaPenerima = namaPenerima ?? address.namaPenerima;
+    // address.email = email ?? address.email;
+    // address.noTlpn = noTlpn ?? address.noTlpn;
+    // address.alamat = alamat ?? address.alamat;
+    // address.provinceName = provinceName ?? address.provinceName;
+    // address.provinceId = provinceId ?? address.provinceId;
+    // address.kabupatenName = kabupatenName ?? address.kabupatenName;
+    // address.kabupatenId = kabupatenId ?? address.kabupatenId;
+    // address.kecamatanName = kecamatanName ?? address.kecamatanName;
+    // address.kecamatanId = kecamatanId ?? address.kecamatanId;
+    // address.kodePos = kodePos ?? address.kodePos;
   }
 
   actionSubmit(BuildContext context) async {
@@ -72,18 +70,18 @@ class AddressController extends GetController{
         });
     formKey.currentState.save();
     var body = {
-      'namaPenerima' : address?.namaPenerima,
-      'email' : address?.email,
-      'noTlpn' : address?.noTlpn,
-      'alamat' : address?.alamat,
-      'provinceName' : address?.provinceName,
-      'provinceId' : address?.provinceId,
-      'kabupatenName' : address?.kabupatenName,
-      'kabupatenId' : address?.kabupatenId,
-      'kecamatanName': address?.kecamatanName,
-      'kecamatanId': address?.kecamatanId,
-      'addressId': address?.addressId,
-      'kodePos': address?.kodePos,
+      // 'namaPenerima': address?.namaPenerima,
+      // 'email': address?.email,
+      // 'noTlpn': address?.noTlpn,
+      // 'alamat': address?.alamat,
+      // 'provinceName': address?.provinceName,
+      // 'provinceId': address?.provinceId,
+      // 'kabupatenName': address?.kabupatenName,
+      // 'kabupatenId': address?.kabupatenId,
+      // 'kecamatanName': address?.kecamatanName,
+      // 'kecamatanId': address?.kecamatanId,
+      // 'addressId': address?.addressId,
+      // 'kodePos': address?.kodePos,
     };
     debugPrint('action api ${isEdit ? 'edit' : 'add'} customer $body');
     if (isEdit) {
@@ -91,7 +89,6 @@ class AddressController extends GetController{
     } else {
       await actionPostAddAddress(body, context);
     }
-
   }
 
   actionPutEditAddress(body, BuildContext context) async {
@@ -127,7 +124,6 @@ class AddressController extends GetController{
       onSuccess: (data, _) {
         Navigator.of(context).pop();
         Get.back(result: "qqww");
-
       },
       onFailed: (title, message) {
         Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
@@ -140,31 +136,26 @@ class AddressController extends GetController{
     status.execute();
   }
 
-  void getListAddress() async{
+  void getListAddress() async {
     listAddress.clear();
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
     };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListAddress, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
+    var status = await ApiClient.methodGet(ApiConfig.urlListAddress,
+        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
-      listAddress.addAll(baseResponse?.data?.listAddress);
+      listAddress.addAll(baseResponse?.data?.listAlamat);
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-    });
+    }, onAfter: (status) {});
     status.execute();
     update();
   }
 
-  void deleteAddress(int idAddress, BuildContext context) async{
-    var params = {
-      MyString.KEY_ID_DISTRIBUTOR: idAddress,
-    };
-
+  void deleteAddress(int idAddress, BuildContext context) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -186,7 +177,6 @@ class AddressController extends GetController{
         getListAddress();
         Navigator.of(context).pop();
 //        Get.back(result: "qqww");
-
       },
       onFailed: (title, message) {
         Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));

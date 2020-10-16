@@ -1,33 +1,45 @@
-import 'package:aksestokomobile/model/address.dart';
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:aksestokomobile/view_model/home/list_address_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:get/get.dart';
 
 class ListAddressScreen extends StatefulWidget {
   AddressController controller;
-  ListAddressScreen(AddressController controller){
+
+  ListAddressScreen(AddressController controller) {
     this.controller = controller;
   }
+
   @override
   _ListAddressScreenState createState() => _ListAddressScreenState(controller);
 }
 
 class _ListAddressScreenState extends State<ListAddressScreen> {
   AddressController controller;
-  _ListAddressScreenState(AddressController controller){
+
+  _ListAddressScreenState(AddressController controller) {
     this.controller = controller;
   }
+
   @override
   void initState() {
     super.initState();
-      controller.getListAddress();
+    controller.getListAddress();
   }
-  Widget _address(Address address){
+
+  Widget _address(Alamat address) {
+    List<String> line1 = [
+      address?.addressName,
+      address?.addressPhone,
+    ];
+    List<String> line2 = [
+      address?.address,
+      address?.addressPostalCode,
+    ];
     return InkWell(
-      onTap: (){
+      onTap: () {
         Get.back(result: address);
         debugPrint("ok");
       },
@@ -63,7 +75,7 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                         ),
                       ),
                       Text(
-                        address != null ? "${address.namaPenerima}" : "",
+                        address != null ? "${address.addressName}" : "",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -79,7 +91,7 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                             color: MyColor.redAT,
                           ),
                           onPressed: () {
-                            controller.deleteAddress(address.addressId, context);
+                            // controller.deleteAddress(address.addressId, context);
                             /*debugPrint("asdasd");*/
                           },
                         ),
@@ -91,37 +103,16 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
             ),
             Container(
               margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      address != null ? "${address.namaPenerima}, " : "",
-                      style: TextStyle(
-                          fontSize: 16, color: MyColor.greyTextAT),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      address != null ? "${address.noTlpn}" : "",
-                      style: TextStyle(
-                          fontSize: 15, color: MyColor.greyTextAT),
-                    ),
-                  ),
-                ],
+              child: Text(
+                line1.join(', '),
+                style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
               ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 10, left: 10),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      address != null ? "${address.alamat}, ${address.kecamatanName}, ${address.kabupatenName}, ${address.provinceName}" : "",
-                      style: TextStyle(
-                          fontSize: 16, color: MyColor.greyTextAT),
-                    ),
-                  ),
-                ],
+              child: Text(
+                line2.join(', '),
+                style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
               ),
             ),
             Container(
@@ -136,9 +127,14 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                       style: TextStyle(color: MyColor.redAT),
                     ),
                     onPressed: () {
-                      Map<String, dynamic> param = {'controller' : controller, 'data' : address};
-                      Get.toNamed(editAddressScreen, arguments: param).then((value){
+                      Map<String, dynamic> param = {
+                        'controller': controller,
+                        'data': address
+                      };
+                      Get.toNamed(editAddressScreen, arguments: param)
+                          .then((value) {
 //                        debugPrint("return dari form $value");
+                        if (value == null) return;
                         controller.getListAddress();
                       });
                     },
@@ -156,7 +152,7 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemBuilder: (context, index)=> _address(controller.listAddress[index]),
+      itemBuilder: (context, index) => _address(controller.listAddress[index]),
       itemCount: controller.listAddress.length,
     );
   }
