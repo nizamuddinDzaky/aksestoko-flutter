@@ -7,6 +7,8 @@ class ApiConfig {
 
   //auth
   static String urlLogin = '${path}Auth/login';
+  static String urlRegisterCheck = '${path}Auth/register_check';
+  static String urlRegisterSubmit = '${path}Auth/register_submit';
   static String urlResetPass = '${path}auth/forgot_password';
   static String urlProfile = '${path}auth/profile';
   static String urlProfileUpdate = '${path}auth/update_profile';
