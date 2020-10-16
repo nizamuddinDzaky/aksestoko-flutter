@@ -12,11 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class SelectProductViewModel extends State<SelectProductScreen> {
-  /*final SelectProductController controller = Get.find();*/
   @override
   void initState() {
-    /*final SelectProductController controller = Get.find();
-    controller.refresh();*/
     getDataProduct();
     getDataCart();
     super.initState();
@@ -29,11 +26,12 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
     };
-    var status = await ApiClient.methodGet(ApiConfig.urlListProduct, params: params, onBefore: (status) {
+    var status = await ApiClient.methodGet(ApiConfig.urlListProduct,
+        params: params, onBefore: (status) {
 //      Get.back();
     }, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
-      var newListProduct = baseResponse?.data?.listProduct ?? [];
+      List<Product> newListProduct = baseResponse?.data?.listProduct ?? [];
       listProduct.clear();
       listProduct.addAll(newListProduct);
       buildCart();
@@ -41,10 +39,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-//      if (status == ResponseStatus.success)
-//        MyPref.setRemember(isRemember, currentData);
-    });
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
@@ -52,10 +47,10 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
 
   void getDataCart() async {
     var params = {
-      MyString.KEY_ID_CART: MyPref.getIdDistributor(),
+      'id_distributor': MyPref.getIdDistributor(),
     };
-    var status = await ApiClient.methodGet(ApiConfig.urlCart, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
+    var status = await ApiClient.methodGet(ApiConfig.urlCart,
+        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       var newListCart = baseResponse?.data?.listCart ?? [];
       listCart.clear();
@@ -65,25 +60,20 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-//      if (status == ResponseStatus.success)
-//        MyPref.setRemember(isRemember, currentData);
-    });
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
   }
 
-  void confirmMinus(){
+  void confirmMinus() {}
 
-  }
-
-  void buildCart(){
-      final SelectProductController controller = Get.find();
-    if(listCart != null && listProduct != null){
+  void buildCart() {
+    final SelectProductController controller = Get.find();
+    if (listCart != null && listProduct != null) {
       listCart.forEach((cart) {
         listProduct.forEach((product) {
-          if(cart.productId == product.productId){
+          if (cart.productId == product.productId) {
             debugPrint("product => ${product.productId}");
             controller.addToCart(product, customQty: cart.qty.toDouble());
           }
@@ -93,10 +83,10 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     setState(() {});
   }
 
-  void confirm(SelectProductController vm, _alertDialog()){
-    if(vm.listCart == null || vm.listCart.length < 1){
+  void confirm(SelectProductController vm, _alertDialog()) {
+    if (vm.listCart == null || vm.listCart.length < 1) {
       _alertDialog();
-    }else{
+    } else {
       Get.toNamed(checkoutScreen, arguments: vm.listCart);
     }
   }

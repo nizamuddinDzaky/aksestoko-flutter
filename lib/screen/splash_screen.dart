@@ -15,12 +15,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   _changePage() async {
     await MyPref.init();
-    var token = MyPref.getForcaToken();
+    var token = MyPref.getATToken();
     var isLogin = token != null && token.isNotEmpty;
     debugPrint('forcatoken $token');
     Future.delayed(Duration(seconds: MyDimen.timerSplash), () {
       debugPrint("=>>${MyPref.isIdDistributorExist()}");
-      Get.offNamed(isLogin ? (MyPref.isIdDistributorExist() ? parentScreen : selectDistributorScreen) : loginScreen);
+      Get.offNamed(isLogin
+          ? (MyPref.isIdDistributorExist()
+              ? parentScreen
+              : selectDistributorScreen)
+          : loginScreen);
     });
   }
 

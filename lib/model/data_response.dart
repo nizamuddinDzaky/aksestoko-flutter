@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/zone.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 
 class DataResponse {
   String token;
@@ -17,6 +18,7 @@ class DataResponse {
   List<Zone> listDesa;
   Address address;
   String shipmentPrice;
+
   DataResponse({this.token});
 
   T ifExist<T>(json, key) {
@@ -47,7 +49,8 @@ class DataResponse {
   DataResponse.fromJson(Map<String, dynamic> json) {
     token = ifExist(json, 'token');
     shipmentPrice = ifExist(json, 'biaya_pengiriman');
-    idBK = ifExist(json, 'id_bk_user');
+    idBK = ifExist(json, 'id_bk_user') ??
+        (ifExist(json, 'company_id')?.toString()?.toInt());
     listDistributor = ifExistList(json, 'list_distributor', (obj) {
       return Distributor.fromJson(obj);
     });
@@ -57,10 +60,13 @@ class DataResponse {
     });
 
     listCart = ifExistList(json, 'list_cart', (obj) {
-      return Cart.fromJson(obj);
-    });
+          return Cart.fromJson(obj);
+        }) ??
+        ifExistList(json, 'product', (obj) {
+          return Cart.fromJson(obj);
+        });
 
-    address = ifExistObject(json, 'address', (obj){
+    address = ifExistObject(json, 'address', (obj) {
       return Address.fromJson(obj);
     });
 

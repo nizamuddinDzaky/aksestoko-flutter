@@ -48,16 +48,18 @@ class MyPref {
     //setRemember(false, null);
     setIdDristributor(null);
     setDisributorName(null);
-    setForcaToken(null);
+    setATToken(null);
   }
 
   //get value
-  static String getForcaToken() => getString(MyString.KEY_FORCA_TOKEN);
+  static String getATToken() => getString(MyString.KEY_AT_TOKEN);
+
   static int getIdBk() => getInt(MyString.KEY_ID_BK);
+
   static int getIdDistributor() => getInt(MyString.KEY_ID_DISTRIBUTOR);
 
-  static setForcaToken(String value) {
-    setString(MyString.KEY_FORCA_TOKEN, value);
+  static setATToken(String value) {
+    setString(MyString.KEY_AT_TOKEN, value);
   }
 
   static bool getRemember() => getBool(MyString.KEY_IS_REMEMBER);
@@ -69,8 +71,12 @@ class MyPref {
   }
 
   static String getUsername() => getString(MyString.KEY_USERNAME);
-  static String getDistributorName() => getString(MyString.KEY_DISTRIBUTOR_NAME);
-  static String getDistributorCode() => getString(MyString.KEY_DISTRIBUTOR_CODE);
+
+  static String getDistributorName() =>
+      getString(MyString.KEY_DISTRIBUTOR_NAME);
+
+  static String getDistributorCode() =>
+      getString(MyString.KEY_DISTRIBUTOR_CODE);
 
   static setUsername(String value) {
     setString(MyString.KEY_USERNAME, value);
@@ -82,17 +88,18 @@ class MyPref {
     setString(MyString.KEY_PASSWORD, value);
   }
 
-  static setDisributorName(String value){
+  static setDisributorName(String value) {
     setString(MyString.KEY_DISTRIBUTOR_NAME, value);
   }
 
-  static setDisributorCode(String value){
+  static setDisributorCode(String value) {
     setString(MyString.KEY_DISTRIBUTOR_CODE, value);
   }
 
   static setRole(int roleId) {
     setInt(MyString.KEY_ROLE_USER, roleId);
   }
+
   static setIdBk(int idBk) {
     setInt(MyString.KEY_ID_BK, idBk);
   }
@@ -101,10 +108,10 @@ class MyPref {
     setInt(MyString.KEY_ID_DISTRIBUTOR, idDistributor);
   }
 
-  static bool isIdDistributorExist(){
-    if(getIdDistributor() == null){
+  static bool isIdDistributorExist() {
+    if (getIdDistributor() == null) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }

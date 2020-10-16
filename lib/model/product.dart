@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/util/my_util.dart';
+
 class Product {
   String nama;
   String satuanHargaCash;
@@ -7,22 +9,23 @@ class Product {
   double qty;
   int productId;
 
-  Product(
-      {this.nama,
-        this.satuanHargaCash,
-        this.satuanHargaCredit,
-        this.kodeUnit,
-        this.imageUrl,
-        this.qty,
-        this.productId});
+  Product({
+    this.nama,
+    this.satuanHargaCash,
+    this.satuanHargaCredit,
+    this.kodeUnit,
+    this.imageUrl,
+    this.qty,
+    this.productId,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
-    nama = json['nama'];
-    satuanHargaCash = json['satuan_harga_cash'];
+    nama = json['nama'] ?? json['product_name'];
+    satuanHargaCash = json['satuan_harga_cash'] ?? json['product_price'];
     satuanHargaCredit = json['satuan_harga_credit'];
-    kodeUnit = json['kode_unit'];
-    imageUrl = json['image_url'];
-    productId = json['product_id'];
+    kodeUnit = json['kode_unit'] ?? json['unit_name'];
+    imageUrl = json['image_url'] ?? json['images'];
+    productId = json['product_id']?.toString()?.toInt();
   }
 
   Map<String, dynamic> toJson() {

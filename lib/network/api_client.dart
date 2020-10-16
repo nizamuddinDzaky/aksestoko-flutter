@@ -19,7 +19,7 @@ typedef APIFailedCallback = dynamic Function(String title, String message);
 
 class ApiClient {
   static addInterceptor() {
-     addInterceptor1();
+    addInterceptor1();
     addInterceptor2();
   }
 
@@ -34,13 +34,12 @@ class ApiClient {
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
       if (options.uri.toString().contains('login') == false) {
-        var token = MyPref.getIdBk();
+        var token = MyPref.getATToken();
 //        token = 'aGNUeGJzT2ROSUk1UDYrU1JLY0JHZHFNRzBPbzJUc05pVjd1ZE5iU2lWTVRUSURGOjrClToY3zBN7qChVoCiHwLUOjrZnRCcRjF0yMtoiwg=';//sbj
 //        token = 'MHZDeWprTXJMVkg1d0hwTUtyRUtNL3pENnlOMUkwWCtTL2VxMDdxNXNUbz06Oq6JsfLg3cMucEM64dSy3pc6OoeQ8IgrX7Tsh7sGMw==';//devsisi2
 //        token = 'emRiWWlYYytTNUVsY3FLa3hsbFFKRjlkMVBLdkFmMkdMVWV3YTdsNTMySFZLU3pQOjrQKFrlmJbxfV5Ba3fe/v8GOjorB7ppAg4nc5ogLeU=';//bjbu
 //        token = 'M1VjRWJqSUFpZzNxaHRrQTZManVxVkRIeXlubnRrcWNkcGh1YmNQekY2c25MNG1YTFZnPTo6pOtmmYOag6TZv8wq6LF9pjo6CkN7Hp4kXWFer5Y/';//kenang
-        options.headers.addAll(
-            {MyString.KEY_TOKEN: 2});
+        options.headers.addAll({MyString.KEY_AT_TOKEN: token});
       }
       return options;
     }, onResponse: (Response response) async {
@@ -54,10 +53,11 @@ class ApiClient {
             jsonResponse['data'].containsKey('token')) {
 //          MyPref.setForcaToken(jsonResponse['data']['token']);
           dio.lock();
-          profileDio.options.headers.addAll(
-              {MyString.KEY_FORCA_TOKEN: jsonResponse['data']['token']}
-          );
-          return profileDio.get<String>(ApiConfig.urlProfile).then((profileData) {
+          profileDio.options.headers
+              .addAll({MyString.KEY_AT_TOKEN: jsonResponse['data']['token']});
+          return profileDio
+              .get<String>(ApiConfig.urlProfile)
+              .then((profileData) {
             var jsonProfile = jsonDecode(profileData.data);
             jsonProfile['data']['token'] = jsonResponse['data']['token'];
             profileData.data = jsonEncode(jsonProfile);
@@ -70,7 +70,7 @@ class ApiClient {
       var isLogin = e.request.uri.toString().contains('auth/login');
       var statusCode = e.response.statusCode;
       if (statusCode == 401 && !isLogin) {
-        MyPref.setForcaToken(null);
+        MyPref.setATToken(null);
 //        Get.toNamed(root);
         return null;
       }
@@ -79,16 +79,16 @@ class ApiClient {
   }
 
   static Future<ApiResponse> methodDelete(
-      String url, {
-        Map<String, dynamic> params,
-        APIBeforeCallback onBefore,
-        APISuccessCallback onSuccess,
-        APIErrorCallback onError,
-        APIFailedCallback onFailed,
-        APIAfterCallback onAfter,
-        bool customHandle = false,
-        dynamic tagOrFlag,
-      }) async {
+    String url, {
+    Map<String, dynamic> params,
+    APIBeforeCallback onBefore,
+    APISuccessCallback onSuccess,
+    APIErrorCallback onError,
+    APIFailedCallback onFailed,
+    APIAfterCallback onAfter,
+    bool customHandle = false,
+    dynamic tagOrFlag,
+  }) async {
     var responseApi = ApiResponse(
       ResponseStatus.progress,
       onBefore,
@@ -101,8 +101,8 @@ class ApiClient {
     try {
       await dio
           .delete<String>(url,
-          queryParameters: params,
-          options: Options(contentType: Headers.jsonContentType))
+              queryParameters: params,
+              options: Options(contentType: Headers.jsonContentType))
           .then((response) {
         var statusCode = response.statusCode;
         if (onSuccess != null && statusCode == 200) {
@@ -241,9 +241,10 @@ class ApiClient {
         var statusCode = error.response.statusCode;
         if (statusCode == 405) {
           responseApi._setFailed(title, 'Akses informasi tidak valid.');
-        } else if (statusCode == 400 && error.request.uri.toString().contains('login')) {
-          responseApi._setFailed(
-              error.request.uri.toString(), 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
+        } else if (statusCode == 400 &&
+            error.request.uri.toString().contains('login')) {
+          responseApi._setFailed(error.request.uri.toString(),
+              'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
           debugPrint('error gan $error ${error.response}');
           responseApi._setFailed(title, error.response.toString());

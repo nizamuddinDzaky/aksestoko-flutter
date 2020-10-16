@@ -1,5 +1,5 @@
 class MyString {
-  static const KEY_FORCA_TOKEN = "Forca-Token";
+  static const KEY_AT_TOKEN = "Aksestoko-Token";
   static const KEY_TOKEN = "token";
   static const KEY_IS_REMEMBER = "isRemember";
   static const KEY_USERNAME = "username";
