@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
@@ -45,11 +46,16 @@ class _ListProductScreenState extends State<ListProductScreen> {
           children: <Widget>[
             Center(
               child: Container(
-                //color: Colors.blue,
-                child: Image.asset(
-                  kImageDynamix,
-                  height: 120,
-                ),
+                height: 112,
+                width: 112,
+                child: kDebugMode
+                    ? Image.asset(kImageDynamix, height: 112)
+                    : FadeInImage.assetNetwork(
+                        placeholder: kImageDynamix,
+                        image: _product?.imageUrl ?? '',
+                        fit: BoxFit.cover,
+                        width: 112,
+                      ),
               ),
             ),
             SizedBox(height: 10),
@@ -117,8 +123,6 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      // height: 40,
-                      // width: 50,
                       child: TextFormField(
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -129,6 +133,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(0.0),
                           border: InputBorder.none,
+                          isDense: true,
                         ),
                         controller: _controller,
                         keyboardType: TextInputType.numberWithOptions(

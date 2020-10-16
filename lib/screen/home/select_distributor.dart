@@ -17,7 +17,6 @@ class SelectDistributorScreen extends StatefulWidget {
 class _SelectDistributorScreenState extends SelectDistributorViewModel {
   @override
   Widget build(BuildContext context) {
-
     var formLayout = SingleChildScrollView(
       padding: EdgeInsets.only(bottom: 16),
       child: Container(
@@ -53,10 +52,10 @@ class _SelectDistributorScreenState extends SelectDistributorViewModel {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: listDistributor.length,
-                itemBuilder: (context, index)=>ListDistributorScreen().listItem(context, listDistributor[index], index),
+                itemBuilder: (context, index) => ListDistributorScreen()
+                    .listItem(context, listDistributor[index], index),
                 padding: EdgeInsets.only(top: 65),
                 physics: NeverScrollableScrollPhysics(),
-
               ),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
 import 'package:aksestokomobile/model/distributor.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 
@@ -13,8 +14,17 @@ class ListDistributorScreen extends SelectDistributorController {
             children: <Widget>[
               Center(
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: Image.asset(kDistributor),
+                  height: 112,
+                  width: 112,
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: kDebugMode
+                      ? Image.asset(kDistributor, width: 112)
+                      : FadeInImage.assetNetwork(
+                          placeholder: kDistributor,
+                          image: distributor?.imageUrl ?? '',
+                          fit: BoxFit.cover,
+                          width: 112,
+                        ),
                 ),
               ),
               Expanded(
