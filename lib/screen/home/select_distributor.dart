@@ -1,10 +1,8 @@
-import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/view_model/home/select_distributor_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:get/get.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/screen/home/list_distributor_screen.dart';
 

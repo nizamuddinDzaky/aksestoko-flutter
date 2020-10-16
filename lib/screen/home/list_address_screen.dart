@@ -6,11 +6,9 @@ import 'package:aksestokomobile/app/my_router.dart';
 import 'package:get/get.dart';
 
 class ListAddressScreen extends StatefulWidget {
-  AddressController controller;
+  final AddressController controller;
 
-  ListAddressScreen(AddressController controller) {
-    this.controller = controller;
-  }
+  ListAddressScreen(this.controller);
 
   @override
   _ListAddressScreenState createState() => _ListAddressScreenState(controller);

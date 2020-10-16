@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/app/my_router.dart';/**/
+import 'package:aksestokomobile/app/my_router.dart'; /**/
 import 'package:aksestokomobile/controller/login/forgot_pasword_controller.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
@@ -17,7 +17,6 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
   @override
   Widget build(BuildContext context) {
     dynamic screenHeight = MediaQuery.of(context).size.height;
-    dynamic screenwidth = MediaQuery.of(context).size.width;
 
     var formLayout = SingleChildScrollView(
       child: Container(
@@ -32,7 +31,8 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                 children: <Widget>[
                   Center(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.15),
                       child: Hero(
                         tag: 'logoForcaPoS',
                         child: MyLogo.logoForcaPoSColor(),
@@ -119,8 +119,8 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                         onPressed: () {
                           Get.toNamed(requestOtpScreen);
                         },
-                        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-                    ),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0))),
                   ),
                 ],
               ),
@@ -139,7 +139,6 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-
       ),
       body: GestureDetector(
         onTap: () {

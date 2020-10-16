@@ -12,17 +12,17 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
   File imageFile;
 
   _openGallery(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
     this.setState(() {
-      imageFile = picture;
+      imageFile = File(picture.path);
     });
     Navigator.of(context).pop();
   }
 
   _openCamera(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    var picture = await ImagePicker().getImage(source: ImageSource.camera);
     this.setState(() {
-      imageFile = picture;
+      imageFile = File(picture.path);
     });
     Navigator.of(context).pop();
   }
@@ -233,8 +233,8 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         children: <Widget>[
-                          ListProductShipment(),
-                          ListProductShipment(),
+                          listProductShipment(),
+                          listProductShipment(),
                         ],
                       ),
                     ),
@@ -564,7 +564,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
     );
   }
 
-  Widget ListProductShipment() {
+  Widget listProductShipment() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),

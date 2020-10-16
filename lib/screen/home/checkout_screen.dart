@@ -36,7 +36,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
             ),
           );
         });
-    await getShipmentPrice(data);
+    getShipmentPrice(data);
     setState(() {});
   }
 

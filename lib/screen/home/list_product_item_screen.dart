@@ -141,7 +141,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                           signed: true,
                         ),
                         inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly
+                          FilteringTextInputFormatter.digitsOnly,
                         ],
                       ),
                     ),

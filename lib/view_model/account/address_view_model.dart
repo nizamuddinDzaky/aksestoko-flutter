@@ -53,7 +53,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
             ),
           );
         });
-    await getKabupaten(data.id == null ? 0 : data.id);
+    getKabupaten(data.id == null ? 0 : data.id);
   }
 
   searchKecamatan(Zone data) async {
@@ -69,7 +69,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
             ),
           );
         });
-    await getsubDistrict(data.id == null ? 0 : data.id);
+    getsubDistrict(data.id == null ? 0 : data.id);
   }
 
   searchDesa(Zone data) async {
@@ -85,7 +85,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
             ),
           );
         });
-    await getVillage(data.id == null ? 0 : data.id);
+    getVillage(data.id == null ? 0 : data.id);
   }
 
   void getProvinsi() async {

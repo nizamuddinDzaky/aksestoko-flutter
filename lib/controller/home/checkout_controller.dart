@@ -1,6 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
-import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/sales.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,8 +14,8 @@ class CheckoutController extends GetController {
   Sales sales;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  
-  void checkout(String totalAkhir){
+
+  void checkout(String totalAkhir) {
     sales = Sales();
     sales.tanggalPemesanan = date.toStr();
     sales.catatan = noteSales.text;

@@ -26,7 +26,7 @@ class _EditAddressScreenState extends AddressViewModel {
   }
 
   void _setZone() async {
-    await getProvinsi();
+    getProvinsi();
   }
 
   @override

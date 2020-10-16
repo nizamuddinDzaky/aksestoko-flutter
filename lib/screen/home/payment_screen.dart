@@ -1,5 +1,4 @@
 import 'package:aksestokomobile/controller/home/payment_controller.dart';
-import 'package:aksestokomobile/model/sales.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,40 +13,53 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends PaymentController {
-
   var rekening = '';
-  GlobalKey<ScaffoldState> _key ;
+
   List<String> _dynamicBank;
   List<String> _dynamicTempo;
   List<Color> _colorBank;
   int _value;
   int _tempo;
 
-  bool CashOnDelivery = false;
-  bool CashBeforeDelivery = false;
-  bool KreditPro = false;
-  bool TempoDistributor = false;
+  bool cashOnDelivery = false;
+  bool cashBeforeDelivery = false;
+  bool kreditPro = false;
+  bool tempoDistributor = false;
   int currentTab = 0;
 
-  listBank(){
+  listBank() {
     return Wrap(
       spacing: 6,
       runSpacing: 6,
       children: List<Widget>.generate(_dynamicBank.length, (int index) {
         return Container(
-          margin: EdgeInsets.only(left: 4, right: 8, top:0, bottom: 8,),
+          margin: EdgeInsets.only(
+            left: 4,
+            right: 8,
+            top: 0,
+            bottom: 8,
+          ),
           child: ChoiceChip(
             backgroundColor: _colorBank[index],
             labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            label:  Text(_dynamicBank[index], style: TextStyle(color: _value != index ? Colors.black : Colors.white ),),
+            label: Text(
+              _dynamicBank[index],
+              style: TextStyle(
+                  color: _value != index ? Colors.black : Colors.white),
+            ),
             avatar: CircleAvatar(
               backgroundColor: Colors.white,
               maxRadius: 15,
-              child: _value!= index ? Text('') : Icon(Icons.check, color: Colors.green,),
+              child: _value != index
+                  ? Text('')
+                  : Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
             ),
             selected: _value == index,
             selectedColor: _colorBank[index],
-            onSelected: (bool selected){
+            onSelected: (bool selected) {
               setState(() {
                 rekening = _dynamicBank[index];
                 _value = selected ? index : null;
@@ -60,24 +72,38 @@ class _PaymentScreenState extends PaymentController {
     );
   }
 
-  listTempo(){
+  listTempo() {
     return Wrap(
       spacing: 6,
       runSpacing: 6,
       children: List<Widget>.generate(_dynamicTempo.length, (int index) {
         return Container(
-          margin: EdgeInsets.only(left: 4, right: 8, top:0, bottom: 8,),
+          margin: EdgeInsets.only(
+            left: 4,
+            right: 8,
+            top: 0,
+            bottom: 8,
+          ),
           child: ChoiceChip(
             labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            label:  Text(_dynamicTempo[index], style: TextStyle(color: _tempo != index ? Colors.black : Colors.white ),),
+            label: Text(
+              _dynamicTempo[index],
+              style: TextStyle(
+                  color: _tempo != index ? Colors.black : Colors.white),
+            ),
             avatar: CircleAvatar(
               backgroundColor: Colors.white,
               maxRadius: 15,
-              child: _tempo!= index ? Text('') : Icon(Icons.check, color: Colors.green,),
+              child: _tempo != index
+                  ? Text('')
+                  : Icon(
+                Icons.check,
+                color: Colors.green,
+              ),
             ),
             selected: _tempo == index,
             selectedColor: MyColor.redAT,
-            onSelected: (bool selected){
+            onSelected: (bool selected) {
               setState(() {
                 _tempo = selected ? index : null;
                 debugPrint(_tempo?.toString());
@@ -92,11 +118,14 @@ class _PaymentScreenState extends PaymentController {
   @override
   void initState() {
     super.initState();
-    // _key = GlobalKey<ScaffoldState> ();
-    var sale = Get.arguments as Sales;
     _dynamicBank = ['Mandiri', 'BCA', 'BNI', 'BRI'];
     _dynamicTempo = ['30 Hari', '45 Hari', '60 Hari'];
-    _colorBank = [Color(0xFFff8a65), Color(0xFF4fc3f7), Color(0xFF9575cd), Color(0xFF4db6ac)];
+    _colorBank = [
+      Color(0xFFff8a65),
+      Color(0xFF4fc3f7),
+      Color(0xFF9575cd),
+      Color(0xFF4db6ac)
+    ];
     _value = 0;
     _tempo = 0;
   }
@@ -161,7 +190,6 @@ class _PaymentScreenState extends PaymentController {
                       });
                     },
                   ),
-
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
@@ -176,1026 +204,1049 @@ class _PaymentScreenState extends PaymentController {
               margin: EdgeInsets.only(top: 20),
             ),
             if (currentTab == 0)
-            Column(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Checkbox(
-                                  value: CashOnDelivery,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      CashOnDelivery = value;
-                                      if (CashOnDelivery){
-                                        CashBeforeDelivery = false;
-                                      }
-                                    });
-                                  },
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(
-                                    atPaymentCOD,
-                                    width: 18,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 15,
-                                    bottom: 15,
-                                  ),
-                                  child: Text(
-                                    "Bayar Ditempat",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              "Rp 20.000.000",
-                              style: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: 3,
-                          color: Color(0xffEAEAEA),
-                          margin: EdgeInsets.only(top: 10, bottom: 20),
-                        ),
-                        if (CashOnDelivery)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColor.greyTextAT,
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Harga",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Pengiriman Ditributor",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 3,
-                                color: Color(0xffEAEAEA),
-                                margin: EdgeInsets.only(top: 10, bottom: 20),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Yang Perlu Dibayar",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.redAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (CashOnDelivery)
-                        MyDivider.spaceDividerLogin(custom: 10),
-                        if (CashOnDelivery)
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                decoration: BoxDecoration(
-                                  color: MyColor.greenAT,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: FlatButton(
-                                  child: Text(
-                                    "Seleseikan",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  onPressed: () {
-                                    Get.toNamed(successScreen);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                Container(
-                  height: 3,
-                  color: Color(0xffEAEAEA),
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
-                ),
-              ],
-            ),
-            if (currentTab == 0)
-            Column(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Checkbox(
-                                  value: CashBeforeDelivery,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      CashBeforeDelivery = value;
-                                      if (CashBeforeDelivery){
-                                        CashOnDelivery = false;
-                                      }
-                                    });
-                                  },
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(
-                                    atPaymentCBD,
-                                    width: 18,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 15,
-                                    bottom: 15,
-                                  ),
-                                  child: Text(
-                                    "Bayar Sebelum Dikirim",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              "Rp 20.000.000",
-                              style: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: 3,
-                          color: Color(0xffEAEAEA),
-                          margin: EdgeInsets.only(top: 10, bottom: 20),
-                        ),
-                        if (CashBeforeDelivery)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: listBank(),
-                          ),
-                        ),
-                        if (CashBeforeDelivery)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: Row(
+              Column(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
                                 children: <Widget>[
-                                  Text(
-                                    "Nomor Rekening Tujuan",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: MyColor.greyTextAT,
-                                        fontSize: 16),
+                                  Checkbox(
+                                    value: cashOnDelivery,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        cashOnDelivery = value;
+                                        if (cashOnDelivery) {
+                                          cashBeforeDelivery = false;
+                                        }
+                                      });
+                                    },
                                   ),
-                                  MyDivider.spaceDividerElementsAT(custom: 5),
-                                  Text(
-                                    rekening,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: MyColor.blackTextAT,
-                                        fontSize: 16),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Image.asset(
+                                      atPaymentCOD,
+                                      width: 18,
+                                    ),
                                   ),
-                                  MyDivider.spaceDividerElementsAT(custom: 5),
-                                  Text(
-                                    "a/n Lorem Ipsum",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              Image.asset(
-                                atBankExample,
-                                width: 120,
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (CashBeforeDelivery)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColor.greyTextAT,
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Harga",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 15,
+                                      bottom: 15,
                                     ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Pengiriman Ditributor",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 3,
-                                color: Color(0xffEAEAEA),
-                                margin: EdgeInsets.only(top: 10, bottom: 20),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Yang Perlu Dibayar",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.redAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (CashBeforeDelivery)
-                        MyDivider.spaceDividerElementsAT(custom: 10),
-                        if (CashBeforeDelivery)
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                decoration: BoxDecoration(
-                                  color: MyColor.greenAT,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: FlatButton(
-                                  child: Text(
-                                    "Seleseikan",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  onPressed: () {
-                                    Get.toNamed(successScreen);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                Container(
-                  height: 3,
-                  color: Color(0xffEAEAEA),
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
-                ),
-              ],
-            ),
-            if (currentTab == 1)
-            Column(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Checkbox(
-                                  value: TempoDistributor,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      TempoDistributor = value;
-                                    });
-                                  },
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(
-                                    atPaymentTempoDistributor,
-                                    width: 18,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 15,
-                                    bottom: 15,
-                                  ),
-                                  child: Text(
-                                    "Tempo Distributor",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  "Rp 200.000.000.000",
-                                  style: TextStyle(
-                                      color: MyColor.redAT,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                Text(
-                                  "30 Hari",
-                                  style: TextStyle(
-                                      color: MyColor.greyTextAT,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height: 3,
-                          color: Color(0xffEAEAEA),
-                          margin: EdgeInsets.only(top: 10, bottom: 20),
-                        ),
-                        if(TempoDistributor)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: listBank(),
-                          ),
-                        ),
-                        if(TempoDistributor)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "Nomor Rekening Tujuan",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: MyColor.greyTextAT,
-                                        fontSize: 16),
-                                  ),
-                                  MyDivider.spaceDividerElementsAT(custom: 5),
-                                  Text(
-                                    "19827364",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: MyColor.blackTextAT,
-                                        fontSize: 16),
-                                  ),
-                                  MyDivider.spaceDividerElementsAT(custom: 5),
-                                  Text(
-                                    "a/n Lorem Ipsum",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              Image.asset(
-                                atBankExample,
-                                width: 120,
-                              ),
-                            ],
-                          ),
-                        ),
-                        if(TempoDistributor)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColor.greyTextAT,
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Harga",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Pengiriman Ditributor",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 3,
-                                color: Color(0xffEAEAEA),
-                                margin: EdgeInsets.only(top: 10, bottom: 20),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Yang Perlu Dibayar",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.redAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if(TempoDistributor)
-                        MyDivider.spaceDividerElementsAT(custom: 20),
-                        if(TempoDistributor)
-                        Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 5,
-                                    bottom: 5,
-                                  ),
-                                  child: Text(
-                                    "Tanggal Ekspetasi Pengiriman",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  child: Expanded(
                                     child: Text(
-                                      "Hanya sebagai pengingat Toko, tidak berimbas menjadi batas pembayaran Toko",
+                                      "Bayar Ditempat",
                                       style: TextStyle(
-                                          color: MyColor.greyTextAT,
-                                          fontSize: 14),
+                                          color: MyColor.blackTextAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 25),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      top: BorderSide(
-                                          color: Color(0xffC8C8C8), width: 2),
-                                      bottom: BorderSide(
-                                          color: Color(0xffC8C8C8), width: 2),
-                                      left: BorderSide(
-                                          color: Color(0xffC8C8C8), width: 2),
-                                      right: BorderSide(
-                                          color: Color(0xffC8C8C8), width: 0),
-                                    ),
-                                  ),
-                                  child: Icon(
-                                    Icons.date_range,
-                                    color: MyColor.redAT,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Color(0xffEEEEEE),
-                                      hintText: "30 Hari",
-                                      contentPadding:
-                                          const EdgeInsets.only(left: 20),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xffC8C8C8),
-                                            width: 2.0),
-                                        borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(5.0),
-                                          bottomRight: Radius.circular(5.0),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: MyColor.redAT, width: 1),
-                                        borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(5.0),
-                                          bottomRight: Radius.circular(5.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        if(TempoDistributor)
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                decoration: BoxDecoration(
-                                  color: MyColor.greenAT,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: FlatButton(
-                                  child: Text(
-                                    "Seleseikan",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  onPressed: () {
-                                    Get.toNamed(successScreen);
-                                  },
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                Container(
-                  height: 3,
-                  color: Color(0xffEAEAEA),
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
-                ),
-              ],
-            ),
-            if (currentTab == 1)
-            Column(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Checkbox(
-                                  value: KreditPro,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      KreditPro = value;
-                                    });
-                                  },
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  child: Image.asset(
-                                    atPaymentKreditPro,
-                                    width: 40,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 15,
-                                    bottom: 15,
-                                  ),
-                                  child: Text(
-                                    "KreditPro",
-                                    style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  "Rp 200.000.000.000",
-                                  style: TextStyle(
-                                      color: MyColor.redAT,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                Text(
-                                  "30 Hari",
-                                  style: TextStyle(
-                                      color: MyColor.greyTextAT,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height: 3,
-                          color: Color(0xffEAEAEA),
-                          margin: EdgeInsets.only(top: 10, bottom: 20),
-                        ),
-                        if(KreditPro)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: listTempo(),
-                          ),
-                        ),
-                        if(KreditPro)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColor.greyTextAT,
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
+                              Text(
+                                "Rp 20.000.000",
+                                style: TextStyle(
+                                    color: MyColor.redAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
                               )
                             ],
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Harga",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Pengiriman Ditributor",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 20.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 3,
-                                color: Color(0xffEAEAEA),
-                                margin: EdgeInsets.only(top: 10, bottom: 20),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "Yang Perlu Dibayar",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.greyTextAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Rp 200.000.000.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: MyColor.redAT,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          Container(
+                            height: 3,
+                            color: Color(0xffEAEAEA),
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
                           ),
-                        ),
-                        if(KreditPro)
-                        MyDivider.spaceDividerElementsAT(custom: 20),
-                        if(KreditPro)
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                decoration: BoxDecoration(
-                                  color: MyColor.greenAT,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: FlatButton(
-                                  child: Text(
-                                    "Seleseikan",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
+                          if (cashOnDelivery)
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: MyColor.greyTextAT,
+                                    spreadRadius: 0,
+                                    blurRadius: 8,
+                                    offset: Offset(
+                                        0, 2), // changes position of shadow
+                                  )
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Harga",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    Get.toNamed(successScreen);
-                                  },
-                                ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Pengiriman Ditributor",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 3,
+                                    color: Color(0xffEAEAEA),
+                                    margin:
+                                    EdgeInsets.only(top: 10, bottom: 20),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Yang Perlu Dibayar",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.redAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (cashOnDelivery)
+                            MyDivider.spaceDividerLogin(custom: 10),
+                          if (cashOnDelivery)
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    padding:
+                                    EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      color: MyColor.greenAT,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: FlatButton(
+                                      child: Text(
+                                        "Seleseikan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      onPressed: () {
+                                        Get.toNamed(successScreen);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      )),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                  ),
+                ],
+              ),
+            if (currentTab == 0)
+              Column(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Checkbox(
+                                    value: cashBeforeDelivery,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        cashBeforeDelivery = value;
+                                        if (cashBeforeDelivery) {
+                                          cashOnDelivery = false;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Image.asset(
+                                      atPaymentCBD,
+                                      width: 18,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 15,
+                                      bottom: 15,
+                                    ),
+                                    child: Text(
+                                      "Bayar Sebelum Dikirim",
+                                      style: TextStyle(
+                                          color: MyColor.blackTextAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Rp 20.000.000",
+                                style: TextStyle(
+                                    color: MyColor.redAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: 3,
+                            color: Color(0xffEAEAEA),
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                          ),
+                          if (cashBeforeDelivery)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: listBank(),
+                              ),
+                            ),
+                          if (cashBeforeDelivery)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Nomor Rekening Tujuan",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: MyColor.greyTextAT,
+                                            fontSize: 16),
+                                      ),
+                                      MyDivider.spaceDividerElementsAT(
+                                          custom: 5),
+                                      Text(
+                                        rekening,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: MyColor.blackTextAT,
+                                            fontSize: 16),
+                                      ),
+                                      MyDivider.spaceDividerElementsAT(
+                                          custom: 5),
+                                      Text(
+                                        "a/n Lorem Ipsum",
+                                        style: TextStyle(
+                                            color: MyColor.blackTextAT,
+                                            fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                  Image.asset(
+                                    atBankExample,
+                                    width: 120,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (cashBeforeDelivery)
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: MyColor.greyTextAT,
+                                    spreadRadius: 0,
+                                    blurRadius: 8,
+                                    offset: Offset(
+                                        0, 2), // changes position of shadow
+                                  )
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Harga",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Pengiriman Ditributor",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 3,
+                                    color: Color(0xffEAEAEA),
+                                    margin:
+                                    EdgeInsets.only(top: 10, bottom: 20),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Yang Perlu Dibayar",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.redAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (cashBeforeDelivery)
+                            MyDivider.spaceDividerElementsAT(custom: 10),
+                          if (cashBeforeDelivery)
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    padding:
+                                    EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      color: MyColor.greenAT,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: FlatButton(
+                                      child: Text(
+                                        "Seleseikan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      onPressed: () {
+                                        Get.toNamed(successScreen);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      )),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                  ),
+                ],
+              ),
+            if (currentTab == 1)
+              Column(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Checkbox(
+                                    value: tempoDistributor,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        tempoDistributor = value;
+                                      });
+                                    },
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Image.asset(
+                                      atPaymentTempoDistributor,
+                                      width: 18,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 15,
+                                      bottom: 15,
+                                    ),
+                                    child: Text(
+                                      "Tempo Distributor",
+                                      style: TextStyle(
+                                          color: MyColor.blackTextAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Rp 200.000.000.000",
+                                    style: TextStyle(
+                                        color: MyColor.redAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    "30 Hari",
+                                    style: TextStyle(
+                                        color: MyColor.greyTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  )
+                                ],
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    )),
-                Container(
-                  height: 3,
-                  color: Color(0xffEAEAEA),
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
-                ),
-              ],
-            ),
+                          Container(
+                            height: 3,
+                            color: Color(0xffEAEAEA),
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                          ),
+                          if (tempoDistributor)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: listBank(),
+                              ),
+                            ),
+                          if (tempoDistributor)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Nomor Rekening Tujuan",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: MyColor.greyTextAT,
+                                            fontSize: 16),
+                                      ),
+                                      MyDivider.spaceDividerElementsAT(
+                                          custom: 5),
+                                      Text(
+                                        "19827364",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: MyColor.blackTextAT,
+                                            fontSize: 16),
+                                      ),
+                                      MyDivider.spaceDividerElementsAT(
+                                          custom: 5),
+                                      Text(
+                                        "a/n Lorem Ipsum",
+                                        style: TextStyle(
+                                            color: MyColor.blackTextAT,
+                                            fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                  Image.asset(
+                                    atBankExample,
+                                    width: 120,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (tempoDistributor)
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: MyColor.greyTextAT,
+                                    spreadRadius: 0,
+                                    blurRadius: 8,
+                                    offset: Offset(
+                                        0, 2), // changes position of shadow
+                                  )
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Harga",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Pengiriman Ditributor",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 3,
+                                    color: Color(0xffEAEAEA),
+                                    margin:
+                                    EdgeInsets.only(top: 10, bottom: 20),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Yang Perlu Dibayar",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.redAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (tempoDistributor)
+                            MyDivider.spaceDividerElementsAT(custom: 20),
+                          if (tempoDistributor)
+                            Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 5,
+                                        bottom: 5,
+                                      ),
+                                      child: Text(
+                                        "Tanggal Ekspetasi Pengiriman",
+                                        style: TextStyle(
+                                            color: MyColor.blackTextAT,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Expanded(
+                                        child: Text(
+                                          "Hanya sebagai pengingat Toko, tidak berimbas menjadi batas pembayaran Toko",
+                                          style: TextStyle(
+                                              color: MyColor.greyTextAT,
+                                              fontSize: 14),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin:
+                                      EdgeInsets.symmetric(vertical: 25),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide(
+                                              color: Color(0xffC8C8C8),
+                                              width: 2),
+                                          bottom: BorderSide(
+                                              color: Color(0xffC8C8C8),
+                                              width: 2),
+                                          left: BorderSide(
+                                              color: Color(0xffC8C8C8),
+                                              width: 2),
+                                          right: BorderSide(
+                                              color: Color(0xffC8C8C8),
+                                              width: 0),
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.date_range,
+                                        color: MyColor.redAT,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Color(0xffEEEEEE),
+                                          hintText: "30 Hari",
+                                          contentPadding:
+                                          const EdgeInsets.only(left: 20),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xffC8C8C8),
+                                                width: 2.0),
+                                            borderRadius:
+                                            const BorderRadius.only(
+                                              topRight: Radius.circular(5.0),
+                                              bottomRight: Radius.circular(5.0),
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: MyColor.redAT, width: 1),
+                                            borderRadius:
+                                            const BorderRadius.only(
+                                              topRight: Radius.circular(5.0),
+                                              bottomRight: Radius.circular(5.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          if (tempoDistributor)
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    padding:
+                                    EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      color: MyColor.greenAT,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: FlatButton(
+                                      child: Text(
+                                        "Seleseikan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      onPressed: () {
+                                        Get.toNamed(successScreen);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      )),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                  ),
+                ],
+              ),
+            if (currentTab == 1)
+              Column(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Checkbox(
+                                    value: kreditPro,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        kreditPro = value;
+                                      });
+                                    },
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Image.asset(
+                                      atPaymentKreditPro,
+                                      width: 40,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 15,
+                                      bottom: 15,
+                                    ),
+                                    child: Text(
+                                      "KreditPro",
+                                      style: TextStyle(
+                                          color: MyColor.blackTextAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Rp 200.000.000.000",
+                                    style: TextStyle(
+                                        color: MyColor.redAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    "30 Hari",
+                                    style: TextStyle(
+                                        color: MyColor.greyTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Container(
+                            height: 3,
+                            color: Color(0xffEAEAEA),
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                          ),
+                          if (kreditPro)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: listTempo(),
+                              ),
+                            ),
+                          if (kreditPro)
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: MyColor.greyTextAT,
+                                    spreadRadius: 0,
+                                    blurRadius: 8,
+                                    offset: Offset(
+                                        0, 2), // changes position of shadow
+                                  )
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Harga",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Pengiriman Ditributor",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 20.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 3,
+                                    color: Color(0xffEAEAEA),
+                                    margin:
+                                    EdgeInsets.only(top: 10, bottom: 20),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Yang Perlu Dibayar",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Rp 200.000.000.000",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.redAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (kreditPro)
+                            MyDivider.spaceDividerElementsAT(custom: 20),
+                          if (kreditPro)
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    padding:
+                                    EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      color: MyColor.greenAT,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: FlatButton(
+                                      child: Text(
+                                        "Seleseikan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      onPressed: () {
+                                        Get.toNamed(successScreen);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      )),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                  ),
+                ],
+              ),
             Container(
               margin: EdgeInsets.only(left: 25, right: 25),
               width: double.maxFinite,

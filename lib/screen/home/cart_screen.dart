@@ -15,25 +15,26 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-
-
   @override
   void initState() {
     super.initState();
-    /*_controller.text = "0"; */// Setting the initial value for the field.
+    /*_controller.text = "0"; */ // Setting the initial value for the field.
   }
 
   // ignore: non_constant_identifier_names
   bool CheckBoxValue = false;
-  Widget formLayout(SelectProductController controller){
+
+  Widget formLayout(SelectProductController controller) {
     return SingleChildScrollView(
       child: Container(
         child: Stack(
           children: <Widget>[
             Container(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: controller.listCart == null || controller.listCart.length < 1 ?
-              new Text('Keranjang Kosong') : _gridCart(controller),
+              child:
+                  controller.listCart == null || controller.listCart.length < 1
+                      ? new Text('Keranjang Kosong')
+                      : _gridCart(controller),
             ),
           ],
         ),
@@ -41,14 +42,15 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _gridCart(SelectProductController controller){
+  Widget _gridCart(SelectProductController controller) {
     return ListView.builder(
         itemCount: controller.listCart.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index)=>listProductCart(controller.listCart[index], controller)
-    );
+        itemBuilder: (context, index) =>
+            listProductCart(controller.listCart[index], controller));
   }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SelectProductController>(
@@ -61,8 +63,10 @@ class _CartScreenState extends State<CartScreen> {
             tag: 'logoForcaPoS',
             child: Text("Keranjang"),
           ),
-          bottom: controller.listCart?.isEmpty ?? true ? null : PreferredSize(
-          preferredSize: const Size.fromHeight(48.0),
+          bottom: controller.listCart?.isEmpty ?? true
+              ? null
+              : PreferredSize(
+            preferredSize: const Size.fromHeight(48.0),
             child: Container(
               color: Colors.white,
               height: 48,
@@ -122,15 +126,13 @@ class _CartScreenState extends State<CartScreen> {
             onTap: () {
               FocusScope.of(context).unfocus();
             },
-
-            child: formLayout(controller)
-
-        ),
+            child: formLayout(controller)),
         bottomNavigationBar: new Stack(
           overflow: Overflow.visible,
           children: [
             new Container(
-              padding: EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+              padding:
+              EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
               height: 80,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -182,7 +184,8 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Get.toNamed(checkoutScreen , arguments: controller.listCart);
+                          Get.toNamed(checkoutScreen,
+                              arguments: controller.listCart);
                         },
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20.0)),
@@ -196,7 +199,6 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
-
   }
 
   Widget listProductCart(Product _product, SelectProductController controller) {
@@ -244,8 +246,7 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                               onPressed: () {
                                 controller.removeCart(_product);
-                              }
-                          ),
+                              }),
                         ],
                       ),
                       alignment: Alignment(-1.0, 0.0),
@@ -269,145 +270,169 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Column(
-                            children: [
-                              Container(
-                                  height: 70,
+                        child: Column(children: [
+                          Container(
+                              height: 70,
 //                                color: Colors.blue,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Text(
+                                          '${_product.nama}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff333333),
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          _product.kodeUnit,
+                                          style: TextStyle(
+                                              color: Color(0xff999999),
+                                              fontSize: 14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Container(
+                            height: 40,
+//                                color: Colors.red,
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SizedBox(height: 5,),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Text(
-                                              '${_product.nama}',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color(0xff333333),
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                        ],
+                                      Container(
+                                        child: Text(
+                                          'Harga',
+                                          style: TextStyle(
+                                              color: Color(0xff999999),
+                                              fontSize: 14),
+                                        ),
                                       ),
-                                      SizedBox(height: 10,),
+                                      Container(
+                                        child: Text(
+                                          '${MyNumber.toNumberRpStr(
+                                              _product.satuanHargaCash)}',
+                                          style: TextStyle(
+                                              color: Color(0xff333333),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
                                       Row(
                                         children: <Widget>[
                                           Container(
-                                            child: Text(
-                                              _product.kodeUnit,
+                                            height: 20,
+                                            width: 20,
+                                            child: FittedBox(
+                                              child: FloatingActionButton(
+                                                heroTag:
+                                                "btnMinus${_product.nama}",
+                                                backgroundColor:
+                                                Color(0xFF387C2B),
+                                                onPressed: () {
+                                                  controller
+                                                      .reduceCart(_product);
+                                                },
+                                                child: Icon(Icons.remove),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: 50,
+                                            child: TextFormField(
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  color: Color(0xff999999), fontSize: 14),
+                                                fontSize: 14,
+                                                color: Color(0xFF333333),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                EdgeInsets.all(0.0),
+                                                border: InputBorder.none,
+                                              ),
+                                              controller: _controller,
+                                              keyboardType: TextInputType
+                                                  .numberWithOptions(
+                                                decimal: false,
+                                                signed: true,
+                                              ),
+                                              inputFormatters: <
+                                                  TextInputFormatter>[
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 20,
+                                            width: 20,
+                                            child: FittedBox(
+                                              child: FloatingActionButton(
+                                                heroTag:
+                                                "btnPlus${_product.nama}",
+                                                backgroundColor:
+                                                Color(0xFF387C2B),
+                                                onPressed: () {
+                                                  debugPrint(
+                                                      "${_controller.text}");
+                                                  int currentValue =
+                                                  _product.qty.toInt();
+                                                  _product.qty =
+                                                      currentValue.toDouble();
+                                                  controller
+                                                      .addToCart(_product);
+                                                  setState(() {});
+                                                },
+                                                child: Icon(Icons.add),
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ],
-                                  )
-                              ),
-                              Container(
-                                height: 40,
-//                                color: Colors.red,
-                                padding: EdgeInsets.symmetric(horizontal: 5),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                            child: Text(
-                                              'Harga',
-                                              style: TextStyle(
-                                                  color: Color(0xff999999),
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Container(
-                                                height: 20,
-                                                width: 20,
-                                                child: FittedBox(
-                                                  child: FloatingActionButton(
-                                                    heroTag: "btnMinus${_product.nama}",
-                                                    backgroundColor: Color(0xFF387C2B),
-                                                    onPressed: () {
-                                                      controller.reduceCart(_product);
-                                                    },
-                                                    child: Icon(Icons.remove),
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                height: 40,
-                                                width: 50,
-                                                child: TextFormField(
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(fontSize: 14, color: Color(0xFF333333),
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    contentPadding: EdgeInsets.all(0.0),
-                                                    border: InputBorder.none,
-                                                  ),
-                                                  controller: _controller,
-                                                  keyboardType: TextInputType.numberWithOptions(decimal: false, signed: true,),
-                                                  inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
-                                                ),
-                                              ),
-
-                                              Container(
-                                                height: 20,
-                                                width: 20,
-                                                child: FittedBox(
-                                                  child: FloatingActionButton(
-                                                    heroTag: "btnPlus${_product.nama}",
-                                                    backgroundColor: Color(0xFF387C2B),
-                                                    onPressed: () {
-                                                      debugPrint("${_controller.text}");
-                                                      int currentValue = _product.qty.toInt();
-                                                      _product.qty = currentValue.toDouble();
-                                                      controller.addToCart(_product);
-                                                      setState(() {
-                                                      });
-                                                    },
-                                                    child: Icon(Icons.add),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ]),
+                              ],
+                            ),
+                          ),
+                        ]),
                       ),
                     ]),
               ),
               Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                padding:
+                EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border(
@@ -424,12 +449,18 @@ class _CartScreenState extends State<CartScreen> {
                       Text(
                         "SUBTOTAL",
                         style: TextStyle(
-                          color: Color(0xff999999), fontWeight: FontWeight.bold, fontSize: 14,),
+                          color: Color(0xff999999),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                       Text(
                         count(_product.satuanHargaCash, _product.qty),
                         style: TextStyle(
-                          color: Color(0xff333333), fontWeight: FontWeight.bold, fontSize: 14,),
+                          color: Color(0xff333333),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                     ],
                   ),
