@@ -6,7 +6,7 @@ import 'package:aksestokomobile/screen/home/select_product.dart'
     as selectProduct;
 import 'package:aksestokomobile/screen/order/history_order_screen.dart'
     as historyOrder;
-import 'package:aksestokomobile/screen/promotion/list_promo.dart'
+import 'package:aksestokomobile/screen/promo/list_promo.dart'
     as listPromo;
 import 'package:aksestokomobile/screen/account/account_screen.dart' as Account;
 
