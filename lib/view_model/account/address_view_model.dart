@@ -1,37 +1,36 @@
-import 'package:aksestokomobile/model/address.dart';
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
-import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-abstract class AddressViewModel<T extends StatefulWidget> extends State<T>{
+abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   @override
   void initState() {
     super.initState();
   }
 
-  var address;
+  Alamat address;
   String selectedValue;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   /*String recipientsName;
   String email;
   String tlp;
   String address;
   String postalCode;*/
 
-
   Zone selectProvince;
   Zone selectDistrict;
   Zone selectSubDistrict;
   Zone selectVillage;
 
-  final provinceSelected  = TextEditingController();
+  final provinceSelected = TextEditingController();
   final List<Zone> province = [];
   final List<Zone> district = [];
   final List<Zone> subDistrict = [];
@@ -41,7 +40,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T>{
   final subDistrictSelected  = TextEditingController();
   final villageSelected  = TextEditingController();*/
 
-  searchKabupaten(Zone data) async{
+  searchKabupaten(Zone data) async {
     selectProvince = data;
     showDialog(
         context: context,
@@ -54,10 +53,10 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T>{
             ),
           );
         });
-    await getKabupaten(data.id == null ? 0 : data.id);
+    getKabupaten(data.id == null ? 0 : data.id);
   }
 
-  searchKecamatan(Zone data) async{
+  searchKecamatan(Zone data) async {
     selectDistrict = data;
     showDialog(
         context: context,
@@ -70,10 +69,10 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T>{
             ),
           );
         });
-    await getsubDistrict(data.id == null ? 0 : data.id);
+    getsubDistrict(data.id == null ? 0 : data.id);
   }
 
-  searchDesa(Zone data) async{
+  searchDesa(Zone data) async {
     selectSubDistrict = data;
     showDialog(
         context: context,
@@ -86,115 +85,108 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T>{
             ),
           );
         });
-    await getVillage(data.id == null ? 0 : data.id);
+    getVillage(data.id == null ? 0 : data.id);
   }
 
-  void getProvinsi() async{
+  void getProvinsi() async {
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
     };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListProvinsi, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
+    var status = await ApiClient.methodGet(ApiConfig.urlListProvinsi,
+        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       province.addAll(baseResponse?.data?.listProvinsi);
       /*Navigator.of(context).pop();*/
-      if(address != null){
+      if (address != null) {
         province.forEach((prov) {
-          if(prov.name.toLowerCase() == address.provinceName.toLowerCase()){
-            searchKabupaten(prov);
-          }
+          // if(prov.name.toLowerCase() == address.provinceName.toLowerCase()){
+          //   searchKabupaten(prov);
+          // }
         });
       }
-
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-    });
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
   }
 
-  void getKabupaten(int idProvinsi) async{
+  void getKabupaten(int idProvinsi) async {
     district.clear();
     var params = {
       MyString.KEY_ID_PROVINSI: idProvinsi,
     };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListKabupaten, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
+    var status = await ApiClient.methodGet(ApiConfig.urlListKabupaten,
+        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       district.addAll(baseResponse?.data?.listKabupaten);
       Navigator.of(context).pop();
-      if(address != null){
+      if (address != null) {
         district.forEach((kab) {
-          if(kab.name.toLowerCase() == address.kabupatenName.toLowerCase()){
-            searchKecamatan(kab);
-//            break;
-          }
+          // if(kab.name.toLowerCase() == address.kabupatenName.toLowerCase()){
+          //   searchKecamatan(kab);
+          // }
         });
       }
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-    });
+    }, onAfter: (status) {});
     /*status.execute();*/
     setState(() {
       status.execute();
     });
   }
 
-  void getsubDistrict(int idKabupaten) async{
+  void getsubDistrict(int idKabupaten) async {
     district.clear();
     var params = {
       MyString.KEY_ID_KABUPATEN: idKabupaten,
     };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListKecamatan, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
+    var status = await ApiClient.methodGet(ApiConfig.urlListKecamatan,
+        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       subDistrict.addAll(baseResponse?.data?.listKecamatan);
       Navigator.of(context).pop();
-      if(address != null){
+      if (address != null) {
         subDistrict.forEach((kec) {
-          if(kec.name.toLowerCase() == address.kecamatanName.toLowerCase()){
-            searchDesa(kec);
-          }
+          // if(kec.name.toLowerCase() == address.kecamatanName.toLowerCase()){
+          //   searchDesa(kec);
+          // }
         });
       }
-
-
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-    });
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
   }
 
-  void getVillage(int idKecamatan) async{
+  void getVillage(int idKecamatan) async {
     district.clear();
     var params = {
       MyString.KEY_ID_KECAMATAN: idKecamatan,
     };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListDesa, params: params, onBefore: (status) {
-    }, onSuccess: (data, flag) {
+    var status = await ApiClient.methodGet(ApiConfig.urlListDesa,
+        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       village.addAll(baseResponse?.data?.listDesa);
-      if(address != null){
+      if (address != null) {
         village.forEach((vil) {
-          if(vil.name.toLowerCase() == address.kelurahanName.toLowerCase()){
-            selectVillage = vil;
-          }
+          // if(vil.name.toLowerCase() == address.kelurahanName.toLowerCase()){
+          //   selectVillage = vil;
+          // }
         });
       }
       Navigator.of(context).pop();
@@ -202,11 +194,9 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T>{
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {
-    });
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
   }
-
 }

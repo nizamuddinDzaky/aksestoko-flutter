@@ -91,7 +91,6 @@ class _RequestOtpScreenState extends RequestOtpController {
   @override
   Widget build(BuildContext context) {
     dynamic screenHeight = MediaQuery.of(context).size.height;
-    dynamic screenwidth = MediaQuery.of(context).size.width;
 
     var formLayout = Container(
       margin: EdgeInsets.symmetric(vertical: screenHeight * .1),
@@ -188,7 +187,8 @@ class _RequestOtpScreenState extends RequestOtpController {
                           height: Get.height * 0.2,
                           child: Center(
                             child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: Get.width * 0.15),
                               child: Hero(
                                 tag: 'logoForcaPoS2',
                                 child: MyLogo.logoForcaPoSColor(),

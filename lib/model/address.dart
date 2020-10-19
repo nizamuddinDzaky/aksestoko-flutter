@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/util/my_util.dart';
+
 class Address {
   String namaPenerima;
   String email;
@@ -43,7 +45,7 @@ class Address {
     kecamatanId = json['kecamatan_id'];
     kelurahanName = json['kelurahan'];
     kelurahanId = json['kelurahan_id'];
-    addressId = json['address_id'];
+    addressId = json['address_id']?.toString()?.toInt();
     kodePos = json['kode_pos'];
   }
 

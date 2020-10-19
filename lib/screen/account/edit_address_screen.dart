@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
-import 'package:aksestokomobile/screen/account/address_controller.dart';
-import 'package:dropdownfield/dropdownfield.dart';
 import 'package:get/get.dart';
 
 class EditAddressScreen extends StatefulWidget {
@@ -16,8 +14,9 @@ class EditAddressScreen extends StatefulWidget {
 class _EditAddressScreenState extends AddressViewModel {
   var vm;
   Map<String, dynamic> param;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     param = Get.arguments as Map<String, dynamic>;
     vm = param['controller'];
@@ -26,13 +25,12 @@ class _EditAddressScreenState extends AddressViewModel {
     _setZone();
   }
 
-  void _setZone() async{
-    await getProvinsi();
+  void _setZone() async {
+    getProvinsi();
   }
 
   @override
   Widget build(BuildContext context) {
-
     var formLayout = Container(
       child: Column(
         children: <Widget>[
@@ -44,7 +42,10 @@ class _EditAddressScreenState extends AddressViewModel {
                 Center(
                   child: Text(
                     "Perbarui Alamat Toko",
-                    style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -79,10 +80,9 @@ class _EditAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address.namaPenerima,
-                              onSaved: (value) => {
-                                vm.saveForm(namaPenerima: value)
-                              },
+                              initialValue: address?.addressName,
+                              onSaved: (value) =>
+                                  {vm.saveForm(namaPenerima: value)},
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -93,10 +93,12 @@ class _EditAddressScreenState extends AddressViewModel {
                                   fontSize: 18,
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Nama Penerima',
                                 errorStyle: TextStyle(
@@ -109,10 +111,8 @@ class _EditAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address.email,
-                              onSaved: (value) => {
-                                vm.saveForm(email: value)
-                              },
+                              initialValue: address?.addressName,
+                              onSaved: (value) => {vm.saveForm(email: value)},
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -123,10 +123,12 @@ class _EditAddressScreenState extends AddressViewModel {
                                   fontSize: 18,
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Email Anda',
                                 errorStyle: TextStyle(
@@ -139,10 +141,8 @@ class _EditAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address.noTlpn,
-                              onSaved: (value) => {
-                                vm.saveForm(noTlpn: value)
-                              },
+                              initialValue: address?.addressPhone,
+                              onSaved: (value) => {vm.saveForm(noTlpn: value)},
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -153,12 +153,15 @@ class _EditAddressScreenState extends AddressViewModel {
                                   fontSize: 18,
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.lineTxtField),
                                 ),
-                                errorText: 'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                                errorText:
+                                    'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
                                 errorStyle: TextStyle(
                                   color: MyColor.redAT,
                                   fontStyle: FontStyle.italic,
@@ -169,10 +172,8 @@ class _EditAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address.alamat,
-                              onSaved: (value) => {
-                                vm.saveForm(alamat: value)
-                              },
+                              initialValue: address?.address,
+                              onSaved: (value) => {vm.saveForm(alamat: value)},
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -183,10 +184,12 @@ class _EditAddressScreenState extends AddressViewModel {
                                   fontSize: 18,
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Alamat Anda',
                                 errorStyle: TextStyle(
@@ -199,9 +202,12 @@ class _EditAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address.kodePos == null || address.kodePos == '' ? null : address.kodePos.toString(),
-                              onSaved: (value) =>{
-                                vm.saveForm(kodePos: value == null || value == '' ? 0 : int.parse(value))
+                              initialValue: address?.addressPostalCode,
+                              onSaved: (value) => {
+                                vm.saveForm(
+                                    kodePos: value == null || value == ''
+                                        ? 0
+                                        : int.parse(value))
                               },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
@@ -213,10 +219,12 @@ class _EditAddressScreenState extends AddressViewModel {
                                   fontSize: 18,
                                 ),
                                 errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
+                                  borderSide:
+                                      BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Kode Pos',
                                 errorStyle: TextStyle(
@@ -235,20 +243,22 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: province,
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
-                                    onChanged: (Zone data) =>searchKabupaten(data),
-                                    onSaved: (Zone data)=>{
-                                      vm.saveForm(provinceName: data.name, provinceId: data.id)
+                                    onChanged: (Zone data) =>
+                                        searchKabupaten(data),
+                                    onSaved: (Zone data) => {
+                                      vm.saveForm(
+                                          provinceName: data.name,
+                                          provinceId: data.id)
                                     },
-                                    selectedItem : selectProvince,
+                                    selectedItem: selectProvince,
                                     showSearchBox: true,
                                     itemAsString: (Zone prov) => prov.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Provinsi",
                                     ),
-
-
                                   ),
                                 ),
                               ),
@@ -263,19 +273,22 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: district,
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
-                                    onChanged: (Zone data) =>searchKecamatan(data),
-                                    onSaved: (Zone data)=>{
-                                      vm.saveForm(kabupatenName: data.name, kabupatenId: data.id)
+                                    onChanged: (Zone data) =>
+                                        searchKecamatan(data),
+                                    onSaved: (Zone data) => {
+                                      vm.saveForm(
+                                          kabupatenName: data.name,
+                                          kabupatenId: data.id)
                                     },
                                     showSearchBox: true,
-                                    selectedItem : selectDistrict,
+                                    selectedItem: selectDistrict,
                                     itemAsString: (Zone prov) => prov.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Kabupaten",
                                     ),
-
                                   ),
                                 ),
                               ),
@@ -290,20 +303,21 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: subDistrict,
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
-                                    onChanged: (Zone data) =>searchDesa(data),
-                                    onSaved: (Zone data)=>{
-                                      vm.saveForm(kecamatanName: data.name, kecamatanId: data.id )
+                                    onChanged: (Zone data) => searchDesa(data),
+                                    onSaved: (Zone data) => {
+                                      vm.saveForm(
+                                          kecamatanName: data.name,
+                                          kecamatanId: data.id)
                                     },
-                                    selectedItem : selectSubDistrict,
+                                    selectedItem: selectSubDistrict,
                                     showSearchBox: true,
                                     itemAsString: (Zone prov) => prov.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Kecamatan",
                                     ),
-
-
                                   ),
                                 ),
                               ),
@@ -318,22 +332,22 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: village,
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
-                                    onChanged: (Zone data) =>{
-                                      selectVillage = data
+                                    onChanged: (Zone data) =>
+                                        {selectVillage = data},
+                                    onSaved: (Zone data) => {
+                                      vm.saveForm(
+                                          kecamatanName: data.name,
+                                          kecamatanId: data.id)
                                     },
-                                    onSaved: (Zone data)=>{
-                                      vm.saveForm(kecamatanName: data.name, kecamatanId: data.id)
-                                    },
-                                    selectedItem : selectVillage,
+                                    selectedItem: selectVillage,
                                     showSearchBox: true,
                                     itemAsString: (Zone prov) => prov.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Desa",
                                     ),
-
-
                                   ),
                                 ),
                               ),
@@ -349,11 +363,12 @@ class _EditAddressScreenState extends AddressViewModel {
                                   'Simpan',
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onPressed: (){
+                                onPressed: () {
                                   vm.actionSubmit(context);
                                 },
                                 shape: new RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(30.0))),
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0))),
                           ),
                           Padding(padding: EdgeInsets.only(top: 30)),
                         ],
@@ -391,6 +406,5 @@ class _EditAddressScreenState extends AddressViewModel {
         )
       ],
     );
-
   }
 }
