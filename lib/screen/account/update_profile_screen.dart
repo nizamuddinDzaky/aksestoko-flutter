@@ -9,10 +9,9 @@ class UpdateProfileScreen extends StatefulWidget {
   _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
 }
 
-class _UpdateProfileScreenState extends UpdateProfileController{
+class _UpdateProfileScreenState extends UpdateProfileController {
   @override
   Widget build(BuildContext context) {
-
     var formLayout = Container(
       child: Column(
         children: <Widget>[
@@ -24,7 +23,10 @@ class _UpdateProfileScreenState extends UpdateProfileController{
                 Center(
                   child: Text(
                     "Perbarui Profile",
-                    style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -32,7 +34,6 @@ class _UpdateProfileScreenState extends UpdateProfileController{
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -49,158 +50,170 @@ class _UpdateProfileScreenState extends UpdateProfileController{
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Lorem Ipsum",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "IDC-123456789",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColor.greyTextAT),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: TextFormField(
-                              onSaved: (value) => firstName = value,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'Nama Depan',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText: 'Masukan Nama Depan Anda',
-                                errorStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: TextFormField(
-                              onSaved: (value) => lastName = value,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'Nama Belakang',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText: 'Masukan Nama Belakang Anda',
-                                errorStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: TextFormField(
-                              onSaved: (value) => email = value,
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'Email',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText: 'Masukan Email Anda',
-                                errorStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: TextFormField(
-                              onSaved: (value) => tlp = value,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'No. Telepon',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText: 'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
-                                errorStyle: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          ),
-                          MyDivider.spaceDividerLogin(custom: 22),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 46,
-                            child: FlatButton(
-                                color: MyColor.redAT,
-                                child: Text(
-                                  'Simpan',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: (){},
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(30.0))),
-                          ),
-                          MyDivider.spaceDividerLogin(custom: 22),
-                        ],
+              child: RefreshIndicator(
+                key: refreshKey,
+                onRefresh: actionRefresh,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Lorem Ipsum",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 26),
                       ),
-                    ),
-                  ],
+                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                      Text(
+                        "IDC-123456789",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: MyColor.greyTextAT),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: TextFormField(
+                                onSaved: (value) => firstName = value,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  contentPadding: MyDimen.paddingTxtField(),
+                                  labelText: 'Nama Depan',
+                                  labelStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.txtField),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.lineTxtField),
+                                  ),
+                                  errorText: 'Masukan Nama Depan Anda',
+                                  errorStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: TextFormField(
+                                onSaved: (value) => lastName = value,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  contentPadding: MyDimen.paddingTxtField(),
+                                  labelText: 'Nama Belakang',
+                                  labelStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.txtField),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.lineTxtField),
+                                  ),
+                                  errorText: 'Masukan Nama Belakang Anda',
+                                  errorStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: TextFormField(
+                                onSaved: (value) => email = value,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  contentPadding: MyDimen.paddingTxtField(),
+                                  labelText: 'Email',
+                                  labelStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.txtField),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.lineTxtField),
+                                  ),
+                                  errorText: 'Masukan Email Anda',
+                                  errorStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                              child: TextFormField(
+                                onSaved: (value) => tlp = value,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  contentPadding: MyDimen.paddingTxtField(),
+                                  labelText: 'No. Telepon',
+                                  labelStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.txtField),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.lineTxtField),
+                                  ),
+                                  errorText:
+                                  'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                                  errorStyle: TextStyle(
+                                    color: MyColor.redAT,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            MyDivider.spaceDividerLogin(custom: 22),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 46,
+                              child: FlatButton(
+                                  color: MyColor.redAT,
+                                  child: Text(
+                                    'Simpan',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {},
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                      new BorderRadius.circular(30.0))),
+                            ),
+                            MyDivider.spaceDividerLogin(custom: 22),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -232,6 +245,5 @@ class _UpdateProfileScreenState extends UpdateProfileController{
         )
       ],
     );
-
   }
 }

@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/view_model/account/sales_person_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -6,10 +7,9 @@ class SalesPersonScreen extends StatefulWidget {
   _SalesPersonScreenState createState() => _SalesPersonScreenState();
 }
 
-class _SalesPersonScreenState extends State<SalesPersonScreen>{
+class _SalesPersonScreenState extends SalesPersonViewModel {
   @override
   Widget build(BuildContext context) {
-
     var formLayout = Container(
       child: Column(
         children: <Widget>[
@@ -21,7 +21,10 @@ class _SalesPersonScreenState extends State<SalesPersonScreen>{
                 Center(
                   child: Text(
                     "Sales Person",
-                    style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -29,7 +32,6 @@ class _SalesPersonScreenState extends State<SalesPersonScreen>{
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -46,90 +48,77 @@ class _SalesPersonScreenState extends State<SalesPersonScreen>{
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Nama Toko Anda",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 25)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Reference No",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColor.greyTextAT),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "SP-67890",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Email",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColor.greyTextAT),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "youremail@mail.com",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "No Hp",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColor.greyTextAT),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "081335089667",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Alamat",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColor.greyTextAT),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Gresik, Lorem ipsum Dolor Ismet, Indonesia",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                      ],
-                    ),
-                  ],
+              child: RefreshIndicator(
+                key: refreshKey,
+                onRefresh: actionRefresh,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Nama Toko Anda",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 26),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 25)),
+                      Text(
+                        "Reference No",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: MyColor.greyTextAT),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                      Text(
+                        "SP-67890",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 26),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+                      Text(
+                        "Email",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: MyColor.greyTextAT),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                      Text(
+                        "youremail@mail.com",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 26),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+                      Text(
+                        "No Hp",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: MyColor.greyTextAT),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                      Text(
+                        "081335089667",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 26),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+                      Text(
+                        "Alamat",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: MyColor.greyTextAT),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                      Text(
+                        "Gresik, Lorem ipsum Dolor Ismet, Indonesia",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 26),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -161,6 +150,5 @@ class _SalesPersonScreenState extends State<SalesPersonScreen>{
         )
       ],
     );
-
   }
 }

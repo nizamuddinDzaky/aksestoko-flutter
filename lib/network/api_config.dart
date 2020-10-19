@@ -12,12 +12,14 @@ class ApiConfig {
   static String urlResetPass = '${path}auth/forgot_password';
   static String urlProfile = '${path}auth/profile';
   static String urlProfileUpdate = '${path}auth/update_profile';
+  static String urlDetailProfile = '${path}auth/detail_profile';
 
   //profile
   static String urlListProduct = '${path}Profile/list_product';
   static String urlListDistributor = '${path}Profile/list_distributor';
   static String urlDetailAddress = '${path}Profile/detail_address';
   static String urlListAddress = '${path}Profile/list_address';
+  static String urlDetailSalesPerson = '${path}Profile/detail_sales_person';
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
