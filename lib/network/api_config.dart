@@ -7,6 +7,8 @@ class ApiConfig {
 
   //auth
   static String urlLogin = '${path}Auth/login';
+  static String urlRegisterCheck = '${path}Auth/register_check';
+  static String urlRegisterSubmit = '${path}Auth/register_submit';
   static String urlResetPass = '${path}auth/forgot_password';
   static String urlProfile = '${path}auth/profile';
   static String urlProfileUpdate = '${path}auth/update_profile';
@@ -14,13 +16,13 @@ class ApiConfig {
   //profile
   static String urlListProduct = '${path}Profile/list_product';
   static String urlListDistributor = '${path}Profile/list_distributor';
-  static String urlDetailAddress = '${path}Profile/list_address';
+  static String urlDetailAddress = '${path}Profile/detail_address';
+  static String urlListAddress = '${path}Profile/list_address';
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
 
   //address
-  static String urlListAddress = '${path}get_list_alamat.php';
   static String urlListProvinsi = '${path}get_list_province.php';
   static String urlListKabupaten = '${path}get_list_kabupaten.php';
   static String urlListKecamatan = '${path}get_list_kecamatan.php';

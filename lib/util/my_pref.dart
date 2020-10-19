@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:aksestokomobile/resource/my_string.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPref {

@@ -10,6 +10,10 @@ abstract class SelectDistributorController
   List<Distributor> listDistributor = [];
 
   gotoParent(BuildContext context, Distributor distributor) {
+    if (MyPref.getIdDistributor() == distributor.id) {
+      Get.back();
+      return;
+    }
     if (!MyPref.isIdDistributorExist()) {
       MyPref.setIdDristributor(distributor.id);
       MyPref.setDisributorName(distributor.nama);

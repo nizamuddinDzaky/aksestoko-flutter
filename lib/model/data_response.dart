@@ -1,5 +1,7 @@
 import 'package:aksestokomobile/model/address.dart';
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/cart.dart';
+import 'package:aksestokomobile/model/customer.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/zone.dart';
@@ -18,6 +20,8 @@ class DataResponse {
   List<Zone> listDesa;
   Address address;
   String shipmentPrice;
+  Customer customer;
+  List<Alamat> listAlamat;
 
   DataResponse({this.token});
 
@@ -88,6 +92,12 @@ class DataResponse {
 
     listDesa = ifExistList(json, 'list_kelurahan', (obj) {
       return Zone.fromJson(obj);
+    });
+    customer = ifExistObject(json, 'customer', (obj) {
+      return Customer.fromJson(obj);
+    });
+    listAlamat = ifExistList(json, 'list_alamat', (obj) {
+      return Alamat.fromJson(obj);
     });
   }
 

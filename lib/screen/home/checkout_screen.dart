@@ -36,7 +36,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
             ),
           );
         });
-    await getShipmentPrice(data);
+    getShipmentPrice(data);
     setState(() {});
   }
 
@@ -223,6 +223,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       onPressed: () =>
                           _dialogListAddress(context).then((value) {
                         setState(() {
+                          if (value == null) return;
                           address.namaPenerima =
                               value?.namaPenerima ?? address.namaPenerima;
                           address.email = value?.email ?? address.email;

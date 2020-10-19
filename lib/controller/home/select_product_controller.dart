@@ -23,6 +23,11 @@ class SelectProductController extends GetController {
     update();
   }
 
+  clearCart() {
+    listCart.clear();
+    update();
+  }
+
   void refresh() {
     update();
   }
