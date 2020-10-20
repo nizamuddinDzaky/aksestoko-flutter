@@ -23,6 +23,8 @@ class ApiConfig {
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
+  static String urlListOrder = '${path}Purchase/list_order';
+  static String urlDetailOrder = '${path}Purchase/detail_order';
 
   //address
   static String urlListProvinsi = '${path}get_list_province.php';

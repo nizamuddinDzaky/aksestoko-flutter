@@ -3,6 +3,8 @@ import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/model/customer.dart';
 import 'package:aksestokomobile/model/distributor.dart';
+import 'package:aksestokomobile/model/order_detail.dart';
+import 'package:aksestokomobile/model/order_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/util/my_util.dart';
@@ -22,6 +24,8 @@ class DataResponse {
   String shipmentPrice;
   Customer customer;
   List<Alamat> listAlamat;
+  OrderModel orderModel;
+  OrderDetail orderDetail;
 
   DataResponse({this.token});
 
@@ -98,6 +102,12 @@ class DataResponse {
     });
     listAlamat = ifExistList(json, 'list_alamat', (obj) {
       return Alamat.fromJson(obj);
+    });
+    orderModel = json['order_dalam_proses'] != null
+        ? new OrderModel.fromJson(json['order_dalam_proses'])
+        : null;
+    orderDetail = ifExistObject(json, 'detail_pemesanan', (obj) {
+      return OrderDetail.fromJson(obj);
     });
   }
 

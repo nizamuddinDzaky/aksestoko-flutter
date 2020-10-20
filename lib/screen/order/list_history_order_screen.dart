@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/model/order.dart';
+import 'package:aksestokomobile/util/my_number.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -6,8 +8,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ListHistoryOrderProductScreen extends StatelessWidget {
-  final int index;
-  ListHistoryOrderProductScreen(this.index);
+  final int _index;
+  final Order _order;
+
+  ListHistoryOrderProductScreen(this._index, this._order);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,176 +31,130 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          if (index == 1)
-          Container(
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: MyColor.orangeAT,
+          if (_order?.duration != null)
+            Container(
+              height: 40,
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: MyColor.orangeAT,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Sisa Durasi Waktu Pembayaran :",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  Text(
+                    '${_order?.duration} hari',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "Sisa Durasi Waktu Pembayaran :",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                Text(
-                  "14 Hari",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
           Container(
-            margin: EdgeInsets.only(left: 15, right: 15, top: 20 ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "ID Pemesanan",
-                            style: TextStyle(
-                                color: MyColor.greyTextAT, fontSize: 15),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              "SALE/AT/2020/06/0023",
-                              style: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "(Forca POS)",
-                            style: TextStyle(color: MyColor.redAT),
-                          ),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Status Pesanan",
-                            style: TextStyle(
-                                color: MyColor.greyTextAT, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          if (index == 0)
-                            Expanded(
-                              child: Text(
-                                "Menunggu Konfirmasi",
-                                style: TextStyle(
-                                    color: MyColor.warningTextAT,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          if (index == 1)
-                            Text(
-                              "Dikonfirmasi",
-                              style: TextStyle(
-                                  color: MyColor.greenAT,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
-                            ),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                    ],
-                  ),
+            margin: EdgeInsets.only(left: 15, right: 15, top: 16),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "ID Pemesanan",
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 15),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4),
+                        ),
+                        Text(
+                          _order?.noPemesanan ?? '',
+                          style: TextStyle(
+                              color: MyColor.redAT,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          "(Forca POS)",
+                          style: TextStyle(color: MyColor.redAT),
+                        ),
+                      ],
+                    )),
+                    SizedBox(width: 8),
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Tanggal",
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 15),
+                        ),
+                        Text(
+                          _order?.tanggalPemensanan ?? '',
+                          style: TextStyle(
+                              color: MyColor.blackTextAT,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    )),
+                  ],
                 ),
-                Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Tanggal",
-                            style: TextStyle(
-                                color: MyColor.greyTextAT, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "21 Juni 2020",
-                            style: TextStyle(
-                                color: MyColor.blackTextAT,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Status Pembayaran",
-                            style: TextStyle(
-                                color: MyColor.greyTextAT, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          if (index == 0)
-                            Expanded(
-                              child: Text(
-                                "Menunggu Konfirmasi",
-                                style: TextStyle(
-                                    color: MyColor.warningTextAT,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          if (index == 1)
-                            Text(
-                              "Diterima Sebagian",
-                              style: TextStyle(
-                                  color: MyColor.infoAT,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
-                            ),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-                    ],
-                  ),
+                SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Status Pesanan",
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 15),
+                        ),
+                        Text(
+                          _order?.statusPemesanan ?? '',
+                          style: TextStyle(
+                              color: MyColor.greenAT,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    )),
+                    SizedBox(width: 8),
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Status Pembayaran",
+                          style: TextStyle(
+                              color: MyColor.greyTextAT, fontSize: 15),
+                        ),
+                        Text(
+                          _order?.statusPembayaran ?? '',
+                          style: TextStyle(
+                              color: MyColor.infoAT,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    )),
+                  ],
                 ),
               ],
             ),
@@ -240,7 +199,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                           children: <Widget>[
                             Container(
                               child: Text(
-                                "Semen PCC ZAK 50",
+                                _order?.productName ?? '',
                                 style: TextStyle(
                                   color: MyColor.blackTextAT,
                                   fontWeight: FontWeight.bold,
@@ -254,14 +213,15 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "121-301-0060",
+                                    _order?.productCode ?? '',
                                     style: TextStyle(
                                       color: MyColor.greyTextAT,
                                       fontSize: 16,
                                     ),
                                   ),
                                   Text(
-                                    "Rp 50.000",
+                                    MyNumber.toNumberRp(
+                                        _order?.unitCost?.toDouble() ?? 0.0),
                                     style: TextStyle(
                                       color: MyColor.greyTextAT,
                                       fontSize: 16,
@@ -278,7 +238,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                 children: <Widget>[
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
                                         "Jumlah",
@@ -290,7 +250,9 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                       Row(
                                         children: <Widget>[
                                           Text(
-                                            "2",
+                                            MyNumber.toNumberId(
+                                                _order?.quantity?.toDouble() ??
+                                                    0.0),
                                             style: TextStyle(
                                               color: MyColor.blackTextAT,
                                               fontWeight: FontWeight.bold,
@@ -302,7 +264,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                                 horizontal: 2),
                                           ),
                                           Text(
-                                            "SAK",
+                                            _order?.satuan ?? '',
                                             style: TextStyle(
                                               color: MyColor.blackTextAT,
                                               fontWeight: FontWeight.bold,
@@ -316,13 +278,16 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
-                                            MediaQuery.of(context).size.width /
-                                                16),
+                                        MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width /
+                                            16),
                                   ),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           "Harga",
@@ -332,7 +297,9 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          "Rp 100.000.000",
+                                          MyNumber.toNumberRp(
+                                              _order?.hargaBarang?.toDouble() ??
+                                                  0.0),
                                           style: TextStyle(
                                             color: MyColor.blackTextAT,
                                             fontWeight: FontWeight.bold,
@@ -351,6 +318,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+/*
                 Container(
                   height: 3,
                   color: Color(0xffEAEAEA),
@@ -365,34 +333,35 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   ),
                   child: Text("+1 barang lainya"),
                 ),
-                if (index == 1)
-                Container(
-                  height: 3,
-                  color: Color(0xffEAEAEA),
-                  margin: EdgeInsets.symmetric(vertical: 0),
-                ),
-                if (index == 1)
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  height: 40,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    color: MyColor.greenAT,
-                    borderRadius: BorderRadius.circular(30),
+*/
+                if (_index == 1)
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 0),
                   ),
-                  child: FlatButton(
-                    child: Text(
-                      "Konfirmasi Penerimaan",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12),
+                if (_index == 1)
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    height: 40,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: MyColor.greenAT,
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    onPressed: () {
-                      Get.toNamed(confirmationAcceptScreen);
-                    },
+                    child: FlatButton(
+                      child: Text(
+                        "Konfirmasi Penerimaan",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
+                      ),
+                      onPressed: () {
+                        Get.toNamed(confirmationAcceptScreen);
+                      },
+                    ),
                   ),
-                ),
               ],
             ),
           ),
@@ -417,7 +386,8 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 4),
                       ),
                       Text(
-                        "Rp 1.000.000",
+                        MyNumber.toNumberRp(
+                            _order?.totalHarga?.toDouble() ?? 0.0),
                         style: TextStyle(
                             color: MyColor.greyTextAT,
                             fontWeight: FontWeight.bold),
@@ -436,14 +406,11 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Get.toNamed(detailOrderScreen,  arguments: index);
+                      Get.toNamed(
+                          detailOrderScreen, arguments: _order?.idPemesanan);
                     },
                   ),
                 ),
-                if (index == 2)
-                  Text("Tess"),
-                if (index ==3 )
-                  Text("hehe"),
               ],
             ),
           ),
