@@ -21,6 +21,7 @@ import 'package:aksestokomobile/screen/account/add_address_screen.dart';
 import 'package:aksestokomobile/screen/account/edit_address_screen.dart';
 import 'package:aksestokomobile/screen/account/sales_person_screen.dart';
 import 'package:aksestokomobile/screen/account/change_password_screen.dart';
+import 'package:aksestokomobile/screen/promo/detail_promo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +40,7 @@ const paymentScreen = "/PaymentScreen";
 const successScreen = "/SuccessScreen";
 const historyOrderScreen = "/HistoryOrderScreen";
 const detailOrderScreen = "/DetailOrderScreen";
+const detailPromo = "/DetailPromoScreen";
 const confirmationAcceptScreen ="/ConfirmationAcceptScreen";
 const detailPaymentScreen = "/DetailPaymentScreen";
 const updateProfileScreen = "/UpdateProfileScreen";
@@ -145,6 +147,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: DetailOrderScreen(),
+        );
+      case detailPromo:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: DetailPromoScreen(),
         );
       case detailPaymentScreen:
         return GetRouteBase(

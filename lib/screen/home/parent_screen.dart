@@ -6,6 +6,8 @@ import 'package:aksestokomobile/screen/home/select_product.dart'
     as selectProduct;
 import 'package:aksestokomobile/screen/order/history_order_screen.dart'
     as historyOrder;
+import 'package:aksestokomobile/screen/promo/list_promo.dart'
+    as listPromo;
 import 'package:aksestokomobile/screen/account/account_screen.dart' as Account;
 
 class ParentScreen extends StatefulWidget {
@@ -18,9 +20,7 @@ class _ParentScreenState extends State<ParentScreen>
   int _currentIndex = 0;
   final tabs = [
     selectProduct.SelectProductScreen(),
-    Center(
-      child: Text("Promo"),
-    ),
+    listPromo.ListPromoScreen(),
     historyOrder.HistoryOrderScreen(),
     Account.AccountScreen(),
   ];
