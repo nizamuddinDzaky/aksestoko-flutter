@@ -1,7 +1,7 @@
 class ApiConfig {
-  static String host = 'http://10.15.4.102:9090/';
+  // static String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
-  // static String host = 'https://qp.forca.id/';
+  static String host = 'https://qp.forca.id/';
   static String path = '${host}api/v1/retailer/';
   static String local = '${host}api/Local/';
 
@@ -12,18 +12,19 @@ class ApiConfig {
   static String urlResetPass = '${path}auth/forgot_password';
   static String urlProfile = '${path}auth/profile';
   static String urlProfileUpdate = '${path}auth/update_profile';
+  static String urlDetailProfile = '${path}auth/detail_profile';
 
   //profile
   static String urlListProduct = '${path}Profile/list_product';
   static String urlListDistributor = '${path}Profile/list_distributor';
   static String urlDetailAddress = '${path}Profile/detail_address';
   static String urlListAddress = '${path}Profile/list_address';
-
-  //promo
-  static String urlListPromo = '${path}Order/list_promo';
+  static String urlDetailSalesPerson = '${path}Profile/detail_sales_person';
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
+  static String urlListOrder = '${path}Purchase/list_order';
+  static String urlDetailOrder = '${path}Purchase/detail_order';
 
   //address
   static String urlListProvinsi = '${path}get_list_province.php';

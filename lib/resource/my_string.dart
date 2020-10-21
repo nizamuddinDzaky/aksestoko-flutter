@@ -36,7 +36,7 @@ class MyString {
   static const KEY_ID_WAREHOUSE = "id_warehouse";
 
   // supplier
-  static const KEY_ID_SUPPLIER = "supplier_id";
+  static const KEY_ID_SUPPLIER = "id_supplier";
 
   // product
   // customer group

@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/view_model/order/detail_order_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/screen/order/list_product_detail_screen.dart'
@@ -10,7 +11,7 @@ class DetailOrderScreen extends StatefulWidget {
   _DetailOrderScreenState createState() => _DetailOrderScreenState();
 }
 
-class _DetailOrderScreenState extends State<DetailOrderScreen> {
+class _DetailOrderScreenState extends DetailOrderViewModel {
   createAlertDialog(BuildContext context) {
     return showDialog(
         context: context,
@@ -890,32 +891,32 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
               ),
             ),
             if (index == 0)
-            Container(
-              height: 3,
-              color: Color(0xffEAEAEA),
-              margin: EdgeInsets.symmetric(vertical: 20),
-            ),
+              Container(
+                height: 3,
+                color: Color(0xffEAEAEA),
+                margin: EdgeInsets.symmetric(vertical: 20),
+              ),
             if (index == 0)
-            Container(
-              margin: EdgeInsets.only(left: 25, right: 25),
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                color: MyColor.orangeAT,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: FlatButton(
-                child: Text(
-                  "Batalkan Pesanan",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
+              Container(
+                margin: EdgeInsets.only(left: 25, right: 25),
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                  color: MyColor.orangeAT,
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                onPressed: () {
-                  createAlertDialog(context);
-                },
+                child: FlatButton(
+                  child: Text(
+                    "Batalkan Pesanan",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                  onPressed: () {
+                    createAlertDialog(context);
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -973,6 +974,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       ),
     );
   }
+
   Widget listProductShipment() {
     return Container(
       padding: EdgeInsets.all(15),
@@ -994,8 +996,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
           Expanded(
             flex: 7,
             child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   "SEMEN PCC ZAK 40KG",
@@ -1016,8 +1017,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
           Expanded(
             flex: 3,
             child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   "Jumlah",
