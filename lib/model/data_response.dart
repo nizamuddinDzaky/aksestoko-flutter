@@ -6,6 +6,7 @@ import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/model/order_model.dart';
 import 'package:aksestokomobile/model/product.dart';
+import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 
@@ -13,6 +14,7 @@ class DataResponse {
   String token;
   int idBK;
   List<Distributor> listDistributor;
+  List<Promo> listPromo;
   List<Product> listProduct;
   List<Address> listAddress;
   List<Cart> listCart;
@@ -108,6 +110,10 @@ class DataResponse {
         : null;
     orderDetail = ifExistObject(json, 'detail_pemesanan', (obj) {
       return OrderDetail.fromJson(obj);
+    });
+    listPromo = ifExistList(json, 'list_promo', (obj) {
+      return Promo.fromJson(obj);
+
     });
   }
 
