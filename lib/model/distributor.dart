@@ -24,8 +24,8 @@ class Distributor {
   });
 
   Distributor.fromJson(Map<String, dynamic> json) {
-    nama = json['nama'] ?? json['name'];
-    kode = json['kode'];
+    nama = json['nama'] ?? json['name'] ?? json['nama_distributor'];
+    kode = json['kode'] ?? json['kode_distributor'];
     namaPrincipal = json['nama_principal'] ?? json['company_name'];
     alamatLengkap = json['alamat_lengkap'] ?? json['address'];
     noTlpn = json['no_tlpn'] ?? json['phone'];

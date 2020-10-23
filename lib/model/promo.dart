@@ -6,18 +6,18 @@ class Promo {
   String name;
   String typeNews;
   String description;
-  Null linkPromo;
+  String linkPromo;
   String codePromo;
   String startDate;
   String endDate;
   String urlImage;
-  Null syarat;
+  String syarat;
   String createdBy;
   String linkOutsite;
-  Null urlOutsite;
-  Null totalItems;
+  String urlOutsite;
+  String totalItems;
   String quota;
-  Null region;
+  String region;
   String tipe;
   String maxToko;
   String isDeleted;
@@ -27,38 +27,38 @@ class Promo {
   String minPembelian;
   String isPopup;
   String imagePopup;
-  Null videoPopup;
+  String videoPopup;
 
   Promo(
       {this.id,
-        this.date,
-        this.supplierId,
-        this.supplier,
-        this.name,
-        this.typeNews,
-        this.description,
-        this.linkPromo,
-        this.codePromo,
-        this.startDate,
-        this.endDate,
-        this.urlImage,
-        this.syarat,
-        this.createdBy,
-        this.linkOutsite,
-        this.urlOutsite,
-        this.totalItems,
-        this.quota,
-        this.region,
-        this.tipe,
-        this.maxToko,
-        this.isDeleted,
-        this.status,
-        this.value,
-        this.maxTotalDisc,
-        this.minPembelian,
-        this.isPopup,
-        this.imagePopup,
-        this.videoPopup});
+      this.date,
+      this.supplierId,
+      this.supplier,
+      this.name,
+      this.typeNews,
+      this.description,
+      this.linkPromo,
+      this.codePromo,
+      this.startDate,
+      this.endDate,
+      this.urlImage,
+      this.syarat,
+      this.createdBy,
+      this.linkOutsite,
+      this.urlOutsite,
+      this.totalItems,
+      this.quota,
+      this.region,
+      this.tipe,
+      this.maxToko,
+      this.isDeleted,
+      this.status,
+      this.value,
+      this.maxTotalDisc,
+      this.minPembelian,
+      this.isPopup,
+      this.imagePopup,
+      this.videoPopup});
 
   Promo.fromJson(Map<String, dynamic> json) {
     id = json['id'];

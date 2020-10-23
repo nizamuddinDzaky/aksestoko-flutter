@@ -114,4 +114,16 @@ class MyPref {
   }
 
   static int getRole() => getInt(MyString.KEY_ROLE_USER);
+
+  static int getCustomerGroupId() => getInt(MyString.KEY_ID_CUSTOMER_GROUP);
+
+  static setCustomerGroupId(int customerGroupId) {
+    setInt(MyString.KEY_ID_CUSTOMER_GROUP, customerGroupId);
+  }
+
+  static int getPriceGroupId() => getInt(MyString.KEY_ID_PRICE_GROUP);
+
+  static setPriceGroupId(int priceGroupId) {
+    setInt(MyString.KEY_ID_PRICE_GROUP, priceGroupId);
+  }
 }

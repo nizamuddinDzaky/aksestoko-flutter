@@ -7,6 +7,7 @@ import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/model/order_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/promo.dart';
+import 'package:aksestokomobile/model/ringkasan.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 
@@ -28,6 +29,9 @@ class DataResponse {
   List<Alamat> listAlamat;
   OrderModel orderModel;
   OrderDetail orderDetail;
+  Distributor distributor;
+  List<String> pengiriman;
+  Ringkasan ringkasan;
 
   DataResponse({this.token});
 
@@ -74,9 +78,14 @@ class DataResponse {
         }) ??
         ifExistList(json, 'product', (obj) {
           return Cart.fromJson(obj);
+        }) ??
+        ifExistList(json, 'list_product', (obj) {
+          return Cart.fromJson(obj);
         });
 
     address = ifExistObject(json, 'address', (obj) {
+      return Address.fromJson(obj);
+    }) ?? ifExistObject(json, 'alamat_pengiriman', (obj) {
       return Address.fromJson(obj);
     });
 
@@ -113,7 +122,15 @@ class DataResponse {
     });
     listPromo = ifExistList(json, 'list_promo', (obj) {
       return Promo.fromJson(obj);
-
+    });
+    pengiriman = ifExistList(json, 'pengiriman', (obj) {
+      return obj?.toString();
+    });
+    ringkasan = ifExistObject(json, 'ringkasan', (obj) {
+      return Ringkasan.fromJson(obj);
+    });
+    distributor = ifExistObject(json, 'distributor', (obj) {
+      return Distributor.fromJson(obj);
     });
   }
 

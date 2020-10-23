@@ -57,7 +57,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       listCart.addAll(newListCart);
       buildCart();
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
+      // Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});

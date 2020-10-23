@@ -1,23 +1,26 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
+import 'package:aksestokomobile/model/data_response.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/home/checkout_screen.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class CheckoutViewModel extends State<CheckoutScreen> {
   List<Product> cart;
-
+  bool complete;
   String selectShipping = "";
+  DataResponse response;
 
   @override
   void initState() {
     cart = Get.arguments;
-    _getAddress();
+    _getDetailCheckout();
     super.initState();
   }
 
@@ -26,17 +29,30 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
   var totalAkhir = 0.0;
   var shipmentPrice = 0.0;
 
-  void _getAddress() async {
-    var status = await ApiClient.methodGet(ApiConfig.urlDetailAddress,
+  void _getDetailCheckout() async {
+    var status = await ApiClient.methodGet(ApiConfig.urlDetailCheckout,
+        params: {
+          'id_distributor': MyPref.getIdDistributor().toString(),
+        },
         onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
-      address = baseResponse?.data?.address;
-      shiping.add("Pengiriman Distributor");
-      shiping.add("Pengambilan Sendiri");
+      response = baseResponse?.data;
+      address = response?.address;
+      complete = true;
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
+      complete = false;
+      Get.defaultDialog(
+          title: "Pemberitahuan",
+          content: Text("Proses tidak bisa dilanjutkan $message"),
+          textCancel: 'Tutup',
+          onCancel: () {
+            Get.back();
+          }).then((value) {
+        Get.back();
+      });
     }, onError: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
+      complete = false;
+      // Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});
     setState(() {
       status.execute();

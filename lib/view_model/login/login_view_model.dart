@@ -30,7 +30,7 @@ abstract class LoginViewModel extends State<LoginScreen> {
         Get.offNamed(selectDistributorScreen);
       }
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+      Get.defaultDialog(title: title, content: Text('Login Gagal'));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
     }, onAfter: (status) {

@@ -19,12 +19,12 @@ class SelectProductController extends GetController {
 
   void removeCart(Product p) {
     p.qty = 0;
-    listCart.remove(p);
+    listCart?.remove(p);
     update();
   }
 
   clearCart() {
-    listCart.clear();
+    listCart?.clear();
     update();
   }
 

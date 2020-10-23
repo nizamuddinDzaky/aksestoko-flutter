@@ -1,7 +1,7 @@
 class ApiConfig {
-  static String host = 'http://10.15.4.102:9090/';
+  // static String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
-  // static String host = 'https://qp.forca.id/';
+  static String host = 'https://qp.forca.id/';
   static String path = '${host}api/v1/retailer/';
   static String local = '${host}api/Local/';
 
@@ -28,6 +28,8 @@ class ApiConfig {
   static String urlCart = '${path}Purchase/list_cart';
   static String urlListOrder = '${path}Purchase/list_order';
   static String urlDetailOrder = '${path}Purchase/detail_order';
+  static String urlDetailCheckout = '${path}Purchase/detail_checkout';
+  static String urlListPayment = '${path}Purchase/list_payment';
 
   //address
   static String urlListProvinsi = '${path}get_list_province.php';

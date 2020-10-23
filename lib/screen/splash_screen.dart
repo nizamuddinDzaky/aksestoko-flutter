@@ -22,9 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
       debugPrint("=>>${MyPref.isIdDistributorExist()}");
       Get.offNamed(isLogin
           ? (MyPref.isIdDistributorExist()
-              ? parentScreen
+              ? selectDistributorScreen
               : selectDistributorScreen)
-          : loginScreen);
+          : selectDistributorScreen);
     });
   }
 
