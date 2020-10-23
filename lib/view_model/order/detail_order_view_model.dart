@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/order.dart';
+import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
@@ -9,7 +10,7 @@ import 'package:get/get.dart';
 
 abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
-  Order order;
+  OrderDetail orderDetail;
 
   Future<void> actionRefresh() async {
     await getListOrder();
@@ -26,8 +27,11 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
       var response = BaseResponse.fromJson(data);
+      /*debugPrint("response : ${response.data.orderDetail.detailPemesanan}");*/
+      orderDetail = OrderDetail.fromJson(data['data']);
+      /*debugPrint("response : ${orderDetail.ringkasan}");*/
       // order = response?.data?.orderModel?.listOrderDalamProses ?? [];
-    }, onFailed: (title, message) {
+    }, onFailed: (title, message) { 
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));

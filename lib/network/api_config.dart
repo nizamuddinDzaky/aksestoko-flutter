@@ -1,7 +1,7 @@
 class ApiConfig {
-  static String host = 'http://10.15.4.102:9090/';
+  // static String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
-  // static String host = 'https://qp.forca.id/';
+  static String host = 'https://qp.forca.id/';
   static String path = '${host}api/v1/retailer/';
   static String local = '${host}api/Local/';
 

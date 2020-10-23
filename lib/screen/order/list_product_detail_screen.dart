@@ -1,14 +1,24 @@
+import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_number.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 
 class ListProductDetailOrderScreen extends StatefulWidget {
+  Cart cart;
+  ListProductDetailOrderScreen(Cart cart){
+    this.cart = cart;
+  }
   _ListProductDetailOrderScreenState createState() =>
-      _ListProductDetailOrderScreenState();
+      _ListProductDetailOrderScreenState(cart);
 }
 
 class _ListProductDetailOrderScreenState
     extends State<ListProductDetailOrderScreen> {
+  Cart cart;
+  _ListProductDetailOrderScreenState(Cart cart){
+    this.cart = cart;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +50,7 @@ class _ListProductDetailOrderScreenState
               children: <Widget>[
                 Container(
                   child: Text(
-                    "Semen PCC ZAK 50",
+                    cart != null ? cart.nama : "",
                     style: TextStyle(
                       color: MyColor.blackTextAT,
                       fontWeight: FontWeight.bold,
@@ -54,14 +64,14 @@ class _ListProductDetailOrderScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "121-301-0060",
+                        cart != null ? cart.code : "",
                         style: TextStyle(
                           color: MyColor.greyTextAT,
                           fontSize: 16,
                         ),
                       ),
                       Text(
-                        "Rp 50.000",
+                        cart != null ? MyNumber.toNumberRpStr(cart.satuanHargaCash.toString()) : "",
                         style: TextStyle(
                           color: MyColor.greyTextAT,
                           fontSize: 16,
@@ -89,22 +99,22 @@ class _ListProductDetailOrderScreenState
                           Row(
                             children: <Widget>[
                               Text(
-                                "2",
+                                "${cart != null ? cart.qty : "0"}",
                                 style: TextStyle(
                                   color: MyColor.blackTextAT,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 2),
                               ),
                               Text(
-                                "SAK",
+                                "${cart != null ? cart.unit : "SAK"}",
                                 style: TextStyle(
                                   color: MyColor.blackTextAT,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
@@ -123,15 +133,15 @@ class _ListProductDetailOrderScreenState
                               "Harga",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
-                                fontSize: 16,
+                                fontSize: 14,
                               ),
                             ),
                             Text(
-                              "Rp 100.000.000",
+                              cart != null ? MyNumber.toNumberRpStr(cart.total.toString()) : "",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 14,
                               ),
                             ),
                           ],
