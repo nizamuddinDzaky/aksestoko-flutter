@@ -1,4 +1,6 @@
+import 'package:aksestokomobile/controller/home/checkout_controller.dart';
 import 'package:aksestokomobile/model/payment_model.dart';
+import 'package:aksestokomobile/model/sales_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/home/payment_screen.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class PaymentController extends State<PaymentScreen> {
+  static CheckoutController get to => Get.find();
   PaymentModel paymentModel;
   Detail selectedKreditPro;
   ListBank selectedDue;
@@ -18,7 +21,7 @@ abstract class PaymentController extends State<PaymentScreen> {
   bool tempoDistributor = false;
   int currentTab = 0;
   String paymentMethod;
-  List<String> listPaymentMethod = [
+  static const List<String> listPaymentMethod = [
     'cash on delivery',
     'cash before delivery',
     'kredit',
@@ -46,37 +49,51 @@ abstract class PaymentController extends State<PaymentScreen> {
     paymentMethod = paymentMethodValue;
   }
 
+  actionSubmit() {
+    var salesModel = SalesModel();
+    salesModel?.id_distributor = MyPref.getIdDistributor();
+    salesModel?.price_group_id = MyPref.getPriceGroupId();
+    salesModel?.customer_group_id = MyPref.getCustomerGroupId();
+    salesModel?.uuid = paymentModel?.uuid;
+    salesModel?.payment_method = paymentMethod;
+    if (paymentMethod == listPaymentMethod[1]) {
+      salesModel?.bank_id = selectedDelivery?.bankId;
+    }
+    if (paymentMethod == listPaymentMethod[2]) {
+      salesModel?.bank_id = selectedDue?.bankId;
+      salesModel?.payment_durasi = selectedDuration?.duration;
+    }
+    if (paymentMethod == listPaymentMethod[3]) {
+      salesModel?.payment_durasi = selectedKreditPro?.durasiPembayaran;
+    }
+    to.savePaymentScreen(salesModel);
+  }
+
   void getPaymentMethod() async {
-    /*
-is_checkout (riquired) = true
-id_distributor (riquired)
-delivery_method (riquired)
-price_group_id
-promo
-    */
+    SalesModel salesModel = Get.arguments;
+    salesModel = salesModel ?? to.salesModel;
     var status = await ApiClient.methodGet(ApiConfig.urlListPayment,
         params: {
           'id_distributor': MyPref.getIdDistributor().toString(),
           'is_checkout': 'true',
-          'delivery_method': 'delivery',
-          // 'delivery_method': 'pickup',
+          'delivery_method': salesModel?.delivery_method,
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
       paymentModel = PaymentModel.fromJson(data['data']);
       reInitConfig();
     }, onFailed: (title, message) {
       Get.defaultDialog(
-          title: "Pemberitahuan",
-          content: Text("Proses tidak bisa dilanjutkan $message"),
-          textCancel: 'Tutup',
-          onCancel: () {
+              title: "Pemberitahuan",
+              content: Text("Proses tidak bisa dilanjutkan $message"),
+              textCancel: 'Tutup',
+              onCancel: () {
+                Get.back();
+              }).then((value) {
             Get.back();
-          }).then((value) {
-        Get.back();
-      });
-    }, onError: (title, message) {
-      // Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+          });
+        }, onError: (title, message) {
+          // Get.defaultDialog(title: title, content: Text(message));
+        }, onAfter: (status) {});
     setState(() {
       status.execute();
     });

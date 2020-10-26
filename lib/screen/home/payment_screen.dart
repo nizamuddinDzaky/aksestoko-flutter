@@ -7,8 +7,6 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -100,9 +98,9 @@ class _PaymentScreenState extends PaymentController {
               child: indexTempo != index
                   ? Text('')
                   : Icon(
-                Icons.check,
-                color: Colors.green,
-              ),
+                      Icons.check,
+                      color: Colors.green,
+                    ),
             ),
             selected: indexTempo == index,
             selectedColor: MyColor.redAT,
@@ -208,7 +206,8 @@ class _PaymentScreenState extends PaymentController {
                                     value: cashOnDelivery,
                                     onChanged: (bool value) {
                                       setState(() {
-                                        setIndexMethod(listPaymentMethod[0]);
+                                        setIndexMethod(PaymentController
+                                            .listPaymentMethod[0]);
                                       });
                                     },
                                   ),
@@ -396,7 +395,7 @@ class _PaymentScreenState extends PaymentController {
                                             fontSize: 14),
                                       ),
                                       onPressed: () {
-                                        Get.toNamed(successScreen);
+                                        actionSubmit();
                                       },
                                     ),
                                   ),
@@ -429,7 +428,8 @@ class _PaymentScreenState extends PaymentController {
                                       value: cashBeforeDelivery,
                                       onChanged: (bool value) {
                                         setState(() {
-                                          setIndexMethod(listPaymentMethod[1]);
+                                          setIndexMethod(PaymentController
+                                              .listPaymentMethod[1]);
                                         });
                                       },
                                     ),
@@ -675,7 +675,7 @@ class _PaymentScreenState extends PaymentController {
                                             fontSize: 14),
                                       ),
                                       onPressed: () {
-                                        Get.toNamed(successScreen);
+                                        actionSubmit();
                                       },
                                     ),
                                   ),
@@ -708,7 +708,8 @@ class _PaymentScreenState extends PaymentController {
                                       value: tempoDistributor,
                                       onChanged: (bool value) {
                                         setState(() {
-                                          setIndexMethod(listPaymentMethod[2]);
+                                          setIndexMethod(PaymentController
+                                              .listPaymentMethod[2]);
                                         });
                                       },
                                     ),
@@ -812,10 +813,12 @@ class _PaymentScreenState extends PaymentController {
                                       ),
                                     ],
                                   ),
-                                  Image.network(
-                                    selectedDue?.logoBank ?? '',
-                                    width: 120,
-                                  ),
+                                  if (selectedDue?.logoBank?.isNotEmpty ??
+                                      false)
+                                    Image.network(
+                                      selectedDue?.logoBank,
+                                      width: 120,
+                                    ),
                                 ],
                               ),
                             ),
@@ -1037,9 +1040,10 @@ class _PaymentScreenState extends PaymentController {
                                     ),
                                     Expanded(
                                       child: DropdownSearch<ListPaymentDurasi>(
-                                        dropdownSearchDecoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
-                                              left: 20),
+                                        dropdownSearchDecoration:
+                                        InputDecoration(
+                                          contentPadding:
+                                          EdgeInsets.only(left: 20),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Color(0xffC8C8C8),
@@ -1062,7 +1066,8 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         items: paymentModel
                                             ?.tempoDenganDistributor
-                                            ?.listPaymentDurasi ?? [],
+                                            ?.listPaymentDurasi ??
+                                            [],
                                         onSaved: (value) => {},
                                         hint: "Pilih Durasi",
                                         onChanged: (ListPaymentDurasi data) {
@@ -1074,7 +1079,8 @@ class _PaymentScreenState extends PaymentController {
                                           border: OutlineInputBorder(),
                                           labelText: "Cari Durasi",
                                         ),
-                                      ),),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -1085,27 +1091,26 @@ class _PaymentScreenState extends PaymentController {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  if (selectedDue != null)
-                                    Container(
-                                      padding:
-                                      EdgeInsets.only(left: 10, right: 10),
-                                      decoration: BoxDecoration(
-                                        color: MyColor.greenAT,
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      child: FlatButton(
-                                        child: Text(
-                                          "Selesaikan",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
-                                        ),
-                                        onPressed: () {
-                                          Get.toNamed(successScreen);
-                                        },
-                                      ),
+                                  Container(
+                                    padding:
+                                    EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      color: MyColor.greenAT,
+                                      borderRadius: BorderRadius.circular(30),
                                     ),
+                                    child: FlatButton(
+                                      child: Text(
+                                        "Selesaikan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      onPressed: () {
+                                        actionSubmit();
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -1135,7 +1140,8 @@ class _PaymentScreenState extends PaymentController {
                                       value: kreditPro,
                                       onChanged: (bool value) {
                                         setState(() {
-                                          setIndexMethod(listPaymentMethod[3]);
+                                          setIndexMethod(PaymentController
+                                              .listPaymentMethod[3]);
                                         });
                                       },
                                     ),
@@ -1168,9 +1174,9 @@ class _PaymentScreenState extends PaymentController {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    MyNumber.toNumberRp(selectedKreditPro?.total
-                                        ?.toDouble() ??
-                                        0.0),
+                                    MyNumber.toNumberRp(
+                                        selectedKreditPro?.total?.toDouble() ??
+                                            0.0),
                                     style: TextStyle(
                                         color: MyColor.redAT,
                                         fontWeight: FontWeight.bold,
@@ -1236,8 +1242,7 @@ class _PaymentScreenState extends PaymentController {
                                         Container(
                                           child: Text(
                                             MyNumber.toNumberRp(
-                                                selectedKreditPro
-                                                    ?.harga
+                                                selectedKreditPro?.harga
                                                     ?.toDouble() ??
                                                     0.0),
                                             style: TextStyle(
@@ -1266,8 +1271,7 @@ class _PaymentScreenState extends PaymentController {
                                         Container(
                                           child: Text(
                                             MyNumber.toNumberRp(
-                                                selectedKreditPro
-                                                    ?.charge
+                                                selectedKreditPro?.charge
                                                     ?.toDouble() ??
                                                     0.0),
                                             style: TextStyle(
@@ -1302,8 +1306,7 @@ class _PaymentScreenState extends PaymentController {
                                         Container(
                                           child: Text(
                                             MyNumber.toNumberRp(
-                                                selectedKreditPro
-                                                    ?.subtotal
+                                                selectedKreditPro?.subtotal
                                                     ?.toDouble() ??
                                                     0.0),
                                             style: TextStyle(
@@ -1387,8 +1390,7 @@ class _PaymentScreenState extends PaymentController {
                                         Container(
                                           child: Text(
                                             MyNumber.toNumberRp(
-                                                selectedKreditPro
-                                                    ?.total
+                                                selectedKreditPro?.total
                                                     ?.toDouble() ??
                                                     0.0),
                                             style: TextStyle(
@@ -1430,7 +1432,7 @@ class _PaymentScreenState extends PaymentController {
                                               fontSize: 14),
                                         ),
                                         onPressed: () {
-                                          Get.toNamed(successScreen);
+                                          actionSubmit();
                                         },
                                       ),
                                     )
@@ -1505,41 +1507,7 @@ class _PaymentScreenState extends PaymentController {
           ),
         ),
         centerTitle: false,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              getPaymentMethod();
-            },
-          ),
-/*
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-*/
-        ],
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {

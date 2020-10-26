@@ -16,6 +16,12 @@ abstract class LoginViewModel extends State<LoginScreen> {
   Login currentData = Login();
 
   actionSubmit() async {
+    formKey.currentState.save();
+    postLogin();
+  }
+
+  postLogin() async {
+    formKey.currentState.save();
     var status = await ApiClient.methodPost(
         ApiConfig.urlLogin, currentData.toJson(), {}, onBefore: (status) {
       Get.back();
@@ -27,9 +33,9 @@ abstract class LoginViewModel extends State<LoginScreen> {
       if (valid) {
         MyPref.setATToken(baseResponse?.data?.token);
         MyPref.setIdBk(baseResponse?.data?.idBK);
-        Get.offNamed(selectDistributorScreen);
-      }
-    }, onFailed: (title, message) {
+            Get.offNamed(selectDistributorScreen);
+          }
+        }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text('Login Gagal'));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
@@ -40,14 +46,23 @@ abstract class LoginViewModel extends State<LoginScreen> {
     status.execute();
   }
 
-  @override
-  void initState() {
+  developerInit() {
     if (Foundation.kDebugMode) {
       currentData = Login(
         username: '900000010',
-        password: 'Indonesia1',
+        password: 'Indonesia2020',
       );
     }
+  }
+
+  @override
+  void initState() {
+    currentData = Login(
+      username: MyPref.getUsername(),
+      password: MyPref.getPassword(),
+    );
+    isRemember = MyPref.getRemember();
+    developerInit();
     super.initState();
   }
 }

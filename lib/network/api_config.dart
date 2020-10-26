@@ -30,6 +30,8 @@ class ApiConfig {
   static String urlDetailOrder = '${path}Purchase/detail_order';
   static String urlDetailCheckout = '${path}Purchase/detail_checkout';
   static String urlListPayment = '${path}Purchase/list_payment';
+  static String urlActionOrder = '${path}Purchase/action_checkout';
+  static String urlShipmentPrice = '${path}Purchase/shipment_group_price';
 
   //address
   static String urlListProvinsi = '${path}get_list_province.php';

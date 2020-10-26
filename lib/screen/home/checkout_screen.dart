@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/model/checkout_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_number.dart';
@@ -22,23 +23,6 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends CheckoutViewModel {
-  void _changeShipment(String data, CheckoutController controller) async {
-    controller.shipment = data;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
-    getShipmentPrice(data);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,33 +42,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
           ),
         ),
         centerTitle: false,
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {
@@ -174,16 +132,14 @@ class _CheckoutScreenState extends CheckoutViewModel {
                     margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
                     child: Text(
                       address?.line1 ?? '',
-                      style: TextStyle(
-                          fontSize: 16, color: MyColor.greyTextAT),
+                      style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: 10, left: 10),
                     child: Text(
                       address?.line2 ?? '',
-                      style: TextStyle(
-                          fontSize: 16, color: MyColor.greyTextAT),
+                      style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
                     ),
                   ),
                 ],
@@ -472,7 +428,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                   fontSize: 14),
                             ),
                             Text(
-                              response?.distributor?.kode ?? '',
+                              checkoutModel?.distributor?.kode ?? '',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
@@ -490,7 +446,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                     fontSize: 14),
                               ),
                               Text(
-                                response?.distributor?.nama ?? '',
+                                checkoutModel?.distributor?.nama ?? '',
                                 textAlign: TextAlign.end,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
@@ -536,27 +492,21 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.symmetric(vertical: 25),
-                          child: DropdownSearch<String>(
-                            items: response?.pengiriman ?? [],
+                          child: DropdownSearch<Shipment>(
+                            items: checkoutModel?.listPengiriman ?? [],
                             onSaved: (value) => {},
                             hint: "Pilih Pengiriman",
-                            onChanged: (String data) =>
-                                _changeShipment(data, controller),
+                            onChanged: (Shipment data) {
+                              selectShipping = data;
+                              getShipment();
+                            },
                             showSearchBox: true,
-                            selectedItem: controller.shipment,
+                            selectedItem: selectShipping,
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
-                              labelText: "Pilih Pengiriman",
+                              labelText: "Cari Pengiriman",
                             ),
-                            validator: (String item) {
-                              if (item == null)
-                                return "Required field";
-                              else if (item == "Brazil")
-                                return "Invalid item";
-                              else
-                                return null;
-                            },
                           ),
                         ),
                       ),
@@ -605,8 +555,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                 color: MyColor.greyTextAT, fontSize: 16),
                           ),
                           Text(
-                            "${MyNumber.toNumberId(response?.ringkasan
-                                ?.jumlahBarang?.toDouble() ?? 0.0)}",
+                            "${MyNumber.toNumberId(checkoutModel?.ringkasan?.jumlahBarang?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: MyColor.greyTextAT,
                                 fontWeight: FontWeight.bold,
@@ -630,8 +579,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             ),
                           ),
                           Text(
-                            // "${MyNumber.toNumberRpStr(getTotalHarga().toString())}",
-                            "${MyNumber.toNumberRp(response?.ringkasan
+                            "${MyNumber.toNumberRp(checkoutModel?.ringkasan
                                 ?.totalHarga?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: MyColor.greyTextAT,
@@ -656,7 +604,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             ),
                           ),
                           Text(
-                            "${MyNumber.toNumberRpStr(shipmentPrice.toString())}",
+                            "${MyNumber.toNumberRp(checkoutModel?.ringkasan
+                                ?.cost?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
@@ -682,9 +631,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             ),
                           ),
                           Text(
-                            // "${MyNumber.toNumberRpStr(totalAkhir.toString())}",
-                            "${MyNumber.toNumberRp(response?.ringkasan
-                                ?.calculateTotal() ?? 0.0)}",
+                            "${MyNumber.toNumberRp(checkoutModel?.ringkasan
+                                ?.grandTotal?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: MyColor.redAT,
                                 fontWeight: FontWeight.bold,
@@ -717,8 +665,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       fontSize: 14),
                 ),
                 onPressed: () {
-                  controller.checkout(totalAkhir.toString());
-//                  Get.toNamed(paymentScreen);
+                  controller.saveCheckoutScreen(
+                      checkoutModel, address, selectShipping);
                 },
               ),
             ),
@@ -738,8 +686,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) =>
-          _item(context, response?.listProduct[index]),
-      itemCount: response?.listProduct?.length ?? 0,
+          _item(context, checkoutModel?.listProduct[index]),
+      itemCount: checkoutModel?.listProduct?.length ?? 0,
     );
   }
 

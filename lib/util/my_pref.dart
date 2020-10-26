@@ -44,7 +44,10 @@ class MyPref {
   static logout() {
     //setRemember(false, null);
     setIdDristributor(null);
+    setCustomerGroupId(null);
+    setPriceGroupId(null);
     setDisributorName(null);
+    setDisributorCode(null);
     setATToken(null);
   }
 
