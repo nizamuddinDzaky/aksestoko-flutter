@@ -79,7 +79,7 @@ Color statusColor(String status){
   }
 
   if (status.toLowerCase() == 'warning'){
-    return MyColor.successTextAT;
+    return MyColor.warningTextAT;
   }
 
   if(status.toLowerCase() == 'info'){

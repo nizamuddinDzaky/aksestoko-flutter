@@ -45,7 +45,7 @@ abstract class LoginViewModel extends State<LoginScreen> {
     if (Foundation.kDebugMode) {
       currentData = Login(
         username: '900000010',
-        password: 'Indonesia1',
+        password: 'Indonesia2020',
       );
     }
     super.initState();

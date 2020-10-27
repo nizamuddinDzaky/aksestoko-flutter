@@ -1,18 +1,30 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
+import 'package:aksestokomobile/model/delivery.dart';
+import 'package:aksestokomobile/screen/order/item_confirmation_acceptance_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_util.dart';
+import 'package:aksestokomobile/view_model/order/confirmation_acceptance_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'dart:io' as Io;
 
 class ConfirmationAcceptScreen extends StatefulWidget {
   _ConfirmationAcceptScreen createState() => _ConfirmationAcceptScreen();
 }
 
-class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
-  File imageFile;
+class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
 
   _openGallery(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.gallery);
+    final bytes = Io.File(picture.path).readAsBytesSync();
+    base64File += base64Encode(bytes);
+    // var decode = base64.decode(base64File);
+    /*debugPrint('decode : ${base64File}');*/
     this.setState(() {
       imageFile = File(picture.path);
     });
@@ -21,6 +33,8 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
 
   _openCamera(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.camera);
+    final bytes = Io.File(picture.path).readAsBytesSync();
+    base64File += base64Encode(bytes);
     this.setState(() {
       imageFile = File(picture.path);
     });
@@ -72,9 +86,8 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    var formLayout = SingleChildScrollView(
+  Widget _body(ConfirmationAcceptanceController controller){
+    return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 25),
         child: Column(
@@ -83,7 +96,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
             Container(
               margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
               child: Text(
-                "SALE/AT/2020/06/07",
+                detailPemesanan.noPemesanan,
                 style: TextStyle(
                     color: MyColor.blackTextAT,
                     fontSize: 18,
@@ -119,14 +132,14 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                               Text(
                                 "No SPJ",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "DO/2020/06/0023",
+                                detailDelivery.noSpj,
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                             ],
                           ),
@@ -140,14 +153,14 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                               Text(
                                 "Status Pengiriman",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "Dalam Pengiriman",
+                                detailDelivery.statuPengiriman,
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.infoAT),
+                                    fontSize: 14, color: statusColor(detailDelivery.labelStatus)),
                               ),
                             ],
                           ),
@@ -167,14 +180,14 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                               Text(
                                 "Tanggal Dikirim",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "05 Juni 2020",
+                                detailDelivery.tanggalDikirim,
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                             ],
                           ),
@@ -187,14 +200,14 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                               Text(
                                 "Dikirim Oleh",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "-",
+                                detailDelivery.dikirimOleh,
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                             ],
                           ),
@@ -215,7 +228,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                                   Text(
                                     "Barang Diterima",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -229,13 +242,17 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                   ),
                   SingleChildScrollView(
                     child: Container(
-                      child: ListView(
+                      child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        children: <Widget>[
+                        itemCount: detailDelivery.listItemDetailDelivery.length,
+                        itemBuilder: (buildcontext, index) {
+                          return ItemConfirmationAcceptScreen(detailDelivery.listItemDetailDelivery[index]);
+                        },
+                        /*children: <Widget>[
                           listProductShipment(),
                           listProductShipment(),
-                        ],
+                        ],*/
                       ),
                     ),
                   ),
@@ -269,7 +286,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                             fillColor: Color(0xffEEEEEE),
                             hintText: "Catatan",
                             contentPadding:
-                                const EdgeInsets.only(left: 20, top: 30),
+                            const EdgeInsets.only(left: 20, top: 30),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color(0xffC8C8C8), width: 2.0),
@@ -282,7 +299,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: MyColor.redAT, width: 1),
+                              BorderSide(color: MyColor.redAT, width: 1),
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5.0),
                                 bottomRight: Radius.circular(5.0),
@@ -329,7 +346,7 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
 //                            border: Border(
 //                              bottom: BorderSide(width: 1, color: MyColor.greyTextAT,),
 //                            ),
-                              ),
+                          ),
                           child: Column(
                             children: <Widget>[
                               _decideImageView(),
@@ -416,12 +433,12 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                             Text(
                               "Jumlah Baik",
                               style: TextStyle(
-                                  fontSize: 16, color: MyColor.greyTextAT),
+                                  fontSize: 14, color: MyColor.greyTextAT),
                             ),
                             Text(
-                              "2",
+                              sumGoodItem(),
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -440,12 +457,12 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                             Text(
                               "Jumlah Rusak",
                               style: TextStyle(
-                                  fontSize: 16, color: MyColor.greyTextAT),
+                                  fontSize: 14, color: MyColor.greyTextAT),
                             ),
                             Text(
-                              "0",
+                              sumBadItem(),
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -464,14 +481,14 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                             Text(
                               "Jumlah Barang",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: MyColor.greyTextAT,
                               ),
                             ),
                             Text(
-                              "2",
+                              sumItem(),
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -503,225 +520,79 @@ class _ConfirmationAcceptScreen extends State<ConfirmationAcceptScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: 14),
                 ),
-                onPressed: null,
+                onPressed: (){
+                  postConfirmDelivery();
+                  /*debugPrint("${detailDelivery.listItemDetailDelivery[0].baik}");*/
+                },
               ),
             ),
           ],
         ),
       ),
     );
+  }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: false,
-        title: Container(
-          //color: Colors.white,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-          ),
-          child: Text(
-            "Konfrimasi Penerimaan",
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ConfirmationAcceptanceController>(
+        init: ConfirmationAcceptanceController(),
+        builder: (vm) =>Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            elevation: 0,
+            centerTitle: false,
+            title: Container(
+              //color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+              child: Text(
+                "Konfrimasi Penerimaan",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            actions: <Widget>[
+              Stack(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.notifications),
+                    onPressed: () {
+                      debugPrint('klik notif');
+                    },
                   ),
-                ),
+                  Positioned(
+                    right: 5,
+                    top: 4,
+                    child: CircleAvatar(
+                      maxRadius: 10,
+                      backgroundColor: MyColor.redAT,
+                      child: Text(
+                        '20',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: formLayout,
-      ),
+          body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: _body(vm),
+          ),
+        )
     );
   }
 
-  Widget listProductShipment() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: MyColor.greyTextAT,
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: Offset(0, 2), // changes position of shadow
-          )
-        ],
-      ),
-      child: Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: 60,
-                height: 60,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: MyColor.redAT,
-                ),
-                child: Text(
-                  "S",
-                  style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "SEMEN PCC ZAK 40KG",
-                      style: TextStyle(
-                          color: MyColor.redAT,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "121-030-0050",
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.left,
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "100",
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.left,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 4)),
-                        Text(
-                          "SAK",
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Container(
-            height: 3,
-            color: Color(0xffEAEAEA),
-            margin: EdgeInsets.symmetric(vertical: 10),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Barang Baik"),
-                    Padding(padding: EdgeInsets.all(5)),
-                    TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xffEEEEEE),
-                        hintText: "100",
-                        contentPadding: const EdgeInsets.only(left: 10),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color(0xffC8C8C8), width: 1.0),
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(5.0),
-                            bottomRight: Radius.circular(5.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                          BorderSide(color: MyColor.redAT, width: 1),
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(5.0),
-                            bottomRight: Radius.circular(5.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(10)),
-              Expanded(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Barang Rusak"),
-                    Padding(padding: EdgeInsets.all(5)),
-                    TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xffEEEEEE),
-                        hintText: "100",
-                        contentPadding: const EdgeInsets.only(left: 10),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color(0xffC8C8C8), width: 1.0),
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(5.0),
-                            bottomRight: Radius.circular(5.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                          BorderSide(color: MyColor.redAT, width: 1),
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(5.0),
-                            bottomRight: Radius.circular(5.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+/*  Widget listProductShipment(ItemDetailDelivery itemDetailDelivery) {
+    itemDetailDelivery.baik = itemDetailDelivery.jumlah;
+    // itemDetailDelivery.buruk = 0;
+
+  }*/
 }

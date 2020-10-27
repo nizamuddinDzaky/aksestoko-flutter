@@ -663,7 +663,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         fontSize: 14),
                   ),
                   onPressed: () {
-                    createAlertDialog(context);
+                    createAlertDialog(context, (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0));
                   },
                 ),
               ),
@@ -684,7 +684,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       fontSize: 14),
                 ),
                 onPressed: () {
-                  createAlertDialog(context);
+                  // createAlertDialog(context);
                 },
               ),
             )
@@ -861,6 +861,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               ],
             ),
           ),
+          if(detailDelivery.statuPengiriman.toLowerCase() == 'dalam pengiriman')
           Container(
             margin:
             EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -879,7 +880,11 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                     fontSize: 12),
               ),
               onPressed: () {
-                Get.toNamed(confirmationAcceptScreen);
+                Map<String, dynamic> param = {
+                  'purchase': orderDetail.detailPemesanan,
+                  'delivery': detailDelivery
+                };
+                Get.toNamed(confirmationAcceptScreen, arguments: param);
               },
             ),
           ),
@@ -991,7 +996,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
     );
   }
 
-  createAlertDialog(BuildContext context) {
+  createAlertDialog(BuildContext context, String idPurchase) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -1061,7 +1066,10 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14),
                           ),
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            showDialogProgress(idPurchase);
+                          },
                         ),
                       ),
                     ],
