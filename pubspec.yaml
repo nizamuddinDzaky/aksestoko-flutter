@@ -32,7 +32,9 @@ dependencies:
   dio: ^3.0.9
   flutter_localizations:
     sdk: flutter
+  fluttertoast: ^7.1.1
   get: ^2.6.3
+  intl: ^0.16.1
   shared_preferences: ^0.5.6+3
   image_picker: ^0.6.7+12
   dropdownfield: ^1.0.3
