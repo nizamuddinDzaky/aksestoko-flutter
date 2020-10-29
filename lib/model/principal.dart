@@ -23,6 +23,7 @@ class Principal {
           iconPrincipal2: stIcon,
           iconPrincipal3: spIcon),
       Principal(principalId: 2, name: "SBI", iconPrincipal1: dynamixIcon),
+      Principal(principalId: 3, name: "SBA", iconPrincipal1: andalasIcon),
     ];
   }
 }

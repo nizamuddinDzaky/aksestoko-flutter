@@ -6,6 +6,7 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 abstract class RegisterController extends State<RegisterScreen> {
@@ -18,6 +19,12 @@ abstract class RegisterController extends State<RegisterScreen> {
   String lastName;
   String password;
   String repeatPassword;
+  String salesCode;
+  var storeNameTextController = TextEditingController();
+  var firstNameTextController = TextEditingController();
+  var lastNameTextController = TextEditingController();
+  var emailTextController = TextEditingController();
+  var phoneTextController = TextEditingController();
 
   List<Principal> principals;
   Principal selectPrincipal;
@@ -35,6 +42,18 @@ abstract class RegisterController extends State<RegisterScreen> {
     isValid = false;
     selectedRadioTile = 0;
     principals = Principal.getPrincipals();
+  }
+
+  bool validatePassword(String value, {String repeat}) {
+    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value) && (repeat ?? value) == value;
+  }
+
+  bool validatePhone(String value) {
+    String pattern = r'^(?:[+0]62)?[0-9]{10,12}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
   }
 
   setSelectedPrincipal(Principal principal) {
@@ -78,23 +97,22 @@ abstract class RegisterController extends State<RegisterScreen> {
         var baseResponse = BaseResponse.fromJson(data);
         setState(() {
           customer = baseResponse?.data?.customer;
+          _initTextValue();
           isValid = true;
         });
       },
       onFailed: (title, message) {
-        if (title == '400') {
-          Get.defaultDialog(
-              title: 'Kesalahan Data', content: Text('Cek ID BK'));
-        } else if (title == '500') {
-          Get.defaultDialog(
-              title: 'Kesalahan Data', content: Text('Email tidak terdaftar'));
-        } else {
-          Get.defaultDialog(
-              title: 'Kesalahan Data', content: Text('Akses dibatalkan'));
-        }
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onError: (title, message) {
-        Get.defaultDialog(title: title, content: Text(message));
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onAfter: (status) {},
     );
@@ -102,11 +120,22 @@ abstract class RegisterController extends State<RegisterScreen> {
   }
 
   void _actionRegisterSubmit() async {
+    var fields = {
+      'kode_bk': idBK,
+      'nama_depan': firstName,
+      'nama_belakang': lastName,
+      'email': email,
+      'nama_toko': storeName,
+      'password': password,
+      'ulangi_password': repeatPassword,
+      'no_tlp': tlp,
+      'registed_by': selectPrincipal?.name,
+      'sales_person': salesCode,
+    };
+    debugPrint('cek fields $fields');
     var status = await ApiClient.methodPost(
       ApiConfig.urlRegisterSubmit,
-      {
-        '': idBK,
-      },
+      fields,
       {},
       customHandle: true,
       onBefore: (status) {
@@ -117,19 +146,17 @@ abstract class RegisterController extends State<RegisterScreen> {
         _dialogSuccess();
       },
       onFailed: (title, message) {
-        if (title == '400') {
-          Get.defaultDialog(
-              title: 'Kesalahan Data', content: Text('Cek ID BK'));
-        } else if (title == '500') {
-          Get.defaultDialog(
-              title: 'Kesalahan Data', content: Text('Email tidak terdaftar'));
-        } else {
-          Get.defaultDialog(
-              title: 'Kesalahan Data', content: Text('Akses dibatalkan'));
-        }
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onError: (title, message) {
-        Get.defaultDialog(title: title, content: Text(message));
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onAfter: (status) {},
     );
@@ -160,10 +187,11 @@ abstract class RegisterController extends State<RegisterScreen> {
     } else {
       Get.back();
       debugPrint("gagal");
+      Fluttertoast.showToast(msg: 'Periksa data kembali');
     }
   }
 
-  showDialogProgress() async {
+  showDialogProgress({int step = 0}) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -175,6 +203,57 @@ abstract class RegisterController extends State<RegisterScreen> {
             ),
           );
         });
-    await _actionSubmit();
+    if (step == 1) {
+      await getGenerateEmail();
+    } else {
+      await _actionSubmit();
+    }
+  }
+
+  getGenerateEmail() async {
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlGenerateEmail,
+      {
+        'kode_bk': idBK,
+      },
+      {},
+      customHandle: true,
+      onBefore: (status) {
+        Get.back();
+      },
+      onSuccess: (data, _) {
+        debugPrint('cek $data');
+        if (data != null &&
+            data['data'] != null &&
+            data['data']['email'] != null) {
+          emailTextController.text = data['data']['email'];
+        }
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {},
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  _initTextValue() {
+    storeNameTextController.text = customer?.storeName;
+    firstNameTextController.text = customer?.firstname;
+    lastNameTextController.text = customer?.lastname;
+    emailTextController.text = customer?.email;
+    phoneTextController.text = customer?.handphone;
   }
 }

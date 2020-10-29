@@ -15,9 +15,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends RegisterController {
-  List<Widget> createRadioListPrincipals(){
+  List<Widget> createRadioListPrincipals() {
     List<Widget> widgets = [];
-    for(Principal principal in principals){
+    for (Principal principal in principals) {
       widgets.add(RadioListTile(
         value: principal,
         groupValue: selectPrincipal,
@@ -26,25 +26,25 @@ class _RegisterScreenState extends RegisterController {
             Text(principal.name),
             Padding(padding: EdgeInsets.only(left: 5)),
             if (principal.iconPrincipal1 != null)
-            Image.asset(
-              principal.iconPrincipal1,
-              height: 30,
-            ),
+              Image.asset(
+                principal.iconPrincipal1,
+                height: 30,
+              ),
             Padding(padding: EdgeInsets.only(left: 5)),
             if (principal.iconPrincipal2 != null)
-            Image.asset(
-              principal.iconPrincipal2,
-              height: 30,
-            ),
+              Image.asset(
+                principal.iconPrincipal2,
+                height: 30,
+              ),
             Padding(padding: EdgeInsets.only(left: 5)),
             if (principal.iconPrincipal3 != null)
-            Image.asset(
-              principal.iconPrincipal3,
-              height: 30,
-            ),
+              Image.asset(
+                principal.iconPrincipal3,
+                height: 30,
+              ),
           ],
         ),
-        onChanged: (currentPrincipal){
+        onChanged: (currentPrincipal) {
           debugPrint("${currentPrincipal.name}");
           setSelectedPrincipal(currentPrincipal);
         },
@@ -61,7 +61,7 @@ class _RegisterScreenState extends RegisterController {
         padding: MyDimen.marginLayout(),
         margin: EdgeInsets.only(bottom: 20),
         child: TextFormField(
-          initialValue: customer?.storeName,
+          controller: storeNameTextController,
           onSaved: (value) => storeName = value,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -88,38 +88,64 @@ class _RegisterScreenState extends RegisterController {
       Container(
         padding: MyDimen.marginLayout(),
         margin: EdgeInsets.only(bottom: 20),
-        child: TextFormField(
-          initialValue: customer?.email,
-          onSaved: (value) => email = value,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            contentPadding: MyDimen.paddingTxtField(),
-            labelText: 'Alamat E-mail',
-            labelStyle: TextStyle(
-              color: MyColor.txtField,
-              fontWeight: FontWeight.bold,
+        child: Stack(
+          children: [
+            TextFormField(
+              controller: emailTextController,
+              onSaved: (value) => email = value,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                contentPadding: MyDimen.paddingTxtField(),
+                labelText: 'Alamat E-mail',
+                labelStyle: TextStyle(
+                  color: MyColor.txtField,
+                  fontWeight: FontWeight.bold,
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: MyColor.txtField),
+                ),
+                focusedErrorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: MyColor.lineTxtField),
+                ),
+                errorText: 'Masukkan Email',
+                errorStyle: TextStyle(
+                  color: MyColor.txtField,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
             ),
-            errorBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: MyColor.txtField),
+            Positioned(
+              right: 0,
+              child: CupertinoButton(
+                minSize: 0,
+                padding: EdgeInsets.zero,
+                child: Text(
+                  'Generate E-mail',
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+                onPressed: () {
+                  showDialogProgress(step: 1);
+                },
+              ),
             ),
-            focusedErrorBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: MyColor.lineTxtField),
-            ),
-            errorText: 'Masukkan Email',
-            errorStyle: TextStyle(
-              color: MyColor.txtField,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
+          ],
         ),
       ),
       Container(
         padding: MyDimen.marginLayout(),
         margin: EdgeInsets.only(bottom: 20),
         child: TextFormField(
-          initialValue: customer?.handphone,
+          controller: phoneTextController,
           onSaved: (value) => tlp = value,
           keyboardType: TextInputType.text,
+          validator: (text) {
+            if (!validatePhone(text)) {
+              return 'Masukkan no telepon yang valid';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding: MyDimen.paddingTxtField(),
             labelText: 'No Telepon',
@@ -133,7 +159,8 @@ class _RegisterScreenState extends RegisterController {
             focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: MyColor.lineTxtField),
             ),
-            errorText: 'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+            errorText:
+                'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
             errorStyle: TextStyle(
               color: MyColor.redAT,
               fontStyle: FontStyle.italic,
@@ -145,7 +172,7 @@ class _RegisterScreenState extends RegisterController {
         padding: MyDimen.marginLayout(),
         margin: EdgeInsets.only(bottom: 20),
         child: TextFormField(
-          initialValue: customer?.firstname,
+          controller: firstNameTextController,
           onSaved: (value) => firstName = value,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -163,7 +190,7 @@ class _RegisterScreenState extends RegisterController {
             ),
             errorText: 'Masukan nama depan anda',
             errorStyle: TextStyle(
-              color: MyColor.txtField ,
+              color: MyColor.txtField,
               fontStyle: FontStyle.italic,
             ),
           ),
@@ -173,7 +200,7 @@ class _RegisterScreenState extends RegisterController {
         padding: MyDimen.marginLayout(),
         margin: EdgeInsets.only(bottom: 20),
         child: TextFormField(
-          initialValue: customer?.lastname,
+          controller: lastNameTextController,
           onSaved: (value) => lastName = value,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -191,7 +218,7 @@ class _RegisterScreenState extends RegisterController {
             ),
             errorText: 'Masukan nama belakang anda',
             errorStyle: TextStyle(
-              color: MyColor.txtField ,
+              color: MyColor.txtField,
               fontStyle: FontStyle.italic,
             ),
           ),
@@ -208,6 +235,12 @@ class _RegisterScreenState extends RegisterController {
           onFieldSubmitted: (val) {
             showDialogProgress();
           },
+          validator: (text) {
+            if (!validatePassword(text)) {
+              return 'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding: MyDimen.paddingTxtField(),
             labelText: 'Kata Sandi',
@@ -221,7 +254,8 @@ class _RegisterScreenState extends RegisterController {
             focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: MyColor.lineTxtField),
             ),
-            errorText: 'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka',
+            errorText:
+            'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka',
             errorStyle: TextStyle(
               color: MyColor.redAT,
               fontStyle: FontStyle.italic,
@@ -250,6 +284,12 @@ class _RegisterScreenState extends RegisterController {
           onFieldSubmitted: (val) {
             showDialogProgress();
           },
+          validator: (text) {
+            if (!validatePassword(text, repeat: password)) {
+              return 'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding: MyDimen.paddingTxtField(),
             labelText: 'Ulangi Kata Sandi',
@@ -263,7 +303,6 @@ class _RegisterScreenState extends RegisterController {
             focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: MyColor.lineTxtField),
             ),
-
             suffixIcon: IconButton(
               icon: Icon(
                 isShowRepeatPassword ? Icons.visibility : Icons.visibility_off,
@@ -284,9 +323,16 @@ class _RegisterScreenState extends RegisterController {
           children: <Widget>[
             Text(
               "Didaftarkan Oleh",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: MyColor.txtField),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: MyColor.txtField),
             ),
-            Icon(Icons.info, color: MyColor.redAT, size: 20,),
+            Icon(
+              Icons.info,
+              color: MyColor.redAT,
+              size: 20,
+            ),
           ],
         ),
       ),
@@ -303,7 +349,10 @@ class _RegisterScreenState extends RegisterController {
               children: <Widget>[
                 Text(
                   "Punya kode referal Salesperson ?",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: MyColor.txtField),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: MyColor.txtField),
                 ),
               ],
             ),
@@ -313,7 +362,7 @@ class _RegisterScreenState extends RegisterController {
                   child: Container(
                     margin: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
-                      onSaved: (value) => idBK = value,
+                      onSaved: (value) => salesCode = value,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         contentPadding: MyDimen.paddingTxtField(),
@@ -327,7 +376,8 @@ class _RegisterScreenState extends RegisterController {
                         focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: MyColor.lineTxtField),
                         ),
-                        errorText: 'Silahkan isi jika memiliki kode sales, jika tidak ada silahkan lewati',
+                        errorText:
+                        'Silahkan isi jika memiliki kode sales, jika tidak ada silahkan lewati',
                         errorStyle: TextStyle(
                           color: MyColor.txtField,
                           fontStyle: FontStyle.italic,
@@ -365,11 +415,14 @@ class _RegisterScreenState extends RegisterController {
                   style: TextStyle(color: MyColor.txtField, fontSize: 16),
                   children: <TextSpan>[
                     TextSpan(
-                        text: 'Syarat dan Ketentuan ', style: TextStyle(color: MyColor.redAT)),
+                        text: 'Syarat dan Ketentuan ',
+                        style: TextStyle(color: MyColor.redAT)),
                     TextSpan(
-                      text: '& ', ),
+                      text: '& ',
+                    ),
                     TextSpan(
-                        text: 'Kebijakan Privasi', style: TextStyle(color: MyColor.redAT)),
+                        text: 'Kebijakan Privasi',
+                        style: TextStyle(color: MyColor.redAT)),
                   ],
                 ),
               ),
@@ -391,7 +444,8 @@ class _RegisterScreenState extends RegisterController {
                 children: <Widget>[
                   Center(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                      margin:
+                      EdgeInsets.symmetric(horizontal: Get.width * 0.15),
                       child: Hero(
                         tag: 'logoForcaPoS',
                         child: MyLogo.logoForcaPoSColor(),
@@ -451,8 +505,7 @@ class _RegisterScreenState extends RegisterController {
                       ),
                     ),
                   ),
-                  if (isValid)
-                    ...listField,
+                  if (isValid) ...listField,
                   MyDivider.spaceDividerLogin(custom: 22),
                   Container(
                     margin: MyDimen.marginButtonRegister(),
