@@ -28,6 +28,10 @@ class ApiConfig {
   static String urlCart = '${path}Purchase/list_cart';
   static String urlListOrder = '${path}Purchase/list_order';
   static String urlDetailOrder = '${path}Purchase/detail_order';
+
+  static String urlCancelOrder = '${path}order/cancel_order';
+  static String urlConfirmDelivery = '${path}order/confirm_delivery';
+
   static String urlDetailCheckout = '${path}Purchase/detail_checkout';
   static String urlListPayment = '${path}Purchase/list_payment';
   static String urlActionOrder = '${path}Purchase/action_checkout';

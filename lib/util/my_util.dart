@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
+import 'my_color.dart';
 import 'my_number.dart';
 
 extension StringExtension on String {
@@ -70,6 +71,26 @@ extension StringExtension on String {
   int toInt() {
     return int.tryParse(this);
   }
+}
+
+Color statusColor(String status){
+  if (status.toLowerCase() == 'success'){
+    return MyColor.successTextAT;
+  }
+
+  if (status.toLowerCase() == 'warning'){
+    return MyColor.warningTextAT;
+  }
+
+  if(status.toLowerCase() == 'info'){
+    return MyColor.infoAT;
+  }
+
+  if(status.toLowerCase() == 'danger'){
+    return MyColor.redAT;
+  }
+
+  return null;
 }
 
 String strToDate(String txtDate, {BuildContext context}) {

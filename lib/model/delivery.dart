@@ -9,7 +9,7 @@ class Delivery {
   String provinsi;
   String kodePos;
   int jumlahDeliveries;
-  List<ListDeliveries> listDeliveries;
+  List<DetailDelivery> listDetailDelivery;
 
   Delivery(
       {this.idToko,
@@ -22,7 +22,8 @@ class Delivery {
       this.provinsi,
       this.kodePos,
       this.jumlahDeliveries,
-      this.listDeliveries});
+      this.listDetailDelivery
+      });
 
   Delivery.fromJson(Map<String, dynamic> json) {
     idToko = json['id_toko'];
@@ -35,7 +36,12 @@ class Delivery {
     provinsi = json['provinsi'];
     kodePos = json['kode_pos'];
     jumlahDeliveries = json['jumlah_deliveries'];
-    listDeliveries = json['list_deliveries'];
+    if (json['list_deliveries'] != null) {
+      listDetailDelivery = new List<DetailDelivery>();
+      json['list_deliveries'].forEach((v) {
+        listDetailDelivery.add(new DetailDelivery.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -50,37 +56,42 @@ class Delivery {
     data['provinsi'] = this.provinsi;
     data['kode_pos'] = this.kodePos;
     data['jumlah_deliveries'] = this.jumlahDeliveries;
-    data['list_deliveries'] = this.listDeliveries;
+    if (this.listDetailDelivery != null) {
+      data['list_deliveries'] =
+          this.listDetailDelivery.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
-class ListDeliveries {
+class DetailDelivery {
   String idDelivery;
   String noSpj;
   String labelStatus;
   String statuPengiriman;
   String tanggalDikirim;
   String dikirimOleh;
-  Null konfirmasiPenerimaan;
+  bool konfirmasiPenerimaan;
   Null konfirmasiBadQty;
-  Null urlSpj;
+  String urlSpj;
   int jumlahDetailDelivery;
-  List<ListDetailDelivery> listDetailDelivery;
+  List<ItemDetailDelivery> listItemDetailDelivery;
 
-  ListDeliveries({this.idDelivery,
-    this.noSpj,
-    this.labelStatus,
-    this.statuPengiriman,
-    this.tanggalDikirim,
-    this.dikirimOleh,
-    this.konfirmasiPenerimaan,
-    this.konfirmasiBadQty,
-    this.urlSpj,
-    this.jumlahDetailDelivery,
-    this.listDetailDelivery});
+  DetailDelivery(
+      {this.idDelivery,
+        this.noSpj,
+        this.labelStatus,
+        this.statuPengiriman,
+        this.tanggalDikirim,
+        this.dikirimOleh,
+        this.konfirmasiPenerimaan,
+        this.konfirmasiBadQty,
+        this.urlSpj,
+        this.jumlahDetailDelivery,
+        this.listItemDetailDelivery
+      });
 
-  ListDeliveries.fromJson(Map<String, dynamic> json) {
+  DetailDelivery.fromJson(Map<String, dynamic> json) {
     idDelivery = json['id_delivery'];
     noSpj = json['no_spj'];
     labelStatus = json['label_status'];
@@ -92,9 +103,9 @@ class ListDeliveries {
     urlSpj = json['url_spj'];
     jumlahDetailDelivery = json['jumlah_detail_delivery'];
     if (json['list_detail_delivery'] != null) {
-      listDetailDelivery = new List<ListDetailDelivery>();
+      listItemDetailDelivery = new List<ItemDetailDelivery>();
       json['list_detail_delivery'].forEach((v) {
-        listDetailDelivery.add(new ListDetailDelivery.fromJson(v));
+        listItemDetailDelivery.add(new ItemDetailDelivery.fromJson(v));
       });
     }
   }
@@ -111,16 +122,17 @@ class ListDeliveries {
     data['konfirmasi_bad_qty'] = this.konfirmasiBadQty;
     data['url_spj'] = this.urlSpj;
     data['jumlah_detail_delivery'] = this.jumlahDetailDelivery;
-    if (this.listDetailDelivery != null) {
+    if (this.listItemDetailDelivery != null) {
       data['list_detail_delivery'] =
-          this.listDetailDelivery.map((v) => v.toJson()).toList();
+          this.listItemDetailDelivery.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class ListDetailDelivery {
+class ItemDetailDelivery {
   String idProduct;
+  String deliveryItemId;
   String namaProduct;
   String kodeProduct;
   int jumlah;
@@ -128,16 +140,19 @@ class ListDetailDelivery {
   int baik;
   int buruk;
 
-  ListDetailDelivery({this.idProduct,
-    this.namaProduct,
-    this.kodeProduct,
-    this.jumlah,
-    this.satuan,
-    this.baik,
-    this.buruk});
+  ItemDetailDelivery(
+      {this.idProduct,
+        this.deliveryItemId,
+        this.namaProduct,
+        this.kodeProduct,
+        this.jumlah,
+        this.satuan,
+        this.baik,
+        this.buruk});
 
-  ListDetailDelivery.fromJson(Map<String, dynamic> json) {
+  ItemDetailDelivery.fromJson(Map<String, dynamic> json) {
     idProduct = json['id_product'];
+    deliveryItemId = json['delivery_item_id'];
     namaProduct = json['nama_product'];
     kodeProduct = json['kode_product'];
     jumlah = json['jumlah'];
@@ -149,6 +164,7 @@ class ListDetailDelivery {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id_product'] = this.idProduct;
+    data['delivery_item_id'] = this.deliveryItemId;
     data['nama_product'] = this.namaProduct;
     data['kode_product'] = this.kodeProduct;
     data['jumlah'] = this.jumlah;

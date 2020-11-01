@@ -4,13 +4,14 @@ import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
-  Order order;
+  OrderDetail orderDetail;
 
   Future<void> actionRefresh() async {
     await getListOrder();
@@ -26,11 +27,14 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
           'id_pemesanan': Get.arguments?.toString(),
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
-      // var response = BaseResponse.fromJson(data);
-      OrderDetail orderDetail = OrderDetail.fromJson(data['data']);
-      debugPrint("cek ${orderDetail.detailPemesanan}");
+
+      var response = BaseResponse.fromJson(data);
+      /*debugPrint("response : ${response.data.orderDetail.detailPemesanan}");*/
+      orderDetail = OrderDetail.fromJson(data['data']);
+      /*debugPrint("response : ${orderDetail.ringkasan}");*/
+
       // order = response?.data?.orderModel?.listOrderDalamProses ?? [];
-    }, onFailed: (title, message) {
+    }, onFailed: (title, message) { 
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
@@ -40,6 +44,42 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
     });
   }
 
+  void putCancelOrder(String idPurchase) async {
+    var body = {
+      'purchase_id': idPurchase,
+    };
+    var status = await ApiClient.methodPut(ApiConfig.urlCancelOrder, body, {},
+        onBefore: (status) {
+          Get.back();
+        }, onSuccess: (data, _) {
+          var baseResponse = BaseResponse.fromJson(data);
+          debugPrint("result => ${baseResponse?.data?.idPurchase}");
+          getListOrder();
+        }, onFailed: (title, message) {
+          Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+        }, onError: (title, message) {
+          Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+        }, onAfter: (status) {
+          /*if (status == ResponseStatus.success)
+        MyPref.setRemember(isRemember, currentData);*/
+        });
+    status.execute();
+  }
+
+  showDialogProgress(String idPurchase) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CupertinoActivityIndicator()],
+            ),
+          );
+        });
+    await putCancelOrder(idPurchase);
+  }
   @override
   void initState() {
     super.initState();

@@ -4,60 +4,71 @@ import 'package:aksestokomobile/model/order_summary.dart';
 
 class OrderDetail {
   DetailPemesanan detailPemesanan;
-  List<String> pembayaranKreditPro;
+  OrderSummary ringkasan;
+  Delivery pengiriman;
+  CartModel daftarBelanja;
+  /*List<String> pembayaranKreditPro;
   Penerimaan penerimaan;
   Delivery pengiriman;
-  OrderSummary ringkasan;
-  CartModel daftarBelanja;
+
+  ;
   Null pesan;
   Null info1;
   Null info2;
   Null info3;
   Null info4;
-  Null konfirmasiHargaPesanan;
+  Null konfirmasiHargaPesanan;*/
 
   OrderDetail(
       {this.detailPemesanan,
-      this.pembayaranKreditPro,
+        this.ringkasan,
+        this.pengiriman,
+        this.daftarBelanja,
+      /*this.pembayaranKreditPro,
       this.penerimaan,
-      this.pengiriman,
-      this.ringkasan,
-      this.daftarBelanja,
+
+      ,
+
       this.pesan,
       this.info1,
       this.info2,
       this.info3,
       this.info4,
-      this.konfirmasiHargaPesanan});
+      this.konfirmasiHargaPesanan*/});
 
   OrderDetail.fromJson(Map<String, dynamic> json) {
     detailPemesanan = json['detail_pemesanan'] != null
         ? new DetailPemesanan.fromJson(json['detail_pemesanan'])
         : null;
-    if (json['pembayaran_kredit_pro'] != null) {
-      pembayaranKreditPro = new List<Null>();
-      json['pembayaran_kredit_pro'].forEach((v) {
-        pembayaranKreditPro.add(v);
-      });
-    }
-    penerimaan = json['penerimaan'] != null
-        ? new Penerimaan.fromJson(json['penerimaan'])
-        : null;
-    pengiriman = json['pengiriman'] != null
-        ? new Delivery.fromJson(json['pengiriman'])
-        : null;
+
     ringkasan = json['ringkasan'] != null
         ? new OrderSummary.fromJson(json['ringkasan'])
+        : null;
+
+    pengiriman = json['pengiriman'] != null
+        ? new Delivery.fromJson(json['pengiriman'])
         : null;
     daftarBelanja = json['daftar_belanja'] != null
         ? new CartModel.fromJson(json['daftar_belanja'])
         : null;
+    /*if (json['pembayaran_kredit_pro'] != null) {
+      pembayaranKreditPro = new List<Null>();
+      json['pembayaran_kredit_pro'].forEach((v) {
+        pembayaranKreditPro.add(v);
+      });
+    }*/
+    /*penerimaan = json['penerimaan'] != null
+        ? new Penerimaan.fromJson(json['penerimaan'])
+        : null;
+
+
+
     pesan = json['pesan'];
     info1 = json['info_1'];
     info2 = json['info_2'];
     info3 = json['info_3'];
     info4 = json['info_4'];
-    konfirmasiHargaPesanan = json['konfirmasi_harga_pesanan'];
+    konfirmasiHargaPesanan = json['konfirmasi_harga_pesanan'];*/
   }
 
   Map<String, dynamic> toJson() {
@@ -65,27 +76,33 @@ class OrderDetail {
     if (this.detailPemesanan != null) {
       data['detail_pemesanan'] = this.detailPemesanan.toJson();
     }
-    if (this.pembayaranKreditPro != null) {
+
+    if (this.ringkasan != null) {
+      data['ringkasan'] = this.ringkasan.toJson();
+    }
+
+    if (this.pengiriman != null) {
+      data['pengiriman'] = this.pengiriman.toJson();
+    }
+
+    if (this.daftarBelanja != null) {
+      data['daftar_belanja'] = this.daftarBelanja.toJson();
+    }
+    /*if (this.pembayaranKreditPro != null) {
       data['pembayaran_kredit_pro'] = this.pembayaranKreditPro;
     }
     if (this.penerimaan != null) {
       data['penerimaan'] = this.penerimaan.toJson();
     }
-    if (this.pengiriman != null) {
-      data['pengiriman'] = this.pengiriman.toJson();
-    }
-    if (this.ringkasan != null) {
-      data['ringkasan'] = this.ringkasan.toJson();
-    }
-    if (this.daftarBelanja != null) {
-      data['daftar_belanja'] = this.daftarBelanja.toJson();
-    }
+
+
+
     data['pesan'] = this.pesan;
     data['info_1'] = this.info1;
     data['info_2'] = this.info2;
     data['info_3'] = this.info3;
     data['info_4'] = this.info4;
-    data['konfirmasi_harga_pesanan'] = this.konfirmasiHargaPesanan;
+    data['konfirmasi_harga_pesanan'] = this.konfirmasiHargaPesanan;*/
     return data;
   }
 }
@@ -106,27 +123,27 @@ class DetailPemesanan {
   String notifikasiPembayaran;
   String statusPembayaran;
   Null urlInvoice;
-  Null konfirmasiPembayaran;
+  bool konfirmasiPembayaran;
   Null daftarPembayaran;
 
   DetailPemesanan(
       {this.idPemesanan,
-      this.noPemesanan,
-      this.idBk,
-      this.tanggalPeesanan,
-      this.ekpestasi,
-      this.kodeDistributor,
-      this.namaDistributor,
-      this.caraPengiriman,
-      this.caraPembayaran,
-      this.jenisPembayaran,
-      this.notifikasiPemesanan,
-      this.statusPemesanan,
-      this.notifikasiPembayaran,
-      this.statusPembayaran,
-      this.urlInvoice,
-      this.konfirmasiPembayaran,
-      this.daftarPembayaran});
+        this.noPemesanan,
+        this.idBk,
+        this.tanggalPeesanan,
+        this.ekpestasi,
+        this.kodeDistributor,
+        this.namaDistributor,
+        this.caraPengiriman,
+        this.caraPembayaran,
+        this.jenisPembayaran,
+        this.notifikasiPemesanan,
+        this.statusPemesanan,
+        this.notifikasiPembayaran,
+        this.statusPembayaran,
+        this.urlInvoice,
+        this.konfirmasiPembayaran,
+        this.daftarPembayaran});
 
   DetailPemesanan.fromJson(Map<String, dynamic> json) {
     idPemesanan = json['id_pemesanan'];

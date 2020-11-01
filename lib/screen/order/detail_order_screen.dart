@@ -1,4 +1,7 @@
+import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/order/detail_order_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,92 +15,11 @@ class DetailOrderScreen extends StatefulWidget {
 }
 
 class _DetailOrderScreenState extends DetailOrderViewModel {
-  createAlertDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            elevation: 16,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              height: 270.0,
-              width: 360.0,
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "Batalkan Pesanan",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Container(
-                    height: 3,
-                    color: Color(0xffEAEAEA),
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                  ),
-                  Expanded(
-                    child: Center(
-                        child: Text(
-                      "Apakah Anda yakin membatalkan Pesanan ini ?",
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center,
-                    )),
-                  ),
-                  Container(
-                    height: 3,
-                    color: Color(0xffEAEAEA),
-                    margin: EdgeInsets.symmetric(vertical: 15),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 25, right: 25),
-                        decoration: BoxDecoration(
-                          color: MyColor.greyTextAT,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: FlatButton(
-                          child: Text(
-                            "Batal",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 25, right: 25),
-                        decoration: BoxDecoration(
-                          color: MyColor.orangeAT,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: FlatButton(
-                          child: Text(
-                            "Iya",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
+    /*debugPrint("sad => ${orderDetail.pengiriman.listDetailDelivery.length}");*/
     var index = Get.arguments;
-    debugPrint("index = $index");
+    // debugPrint("index = ${orderDetail.detailPemesanan}");
     var formLayout = SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 25),
@@ -143,12 +65,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "ID Pesnaan",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "SALE/AT/2020/0023",
+                                orderDetail != null ? orderDetail.detailPemesanan.noPemesanan :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -164,12 +86,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "ID Bisnis Kokoh",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "123456789",
+                                orderDetail != null ? orderDetail.detailPemesanan.idBk :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -191,12 +113,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Tanggal Pemesanan",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "20 Desember 2020",
+                                orderDetail != null ? orderDetail.detailPemesanan.tanggalPeesanan :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -212,12 +134,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Tgl Ekspetasi Pengiriman",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "20 Desember 2020",
+                                orderDetail != null ? orderDetail.detailPemesanan.ekpestasi :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -239,12 +161,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Kode Distributor",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "000001390",
+                                orderDetail != null ? orderDetail.detailPemesanan.kodeDistributor :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -260,12 +182,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Nama Distributor",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "Lorem Ipsum Dolor Ismet",
+                                orderDetail != null ? orderDetail.detailPemesanan.namaDistributor :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -287,12 +209,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Cara Pengiriman",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                "Pengiriman Distributor",
+                                orderDetail != null ? orderDetail.detailPemesanan.caraPengiriman :  "",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -308,24 +230,16 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Cara Pembayaran",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
-                              if (index == 0)
-                                Text(
-                                  "Bayar Di Tempat",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              Text(
+
+                                orderDetail != null ? orderDetail.detailPemesanan.caraPembayaran :  "",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              if (index == 1)
-                                Text(
-                                  "Tempo Distributor",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -349,24 +263,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Status Pesanan",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
-                              if (index == 0)
                                 Text(
-                                  "Menunggu Konfirmasi",
+                                  orderDetail != null ? orderDetail.detailPemesanan.statusPemesanan :  "",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: MyColor.warningTextAT,
-                                  ),
-                                ),
-                              if (index == 1)
-                                Text(
-                                  "Dikonfirmasi",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: MyColor.greenAT,
+                                    color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPemesanan :  ""),
                                   ),
                                 ),
                             ],
@@ -380,33 +284,34 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               Text(
                                 "Status Pembayaran",
                                 style: TextStyle(
-                                    fontSize: 16, color: MyColor.greyTextAT),
+                                    fontSize: 14, color: MyColor.greyTextAT),
                               ),
-                              if (index == 0)
+                              /*if (index == 0)*/
                                 Text(
-                                  "Belum Bayar",
+                                  orderDetail != null ? orderDetail.detailPemesanan.statusPembayaran :  "",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: MyColor.warningTextAT,
+                                    color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPembayaran :  ""),
                                   ),
                                 ),
-                              if (index == 1)
+                              /*if (index == 1)
                                 Text(
                                   "Diterima Sebagian",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: MyColor.infoAT,
                                   ),
-                                ),
+                                ),*/
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  if (index == 1)
+                  if(orderDetail != null )
+                  if (orderDetail.detailPemesanan.daftarPembayaran != null)
                     Container(
                       child: FlatButton.icon(
                         onPressed: () {
@@ -418,7 +323,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         ),
                         label: Text(
                           "Daftar Pembayaran",
-                          style: TextStyle(color: MyColor.redAT, fontSize: 16),
+                          style: TextStyle(color: MyColor.redAT, fontSize: 14),
                         ),
                       ),
                     ),
@@ -467,12 +372,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             Text(
                               "Jumlah Pesanan",
                               style: TextStyle(
-                                  fontSize: 16, color: MyColor.greyTextAT),
+                                  fontSize: 14, color: MyColor.greyTextAT),
                             ),
                             Text(
-                              "2",
+                              orderDetail != null ? orderDetail.ringkasan.jumlahPesanan.toString() : "0",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -491,12 +396,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             Text(
                               "Jumlah Diterima",
                               style: TextStyle(
-                                  fontSize: 16, color: MyColor.greyTextAT),
+                                  fontSize: 14, color: MyColor.greyTextAT),
                             ),
                             Text(
-                              "0",
+                              orderDetail != null ? orderDetail.ringkasan.jumlahDiterima.toString() : "0",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -515,14 +420,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             Text(
                               "Sisa Pesanan",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: MyColor.greyTextAT,
                               ),
                             ),
                             Text(
-                              "2",
+                              orderDetail != null ? orderDetail.ringkasan.sisaPesanan.toString() : "0",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -543,14 +448,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Text(
                           "Total Harga",
                           style: TextStyle(
-                              fontSize: 16, color: MyColor.greyTextAT),
+                              fontSize: 14, color: MyColor.greyTextAT),
                         ),
                         Text(
-                          "Rp 10.000.000",
+                            orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalHarga.toString()) : "0",
                           style: TextStyle(
                               color: MyColor.blackTextAT,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                              fontSize: 14),
                         ),
                       ],
                     ),
@@ -567,14 +472,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Text(
                           "Total Pembayaran",
                           style: TextStyle(
-                              fontSize: 16, color: MyColor.greyTextAT),
+                              fontSize: 14, color: MyColor.greyTextAT),
                         ),
                         Text(
-                          "Rp 10.000.000",
+                            orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalPembayaran.toString()) : "0",
                           style: TextStyle(
                               color: MyColor.redAT,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                              fontSize: 16),
                         ),
                       ],
                     ),
@@ -582,174 +487,6 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                 ],
               ),
             ),
-            if (index == 1)
-              Container(
-                padding: EdgeInsets.all(15),
-                margin: EdgeInsets.only(left: 25, right: 25, top: 25),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: MyColor.greyTextAT,
-                      spreadRadius: 0,
-                      blurRadius: 8,
-                      offset: Offset(0, 2), // changes position of shadow
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "No SPJ",
-                                  style: TextStyle(
-                                      fontSize: 16, color: MyColor.greyTextAT),
-                                ),
-                                Text(
-                                  "DO/2020/05/0023",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Status Pengiriman",
-                                  style: TextStyle(
-                                      fontSize: 16, color: MyColor.greyTextAT),
-                                ),
-                                Text(
-                                  "Dalam Pengiriman",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: MyColor.infoAT),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Tanggal Dikirim",
-                                  style: TextStyle(
-                                      fontSize: 16, color: MyColor.greyTextAT),
-                                ),
-                                Text(
-                                  "20 Desember 2020",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Dikirim Oleh",
-                                  style: TextStyle(
-                                      fontSize: 16, color: MyColor.greyTextAT),
-                                ),
-                                Text(
-                                  "Bpk. Lorem Ipsum",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      height: 40,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: MyColor.greenAT,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: FlatButton(
-                        child: Text(
-                          "Konfirmasi Penerimaan",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12),
-                        ),
-                        onPressed: () {
-                          Get.toNamed(confirmationAcceptScreen);
-                        },
-                      ),
-                    ),
-                    Container(
-                      height: 3,
-                      color: Color(0xffEAEAEA),
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 15, bottom: 15),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Barang yang Dikirim",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: ListView(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          listProductShipment(),
-                          listProductShipment()
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             Container(
               height: 3,
               color: Color(0xffEAEAEA),
@@ -793,9 +530,9 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                           ),
                         ),
                         Text(
-                          "PT Lorem Ipsum",
+                          orderDetail != null ? orderDetail.pengiriman.namaToko : "",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -806,14 +543,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       children: <Widget>[
                         Container(
                           child: Text(
-                            "Nama Lengkap, ",
+                            orderDetail != null ? orderDetail.pengiriman.nama : "",
                             style: TextStyle(
-                                fontSize: 16, color: MyColor.greyTextAT),
+                                fontSize: 14, color: MyColor.greyTextAT),
                           ),
                         ),
                         Container(
                           child: Text(
-                            "08912321313",
+                              orderDetail != null ? orderDetail.pengiriman.noTlp : "",
                             style: TextStyle(
                                 fontSize: 15, color: MyColor.greyTextAT),
                           ),
@@ -827,9 +564,9 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            "Jl. Lorem Ipsum Dolor Ismet No 29, Lorem Ipsum Dolor Ismet Kabupaten Gresik Jawa Timur Indonesia",
+                            orderDetail != null ? orderDetail.pengiriman.alamat : "",
                             style: TextStyle(
-                                fontSize: 16, color: MyColor.greyTextAT),
+                                fontSize: 14, color: MyColor.greyTextAT),
                           ),
                         ),
                       ],
@@ -838,6 +575,18 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                 ],
               ),
             ),
+            //tempat
+            Container(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: orderDetail != null ? (orderDetail.pengiriman.listDetailDelivery != null ? orderDetail.pengiriman.listDetailDelivery.length : 0)  : 0,
+                itemBuilder: (buildcontext, index) {
+                  return _listDelivery(orderDetail.pengiriman.listDetailDelivery[index]);
+                },
+              ),
+            ),
+            //container
             Container(
               height: 3,
               color: Color(0xffEAEAEA),
@@ -856,7 +605,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   ),
                   Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
                   Text(
-                    "(2)",
+                    "(${orderDetail != null ? orderDetail.daftarBelanja.jumlahBelanja : 0})",
                     style: TextStyle(
                         color: MyColor.blackTextAT,
                         fontSize: 18,
@@ -881,22 +630,23 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   )
                 ],
               ),
-              child: ListView(
+              child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  listProduct.ListProductDetailOrderScreen(),
-                  listProduct.ListProductDetailOrderScreen(),
-                ],
+                itemCount: orderDetail != null ? orderDetail.daftarBelanja.listBelanja.length : 0,
+                itemBuilder: (buildcontext, index) {
+                  if(orderDetail != null)
+                    return listProduct.ListProductDetailOrderScreen(orderDetail.daftarBelanja.listBelanja[index]);
+                },
               ),
             ),
-            if (index == 0)
+
               Container(
                 height: 3,
                 color: Color(0xffEAEAEA),
                 margin: EdgeInsets.symmetric(vertical: 20),
               ),
-            if (index == 0)
+            if (orderDetail != null && orderDetail.detailPemesanan.statusPemesanan.toLowerCase() == 'menunggu konfirmasi')
               Container(
                 margin: EdgeInsets.only(left: 25, right: 25),
                 width: double.maxFinite,
@@ -913,10 +663,31 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         fontSize: 14),
                   ),
                   onPressed: () {
-                    createAlertDialog(context);
+                    createAlertDialog(context, (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0));
                   },
                 ),
               ),
+            if (orderDetail != null && orderDetail.detailPemesanan.konfirmasiPembayaran != null)
+            Container(
+              margin: EdgeInsets.only(left: 25, right: 25),
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: MyColor.successTextAT,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: FlatButton(
+                child: Text(
+                  "Selesaikan Pembayaran",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
+                onPressed: () {
+                  // createAlertDialog(context);
+                },
+              ),
+            )
           ],
         ),
       ),
@@ -975,7 +746,189 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
     );
   }
 
-  Widget listProductShipment() {
+  Widget _listDelivery(DetailDelivery detailDelivery){
+    // debugPrint("cek =>${detailDelivery.listItemDetailDelivery}");
+    return new Container(
+      padding: EdgeInsets.all(15),
+      margin: EdgeInsets.only(left: 25, right: 25, top: 25),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: MyColor.greyTextAT,
+            spreadRadius: 0,
+            blurRadius: 8,
+            offset: Offset(0, 2), // changes position of shadow
+          )
+        ],
+      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(bottom: 15),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "No SPJ",
+                        style: TextStyle(
+                            fontSize: 14, color: MyColor.greyTextAT),
+                      ),
+                      Text(
+                        detailDelivery.noSpj,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Status Pengiriman",
+                        style: TextStyle(
+                            fontSize: 14, color: MyColor.greyTextAT),
+                      ),
+                      Text(
+                        detailDelivery.statuPengiriman,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: statusColor(detailDelivery.labelStatus)),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 15),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Tanggal Dikirim",
+                        style: TextStyle(
+                            fontSize: 14, color: MyColor.greyTextAT),
+                      ),
+                      Text(
+                        detailDelivery.tanggalDikirim,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Dikirim Oleh",
+                        style: TextStyle(
+                            fontSize: 14, color: MyColor.greyTextAT),
+                      ),
+                      Text(
+                        detailDelivery.dikirimOleh,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if(detailDelivery.statuPengiriman.toLowerCase() == 'dalam pengiriman')
+          Container(
+            margin:
+            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            height: 40,
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              color: MyColor.greenAT,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: FlatButton(
+              child: Text(
+                "Konfirmasi Penerimaan",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12),
+              ),
+              onPressed: () {
+                Map<String, dynamic> param = {
+                  'purchase': orderDetail.detailPemesanan,
+                  'delivery': detailDelivery
+                };
+                Get.toNamed(confirmationAcceptScreen, arguments: param);
+              },
+            ),
+          ),
+          Container(
+            height: 3,
+            color: Color(0xffEAEAEA),
+            margin: EdgeInsets.symmetric(vertical: 5),
+          ),
+          ExpansionTile(
+            /*onExpansionChanged: ,*/
+            title: new Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Barang yang Dikirim",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+            ),
+            children: <Widget>[
+              new Column(
+                children: _buildExpandableContent(detailDelivery.listItemDetailDelivery),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _buildExpandableContent(List<ItemDetailDelivery> listItemDetailDelivery) {
+    List<Widget> columnContent = [];
+    for (var i = 0 ; i < listItemDetailDelivery.length ; i++)
+      columnContent.add(
+          listProductShipment(listItemDetailDelivery[i])
+      );
+    return columnContent;
+  }
+
+  Widget listProductShipment(ItemDetailDelivery itemDetailDelivery) {
     return Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.only(bottom: 10),
@@ -999,16 +952,16 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "SEMEN PCC ZAK 40KG",
+                  itemDetailDelivery.namaProduct,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       color: MyColor.redAT,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "121-301-0050",
+                  itemDetailDelivery.kodeProduct,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -1022,14 +975,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                 Text(
                   "Jumlah",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                   textAlign: TextAlign.right,
                 ),
                 Text(
-                  "100 SAK",
+                  "${itemDetailDelivery.jumlah} ${itemDetailDelivery.satuan}",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: MyColor.infoAT,
                   ),
@@ -1041,5 +994,90 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
         ],
       ),
     );
+  }
+
+  createAlertDialog(BuildContext context, String idPurchase) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            elevation: 16,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              height: 270.0,
+              width: 360.0,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Batalkan Pesanan",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                  ),
+                  Expanded(
+                    child: Center(
+                        child: Text(
+                          "Apakah Anda yakin membatalkan Pesanan ini ?",
+                          style: TextStyle(fontSize: 14),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 25, right: 25),
+                        decoration: BoxDecoration(
+                          color: MyColor.greyTextAT,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: FlatButton(
+                          child: Text(
+                            "Batal",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 25, right: 25),
+                        decoration: BoxDecoration(
+                          color: MyColor.orangeAT,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: FlatButton(
+                          child: Text(
+                            "Iya",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            showDialogProgress(idPurchase);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

@@ -25,6 +25,7 @@ class DataResponse {
   List<Zone> listDesa;
   Address address;
   String shipmentPrice;
+  String idPurchase;
   Customer customer;
   List<Alamat> listAlamat;
   OrderModel orderModel;
@@ -132,6 +133,7 @@ class DataResponse {
     distributor = ifExistObject(json, 'distributor', (obj) {
       return Distributor.fromJson(obj);
     });
+    idPurchase = ifExist(json, 'purchase_id');
   }
 
   Map<String, dynamic> toJson() {
