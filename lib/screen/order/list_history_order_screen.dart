@@ -1,5 +1,7 @@
 import 'package:aksestokomobile/model/order.dart';
+import 'package:aksestokomobile/screen/order/preview_delivery_screen.dart';
 import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -8,10 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ListHistoryOrderProductScreen extends StatelessWidget {
-  final int _index;
   final Order _order;
 
-  ListHistoryOrderProductScreen(this._index, this._order);
+  ListHistoryOrderProductScreen(this._order);
 
   @override
   Widget build(BuildContext context) {
@@ -31,28 +32,28 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          if (_order?.duration != null)
+          if (_order?.notifikasi != null)
             Container(
               height: 40,
               padding: EdgeInsets.symmetric(horizontal: 15),
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: MyColor.orangeAT,
+                color: statusColor(_order?.pesan),
               ),
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Sisa Durasi Waktu Pembayaran :",
+                    _order?.notifikasi,
                     style: TextStyle(
                       color: Colors.white,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
-                  Text(
+                  /*Text(
                     '${_order?.duration} hari',
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -127,7 +128,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                         Text(
                           _order?.statusPemesanan ?? '',
                           style: TextStyle(
-                              color: MyColor.greenAT,
+                              color: statusColor(_order?.notikasiPemesanan),
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
@@ -147,7 +148,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                         Text(
                           _order?.statusPembayaran ?? '',
                           style: TextStyle(
-                              color: MyColor.infoAT,
+                              color: statusColor(_order?.notikasiPembayaran),
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
@@ -318,12 +319,13 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-/*
+                if(_order?.notifikasiProduct != null)
                 Container(
                   height: 3,
                   color: Color(0xffEAEAEA),
                   margin: EdgeInsets.symmetric(vertical: 0),
                 ),
+                if(_order?.notifikasiProduct != null)
                 Container(
                   padding:
                       EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
@@ -331,16 +333,15 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
                   ),
-                  child: Text("+1 barang lainya"),
+                  child: Text("${_order?.notifikasiProduct}"),
                 ),
-*/
-                if (_index == 1)
+                if (_order?.konfirmasiPenerimaan)
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
                     margin: EdgeInsets.symmetric(vertical: 0),
                   ),
-                if (_index == 1)
+                if (_order?.konfirmasiPenerimaan)
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     height: 40,
@@ -358,7 +359,8 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                             fontSize: 12),
                       ),
                       onPressed: () {
-                        Get.toNamed(confirmationAcceptScreen);
+                        _dialogListAddress(context);
+                        /*Get.toNamed(confirmationAcceptScreen);*/
                       },
                     ),
                   ),
@@ -416,6 +418,36 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  _dialogListAddress(BuildContext context) async {
+    return showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text('Terima Barang'),
+        content: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                  width: double.maxFinite,
+                  child: PreviewDeliveryScreen()
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlatButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      )
     );
   }
 }

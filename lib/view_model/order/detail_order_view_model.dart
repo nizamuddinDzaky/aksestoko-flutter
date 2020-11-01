@@ -27,13 +27,7 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
           'id_pemesanan': Get.arguments?.toString(),
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
-
-      var response = BaseResponse.fromJson(data);
-      /*debugPrint("response : ${response.data.orderDetail.detailPemesanan}");*/
       orderDetail = OrderDetail.fromJson(data['data']);
-      /*debugPrint("response : ${orderDetail.ringkasan}");*/
-
-      // order = response?.data?.orderModel?.listOrderDalamProses ?? [];
     }, onFailed: (title, message) { 
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
@@ -83,10 +77,8 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
   @override
   void initState() {
     super.initState();
-    debugPrint('argument1 ${Get.arguments}');
     actionRefresh();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      debugPrint('argument2 ${Get.arguments}');
       refreshKey?.currentState?.show();
     });
   }

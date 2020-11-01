@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:aksestokomobile/screen/order/in_proses.dart' as inProses;
+import 'package:aksestokomobile/screen/order/list_order_screen.dart' as inProses;
 import 'package:aksestokomobile/screen/order/order_done.dart' as done;
 
 class HistoryOrderScreen extends StatefulWidget {
@@ -90,8 +90,9 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
           physics: BouncingScrollPhysics(),
           controller: controller,
           children: <Widget>[
-            inProses.InProsesScreen(),
-            done.OrderDoneScreen(),
+            inProses.ListOrderScreen('order_dalam_proses'),
+            inProses.ListOrderScreen('order_selesai'),
+            /*done.OrderDoneScreen(),*/
           ],
         ),
       ),

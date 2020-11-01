@@ -17,285 +17,288 @@ class DetailOrderScreen extends StatefulWidget {
 class _DetailOrderScreenState extends DetailOrderViewModel {
   @override
   Widget build(BuildContext context) {
-    /*debugPrint("sad => ${orderDetail.pengiriman.listDetailDelivery.length}");*/
-    var index = Get.arguments;
-    // debugPrint("index = ${orderDetail.detailPemesanan}");
-    var formLayout = SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
-              child: Text(
-                "Detail Pesanan",
-                style: TextStyle(
-                    color: MyColor.blackTextAT,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: [
-                  BoxShadow(
-                    color: MyColor.greyTextAT,
-                    spreadRadius: 0,
-                    blurRadius: 8,
-                    offset: Offset(0, 2), // changes position of shadow
-                  )
-                ],
-              ),
+    var formLayout =
+        RefreshIndicator(
+          key: refreshKey,
+          onRefresh: (){
+            return actionRefresh();
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 25),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "ID Pesnaan",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
-                              ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.noPemesanan :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "ID Bisnis Kokoh",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
-                              ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.idBk :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
+                    child: Text(
+                      "Detail Pesanan",
+                      style: TextStyle(
+                          color: MyColor.blackTextAT,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Tanggal Pemesanan",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
-                              ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.tanggalPeesanan :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Tgl Ekspetasi Pengiriman",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
-                              ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.ekpestasi :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                    padding: EdgeInsets.all(15),
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: MyColor.greyTextAT,
+                          spreadRadius: 0,
+                          blurRadius: 8,
+                          offset: Offset(0, 2), // changes position of shadow
+                        )
                       ],
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
+                    child: Column(
                       children: <Widget>[
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
                             children: <Widget>[
-                              Text(
-                                "Kode Distributor",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "ID Pesnaan",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.noPemesanan :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.kodeDistributor :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "ID Bisnis Kokoh",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.idBk :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
                             children: <Widget>[
-                              Text(
-                                "Nama Distributor",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Tanggal Pemesanan",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.tanggalPeesanan :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.namaDistributor :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Tgl Ekspetasi Pengiriman",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.ekpestasi :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
                             children: <Widget>[
-                              Text(
-                                "Cara Pengiriman",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Kode Distributor",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.kodeDistributor :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                orderDetail != null ? orderDetail.detailPemesanan.caraPengiriman :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Nama Distributor",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.namaDistributor :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
                             children: <Widget>[
-                              Text(
-                                "Cara Pembayaran",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Cara Pengiriman",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.caraPengiriman :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Cara Pembayaran",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
 
-                                orderDetail != null ? orderDetail.detailPemesanan.caraPembayaran :  "",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                      orderDetail != null ? orderDetail.detailPemesanan.caraPembayaran :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 3,
-                    color: Color(0xffEAEAEA),
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15, top: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Status Pesanan",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
-                              ),
-                                Text(
-                                  orderDetail != null ? orderDetail.detailPemesanan.statusPemesanan :  "",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPemesanan :  ""),
-                                  ),
-                                ),
-                            ],
-                          ),
+                        Container(
+                          height: 3,
+                          color: Color(0xffEAEAEA),
+                          margin: EdgeInsets.symmetric(vertical: 5),
                         ),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15, top: 15),
+                          child: Row(
                             children: <Widget>[
-                              Text(
-                                "Status Pembayaran",
-                                style: TextStyle(
-                                    fontSize: 14, color: MyColor.greyTextAT),
-                              ),
-                              /*if (index == 0)*/
-                                Text(
-                                  orderDetail != null ? orderDetail.detailPemesanan.statusPembayaran :  "",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPembayaran :  ""),
-                                  ),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Status Pesanan",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.statusPemesanan :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPemesanan :  ""),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              /*if (index == 1)
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Status Pembayaran",
+                                      style: TextStyle(
+                                          fontSize: 14, color: MyColor.greyTextAT),
+                                    ),
+                                    /*if (index == 0)*/
+                                    Text(
+                                      orderDetail != null ? orderDetail.detailPemesanan.statusPembayaran :  "",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPembayaran :  ""),
+                                      ),
+                                    ),
+                                    /*if (index == 1)
                                 Text(
                                   "Diterima Sebagian",
                                   style: TextStyle(
@@ -304,394 +307,395 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     color: MyColor.infoAT,
                                   ),
                                 ),*/
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if(orderDetail != null )
+                          if (orderDetail.detailPemesanan.daftarPembayaran != null)
+                            Container(
+                              child: FlatButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(detailPaymentScreen);
+                                },
+                                icon: Icon(
+                                  Icons.list,
+                                  color: MyColor.redAT,
+                                ),
+                                label: Text(
+                                  "Daftar Pembayaran",
+                                  style: TextStyle(color: MyColor.redAT, fontSize: 14),
+                                ),
+                              ),
+                            ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 30),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
+                    child: Text(
+                      "Ringkasan",
+                      style: TextStyle(
+                          color: MyColor.blackTextAT,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: MyColor.greyTextAT,
+                          spreadRadius: 0,
+                          blurRadius: 8,
+                          offset: Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Jumlah Pesanan",
+                                    style: TextStyle(
+                                        fontSize: 14, color: MyColor.greyTextAT),
+                                  ),
+                                  Text(
+                                    orderDetail != null ? orderDetail.ringkasan.jumlahPesanan.toString() : "0",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Jumlah Diterima",
+                                    style: TextStyle(
+                                        fontSize: 14, color: MyColor.greyTextAT),
+                                  ),
+                                  Text(
+                                    orderDetail != null ? orderDetail.ringkasan.jumlahDiterima.toString() : "0",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          child: Row(
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Sisa Pesanan",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: MyColor.greyTextAT,
+                                    ),
+                                  ),
+                                  Text(
+                                    orderDetail != null ? orderDetail.ringkasan.sisaPesanan.toString() : "0",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 3,
+                          color: Color(0xffEAEAEA),
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Total Harga",
+                                style: TextStyle(
+                                    fontSize: 14, color: MyColor.greyTextAT),
+                              ),
+                              Text(
+                                orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalHarga.toString()) : "0",
+                                style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 3,
+                          color: Color(0xffEAEAEA),
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Total Pembayaran",
+                                style: TextStyle(
+                                    fontSize: 14, color: MyColor.greyTextAT),
+                              ),
+                              Text(
+                                orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalPembayaran.toString()) : "0",
+                                style: TextStyle(
+                                    color: MyColor.redAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  if(orderDetail != null )
-                  if (orderDetail.detailPemesanan.daftarPembayaran != null)
-                    Container(
-                      child: FlatButton.icon(
-                        onPressed: () {
-                          Get.toNamed(detailPaymentScreen);
-                        },
-                        icon: Icon(
-                          Icons.list,
-                          color: MyColor.redAT,
-                        ),
-                        label: Text(
-                          "Daftar Pembayaran",
-                          style: TextStyle(color: MyColor.redAT, fontSize: 14),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Container(
-              height: 3,
-              color: Color(0xffEAEAEA),
-              margin: EdgeInsets.symmetric(vertical: 30),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
-              child: Text(
-                "Ringkasan",
-                style: TextStyle(
-                    color: MyColor.blackTextAT,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: [
-                  BoxShadow(
-                    color: MyColor.greyTextAT,
-                    spreadRadius: 0,
-                    blurRadius: 8,
-                    offset: Offset(0, 2), // changes position of shadow
-                  )
-                ],
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Jumlah Pesanan",
-                              style: TextStyle(
-                                  fontSize: 14, color: MyColor.greyTextAT),
-                            ),
-                            Text(
-                              orderDetail != null ? orderDetail.ringkasan.jumlahPesanan.toString() : "0",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Jumlah Diterima",
-                              style: TextStyle(
-                                  fontSize: 14, color: MyColor.greyTextAT),
-                            ),
-                            Text(
-                              orderDetail != null ? orderDetail.ringkasan.jumlahDiterima.toString() : "0",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Sisa Pesanan",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: MyColor.greyTextAT,
-                              ),
-                            ),
-                            Text(
-                              orderDetail != null ? orderDetail.ringkasan.sisaPesanan.toString() : "0",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 30),
                   ),
                   Container(
+                    margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
+                    child: Text(
+                      "Pengiriman",
+                      style: TextStyle(
+                          color: MyColor.blackTextAT,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: MyColor.greyTextAT,
+                          spreadRadius: 0,
+                          blurRadius: 8,
+                          offset: Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: MyColor.redAT,
+                                ),
+                              ),
+                              Text(
+                                orderDetail != null ? orderDetail.pengiriman.namaToko : "",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  orderDetail != null ? orderDetail.pengiriman.nama : "",
+                                  style: TextStyle(
+                                      fontSize: 14, color: MyColor.greyTextAT),
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  orderDetail != null ? orderDetail.pengiriman.noTlp : "",
+                                  style: TextStyle(
+                                      fontSize: 15, color: MyColor.greyTextAT),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10, left: 10),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  orderDetail != null ? orderDetail.pengiriman.alamat : "",
+                                  style: TextStyle(
+                                      fontSize: 14, color: MyColor.greyTextAT),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //tempat
+                  Container(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: orderDetail != null ? (orderDetail.pengiriman.listDetailDelivery != null ? orderDetail.pengiriman.listDetailDelivery.length : 0)  : 0,
+                      itemBuilder: (buildcontext, index) {
+                        return _listDelivery(orderDetail.pengiriman.listDetailDelivery[index]);
+                      },
+                    ),
+                  ),
+                  //container
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 30),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Total Harga",
-                          style: TextStyle(
-                              fontSize: 14, color: MyColor.greyTextAT),
-                        ),
-                        Text(
-                            orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalHarga.toString()) : "0",
+                          "Daftar Belanja",
                           style: TextStyle(
                               color: MyColor.blackTextAT,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                        Text(
+                          "(${orderDetail != null ? orderDetail.daftarBelanja.jumlahBelanja : 0})",
+                          style: TextStyle(
+                              color: MyColor.blackTextAT,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    padding:
+                    EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: MyColor.greyTextAT,
+                          spreadRadius: 0,
+                          blurRadius: 8,
+                          offset: Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: orderDetail != null ? orderDetail.daftarBelanja.listBelanja.length : 0,
+                      itemBuilder: (buildcontext, index) {
+                        if(orderDetail != null)
+                          return listProduct.ListProductDetailOrderScreen(orderDetail.daftarBelanja.listBelanja[index]);
+                      },
+                    ),
+                  ),
+
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                  ),
+                  if (orderDetail != null && orderDetail.detailPemesanan.statusPemesanan.toLowerCase() == 'menunggu konfirmasi')
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25),
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: MyColor.orangeAT,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: FlatButton(
+                        child: Text(
+                          "Batalkan Pesanan",
+                          style: TextStyle(
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                         ),
-                      ],
+                        onPressed: () {
+                          createAlertDialog(context, (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0));
+                        },
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 3,
-                    color: Color(0xffEAEAEA),
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          "Total Pembayaran",
+                  if (orderDetail != null && orderDetail.detailPemesanan.konfirmasiPembayaran != null)
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25),
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: MyColor.successTextAT,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: FlatButton(
+                        child: Text(
+                          "Selesaikan Pembayaran",
                           style: TextStyle(
-                              fontSize: 14, color: MyColor.greyTextAT),
-                        ),
-                        Text(
-                            orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalPembayaran.toString()) : "0",
-                          style: TextStyle(
-                              color: MyColor.redAT,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                              fontSize: 14),
                         ),
-                      ],
-                    ),
-                  ),
+                        onPressed: () {
+                          // createAlertDialog(context);
+                        },
+                      ),
+                    )
                 ],
               ),
             ),
-            Container(
-              height: 3,
-              color: Color(0xffEAEAEA),
-              margin: EdgeInsets.symmetric(vertical: 30),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
-              child: Text(
-                "Pengiriman",
-                style: TextStyle(
-                    color: MyColor.blackTextAT,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: [
-                  BoxShadow(
-                    color: MyColor.greyTextAT,
-                    spreadRadius: 0,
-                    blurRadius: 8,
-                    offset: Offset(0, 2), // changes position of shadow
-                  )
-                ],
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Icon(
-                            Icons.location_on,
-                            color: MyColor.redAT,
-                          ),
-                        ),
-                        Text(
-                          orderDetail != null ? orderDetail.pengiriman.namaToko : "",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            orderDetail != null ? orderDetail.pengiriman.nama : "",
-                            style: TextStyle(
-                                fontSize: 14, color: MyColor.greyTextAT),
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                              orderDetail != null ? orderDetail.pengiriman.noTlp : "",
-                            style: TextStyle(
-                                fontSize: 15, color: MyColor.greyTextAT),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10, left: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            orderDetail != null ? orderDetail.pengiriman.alamat : "",
-                            style: TextStyle(
-                                fontSize: 14, color: MyColor.greyTextAT),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //tempat
-            Container(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: orderDetail != null ? (orderDetail.pengiriman.listDetailDelivery != null ? orderDetail.pengiriman.listDetailDelivery.length : 0)  : 0,
-                itemBuilder: (buildcontext, index) {
-                  return _listDelivery(orderDetail.pengiriman.listDetailDelivery[index]);
-                },
-              ),
-            ),
-            //container
-            Container(
-              height: 3,
-              color: Color(0xffEAEAEA),
-              margin: EdgeInsets.symmetric(vertical: 30),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "Daftar Belanja",
-                    style: TextStyle(
-                        color: MyColor.blackTextAT,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
-                  Text(
-                    "(${orderDetail != null ? orderDetail.daftarBelanja.jumlahBelanja : 0})",
-                    style: TextStyle(
-                        color: MyColor.blackTextAT,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              padding:
-                  EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: [
-                  BoxShadow(
-                    color: MyColor.greyTextAT,
-                    spreadRadius: 0,
-                    blurRadius: 8,
-                    offset: Offset(0, 2), // changes position of shadow
-                  )
-                ],
-              ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: orderDetail != null ? orderDetail.daftarBelanja.listBelanja.length : 0,
-                itemBuilder: (buildcontext, index) {
-                  if(orderDetail != null)
-                    return listProduct.ListProductDetailOrderScreen(orderDetail.daftarBelanja.listBelanja[index]);
-                },
-              ),
-            ),
-
-              Container(
-                height: 3,
-                color: Color(0xffEAEAEA),
-                margin: EdgeInsets.symmetric(vertical: 20),
-              ),
-            if (orderDetail != null && orderDetail.detailPemesanan.statusPemesanan.toLowerCase() == 'menunggu konfirmasi')
-              Container(
-                margin: EdgeInsets.only(left: 25, right: 25),
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: MyColor.orangeAT,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: FlatButton(
-                  child: Text(
-                    "Batalkan Pesanan",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
-                  ),
-                  onPressed: () {
-                    createAlertDialog(context, (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0));
-                  },
-                ),
-              ),
-            if (orderDetail != null && orderDetail.detailPemesanan.konfirmasiPembayaran != null)
-            Container(
-              margin: EdgeInsets.only(left: 25, right: 25),
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                color: MyColor.successTextAT,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: FlatButton(
-                child: Text(
-                  "Selesaikan Pembayaran",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
-                ),
-                onPressed: () {
-                  // createAlertDialog(context);
-                },
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+          ),
+        );
 
     return Scaffold(
       appBar: AppBar(
@@ -910,7 +914,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
             ),
             children: <Widget>[
               new Column(
-                children: _buildExpandableContent(detailDelivery.listItemDetailDelivery),
+                children: _buildExpandableContent(detailDelivery?.listItemDetailDelivery),
               ),
             ],
           )
