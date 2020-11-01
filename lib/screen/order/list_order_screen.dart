@@ -1,20 +1,30 @@
-import 'package:aksestokomobile/view_model/order/inprogress_view_model.dart';
+import 'package:aksestokomobile/view_model/order/list_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/screen/order/list_history_order_screen.dart';
 
-class InProsesScreen extends StatefulWidget {
+class ListOrderScreen extends StatefulWidget {
+  String status;
+  ListOrderScreen(String status){
+    this.status = status;
+  }
   @override
-  _InProsesScreenState createState() => _InProsesScreenState();
+  _ListOrderScreenState createState() => _ListOrderScreenState(status);
 }
 
-class _InProsesScreenState extends InprogressViewModel {
+class _ListOrderScreenState extends ListOrderViewModel {
+  String status;
+  _ListOrderScreenState(String status){
+    this.status = status;
+  }
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       key: refreshKey,
-      onRefresh: actionRefresh,
+      onRefresh: (){
+        return actionRefresh(status);
+      },
       child: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -70,8 +80,7 @@ class _InProsesScreenState extends InprogressViewModel {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (buildcontext, index) {
-                    return ListHistoryOrderProductScreen(
-                        index, listOrder[index]);
+                    return ListHistoryOrderProductScreen(listOrder[index]);
                   },
                 ),
               ),

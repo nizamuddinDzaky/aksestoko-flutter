@@ -28,7 +28,7 @@ class DataResponse {
   String idPurchase;
   Customer customer;
   List<Alamat> listAlamat;
-  OrderModel orderModel;
+  OrderModel orderModelDalamProses;
   OrderDetail orderDetail;
   Distributor distributor;
   List<String> pengiriman;
@@ -115,7 +115,7 @@ class DataResponse {
     listAlamat = ifExistList(json, 'list_alamat', (obj) {
       return Alamat.fromJson(obj);
     });
-    orderModel = json['order_dalam_proses'] != null
+    orderModelDalamProses = json['order_dalam_proses'] != null
         ? new OrderModel.fromJson(json['order_dalam_proses'])
         : null;
     orderDetail = ifExistObject(json, 'detail_pemesanan', (obj) {

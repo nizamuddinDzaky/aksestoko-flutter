@@ -846,7 +846,9 @@ class _CheckoutScreenState extends CheckoutViewModel {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                        width: double.maxFinite, child: ListAddressScreen(vm)),
+                        width: double.maxFinite,
+                        child: ListAddressScreen(vm)
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
