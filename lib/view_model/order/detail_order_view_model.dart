@@ -27,10 +27,12 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
           'id_pemesanan': Get.arguments?.toString(),
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
+
       var response = BaseResponse.fromJson(data);
       /*debugPrint("response : ${response.data.orderDetail.detailPemesanan}");*/
       orderDetail = OrderDetail.fromJson(data['data']);
       /*debugPrint("response : ${orderDetail.ringkasan}");*/
+
       // order = response?.data?.orderModel?.listOrderDalamProses ?? [];
     }, onFailed: (title, message) { 
       Get.defaultDialog(title: title, content: Text(message));

@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/view_model/order/success_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,13 +12,13 @@ class SuccessScreen extends StatefulWidget {
   _SuccessScreenState createState() => _SuccessScreenState();
 }
 
-class _SuccessScreenState extends State<SuccessScreen> {
+class _SuccessScreenState extends SuccessViewModel {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
+      padding: EdgeInsets.symmetric(vertical: 30),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        margin: EdgeInsets.only(top: MediaQuery.of(context).size.width / 6.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +39,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
               margin: EdgeInsets.only(bottom: 30),
               child: Center(
                 child:
-                    Image.asset(atSuccessIcon, height: 200, fit: BoxFit.fill),
+                Image.asset(atSuccessIcon, height: 200, fit: BoxFit.fill),
               ),
             ),
             Container(
@@ -66,10 +67,11 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 ],
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(bottom: 20, top: 10),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
@@ -81,7 +83,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                         ),
                         Container(
                           child: Text(
-                            "SALE/AT/2020/06/0003",
+                            orderResponse?.idPemesanan ?? '',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: MyColor.greyTextAT,
@@ -93,7 +95,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: 10),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
@@ -105,7 +107,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                         ),
                         Container(
                           child: Text(
-                            "Tempo Dengan Distributor",
+                            orderResponse?.caraPembayaran ?? '',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: MyColor.greyTextAT,
@@ -115,6 +117,44 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       ],
                     ),
                   ),
+                  if (orderResponse?.bank?.isNotEmpty ?? false)
+                    Column(
+                      children: [
+                        Text(
+                          "Bank Tujuan",
+                          style: TextStyle(
+                              fontSize: 16, color: MyColor.greyTextAT),
+                        ),
+                        Text(
+                          orderResponse?.bank ?? '',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: MyColor.greyTextAT,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  if (orderResponse?.bank?.isNotEmpty ?? false)
+                    Column(
+                      children: [
+                        SizedBox(height: 8),
+                        Text(
+                          "No. Rekening",
+                          style: TextStyle(
+                              fontSize: 16, color: MyColor.greyTextAT),
+                        ),
+                        Text(
+                          orderResponse?.noRekening
+                                  ?.replaceAll('a/n', '\na/n ') ??
+                              '',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: MyColor.greyTextAT,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -146,40 +186,12 @@ class _SuccessScreenState extends State<SuccessScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Center(
-          child: Hero(
-            tag: 'logoForcaPoS',
-            child: MyLogo.logoATWhite(width: 100),
-          ),
+        title: Hero(
+          tag: 'logoForcaPoS',
+          child: MyLogo.logoATWhite(width: 100),
         ),
-        centerTitle: false,
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        centerTitle: true,
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {

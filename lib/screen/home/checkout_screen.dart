@@ -1,8 +1,8 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/model/checkout_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/util/my_number.dart';
-import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -23,23 +23,6 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends CheckoutViewModel {
-  void _changeShipment(String data, CheckoutController controller) async {
-    controller.shipment = data;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
-    getShipmentPrice(data);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,42 +42,27 @@ class _CheckoutScreenState extends CheckoutViewModel {
           ),
         ),
         centerTitle: false,
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: GetBuilder<CheckoutController>(
-          init: CheckoutController(),
-          builder: (controller) => _layout(controller, context),
-        ),
+        child: complete == null
+            ? Center(child: CircularProgressIndicator())
+            : (complete == true
+                ? GetBuilder<CheckoutController>(
+                    init: CheckoutController(),
+                    builder: (controller) => _layout(controller, context),
+                  )
+                : Center(
+                    child: RaisedButton(
+                      child: Text('Gagal, kembali ke halaman depan'),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  )),
       ),
     );
   }
@@ -140,6 +108,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                 ],
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Row(
@@ -152,7 +121,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           ),
                         ),
                         Text(
-                          address != null ? "${address.namaPenerima}" : "",
+                          address?.namaToko ?? '',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -161,39 +130,16 @@ class _CheckoutScreenState extends CheckoutViewModel {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            address != null ? "${address.namaPenerima}, " : "",
-                            style: TextStyle(
-                                fontSize: 16, color: MyColor.greyTextAT),
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            address != null ? "${address.noTlpn}" : "",
-                            style: TextStyle(
-                                fontSize: 15, color: MyColor.greyTextAT),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      address?.line1 ?? '',
+                      style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: 10, left: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            address != null
-                                ? "${address.alamat}, ${address.kecamatanName}, ${address.kabupatenName}, ${address.provinceName}"
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16, color: MyColor.greyTextAT),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      address?.line2 ?? '',
+                      style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
                     ),
                   ),
                 ],
@@ -468,42 +414,45 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       top: 5,
                     ),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Kode Distributor",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Kode Distributor",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            ),
+                            Text(
+                              checkoutModel?.distributor?.kode ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Nama Distributor",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 5,
-                      bottom: 15,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          MyPref.getDistributorCode(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text(
-                          MyPref.getDistributorName(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Nama Distributor",
+                                style: TextStyle(
+                                    color: MyColor.greyTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                              ),
+                              Text(
+                                checkoutModel?.distributor?.nama ?? '',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -543,27 +492,21 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.symmetric(vertical: 25),
-                          child: DropdownSearch(
-                            items: shiping,
+                          child: DropdownSearch<Shipment>(
+                            items: checkoutModel?.listPengiriman ?? [],
                             onSaved: (value) => {},
                             hint: "Pilih Pengiriman",
-                            onChanged: (String data) =>
-                                _changeShipment(data, controller),
+                            onChanged: (Shipment data) {
+                              selectShipping = data;
+                              getShipment();
+                            },
                             showSearchBox: true,
-                            selectedItem: controller.shipment,
+                            selectedItem: selectShipping,
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
-                              labelText: "Pilih Pengiriman",
+                              labelText: "Cari Pengiriman",
                             ),
-                            validator: (String item) {
-                              if (item == null)
-                                return "Required field";
-                              else if (item == "Brazil")
-                                return "Invalid item";
-                              else
-                                return null;
-                            },
                           ),
                         ),
                       ),
@@ -612,7 +555,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                 color: MyColor.greyTextAT, fontSize: 16),
                           ),
                           Text(
-                            "${getSumItem()}",
+                            "${MyNumber.toNumberId(checkoutModel?.ringkasan?.jumlahBarang?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: MyColor.greyTextAT,
                                 fontWeight: FontWeight.bold,
@@ -636,7 +579,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             ),
                           ),
                           Text(
-                            "${MyNumber.toNumberRpStr(getTotalHarga().toString())}",
+                            "${MyNumber.toNumberRp(checkoutModel?.ringkasan
+                                ?.totalHarga?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: MyColor.greyTextAT,
                                 fontWeight: FontWeight.bold,
@@ -660,7 +604,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             ),
                           ),
                           Text(
-                            "${MyNumber.toNumberRpStr(shipmentPrice.toString())}",
+                            "${MyNumber.toNumberRp(checkoutModel?.ringkasan
+                                ?.cost?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
@@ -686,7 +631,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             ),
                           ),
                           Text(
-                            "${MyNumber.toNumberRpStr(totalAkhir.toString())}",
+                            "${MyNumber.toNumberRp(checkoutModel?.ringkasan
+                                ?.grandTotal?.toDouble() ?? 0.0)}",
                             style: TextStyle(
                                 color: MyColor.redAT,
                                 fontWeight: FontWeight.bold,
@@ -719,8 +665,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       fontSize: 14),
                 ),
                 onPressed: () {
-                  controller.checkout(totalAkhir.toString());
-//                  Get.toNamed(paymentScreen);
+                  controller.saveCheckoutScreen(
+                      checkoutModel, address, selectShipping);
                 },
               ),
             ),
@@ -739,9 +685,9 @@ class _CheckoutScreenState extends CheckoutViewModel {
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemBuilder: (context, index) => _item(context, cart[index]),
-      // itemBuilder: (context, index) => Container(),
-      itemCount: cart.length,
+      itemBuilder: (context, index) =>
+          _item(context, checkoutModel?.listProduct[index]),
+      itemCount: checkoutModel?.listProduct?.length ?? 0,
     );
   }
 
@@ -799,7 +745,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
                           child: Text(
-                            _product?.kodeUnit ?? '',
+                            _product?.productCode ?? '',
                             style: TextStyle(
                               color: MyColor.greyTextAT,
                               fontSize: 16,
@@ -812,7 +758,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  "${MyNumber.toNumberRpStr(_product?.satuanHargaCash)}",
+                                  "${MyNumber.toNumberRp(
+                                      _product?.productPrice ?? 0.0)}",
                                   style: TextStyle(
                                     color: MyColor.blackTextAT,
                                     fontWeight: FontWeight.bold,
@@ -834,8 +781,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                     ),
                                     Container(
                                       child: Text(
-                                        _product?.qty?.toInt()?.toString() ??
-                                            '',
+                                        MyNumber?.toNumberId(
+                                            _product?.qty ?? 0.0),
                                         style: TextStyle(
                                             color: Color(0xff333333),
                                             fontSize: 16,
@@ -875,8 +822,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       color: Color(0xff999999), fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  // "${MyNumber.toNumberRpStr(_product.qty * _product.satuanHargaCash.toDouble()).toString())}",
-                  "${MyNumber.toNumberRpStr((_product.qty * _product.satuanHargaCash.toDouble()).toString())}",
+                  "${MyNumber.toNumberRp(_product?.totalPrice ?? 0.0)}",
                   style: TextStyle(
                       color: Color(0xff333333), fontWeight: FontWeight.bold),
                 ),

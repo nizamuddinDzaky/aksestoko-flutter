@@ -19,10 +19,16 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     super.initState();
   }
 
+  Future<void> actionRefresh() async {
+    await getDataProduct();
+    getDataCart();
+    return Future.value();
+  }
+
   List<Product> listProduct = [];
   List<Cart> listCart = [];
 
-  void getDataProduct() async {
+  getDataProduct() async {
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
     };
@@ -45,19 +51,21 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     });
   }
 
-  void getDataCart() async {
+  getDataCart() async {
     var params = {
       'id_distributor': MyPref.getIdDistributor(),
     };
     var status = await ApiClient.methodGet(ApiConfig.urlCart,
-        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
-      var baseResponse = BaseResponse.fromJson(data);
-      var newListCart = baseResponse?.data?.listCart ?? [];
-      listCart.clear();
-      listCart.addAll(newListCart);
-      buildCart();
+        params: params,
+        onBefore: (status) {},
+        onSuccess: (data, flag) {
+          var baseResponse = BaseResponse.fromJson(data);
+          var newListCart = baseResponse?.data?.listCart ?? [];
+          listCart.clear();
+          listCart.addAll(newListCart);
+          buildCart();
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
+      // Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});
@@ -87,7 +95,12 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     if (vm.listCart == null || vm.listCart.length < 1) {
       _alertDialog();
     } else {
-      Get.toNamed(checkoutScreen, arguments: vm.listCart);
+      Get.toNamed(checkoutScreen, arguments: vm.listCart).then((value) {
+        debugPrint('cek value $value');
+        if (value != null && value['errorcode'] == 400) {
+          debugPrint('hapus cart');
+        }
+      });
     }
   }
 }

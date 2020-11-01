@@ -41,6 +41,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 ),
                 centerTitle: false,
                 actions: <Widget>[
+/*
                   Stack(
                     children: <Widget>[
                       IconButton(
@@ -66,6 +67,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                       ),
                     ],
                   ),
+*/
                   Stack(
                     children: <Widget>[
                       IconButton(
@@ -100,7 +102,10 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 onTap: () {
                   FocusScope.of(context).unfocus();
                 },
-                child: _body(vm),
+                child: RefreshIndicator(
+                  onRefresh: actionRefresh,
+                  child: _body(vm),
+                ),
               ),
               floatingActionButton: Container(
                 width: MediaQuery.of(context).size.width,
@@ -157,6 +162,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
 
   Widget _body(SelectProductController controller) {
     return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
       child: Column(
         children: <Widget>[
           Container(
@@ -221,9 +227,9 @@ class _SelectProductScreenState extends SelectProductViewModel {
             margin: EdgeInsets.only(bottom: 100),
             child: !MyPref.isIdDistributorExist()
                 ? LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                    return new Text('Silahkan Pilih Distributor');
-                  })
+                (BuildContext context, BoxConstraints constraints) {
+              return new Text('Silahkan Pilih Distributor');
+            })
                 : _gridProduct(controller),
           ),
         ],

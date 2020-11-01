@@ -14,15 +14,14 @@ abstract class SelectDistributorController
       Get.back();
       return;
     }
+    MyPref.setIdDristributor(distributor.id);
+    MyPref.setCustomerGroupId(distributor.customerGroupId);
+    MyPref.setPriceGroupId(distributor.priceGroupId);
+    MyPref.setDisributorName(distributor.nama);
+    MyPref.setDisributorCode(distributor.kode);
     if (!MyPref.isIdDistributorExist()) {
-      MyPref.setIdDristributor(distributor.id);
-      MyPref.setDisributorName(distributor.nama);
-      MyPref.setDisributorCode(distributor.kode);
       Get.offNamed(parentScreen);
     } else {
-      MyPref.setIdDristributor(distributor.id);
-      MyPref.setDisributorName(distributor.nama);
-      MyPref.setDisributorCode(distributor.kode);
       Get.back(result: distributor.id);
     }
   }

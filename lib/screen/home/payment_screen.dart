@@ -1,10 +1,12 @@
 import 'package:aksestokomobile/controller/home/payment_controller.dart';
+import 'package:aksestokomobile/model/payment_model.dart';
+import 'package:aksestokomobile/util/my_number.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:get/get.dart';
-import 'package:aksestokomobile/app/my_router.dart';
+import 'package:flutter/widgets.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -13,25 +15,17 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends PaymentController {
-  var rekening = '';
-
-  List<String> _dynamicBank;
-  List<String> _dynamicTempo;
-  List<Color> _colorBank;
-  int _value;
-  int _tempo;
-
-  bool cashOnDelivery = false;
-  bool cashBeforeDelivery = false;
-  bool kreditPro = false;
-  bool tempoDistributor = false;
-  int currentTab = 0;
-
-  listBank() {
+  listBank(int indexPayment) {
+    List<ListBank> listBank = [];
+    if (tempoDistributor)
+      listBank = [...paymentModel?.tempoDenganDistributor?.listBank];
+    if (cashBeforeDelivery)
+      listBank = [...paymentModel?.bayarSebelumDikirim?.listBank];
+    listBank.insert(0, ListBank(bankName: 'Tunai'.toUpperCase()));
     return Wrap(
       spacing: 6,
       runSpacing: 6,
-      children: List<Widget>.generate(_dynamicBank.length, (int index) {
+      children: List<Widget>.generate(listBank?.length ?? 0, (int index) {
         return Container(
           margin: EdgeInsets.only(
             left: 4,
@@ -40,30 +34,35 @@ class _PaymentScreenState extends PaymentController {
             bottom: 8,
           ),
           child: ChoiceChip(
-            backgroundColor: _colorBank[index],
+            backgroundColor: colorBank[index],
             labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             label: Text(
-              _dynamicBank[index],
+              listBank[index]?.bankName?.toUpperCase() ?? '',
               style: TextStyle(
-                  color: _value != index ? Colors.black : Colors.white),
+                  color: indexBank[indexPayment] != index
+                      ? Colors.black
+                      : Colors.white),
             ),
             avatar: CircleAvatar(
               backgroundColor: Colors.white,
               maxRadius: 15,
-              child: _value != index
+              child: indexBank[indexPayment] != index
                   ? Text('')
                   : Icon(
                       Icons.check,
                       color: Colors.green,
                     ),
             ),
-            selected: _value == index,
-            selectedColor: _colorBank[index],
+            selected: indexBank[indexPayment] == index,
+            selectedColor: colorBank[index],
             onSelected: (bool selected) {
+              if (!selected) return;
               setState(() {
-                rekening = _dynamicBank[index];
-                _value = selected ? index : null;
-                debugPrint(_value?.toString());
+                indexBank[indexPayment] = selected ? index : null;
+                if (tempoDistributor)
+                  selectedDue = indexBank == null ? null : listBank[index];
+                if (cashBeforeDelivery)
+                  selectedDelivery = indexBank == null ? null : listBank[index];
               });
             },
           ),
@@ -73,10 +72,12 @@ class _PaymentScreenState extends PaymentController {
   }
 
   listTempo() {
+    List<Detail> listTempo = [...paymentModel?.kreditPro?.detail];
+    selectedKreditPro == selectedKreditPro ?? listTempo?.first;
     return Wrap(
       spacing: 6,
       runSpacing: 6,
-      children: List<Widget>.generate(_dynamicTempo.length, (int index) {
+      children: List<Widget>.generate(listTempo?.length ?? 0, (int index) {
         return Container(
           margin: EdgeInsets.only(
             left: 4,
@@ -87,47 +88,33 @@ class _PaymentScreenState extends PaymentController {
           child: ChoiceChip(
             labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             label: Text(
-              _dynamicTempo[index],
+              "${listTempo[index]?.durasiPembayaran ?? '-'}",
               style: TextStyle(
-                  color: _tempo != index ? Colors.black : Colors.white),
+                  color: indexTempo != index ? Colors.black : Colors.white),
             ),
             avatar: CircleAvatar(
               backgroundColor: Colors.white,
               maxRadius: 15,
-              child: _tempo != index
+              child: indexTempo != index
                   ? Text('')
                   : Icon(
-                Icons.check,
-                color: Colors.green,
-              ),
+                      Icons.check,
+                      color: Colors.green,
+                    ),
             ),
-            selected: _tempo == index,
+            selected: indexTempo == index,
             selectedColor: MyColor.redAT,
             onSelected: (bool selected) {
               setState(() {
-                _tempo = selected ? index : null;
-                debugPrint(_tempo?.toString());
+                indexTempo = selected ? index : null;
+                selectedKreditPro =
+                indexTempo == null ? null : listTempo[index];
               });
             },
           ),
         );
       }),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _dynamicBank = ['Mandiri', 'BCA', 'BNI', 'BRI'];
-    _dynamicTempo = ['30 Hari', '45 Hari', '60 Hari'];
-    _colorBank = [
-      Color(0xFFff8a65),
-      Color(0xFF4fc3f7),
-      Color(0xFF9575cd),
-      Color(0xFF4db6ac)
-    ];
-    _value = 0;
-    _tempo = 0;
   }
 
   @override
@@ -219,10 +206,8 @@ class _PaymentScreenState extends PaymentController {
                                     value: cashOnDelivery,
                                     onChanged: (bool value) {
                                       setState(() {
-                                        cashOnDelivery = value;
-                                        if (cashOnDelivery) {
-                                          cashBeforeDelivery = false;
-                                        }
+                                        setIndexMethod(PaymentController
+                                            .listPaymentMethod[0]);
                                       });
                                     },
                                   ),
@@ -249,7 +234,10 @@ class _PaymentScreenState extends PaymentController {
                                 ],
                               ),
                               Text(
-                                "Rp 20.000.000",
+                                MyNumber.toNumberRp(paymentModel
+                                    ?.bayarDitempat?.total
+                                    ?.toDouble() ??
+                                    0.0),
                                 style: TextStyle(
                                     color: MyColor.redAT,
                                     fontWeight: FontWeight.bold,
@@ -296,7 +284,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.bayarDitempat
+                                                ?.detail
+                                                ?.harga
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -322,7 +315,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.bayarDitempat
+                                                ?.detail
+                                                ?.charge
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -355,7 +353,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.bayarDitempat
+                                                ?.detail
+                                                ?.total
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.redAT,
@@ -385,14 +388,14 @@ class _PaymentScreenState extends PaymentController {
                                     ),
                                     child: FlatButton(
                                       child: Text(
-                                        "Seleseikan",
+                                        "Selesaikan",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
                                       onPressed: () {
-                                        Get.toNamed(successScreen);
+                                        actionSubmit();
                                       },
                                     ),
                                   ),
@@ -418,43 +421,48 @@ class _PaymentScreenState extends PaymentController {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Checkbox(
-                                    value: cashBeforeDelivery,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        cashBeforeDelivery = value;
-                                        if (cashBeforeDelivery) {
-                                          cashOnDelivery = false;
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 5),
-                                    child: Image.asset(
-                                      atPaymentCBD,
-                                      width: 18,
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: cashBeforeDelivery,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          setIndexMethod(PaymentController
+                                              .listPaymentMethod[1]);
+                                        });
+                                      },
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 15,
-                                      bottom: 15,
+                                    Container(
+                                      margin: EdgeInsets.only(right: 5),
+                                      child: Image.asset(
+                                        atPaymentCBD,
+                                        width: 18,
+                                      ),
                                     ),
-                                    child: Text(
-                                      "Bayar Sebelum Dikirim",
-                                      style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                          top: 15,
+                                          bottom: 15,
+                                        ),
+                                        child: Text(
+                                          "Bayar Sebelum Dikirim",
+                                          style: TextStyle(
+                                              color: MyColor.blackTextAT,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Text(
-                                "Rp 20.000.000",
+                                MyNumber.toNumberRp(paymentModel
+                                    ?.bayarSebelumDikirim?.total
+                                    ?.toDouble() ??
+                                    0.0),
                                 style: TextStyle(
                                     color: MyColor.redAT,
                                     fontWeight: FontWeight.bold,
@@ -472,10 +480,11 @@ class _PaymentScreenState extends PaymentController {
                               margin: EdgeInsets.only(bottom: 20),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child: listBank(),
+                                child: listBank(0),
                               ),
                             ),
-                          if (cashBeforeDelivery)
+                          if (cashBeforeDelivery &&
+                              selectedDelivery?.bankId != null)
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: Row(
@@ -496,7 +505,7 @@ class _PaymentScreenState extends PaymentController {
                                       MyDivider.spaceDividerElementsAT(
                                           custom: 5),
                                       Text(
-                                        rekening,
+                                        '${selectedDelivery?.noRek ?? ' '}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: MyColor.blackTextAT,
@@ -505,17 +514,19 @@ class _PaymentScreenState extends PaymentController {
                                       MyDivider.spaceDividerElementsAT(
                                           custom: 5),
                                       Text(
-                                        "a/n Lorem Ipsum",
+                                        'a.n. ${selectedDelivery?.nama ?? ' '}',
                                         style: TextStyle(
                                             color: MyColor.blackTextAT,
                                             fontSize: 16),
                                       ),
                                     ],
                                   ),
-                                  Image.asset(
-                                    atBankExample,
-                                    width: 120,
-                                  ),
+                                  if (selectedDelivery?.logoBank?.isNotEmpty ??
+                                      false)
+                                    Image.network(
+                                      selectedDelivery?.logoBank,
+                                      width: 120,
+                                    ),
                                 ],
                               ),
                             ),
@@ -553,7 +564,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.bayarSebelumDikirim
+                                                ?.detail
+                                                ?.harga
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -579,7 +595,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.bayarSebelumDikirim
+                                                ?.detail
+                                                ?.charge
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -612,7 +633,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.bayarSebelumDikirim
+                                                ?.detail
+                                                ?.total
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.redAT,
@@ -642,14 +668,14 @@ class _PaymentScreenState extends PaymentController {
                                     ),
                                     child: FlatButton(
                                       child: Text(
-                                        "Seleseikan",
+                                        "Selesaikan",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
                                       onPressed: () {
-                                        Get.toNamed(successScreen);
+                                        actionSubmit();
                                       },
                                     ),
                                   ),
@@ -675,49 +701,59 @@ class _PaymentScreenState extends PaymentController {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Checkbox(
-                                    value: tempoDistributor,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        tempoDistributor = value;
-                                      });
-                                    },
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 5),
-                                    child: Image.asset(
-                                      atPaymentTempoDistributor,
-                                      width: 18,
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: tempoDistributor,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          setIndexMethod(PaymentController
+                                              .listPaymentMethod[2]);
+                                        });
+                                      },
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 15,
-                                      bottom: 15,
+                                    Container(
+                                      margin: EdgeInsets.only(right: 5),
+                                      child: Image.asset(
+                                        atPaymentTempoDistributor,
+                                        width: 18,
+                                      ),
                                     ),
-                                    child: Text(
-                                      "Tempo Distributor",
-                                      style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                          top: 15,
+                                          bottom: 15,
+                                        ),
+                                        child: Text(
+                                          "Tempo Distributor",
+                                          style: TextStyle(
+                                              color: MyColor.blackTextAT,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    "Rp 200.000.000.000",
+                                    MyNumber.toNumberRp(paymentModel
+                                        ?.tempoDenganDistributor?.total
+                                        ?.toDouble() ??
+                                        0.0),
                                     style: TextStyle(
                                         color: MyColor.redAT,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
                                   Text(
-                                    "30 Hari",
+                                    "(${selectedDuration?.duration ??
+                                        '-'} Hari)",
                                     style: TextStyle(
                                         color: MyColor.greyTextAT,
                                         fontWeight: FontWeight.bold,
@@ -737,10 +773,10 @@ class _PaymentScreenState extends PaymentController {
                               margin: EdgeInsets.only(bottom: 20),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child: listBank(),
+                                child: listBank(1),
                               ),
                             ),
-                          if (tempoDistributor)
+                          if (tempoDistributor && selectedDue?.bankId != null)
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: Row(
@@ -761,7 +797,7 @@ class _PaymentScreenState extends PaymentController {
                                       MyDivider.spaceDividerElementsAT(
                                           custom: 5),
                                       Text(
-                                        "19827364",
+                                        "${selectedDue?.noRek ?? ''}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: MyColor.blackTextAT,
@@ -770,17 +806,19 @@ class _PaymentScreenState extends PaymentController {
                                       MyDivider.spaceDividerElementsAT(
                                           custom: 5),
                                       Text(
-                                        "a/n Lorem Ipsum",
+                                        "a/n ${selectedDue?.nama ?? ''}",
                                         style: TextStyle(
                                             color: MyColor.blackTextAT,
                                             fontSize: 16),
                                       ),
                                     ],
                                   ),
-                                  Image.asset(
-                                    atBankExample,
-                                    width: 120,
-                                  ),
+                                  if (selectedDue?.logoBank?.isNotEmpty ??
+                                      false)
+                                    Image.network(
+                                      selectedDue?.logoBank,
+                                      width: 120,
+                                    ),
                                 ],
                               ),
                             ),
@@ -818,7 +856,43 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.tempoDenganDistributor
+                                                ?.detail
+                                                ?.harga
+                                                ?.toDouble() ??
+                                                0.0),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Biaya Tempo",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.tempoDenganDistributor
+                                                ?.detail
+                                                ?.hargaTempo
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -844,7 +918,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.tempoDenganDistributor
+                                                ?.detail
+                                                ?.charge
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -877,7 +956,12 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(paymentModel
+                                                ?.tempoDenganDistributor
+                                                ?.detail
+                                                ?.total
+                                                ?.toDouble() ??
+                                                0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.redAT,
@@ -927,7 +1011,7 @@ class _PaymentScreenState extends PaymentController {
                                   ],
                                 ),
                                 Row(
-                                  children: <Widget>[
+                                  children: [
                                     Container(
                                       margin:
                                       EdgeInsets.symmetric(vertical: 25),
@@ -955,13 +1039,11 @@ class _PaymentScreenState extends PaymentController {
                                       ),
                                     ),
                                     Expanded(
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Color(0xffEEEEEE),
-                                          hintText: "30 Hari",
+                                      child: DropdownSearch<ListPaymentDurasi>(
+                                        dropdownSearchDecoration:
+                                        InputDecoration(
                                           contentPadding:
-                                          const EdgeInsets.only(left: 20),
+                                          EdgeInsets.only(left: 20),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Color(0xffC8C8C8),
@@ -981,6 +1063,21 @@ class _PaymentScreenState extends PaymentController {
                                               bottomRight: Radius.circular(5.0),
                                             ),
                                           ),
+                                        ),
+                                        items: paymentModel
+                                            ?.tempoDenganDistributor
+                                            ?.listPaymentDurasi ??
+                                            [],
+                                        onSaved: (value) => {},
+                                        hint: "Pilih Durasi",
+                                        onChanged: (ListPaymentDurasi data) {
+                                          selectedDuration = data;
+                                        },
+                                        showSearchBox: true,
+                                        selectedItem: selectedDuration,
+                                        searchBoxDecoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: "Cari Durasi",
                                         ),
                                       ),
                                     ),
@@ -1003,14 +1100,14 @@ class _PaymentScreenState extends PaymentController {
                                     ),
                                     child: FlatButton(
                                       child: Text(
-                                        "Seleseikan",
+                                        "Selesaikan",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
                                       onPressed: () {
-                                        Get.toNamed(successScreen);
+                                        actionSubmit();
                                       },
                                     ),
                                   ),
@@ -1036,49 +1133,58 @@ class _PaymentScreenState extends PaymentController {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Checkbox(
-                                    value: kreditPro,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        kreditPro = value;
-                                      });
-                                    },
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 5),
-                                    child: Image.asset(
-                                      atPaymentKreditPro,
-                                      width: 40,
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: kreditPro,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          setIndexMethod(PaymentController
+                                              .listPaymentMethod[3]);
+                                        });
+                                      },
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 15,
-                                      bottom: 15,
+                                    Container(
+                                      margin: EdgeInsets.only(right: 5),
+                                      child: Image.asset(
+                                        atPaymentKreditPro,
+                                        width: 40,
+                                      ),
                                     ),
-                                    child: Text(
-                                      "KreditPro",
-                                      style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                          top: 15,
+                                          bottom: 15,
+                                        ),
+                                        child: Text(
+                                          "KreditPro",
+                                          style: TextStyle(
+                                              color: MyColor.blackTextAT,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    "Rp 200.000.000.000",
+                                    MyNumber.toNumberRp(
+                                        selectedKreditPro?.total?.toDouble() ??
+                                            0.0),
                                     style: TextStyle(
                                         color: MyColor.redAT,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
                                   Text(
-                                    "30 Hari",
+                                    "(${selectedKreditPro?.durasiPembayaran ??
+                                        '-'})",
                                     style: TextStyle(
                                         color: MyColor.greyTextAT,
                                         fontWeight: FontWeight.bold,
@@ -1135,7 +1241,10 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(
+                                                selectedKreditPro?.harga
+                                                    ?.toDouble() ??
+                                                    0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -1161,7 +1270,93 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 20.000.000",
+                                            MyNumber.toNumberRp(
+                                                selectedKreditPro?.charge
+                                                    ?.toDouble() ??
+                                                    0.0),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 3,
+                                    color: Color(0xffEAEAEA),
+                                    margin:
+                                    EdgeInsets.only(top: 10, bottom: 20),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "Sub Total",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            MyNumber.toNumberRp(
+                                                selectedKreditPro?.subtotal
+                                                    ?.toDouble() ??
+                                                    0.0),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColor.greyTextAT,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: 'Interest Rate ',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                      MyColor.greyTextAT),
+                                                ),
+                                                TextSpan(
+                                                  text:
+                                                  '${selectedKreditPro
+                                                      ?.interestRate ?? ''}',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                      FontWeight.bold,
+                                                      color:
+                                                      MyColor.greyTextAT),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            MyNumber.toNumberRp(
+                                                selectedKreditPro
+                                                    ?.hargaInterestRate
+                                                    ?.toDouble() ??
+                                                    0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.greyTextAT,
@@ -1194,7 +1389,10 @@ class _PaymentScreenState extends PaymentController {
                                         ),
                                         Container(
                                           child: Text(
-                                            "Rp 200.000.000.000",
+                                            MyNumber.toNumberRp(
+                                                selectedKreditPro?.total
+                                                    ?.toDouble() ??
+                                                    0.0),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: MyColor.redAT,
@@ -1215,26 +1413,40 @@ class _PaymentScreenState extends PaymentController {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(
-                                    padding:
-                                    EdgeInsets.only(left: 10, right: 10),
-                                    decoration: BoxDecoration(
-                                      color: MyColor.greenAT,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: FlatButton(
-                                      child: Text(
-                                        "Seleseikan",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
+                                  if (1000000.0 <
+                                      (selectedKreditPro?.total?.toDouble() ??
+                                          0.0))
+                                    Container(
+                                      padding:
+                                      EdgeInsets.only(left: 10, right: 10),
+                                      decoration: BoxDecoration(
+                                        color: MyColor.greenAT,
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
-                                      onPressed: () {
-                                        Get.toNamed(successScreen);
-                                      },
-                                    ),
-                                  ),
+                                      child: FlatButton(
+                                        child: Text(
+                                          "Selesaikan",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                        ),
+                                        onPressed: () {
+                                          actionSubmit();
+                                        },
+                                      ),
+                                    )
+                                  else
+                                    Container(
+                                        child: Flexible(
+                                          child: Text(
+                                            'Total pesanan harus melebihi Rp 1.000.000 untuk dapat memilih metode ini.',
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        )),
                                 ],
                               ),
                             ),
@@ -1247,6 +1459,7 @@ class _PaymentScreenState extends PaymentController {
                   ),
                 ],
               ),
+/*
             Container(
               margin: EdgeInsets.only(left: 25, right: 25),
               width: double.maxFinite,
@@ -1272,6 +1485,7 @@ class _PaymentScreenState extends PaymentController {
               color: Color(0xffEAEAEA),
               margin: EdgeInsets.only(top: 20),
             ),
+*/
           ],
         ),
       ),
@@ -1293,33 +1507,7 @@ class _PaymentScreenState extends PaymentController {
           ),
         ),
         centerTitle: false,
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {
