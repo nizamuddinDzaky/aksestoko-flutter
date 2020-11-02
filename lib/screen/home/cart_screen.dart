@@ -1,7 +1,11 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/model/product.dart';
+import 'package:aksestokomobile/network/api_client.dart';
+import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/home/cart_item_screen.dart';
 import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -14,6 +18,96 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool CheckBoxValue = false;
+  var needUpdate = 0;
+
+  void confirm(SelectProductController vm, _alertDialog()) async {
+    if (vm.currentFocus != null) {
+      vm.currentFocus?.unfocus();
+      await Future.delayed(Duration(milliseconds: 200));
+    }
+    if (vm.listCart == null || vm.listCart.length < 1) {
+      _alertDialog();
+    } else {
+      needUpdate = 0;
+      vm.listCart?.forEach((product) {
+        debugPrint('cek countUpdate ${product.countChange}');
+        if (1 > (product.idCart ?? 0) || (product.countChange ?? 0) > 0) {
+          needUpdate++;
+        }
+      });
+      debugPrint('action check cart $needUpdate');
+      if (needUpdate > 0) {
+        _addDataToServer(vm);
+      } else {
+        _actionNextToCheckout(vm);
+      }
+    }
+  }
+
+  _addDataToServer(vm) {
+    vm.listCart?.forEach((product) {
+      if (0 == (product.idCart ?? 0) && (product.countChange ?? 0) != 0) {
+        _postAddCart(product).then((_) => _actionNextToCheckout(vm));
+      } else if (0 != (product.idCart ?? 0) &&
+          (product.countChange ?? 0) != 0) {
+        // _postUpdate(product).then((_) => _actionNextToCheckout(vm));
+      }
+    });
+  }
+
+  _postAddCart(Product product) async {
+    var fields = {
+      'id_distributor': MyPref.getIdDistributor(),
+      'product_id': product?.productId,
+      'quantity': product?.qty,
+    };
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlAddItemCart,
+      fields,
+      {},
+      customHandle: true,
+      onSuccess: (data, _) {
+        if (data != null &&
+            data['data'] != null &&
+            data['data']['item_cart_id'] != null) {
+          product.idCart = data['data']['item_cart_id'];
+        }
+        needUpdate--;
+      },
+    );
+    status.execute();
+  }
+
+  _actionNextToCheckout(vm) {
+    if (needUpdate == 0) {
+      Get.toNamed(checkoutScreen, arguments: vm.listCart).then((value) {
+        debugPrint('cek value $value');
+        if (value != null && value['errorcode'] == 400) {
+          debugPrint('hapus cart');
+        }
+      });
+    }
+  }
+
+  void _alertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Perhatian"),
+          content: Text("Keranjang masih kosong. Silahkan pilih produk."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Tutup"),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget formLayout(SelectProductController controller) {
     return SingleChildScrollView(
@@ -191,8 +285,9 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Get.toNamed(checkoutScreen,
-                              arguments: controller.listCart);
+                          confirm(controller, _alertDialog);
+                          // Get.toNamed(checkoutScreen,
+                          //     arguments: controller.listCart);
                         },
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20.0)),

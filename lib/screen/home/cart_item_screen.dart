@@ -43,6 +43,8 @@ class _CartItemScreenState extends State<CartItemScreen> {
         },
         cusQty: int.tryParse(_qtyTextController.text) ?? widget.product.qty,
       );
+    } else {
+      controller?.currentFocus = _focusNode;
     }
   }
 
