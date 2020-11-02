@@ -9,7 +9,11 @@ class ApiConfig {
   static String urlLogin = '${path}Auth/login';
   static String urlRegisterCheck = '${path}Auth/register_check';
   static String urlRegisterSubmit = '${path}Auth/register_submit';
-  static String urlResetPass = '${path}auth/forgot_password';
+  static String urlGenerateEmail = '${path}Auth/generate_email';
+  static String urlResetPass = '${path}auth/forgot_pasword';
+  static String urlSendOTP = '${path}auth/send_otp';
+  static String urlCheckOTP = '${path}auth/check_otp';
+  static String urlChangePassword = '${path}auth/change_password';
   static String urlProfile = '${path}auth/profile';
   static String urlProfileUpdate = '${path}auth/update_profile';
   static String urlDetailProfile = '${path}auth/detail_profile';
@@ -26,6 +30,9 @@ class ApiConfig {
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
+  static String urlDeleteItemCart = '${path}Purchase/delete_item_cart';
+  static String urlUpdateItemCart = '${path}Purchase/update_cart';
+  static String urlAddItemCart = '${path}Purchase/add_to_cart';
   static String urlListOrder = '${path}Purchase/list_order';
   static String urlDetailOrder = '${path}Purchase/detail_order';
 

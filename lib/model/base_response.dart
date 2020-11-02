@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aksestokomobile/model/data_response.dart';
 
 class BaseResponse {
@@ -18,6 +20,18 @@ class BaseResponse {
     this.rows,
     this.data,
   });
+
+  BaseResponse.fromString(String jsonString) {
+    Map<String, dynamic> json = jsonDecode(jsonString);
+    status = json['status'];
+    code = json['code'];
+    message = json['message'];
+    requestTime = json['request_time'];
+    responseTime = json['response_time'];
+    rows = json['rows'];
+    data =
+        json['data'] != null ? new DataResponse.fromJson(json['data']) : null;
+  }
 
   BaseResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];

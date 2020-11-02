@@ -11,6 +11,8 @@ class Product {
   String productCode;
   double productPrice;
   double totalPrice;
+  int idCart;
+  int countChange;
 
   Product({
     this.nama,

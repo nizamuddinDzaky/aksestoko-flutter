@@ -23,6 +23,7 @@ final String sgIcon = "assets/icons/sg.png";
 final String stIcon = "assets/icons/st.png";
 final String spIcon = "assets/icons/sp.png";
 final String dynamixIcon = "assets/icons/dynamix.png";
+final String andalasIcon = "assets/icons/andalas.png";
 
 final String bgHeaderTop = "assets/images/bg-top.png";
 final String bgLarge = "assets/images/bg-large.png";
