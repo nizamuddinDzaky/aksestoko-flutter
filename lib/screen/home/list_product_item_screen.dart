@@ -110,6 +110,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                           int currentValue =
                               (_product.qty != null ? _product.qty : 0).toInt();
                           currentValue--;
+                          _product.countChange = 1;
                           if (currentValue > 0) {
                             _controller.text = currentValue.toString();
                             controller.reduceCart(_product,
@@ -160,6 +161,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                           int currentValue =
                           (_product.qty != null ? _product.qty : 0).toInt();
                           currentValue++;
+                          _product.countChange = 1;
                           controller.addToCart(_product,
                               customQty: currentValue.toDouble());
                           _controller.text = (currentValue).toString();

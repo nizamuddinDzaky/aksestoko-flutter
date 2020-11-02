@@ -329,14 +329,17 @@ class _CartItemScreenState extends State<CartItemScreen> {
                           fontSize: 14,
                         ),
                       ),
+/*
                       Text(
-                        widget.product.qty.toString(),
+                        // widget.product.idCart?.toString() ?? '',
+                        widget.product.countChange?.toString() ?? '',
                         style: TextStyle(
                           color: Color(0xff999999),
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
+*/
                       Text(
                         count(
                             widget.product.satuanHargaCash, widget.product.qty),
