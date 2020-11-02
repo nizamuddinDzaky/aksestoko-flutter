@@ -20,6 +20,11 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
   }
 
   Future<void> actionRefresh() async {
+    final SelectProductController controller = Get.find();
+    controller?.clearCart();
+    listProduct = [];
+    listCart = [];
+    setState(() {});
     await getDataProduct();
     getDataCart();
     return Future.value();
@@ -34,7 +39,6 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListProduct,
         params: params, onBefore: (status) {
-//      Get.back();
     }, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       List<Product> newListProduct = baseResponse?.data?.listProduct ?? [];
@@ -61,14 +65,15 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
         onSuccess: (data, flag) {
           var baseResponse = BaseResponse.fromJson(data);
           var newListCart = baseResponse?.data?.listCart ?? [];
-          listCart.clear();
-          listCart.addAll(newListCart);
+          listCart?.clear();
+          listCart?.addAll(newListCart);
           buildCart();
-    }, onFailed: (title, message) {
-      // Get.defaultDialog(title: title, content: Text(message));
-    }, onError: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+        },
+        onFailed: (title, message) {},
+        onError: (title, message) {
+          Get.defaultDialog(title: title, content: Text(message));
+        },
+        onAfter: (status) {});
     setState(() {
       status.execute();
     });
@@ -78,10 +83,12 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
 
   void buildCart() {
     final SelectProductController controller = Get.find();
+    controller?.clearCart();
     if (listCart != null && listProduct != null) {
       listCart.forEach((cart) {
         listProduct.forEach((product) {
           if (cart.productId == product.productId) {
+            product.idCart = cart.itemCartId;
             debugPrint("product => ${product.productId}");
             controller.addToCart(product, customQty: cart.qty.toDouble());
           }

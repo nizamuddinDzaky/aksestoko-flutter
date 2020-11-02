@@ -102,9 +102,10 @@ class _ListProductScreenState extends State<ListProductScreen> {
                     height: 30,
                     width: 30,
                     child: FittedBox(
-                      child: FloatingActionButton(
-                        heroTag: "btnMinus${_product.nama}",
-                        backgroundColor: Color(0xFF387C2B),
+                      child: MaterialButton(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(8),
+                        color: Color(0xFF387C2B),
                         onPressed: () {
                           int currentValue =
                               (_product.qty != null ? _product.qty : 0).toInt();
@@ -117,7 +118,8 @@ class _ListProductScreenState extends State<ListProductScreen> {
                             _showAlertDialog(context, controller, _product);
                           }
                         },
-                        child: Icon(Icons.remove),
+                        child:
+                            Icon(Icons.remove, size: 54, color: Colors.white),
                       ),
                     ),
                   ),
@@ -150,18 +152,19 @@ class _ListProductScreenState extends State<ListProductScreen> {
                     height: 30,
                     width: 30,
                     child: FittedBox(
-                      child: FloatingActionButton(
-                        heroTag: "btnPlus${_product.nama}",
-                        backgroundColor: Color(0xFF387C2B),
+                      child: MaterialButton(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(8),
+                        color: Color(0xFF387C2B),
                         onPressed: () {
                           int currentValue =
-                              (_product.qty != null ? _product.qty : 0).toInt();
+                          (_product.qty != null ? _product.qty : 0).toInt();
                           currentValue++;
                           controller.addToCart(_product,
                               customQty: currentValue.toDouble());
                           _controller.text = (currentValue).toString();
                         },
-                        child: Icon(Icons.add),
+                        child: Icon(Icons.add, size: 54, color: Colors.white),
                       ),
                     ),
                   ),

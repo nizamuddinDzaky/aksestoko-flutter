@@ -11,6 +11,7 @@ class Product {
   String productCode;
   double productPrice;
   double totalPrice;
+  int idCart;
 
   Product({
     this.nama,
