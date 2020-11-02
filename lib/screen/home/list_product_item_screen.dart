@@ -25,12 +25,32 @@ class _ListProductScreenState extends State<ListProductScreen> {
   final SelectProductController controller;
   final SelectProductViewModel vm;
   final Product _product;
+  FocusNode _focusNode = FocusNode();
 
   _ListProductScreenState(this._product, this.controller, this.vm);
+
+  _actionUpdateData() {
+    if (!_focusNode.hasFocus) {
+      double newValue = double.tryParse(_controller.text ?? 0.0) ?? 0.0;
+      _product.countChange = 1;
+      controller.addToCart(_product, customQty: newValue);
+    } else {
+      controller?.currentFocus = _focusNode;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _focusNode?.addListener(() {
+      _actionUpdateData();
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode?.dispose();
+    super.dispose();
   }
 
   @override
@@ -127,6 +147,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   Expanded(
                     child: Container(
                       child: TextFormField(
+                        focusNode: _focusNode,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,

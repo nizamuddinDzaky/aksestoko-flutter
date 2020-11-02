@@ -12,6 +12,7 @@ class SelectProductController extends GetController {
   static SelectProductController get to => Get.find();
   List<Product> listCart;
   String promoCode;
+  FocusNode currentFocus;
 
   void addToCart(Product p, {double qty = 1, double customQty}) {
     if (listCart == null) listCart = [];

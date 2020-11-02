@@ -100,7 +100,11 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     setState(() {});
   }
 
-  void confirm(SelectProductController vm, _alertDialog()) {
+  void confirm(SelectProductController vm, _alertDialog()) async {
+    if (vm.currentFocus != null) {
+      vm.currentFocus?.unfocus();
+      await Future.delayed(Duration(milliseconds: 200));
+    }
     if (vm.listCart == null || vm.listCart.length < 1) {
       _alertDialog();
     } else {
