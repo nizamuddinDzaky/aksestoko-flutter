@@ -206,9 +206,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                       onPressed: () {
                         Get.toNamed(selectDistributorScreen).then((result) {
                           if (result != null) {
-                            controller?.clearCart();
-                            getDataProduct();
-                            getDataCart();
+                            actionRefresh();
                           }
                         });
                       },
