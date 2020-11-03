@@ -10,6 +10,7 @@ import 'package:aksestokomobile/screen/login/forgot_password_screen.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/screen/login/register_screen.dart';
 import 'package:aksestokomobile/screen/login/otp_screen.dart';
+import 'package:aksestokomobile/screen/order/add_payment_screen.dart';
 import 'package:aksestokomobile/screen/splash_screen.dart';
 import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
@@ -43,6 +44,7 @@ const detailOrderScreen = "/DetailOrderScreen";
 const detailPromo = "/DetailPromoScreen";
 const confirmationAcceptScreen ="/ConfirmationAcceptScreen";
 const detailPaymentScreen = "/DetailPaymentScreen";
+const addPaymentScreen = "/AddPaymentScreen";
 const updateProfileScreen = "/UpdateProfileScreen";
 const listAddressScreen = "/ListAddressScreen";
 const addAddressScreen = "/AddAddressScreen";
@@ -63,6 +65,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: ParentScreen(),
+        );
+        case addPaymentScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: AddPaymentScreen(),
         );
       case successScreen:
         return GetRouteBase(

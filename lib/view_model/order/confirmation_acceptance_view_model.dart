@@ -59,20 +59,20 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
 
   postConfirmDelivery() async{
     var body = {
-      "purchase_id" : detailPemesanan.idPemesanan,
+      "id_pemesanan" : detailPemesanan.idPemesanan,
       "date" : DateTime.now().toStr(),
-      "do_id" : detailDelivery.idDelivery,
+      "id_pengiriman" : detailDelivery.idDelivery,
       "file" : base64File,
-      "supplier_id" : MyPref.getIdDistributor(),
-      "products" : detailDelivery.listItemDetailDelivery.map((item) {
+      "id_distributor" : MyPref.getIdDistributor(),
+      "produk" : detailDelivery.listItemDetailDelivery.map((item) {
         return {
-          'product_id': item.idProduct,
-          'product_name' : item.namaProduct,
-          'product_code' : item.kodeProduct,
-          'quantity_received' : item.jumlah,
+          'id_produk': item.idProduct,
+          'nama_produk' : item.namaProduct,
+          'kode_produk' : item.kodeProduct,
+          'quantity_diterima' : item.jumlah,
           'delivery_item_id' : item.deliveryItemId,
-          'good' : item.baik ?? item.jumlah,
-          'bad': item.buruk ?? 0,
+          'baik' : item.baik ?? item.jumlah,
+          'buruk': item.buruk ?? 0,
         };
       }).toList(),
     };

@@ -122,9 +122,9 @@ class DetailPemesanan {
   String statusPemesanan;
   String notifikasiPembayaran;
   String statusPembayaran;
-  Null urlInvoice;
+  String urlInvoice;
   bool konfirmasiPembayaran;
-  Null daftarPembayaran;
+  bool daftarPembayaran;
 
   DetailPemesanan(
       {this.idPemesanan,

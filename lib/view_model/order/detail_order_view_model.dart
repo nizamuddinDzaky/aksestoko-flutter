@@ -40,7 +40,7 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
 
   void putCancelOrder(String idPurchase) async {
     var body = {
-      'purchase_id': idPurchase,
+      'id_pemesanan': idPurchase,
     };
     var status = await ApiClient.methodPut(ApiConfig.urlCancelOrder, body, {},
         onBefore: (status) {

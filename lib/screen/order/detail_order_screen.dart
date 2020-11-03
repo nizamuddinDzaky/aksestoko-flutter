@@ -687,7 +687,13 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               fontSize: 14),
                         ),
                         onPressed: () {
-                          // createAlertDialog(context);
+                          Get.toNamed(addPaymentScreen, arguments: orderDetail.detailPemesanan.idPemesanan).then((value) {
+                            if(value != null && value){
+                              getListOrder();
+                            }
+                          }
+
+                          );
                         },
                       ),
                     )

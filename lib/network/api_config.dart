@@ -1,7 +1,7 @@
 class ApiConfig {
-  // static String host = 'http://10.15.4.102:9090/';
+  static String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
-  static String host = 'https://qp.forca.id/';
+  // static String host = 'https://qp.forca.id/';
   static String path = '${host}api/v1/retailer/';
   static String local = '${host}api/Local/';
 
@@ -22,20 +22,24 @@ class ApiConfig {
   static String urlDetailSalesPerson = '${path}Profile/detail_sales_person';
 
   //promo
-  static String urlListPromo = '${path}Order/list_promo';
+  static String urlListPromo = '${path}Purchase/list_promo';
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
   static String urlListOrder = '${path}Purchase/list_order';
   static String urlDetailOrder = '${path}Purchase/detail_order';
 
-  static String urlCancelOrder = '${path}order/cancel_order';
-  static String urlConfirmDelivery = '${path}order/confirm_delivery';
+  static String urlCancelOrder = '${path}Purchase/cancel_order';
+  static String urlConfirmDelivery = '${path}Purchase/confirm_delivery';
 
   static String urlDetailCheckout = '${path}Purchase/detail_checkout';
-  static String urlListPayment = '${path}Purchase/list_payment';
   static String urlActionOrder = '${path}Purchase/action_checkout';
   static String urlShipmentPrice = '${path}Purchase/shipment_group_price';
+
+  //payment
+  static String urlListPayment = '${path}Purchase/list_payment';
+  static String urlDetailAddPayment = '${path}Purchase/detail_payment';
+  static String urlAddPayment = '${path}Purchase/add_payment';
 
   //address
   static String urlListProvinsi = '${path}get_list_province.php';

@@ -183,10 +183,10 @@ class ListBank {
   ListBank({this.noRek, this.nama, this.logoBank, this.bankId, this.bankName});
 
   ListBank.fromJson(Map<String, dynamic> json) {
-    noRek = json['no_rek'];
+    noRek = json['no_rek'] ?? json['no_rekening'];
     nama = json['nama'];
     logoBank = json['logo_bank'];
-    bankId = json['bank_id'];
+    bankId = json['bank_id'] ?? json['id'];
     bankName = json['bank_name'];
   }
 
