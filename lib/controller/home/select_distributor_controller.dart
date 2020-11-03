@@ -17,8 +17,9 @@ abstract class SelectDistributorController
     MyPref.setIdDristributor(distributor.id);
     MyPref.setCustomerGroupId(distributor.customerGroupId);
     MyPref.setPriceGroupId(distributor.priceGroupId);
-    MyPref.setDisributorName(distributor.nama);
+    MyPref.setDisributorName(distributor.namaPrincipal);
     MyPref.setDisributorCode(distributor.kode);
+    MyPref.setMap('distributor', distributor.toJson());
     if (!MyPref.isIdDistributorExist()) {
       Get.offNamed(parentScreen);
     } else {

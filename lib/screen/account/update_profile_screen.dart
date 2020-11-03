@@ -59,13 +59,13 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Lorem Ipsum",
+                        profile?.namaToko ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 4)),
                       Text(
-                        "IDC-123456789",
+                        profile?.kodeBk ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -79,7 +79,8 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => firstName = value,
+                                controller: firstNameTextController,
+                                onSaved: (value) => profile?.namaDepan = value,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
@@ -108,7 +109,9 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => lastName = value,
+                                controller: lastNameTextController,
+                                onSaved: (value) =>
+                                    profile?.namaBelakang = value,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
@@ -137,7 +140,8 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => email = value,
+                                controller: emailTextController,
+                                onSaved: (value) => profile?.email = value,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
@@ -166,8 +170,9 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => tlp = value,
-                                keyboardType: TextInputType.text,
+                                controller: phoneTextController,
+                                onSaved: (value) => profile?.noTlp = value,
+                                keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
                                   labelText: 'No. Telepon',
@@ -203,7 +208,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                     'Simpan',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: putUpdateProfile,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                       new BorderRadius.circular(30.0))),

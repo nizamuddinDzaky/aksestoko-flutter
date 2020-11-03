@@ -7,8 +7,10 @@ import 'package:get/get.dart';
 
 class ListAddress extends StatefulWidget {
   final Alamat address;
+  final VoidCallback onDelete;
+  final VoidCallback onUpdate;
 
-  ListAddress(this.address);
+  ListAddress(this.address, this.onDelete, this.onUpdate);
 
   _ListAddressState createState() => _ListAddressState();
 }
@@ -22,6 +24,9 @@ class _ListAddressState extends State<ListAddress> {
     ];
     List<String> line2 = [
       widget.address?.address,
+      widget.address?.addressState,
+      widget.address?.addressCity,
+      widget.address?.addressCountry,
       widget.address?.addressPostalCode,
     ];
     return Container(
@@ -56,7 +61,7 @@ class _ListAddressState extends State<ListAddress> {
                       ),
                     ),
                     Text(
-                      "{{Nama Toko}}",
+                      widget?.address?.addressCompany ?? '',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -71,7 +76,7 @@ class _ListAddressState extends State<ListAddress> {
                           size: 22,
                           color: MyColor.redAT,
                         ),
-                        onPressed: () {},
+                        onPressed: widget.onDelete,
                       ),
                     ),
                   ],
@@ -101,9 +106,7 @@ class _ListAddressState extends State<ListAddress> {
                   color: MyColor.redAT,
                 ),
               ),
-              onPressed: () {
-                Get.to(EditAlamatScreen(widget.address));
-              },
+              onPressed: widget.onUpdate,
             ),
           ),
         ],

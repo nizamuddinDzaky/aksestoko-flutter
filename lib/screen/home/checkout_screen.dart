@@ -6,6 +6,7 @@ import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -146,48 +147,49 @@ class _CheckoutScreenState extends CheckoutViewModel {
               ),
             ),
             MyDivider.spaceDividerLogin(custom: 10),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                      color: MyColor.redAT,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: FlatButton(
-                      child: Text(
-                        "Ganti Alamat",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
+            if (kDebugMode)
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      decoration: BoxDecoration(
+                        color: MyColor.redAT,
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      onPressed: () =>
-                          _dialogListAddress(context).then((value) {
-                        setState(() {
-                          if (value == null) return;
-                          address.namaPenerima =
-                              value?.namaPenerima ?? address.namaPenerima;
-                          address.email = value?.email ?? address.email;
-                          address.noTlpn = value?.noTlpn ?? address.noTlpn;
-                          address.alamat = value?.alamat ?? address.alamat;
-                          address.provinceName =
-                              value?.provinceName ?? address.provinceName;
-                          address.kabupatenName =
-                              value?.kabupatenName ?? address.kabupatenName;
-                          address.kecamatanName =
-                              value?.kecamatanName ?? address.kecamatanName;
-                        });
-                      }),
+                      child: FlatButton(
+                        child: Text(
+                          "Ganti Alamat",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                        onPressed: () =>
+                            _dialogListAddress(context).then((value) {
+                              setState(() {
+                                if (value == null) return;
+                                address.namaPenerima =
+                                    value?.namaPenerima ?? address.namaPenerima;
+                                address.email = value?.email ?? address.email;
+                                address.noTlpn = value?.noTlpn ?? address.noTlpn;
+                                address.alamat = value?.alamat ?? address.alamat;
+                                address.provinceName =
+                                    value?.provinceName ?? address.provinceName;
+                                address.kabupatenName =
+                                    value?.kabupatenName ?? address.kabupatenName;
+                                address.kecamatanName =
+                                    value?.kecamatanName ?? address.kecamatanName;
+                              });
+                            }),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
             Container(
               height: 3,
               color: Color(0xffEAEAEA),

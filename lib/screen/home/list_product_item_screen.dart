@@ -99,7 +99,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                '${_product.kodeUnit}',
+                _product.kodeUnit ?? '',
                 style: TextStyle(
                   color: Color(0xff999999),
                   fontWeight: FontWeight.bold,

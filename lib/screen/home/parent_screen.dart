@@ -15,27 +15,15 @@ class ParentScreen extends StatefulWidget {
   _ParentScreenState createState() => _ParentScreenState();
 }
 
-class _ParentScreenState extends State<ParentScreen>
-    with SingleTickerProviderStateMixin {
-  int _currentIndex = 0;
-  final tabs = [
-    selectProduct.SelectProductScreen(),
-    listPromo.ListPromoScreen(),
-    historyOrder.HistoryOrderScreen(),
-    Account.AccountScreen(),
-  ];
-  TabController controller;
+class _ParentScreenState extends State<ParentScreen> {
+  int selectedPage;
+  PageController _myPage;
 
   @override
   void initState() {
-    controller = TabController(vsync: this, length: 3);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
+    selectedPage = 0;
+    _myPage = PageController(initialPage: selectedPage);
   }
 
   @override
@@ -45,7 +33,16 @@ class _ParentScreenState extends State<ParentScreen>
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: tabs[_currentIndex],
+        child: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _myPage,
+          children: <Widget>[
+            selectProduct.SelectProductScreen(),
+            listPromo.ListPromoScreen(),
+            historyOrder.HistoryOrderScreen(),
+            Account.AccountScreen(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -69,11 +66,12 @@ class _ParentScreenState extends State<ParentScreen>
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         iconSize: 25,
-        currentIndex: _currentIndex,
+        currentIndex: selectedPage,
         selectedItemColor: MyColor.redAT,
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            _myPage.jumpToPage(index);
+            selectedPage = index;
           });
         },
       ),

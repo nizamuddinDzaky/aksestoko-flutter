@@ -1,4 +1,9 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/model/base_response.dart';
+import 'package:aksestokomobile/model/profile.dart';
+import 'package:aksestokomobile/model/sales_person.dart';
+import 'package:aksestokomobile/network/api_client.dart';
+import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +16,37 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  Profile profile;
+  SalesPerson salesPerson;
+
+  getSalesPerson() async {
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlDetailProfile,
+      onSuccess: (data, flag) {
+        var response = BaseResponse.fromJson(data);
+        profile = response?.data?.profile;
+        salesPerson = response?.data?.salesPerson;
+        MyPref.setMap('profile', profile?.toJson());
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('re init state');
+    profile = Profile.fromJson(MyPref.getMap('profile'));
+    if (profile?.namaToko == null) {
+      getSalesPerson();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    profile = Profile.fromJson(MyPref.getMap('profile'));
 
     var formLayout = Scaffold(
       body: SingleChildScrollView(
@@ -75,16 +109,18 @@ class _AccountScreenState extends State<AccountScreen> {
                   Center(
                     child: Container(
                       child: Text(
-                        "Lorem Ipsum",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        profile?.namaToko ?? '',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
                   Center(
                     child: Container(
                       child: Text(
-                        "youremail@mail.com",
-                        style: TextStyle(fontSize: 20, color: MyColor.greyTextAT),
+                        profile?.email ?? '',
+                        style:
+                            TextStyle(fontSize: 20, color: MyColor.greyTextAT),
                       ),
                     ),
                   ),
@@ -100,8 +136,10 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: (){
-                                Get.toNamed(updateProfileScreen);
+                              onPressed: () {
+                                Get.toNamed(updateProfileScreen).then((value) {
+                                  setState(() {});
+                                });
                               },
                               icon: Icon(Icons.account_circle),
                               label: Text(
@@ -151,9 +189,10 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: () {
-                                Get.toNamed(changePasswordScreen);
-                              },
+                              // onPressed: () {
+                              //   Get.toNamed(changePasswordScreen);
+                              // },
+                              onPressed: null,
                               icon: Icon(Icons.settings),
                               label: Text(
                                 "Ganti Password",

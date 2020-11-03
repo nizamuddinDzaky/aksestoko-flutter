@@ -41,7 +41,6 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 60, right: 60, top: 50),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -59,6 +58,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                 ],
               ),
               child: SingleChildScrollView(
+                padding: EdgeInsets.only(left: 60, right: 60, top: 50),
                 child: Column(
                   children: <Widget>[
                     Form(
@@ -68,9 +68,10 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address?.namaPenerima,
-                              onSaved: (value) =>
-                                  {vm.saveForm(namaPenerima: value)},
+                              controller: nameTextController,
+                              onSaved: (value) {
+                                saveForm(namaPenerima: value);
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -82,11 +83,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                 ),
                                 errorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.txtField),
+                                  BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.lineTxtField),
+                                  BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Nama Penerima',
                                 errorStyle: TextStyle(
@@ -99,8 +100,10 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address?.email,
-                              onSaved: (value) => {vm.saveForm(email: value)},
+                              controller: emailTextController,
+                              onSaved: (value) {
+                                saveForm(email: value);
+                              },
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -112,11 +115,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                 ),
                                 errorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.txtField),
+                                  BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.lineTxtField),
+                                  BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Email Anda',
                                 errorStyle: TextStyle(
@@ -129,9 +132,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address?.noTlpn,
-                              onSaved: (value) => {vm.saveForm(noTlpn: value)},
-                              keyboardType: TextInputType.text,
+                              controller: phoneTextController,
+                              onSaved: (value) {
+                                saveForm(noTlpn: value);
+                              },
+                              keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'No. Telepon',
@@ -146,10 +151,10 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.lineTxtField),
+                                  BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText:
-                                    'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                                'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
                                 errorStyle: TextStyle(
                                   color: MyColor.redAT,
                                   fontStyle: FontStyle.italic,
@@ -160,8 +165,10 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address?.alamat,
-                              onSaved: (value) => {vm.saveForm(alamat: value)},
+                              controller: addressTextController,
+                              onSaved: (value) {
+                                saveForm(alamat: value);
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -173,11 +180,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                 ),
                                 errorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.txtField),
+                                  BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.lineTxtField),
+                                  BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Alamat Anda',
                                 errorStyle: TextStyle(
@@ -190,12 +197,9 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              initialValue: address?.kodePos?.toString(),
-                              onSaved: (value) => {
-                                vm.saveForm(
-                                    kodePos: value == null || value == ''
-                                        ? 0
-                                        : int.parse(value))
+                              controller: postalCodeTextController,
+                              onSaved: (value) {
+                                saveForm(kodePos: value);
                               },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
@@ -208,11 +212,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                 ),
                                 errorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.txtField),
+                                  BorderSide(color: MyColor.txtField),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: MyColor.lineTxtField),
+                                  BorderSide(color: MyColor.lineTxtField),
                                 ),
                                 errorText: 'Masukan Kode Pos',
                                 errorStyle: TextStyle(
@@ -227,24 +231,19 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
+                                  child: DropdownSearch<Zona>(
                                     items: province,
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
-                                    onChanged: (Zone data) =>
-                                        searchKabupaten(data),
-                                    onSaved: (Zone data) => {
-                                      vm.saveForm(
-                                          provinceName: data.name,
-                                          provinceId: data.id)
-                                    },
+                                    onChanged: (Zona data) => setZona(data, 1),
                                     selectedItem: selectProvince,
                                     showSearchBox: true,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona prov) =>
+                                    prov.provinceName,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
-                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Provinsi",
                                     ),
                                   ),
@@ -257,24 +256,19 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
+                                  child: DropdownSearch<Zona>(
                                     items: district,
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
-                                    onChanged: (Zone data) =>
-                                        searchKecamatan(data),
-                                    onSaved: (Zone data) => {
-                                      vm.saveForm(
-                                          kabupatenName: data.name,
-                                          kabupatenId: data.id)
-                                    },
+                                    onChanged: (Zona data) => setZona(data, 2),
                                     showSearchBox: true,
                                     selectedItem: selectDistrict,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona kab) =>
+                                    kab.kabupatenName,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
-                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Kabupaten",
                                     ),
                                   ),
@@ -287,23 +281,19 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
+                                  child: DropdownSearch<Zona>(
                                     items: subDistrict,
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
-                                    onChanged: (Zone data) => searchDesa(data),
-                                    onSaved: (Zone data) => {
-                                      vm.saveForm(
-                                          kecamatanName: data.name,
-                                          kecamatanId: data.id)
-                                    },
+                                    onChanged: (Zona data) => setZona(data, 3),
                                     selectedItem: selectSubDistrict,
                                     showSearchBox: true,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona kec) =>
+                                    kec.kecamatanName,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
-                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Kecamatan",
                                     ),
                                   ),
@@ -316,24 +306,19 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
+                                  child: DropdownSearch<Zona>(
                                     items: village,
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
-                                    onChanged: (Zone data) =>
-                                        {selectVillage = data},
-                                    onSaved: (Zone data) => {
-                                      vm.saveForm(
-                                          kecamatanName: data.name,
-                                          kecamatanId: data.id)
-                                    },
+                                    onChanged: (Zona data) => setZona(data, 4),
                                     selectedItem: selectVillage,
                                     showSearchBox: true,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona desa) =>
+                                        desa.idWilayah.toString(),
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
-                                          EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Desa",
                                     ),
                                   ),
@@ -352,11 +337,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
-                                  vm.actionSubmit(context);
+                                  actionSubmit(context);
                                 },
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
-                                        new BorderRadius.circular(30.0))),
+                                    new BorderRadius.circular(30.0))),
                           ),
                           Padding(padding: EdgeInsets.only(top: 30)),
                         ],
@@ -395,10 +380,4 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
       ],
     );
   }
-
-  searchKabupaten(Zone data) {}
-
-  searchKecamatan(Zone data) {}
-
-  searchDesa(Zone data) {}
 }

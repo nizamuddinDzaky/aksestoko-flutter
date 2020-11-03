@@ -17,6 +17,7 @@ class SelectProductScreen extends StatefulWidget {
 class _SelectProductScreenState extends SelectProductViewModel {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GetBuilder<SelectProductController>(
         init: SelectProductController(),
         builder: (vm) => Scaffold(
@@ -28,10 +29,29 @@ class _SelectProductScreenState extends SelectProductViewModel {
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),
                   child: TextField(
+                    controller: searchTextController,
                     style: TextStyle(textBaseline: TextBaseline.alphabetic),
+                    onSubmitted: (query) {
+                      searchProduct(query);
+                    },
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(top: 15.0),
                       hintText: 'Cari Produk',
+                      suffixIcon: listSearch == null
+                          ? null
+                          : InkWell(
+                        onTap: () {
+                          setState(() {
+                            searchTextController.clear();
+                            listSearch = null;
+                            FocusScope.of(context).unfocus();
+                          });
+                        },
+                        child: Icon(
+                          Icons.highlight_remove_outlined,
+                          color: Colors.grey,
+                        ),
+                      ),
                       prefixIcon: Icon(
                         Icons.search,
                         color: Colors.grey,
@@ -134,7 +154,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 ),
               ),
               floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
+              FloatingActionButtonLocation.centerDocked,
             ));
   }
 
@@ -154,7 +174,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
       ),
       padding: EdgeInsets.only(top: 10, bottom: 16),
       physics: NeverScrollableScrollPhysics(),
-      itemCount: listProduct.length,
+      itemCount: listFilter.length,
       itemBuilder: (context, index) =>
           ListProductScreen(listProduct[index], controller, this),
     );
@@ -189,13 +209,19 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 Row(
                   children: <Widget>[
                     Flexible(
-                      child: Text(
-                        MyPref.getDistributorName().isNotEmpty
-                            ? MyPref.getDistributorName()
-                            : "Silahkan Pilih Distributor",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
+                      child: CupertinoButton(
+                        onPressed: showDetailDistributor,
+                        padding: EdgeInsets.zero,
+                        child: Text(
+                          MyPref
+                              .getDistributorName()
+                              .isNotEmpty
+                              ? MyPref.getDistributorName()
+                              : "Silahkan Pilih Distributor",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),

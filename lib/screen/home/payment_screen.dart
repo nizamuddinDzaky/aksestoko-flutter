@@ -34,7 +34,7 @@ class _PaymentScreenState extends PaymentController {
             bottom: 8,
           ),
           child: ChoiceChip(
-            backgroundColor: colorBank[index],
+            backgroundColor: colorBank[index % colorBank.length],
             labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             label: Text(
               listBank[index]?.bankName?.toUpperCase() ?? '',
@@ -54,7 +54,7 @@ class _PaymentScreenState extends PaymentController {
                     ),
             ),
             selected: indexBank[indexPayment] == index,
-            selectedColor: colorBank[index],
+            selectedColor: colorBank[index % colorBank.length],
             onSelected: (bool selected) {
               if (!selected) return;
               setState(() {

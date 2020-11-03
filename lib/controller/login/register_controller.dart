@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/customer.dart';
 import 'package:aksestokomobile/model/principal.dart';
@@ -63,11 +64,13 @@ abstract class RegisterController extends State<RegisterScreen> {
   }
 
   _dialogSuccess() {
+    Get.until((route) => route.settings.name == loginScreen);
     showDialog(
       context: context,
       builder: (BuildContext context) => new CupertinoAlertDialog(
-        title: new Text("Berhasil"),
-        content: new Text("Cek email Anda dan ikuti langkah berikutnya."),
+        title: new Text("Berhasil Dikirim"),
+        content:
+            new Text("Cek informasi aktivasi dan ikuti langkah berikutnya."),
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
@@ -142,8 +145,10 @@ abstract class RegisterController extends State<RegisterScreen> {
         Get.back();
       },
       onSuccess: (data, _) {
-        Get.back();
-        _dialogSuccess();
+        if (data == null) return;
+        if (data['data'] == null) return;
+        if (data['data']['user_id'] == null) return;
+        onSuccessSubmit(data['data']['user_id']);
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -255,5 +260,68 @@ abstract class RegisterController extends State<RegisterScreen> {
     lastNameTextController.text = customer?.lastname;
     emailTextController.text = customer?.email;
     phoneTextController.text = customer?.handphone;
+  }
+
+  onSuccessSubmit(userId) {
+    Get.defaultDialog(
+      title: 'Kirim Kode Aktivasi',
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Kirim ke nomor telepon berikut',
+            textAlign: TextAlign.center,
+          ),
+          TextFormField(
+            initialValue: tlp,
+            textAlign: TextAlign.center,
+            style: Theme
+                .of(context)
+                .textTheme
+                .headline5,
+            decoration: InputDecoration(
+              hintText: 'Nomor Telepon',
+            ),
+          ),
+        ],
+      ),
+      textConfirm: 'Kirim',
+      confirmTextColor: Colors.white,
+      textCancel: 'Tutup',
+      onConfirm: () {
+        _postSendCode(userId);
+      },
+    );
+  }
+
+  _postSendCode(userId) async {
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlSendCode,
+      {
+        'user_id': userId,
+        'no_tlp': tlp,
+      },
+      {},
+      customHandle: true,
+      onSuccess: (data, _) {
+        _dialogSuccess();
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+    );
+    setState(() {
+      status.execute();
+    });
   }
 }

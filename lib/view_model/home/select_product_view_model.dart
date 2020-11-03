@@ -1,19 +1,27 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/cart.dart';
+import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/screen/home/select_product.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-abstract class SelectProductViewModel extends State<SelectProductScreen> {
+abstract class SelectProductViewModel extends State<SelectProductScreen>
+    with AutomaticKeepAliveClientMixin<SelectProductScreen> {
   var needUpdate = 0;
+  var searchTextController = TextEditingController();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -34,24 +42,44 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
   }
 
   List<Product> listProduct = [];
+  List<Product> listSearch;
+
+  List<Product> get listFilter => listSearch ?? listProduct ?? [];
   List<Cart> listCart = [];
+
+  searchProduct(String query) {
+    listSearch = listProduct
+        ?.where((p) =>
+            p.nama?.toLowerCase()?.contains(query?.toLowerCase()) ?? false)
+        ?.toList();
+    setState(() {});
+  }
 
   getDataProduct() async {
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListProduct,
-        params: params, onBefore: (status) {}, onSuccess: (data, flag) {
+        params: params,
+        onBefore: (status) {},
+        customHandle: true, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       List<Product> newListProduct = baseResponse?.data?.listProduct ?? [];
       listProduct.clear();
       listProduct.addAll(newListProduct);
       buildCart();
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
+      var baseResponse = BaseResponse.fromString(message);
+      Fluttertoast.showToast(
+        msg: baseResponse.message,
+        gravity: ToastGravity.CENTER,
+      );
     }, onError: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+          Fluttertoast.showToast(
+            msg: 'Terjadi kesalahan data / koneksi',
+            gravity: ToastGravity.CENTER,
+          );
+        }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
@@ -61,21 +89,14 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
     var params = {
       'id_distributor': MyPref.getIdDistributor(),
     };
-    var status = await ApiClient.methodGet(ApiConfig.urlCart,
-        params: params,
-        onBefore: (status) {},
+    var status = await ApiClient.methodGet(ApiConfig.urlCart, params: params,
         onSuccess: (data, flag) {
           var baseResponse = BaseResponse.fromJson(data);
           var newListCart = baseResponse?.data?.listCart ?? [];
           listCart?.clear();
           listCart?.addAll(newListCart);
           buildCart();
-        },
-        onFailed: (title, message) {},
-        onError: (title, message) {
-          Get.defaultDialog(title: title, content: Text(message));
-        },
-        onAfter: (status) {});
+        });
     setState(() {
       status.execute();
     });
@@ -164,8 +185,9 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       onSuccess: (data, _) {
         if (data != null &&
             data['data'] != null &&
-            data['data']['item_cart_id'] != null) {
-          product.idCart = data['data']['item_cart_id'];
+            data['data']['id_cart'] != null) {
+          product.idCart = data['data']['id_cart'];
+          product.countChange = 0;
         }
         needUpdate--;
       },
@@ -196,5 +218,84 @@ abstract class SelectProductViewModel extends State<SelectProductScreen> {
       },
     );
     status.execute();
+  }
+
+  showDetailDistributor() {
+    var distributor = Distributor.fromJson(MyPref.getMap('distributor'));
+    debugPrint('klik ${distributor.imageUrl}');
+    Get.bottomSheet(SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 32),
+            kReleaseMode
+                ? Image.asset(kDistributor, width: 112)
+                : Container(
+              height: 100,
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: FadeInImage.assetNetwork(
+                  placeholder: kDistributor,
+                  image: distributor?.imageUrl ?? '',
+                  fit: BoxFit.cover,
+                  // width: 100,
+                  // height: 100,
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Company',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle1,
+            ),
+            Text(
+              distributor?.namaPrincipal ?? '',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6,
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Telepon',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle1,
+            ),
+            Text(
+              distributor?.noTlpn ?? '',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6,
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Alamat',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle1,
+            ),
+            Text(
+              distributor?.alamatLengkap ?? '',
+              textAlign: TextAlign.center,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6,
+            ),
+            SizedBox(height: 32),
+          ],
+        ),
+      ),
+    ));
   }
 }

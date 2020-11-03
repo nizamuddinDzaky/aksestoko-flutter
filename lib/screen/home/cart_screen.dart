@@ -69,8 +69,9 @@ class _CartScreenState extends State<CartScreen> {
       onSuccess: (data, _) {
         if (data != null &&
             data['data'] != null &&
-            data['data']['item_cart_id'] != null) {
-          product.idCart = data['data']['item_cart_id'];
+            data['data']['id_cart'] != null) {
+          product.idCart = data['data']['id_cart'];
+          product.countChange = 0;
         }
         needUpdate--;
       },
