@@ -12,6 +12,7 @@ class SelectProductController extends GetController {
   static SelectProductController get to => Get.find();
   List<Product> listCart;
   String promoCode;
+  FocusNode currentFocus;
 
   void addToCart(Product p, {double qty = 1, double customQty}) {
     if (listCart == null) listCart = [];
@@ -81,7 +82,32 @@ class SelectProductController extends GetController {
         });
     if (step == 1) {
       await _actionDelete(data);
-    } else if (step == 2) {} else if (step == 3) {} else {}
+    } else if (step == 2) {
+    } else if (step == 3) {
+    } else {}
+  }
+
+  actionAdd(Product product) async {
+    var fields = {
+      'id_distributor': MyPref.getIdDistributor(),
+      'product_id': product?.productId,
+      'quantity': product?.qty,
+    };
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlAddItemCart,
+      fields,
+      {},
+      customHandle: true,
+      onSuccess: (data, _) {
+        if (data != null &&
+            data['data'] != null &&
+            data['data']['id_cart'] != null) {
+          product.idCart = data['data']['id_cart'];
+          product.countChange = 0;
+        }
+      },
+    );
+    status.execute();
   }
 
   actionUpdate(Product product, int qty,
@@ -89,6 +115,10 @@ class SelectProductController extends GetController {
     var newQty = cusQty ?? ((product?.qty ?? 0.0) + qty);
     if (newQty < 0) {
       Fluttertoast.showToast(msg: 'Quantity tidak boleh kurang dari 0');
+      return;
+    }
+    if (product != null && product.idCart == null) {
+      actionAdd(product);
       return;
     }
     var fields = {
@@ -118,7 +148,6 @@ class SelectProductController extends GetController {
             gravity: ToastGravity.CENTER,
           );
         }
-        if (onRefresh != null) onRefresh();
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -133,20 +162,28 @@ class SelectProductController extends GetController {
           gravity: ToastGravity.CENTER,
         );
       },
-      onAfter: (status) {},
+      onAfter: (status) {
+        if (onRefresh != null) onRefresh();
+      },
     );
     status.execute();
   }
 
-  _actionDeleteFromCart(data) async {
+  _actionDeleteFromCart(Product product) async {
     SelectProductController controller = Get.find();
-    controller?.removeCart(data);
+    product?.idCart = null;
+    controller?.removeCart(product);
   }
 
-  _actionDelete(data) async {
+  _actionDelete(Product product) async {
+    if (product != null && product.idCart == null) {
+      _actionDeleteFromCart(product);
+      Get.back();
+      return;
+    }
     var fields = {
       'id_distributor': MyPref.getIdDistributor(),
-      'id_cart': data?.idCart,
+      'id_cart': product?.idCart,
     };
     var status = await ApiClient.methodPost(
       ApiConfig.urlDeleteItemCart,
@@ -157,7 +194,7 @@ class SelectProductController extends GetController {
         Get.back();
       },
       onSuccess: (data, _) {
-        _actionDeleteFromCart(data);
+        _actionDeleteFromCart(product);
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +13,17 @@ class MyPref {
   static Future<SharedPreferences> init() async {
     _prefsInstance = await _instance;
     return _prefsInstance;
+  }
+
+  static Map getMap(String key, {defValue}) {
+    return jsonDecode(
+        _prefsInstance.getString(key) ?? defValue?.toString() ?? '{}');
+  }
+
+  static Future<bool> setMap(String key, Map value) async {
+    var prefs = await _instance;
+    return prefs?.setString(key, jsonEncode(value ?? {})) ??
+        Future.value(false);
   }
 
   static String getString(String key, [String defValue]) {
@@ -43,6 +56,11 @@ class MyPref {
   //action
   static logout() {
     //setRemember(false, null);
+    [
+      'profile',
+    ].forEach((key) {
+      _prefs?.remove(key);
+    });
     setIdDristributor(null);
     setCustomerGroupId(null);
     setPriceGroupId(null);

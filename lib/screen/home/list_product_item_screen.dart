@@ -1,6 +1,10 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/product.dart';
+import 'package:aksestokomobile/network/api_client.dart';
+import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -8,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
 import 'package:aksestokomobile/util/my_util.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class ListProductScreen extends StatefulWidget {
   final Product _product;
@@ -25,12 +31,32 @@ class _ListProductScreenState extends State<ListProductScreen> {
   final SelectProductController controller;
   final SelectProductViewModel vm;
   final Product _product;
+  FocusNode _focusNode = FocusNode();
 
   _ListProductScreenState(this._product, this.controller, this.vm);
+
+  _actionUpdateData() {
+    if (!_focusNode.hasFocus) {
+      double newValue = double.tryParse(_controller.text ?? 0.0) ?? 0.0;
+      _product.countChange = 1;
+      controller.addToCart(_product, customQty: newValue);
+    } else {
+      controller?.currentFocus = _focusNode;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _focusNode?.addListener(() {
+      _actionUpdateData();
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode?.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,7 +99,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                '${_product.kodeUnit}',
+                _product.kodeUnit ?? '',
                 style: TextStyle(
                   color: Color(0xff999999),
                   fontWeight: FontWeight.bold,
@@ -127,6 +153,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   Expanded(
                     child: Container(
                       child: TextFormField(
+                        focusNode: _focusNode,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -180,6 +207,47 @@ class _ListProductScreenState extends State<ListProductScreen> {
     );
   }
 
+  _actionDelete(Product product) async {
+    if (product == null) return;
+    if (product.idCart == null) {
+      _controller.text = '0';
+      controller.removeCart(_product);
+      Get.back();
+      return;
+    }
+    var fields = {
+      'id_distributor': MyPref.getIdDistributor(),
+      'id_cart': product?.idCart,
+    };
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlDeleteItemCart,
+      fields,
+      {},
+      customHandle: true,
+      onSuccess: (data, _) {
+        _controller.text = '0';
+        controller.removeCart(_product);
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {
+        Get.back();
+      },
+    );
+    status.execute();
+  }
+
   void _showAlertDialog(BuildContext context,
       SelectProductController controller, Product _product) {
     // set up the buttons
@@ -193,9 +261,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
     Widget launchButton = FlatButton(
       child: Text("YA"),
       onPressed: () {
-        controller.removeCart(_product);
-        _controller.text = '0';
-        Navigator.of(context).pop();
+        _actionDelete(_product);
       },
     );
     // set up the AlertDialog

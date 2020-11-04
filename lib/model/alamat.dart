@@ -8,6 +8,7 @@ class Alamat {
   String addressCity;
   String addressCountry;
   String addressPostalCode;
+  bool canBeRemove;
 
   Alamat({
     this.addressId,
@@ -31,6 +32,7 @@ class Alamat {
     addressCity = json['address_city'];
     addressCountry = json['address_country'];
     addressPostalCode = json['address_postal_code'];
+    canBeRemove = json['can_be_removed'];
   }
 
   Map<String, dynamic> toJson() {

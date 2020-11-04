@@ -13,7 +13,7 @@ class AddAddressScreen extends StatefulWidget {
 }
 
 class _AddAddressScreenState extends AddressViewModel {
-  var vm;
+  // AddressController vm;
 
   Widget _formLayout() {
     return Container(
@@ -38,7 +38,6 @@ class _AddAddressScreenState extends AddressViewModel {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 60, right: 60, top: 50),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -56,17 +55,20 @@ class _AddAddressScreenState extends AddressViewModel {
                 ],
               ),
               child: SingleChildScrollView(
+                padding: EdgeInsets.only(left: 60, right: 60, top: 50),
                 child: Column(
                   children: <Widget>[
                     Form(
-                      key: vm.formKey,
+                      key: formKey,
                       child: Column(
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) =>
-                              {vm.saveForm(namaPenerima: value)},
+                              onSaved: (value) {
+                                // vm?.saveForm(namaPenerima: value);
+                                saveForm(namaPenerima: value);
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -95,7 +97,10 @@ class _AddAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => {vm.saveForm(email: value)},
+                              onSaved: (value) {
+                                // vm?.saveForm(email: value);
+                                saveForm(email: value);
+                              },
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -124,8 +129,11 @@ class _AddAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => {vm.saveForm(noTlpn: value)},
-                              keyboardType: TextInputType.text,
+                              onSaved: (value) {
+                                // vm?.saveForm(noTlpn: value);
+                                saveForm(noTlpn: value);
+                              },
+                              keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'No. Telepon',
@@ -154,7 +162,10 @@ class _AddAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) => {vm.saveForm(alamat: value)},
+                              onSaved: (value) {
+                                // vm?.saveForm(alamat: value);
+                                saveForm(alamat: value);
+                              },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -183,12 +194,9 @@ class _AddAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
-                              onSaved: (value) =>
-                              {
-                                vm.saveForm(
-                                    kodePos: value == null || value == ''
-                                        ? 0
-                                        : int.parse(value))
+                              onSaved: (value) {
+                                // vm?.saveForm(email: value);
+                                saveForm(kodePos: value);
                               },
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
@@ -220,21 +228,21 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
-                                    items: province,
+                                  child: DropdownSearch<Zona>(
+                                    items: province2,
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
-                                    onChanged: (Zone data) =>
-                                        searchKabupaten(data),
-                                    onSaved: (Zone data) =>
+                                    onChanged: (Zona data) => setZona(data, 1),
+                                    onSaved: (Zona data) =>
                                     {
-                                      vm.saveForm(
-                                          provinceName: data.name,
-                                          provinceId: data.id)
+                                      // vm.saveForm(
+                                      //     provinceName: data.name,
+                                      //     provinceId: data.id)
                                     },
-                                    selectedItem: selectProvince,
+                                    selectedItem: selectProvince2,
                                     showSearchBox: true,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona prov) =>
+                                    prov.provinceName,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -251,21 +259,21 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
-                                    items: district,
+                                  child: DropdownSearch<Zona>(
+                                    items: district2,
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
-                                    onChanged: (Zone data) =>
-                                        searchKecamatan(data),
-                                    onSaved: (Zone data) =>
+                                    onChanged: (Zona data) => setZona(data, 2),
+                                    onSaved: (Zona data) =>
                                     {
-                                      vm.saveForm(
-                                          kabupatenName: data.name,
-                                          kabupatenId: data.id)
+                                      // vm.saveForm(
+                                      //     kabupatenName: data.name,
+                                      //     kabupatenId: data.id)
                                     },
                                     showSearchBox: true,
-                                    selectedItem: selectDistrict,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    selectedItem: selectDistrict2,
+                                    itemAsString: (Zona kab) =>
+                                    kab.kabupatenName,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -282,20 +290,21 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
-                                    items: subDistrict,
+                                  child: DropdownSearch<Zona>(
+                                    items: subDistrict2,
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
-                                    onChanged: (Zone data) => searchDesa(data),
-                                    onSaved: (Zone data) =>
+                                    onChanged: (Zona data) => setZona(data, 3),
+                                    onSaved: (Zona data) =>
                                     {
-                                      vm.saveForm(
-                                          kecamatanName: data.name,
-                                          kecamatanId: data.id)
+                                      // vm.saveForm(
+                                      //     kecamatanName: data.name,
+                                      //     kecamatanId: data.id)
                                     },
-                                    selectedItem: selectSubDistrict,
+                                    selectedItem: selectSubDistrict2,
                                     showSearchBox: true,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona kec) =>
+                                    kec.kecamatanName,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -312,21 +321,22 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
-                                    items: village,
+                                  child: DropdownSearch<Zona>(
+                                    items: village2,
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
-                                    onChanged: (Zone data) =>
-                                    {selectVillage = data},
-                                    onSaved: (Zone data) =>
+                                    onChanged: (Zona data) =>
+                                    {selectVillage2 = data},
+                                    onSaved: (Zona data) =>
                                     {
-                                      vm.saveForm(
-                                          kecamatanName: data.name,
-                                          kecamatanId: data.id)
+                                      // vm.saveForm(
+                                      //     kecamatanName: data.name,
+                                      //     kecamatanId: data.id)
                                     },
-                                    selectedItem: selectVillage,
+                                    selectedItem: selectVillage2,
                                     showSearchBox: true,
-                                    itemAsString: (Zone prov) => prov.name,
+                                    itemAsString: (Zona desa) =>
+                                        desa.idWilayah.toString(),
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -350,7 +360,8 @@ class _AddAddressScreenState extends AddressViewModel {
                                 ),
                                 onPressed: () async {
                                   setState(() {
-                                    vm.actionSubmit(context);
+                                    // vm?.actionSubmit(context);
+                                    actionSubmit(context);
                                   });
                                 },
                                 shape: new RoundedRectangleBorder(
@@ -371,21 +382,27 @@ class _AddAddressScreenState extends AddressViewModel {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getProvinsi();
-    vm = Get.arguments as AddressController;
-  }
-
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getProvinsi();
+  //   vm = Get.arguments as AddressController;
+  // }
+  //
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Image.asset(
           bgLarge,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
           fit: BoxFit.cover,
         ),
         Scaffold(

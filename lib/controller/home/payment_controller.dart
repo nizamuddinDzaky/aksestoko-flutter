@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/payment_model.dart';
 import 'package:aksestokomobile/model/sales_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -28,8 +29,9 @@ abstract class PaymentController extends State<PaymentScreen> {
     'kredit_pro'
   ];
   List<Color> colorBank;
-  List<int> indexBank;
+  List<int> indexBank = [0, 0];
   int indexTempo;
+  bool isFirst = true;
 
   reInitConfig() {
     indexBank = [0, 0];
@@ -72,28 +74,38 @@ abstract class PaymentController extends State<PaymentScreen> {
   void getPaymentMethod() async {
     SalesModel salesModel = Get.arguments;
     salesModel = salesModel ?? to.salesModel;
-    var status = await ApiClient.methodGet(ApiConfig.urlListPayment,
-        params: {
-          'id_distributor': MyPref.getIdDistributor().toString(),
-          'is_checkout': 'true',
-          'delivery_method': salesModel?.delivery_method,
-        },
-        onBefore: (status) {}, onSuccess: (data, flag) {
-      paymentModel = PaymentModel.fromJson(data['data']);
-      reInitConfig();
-    }, onFailed: (title, message) {
-      Get.defaultDialog(
-              title: "Pemberitahuan",
-              content: Text("Proses tidak bisa dilanjutkan $message"),
-              textCancel: 'Tutup',
-              onCancel: () {
-                Get.back();
-              }).then((value) {
-            Get.back();
-          });
-        }, onError: (title, message) {
-          // Get.defaultDialog(title: title, content: Text(message));
-        }, onAfter: (status) {});
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlListPayment,
+      params: {
+        'id_distributor': MyPref.getIdDistributor().toString(),
+        'is_checkout': 'true',
+        'delivery_method': salesModel?.delivery_method,
+      },
+      customHandle: true,
+      onBefore: (status) {
+        isFirst = false;
+      },
+      onSuccess: (data, flag) {
+        paymentModel = PaymentModel.fromJson(data['data']);
+        reInitConfig();
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Get.defaultDialog(
+            title: "Pemberitahuan",
+            content: Text(response?.message),
+            textCancel: 'Tutup',
+            onCancel: () {
+              Get.back();
+            }).then((value) {
+          Get.back();
+        });
+      },
+      onError: (title, message) {
+        // Get.defaultDialog(title: title, content: Text(message));
+      },
+      onAfter: (status) {},
+    );
     setState(() {
       status.execute();
     });

@@ -4,7 +4,6 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 
 class SuccessScreen extends StatefulWidget {
@@ -174,7 +173,7 @@ class _SuccessScreenState extends SuccessViewModel {
                       fontSize: 14),
                 ),
                 onPressed: () {
-                  Get.toNamed(parentScreen);
+                  Get.back(result: -1);
                 },
               ),
             ),

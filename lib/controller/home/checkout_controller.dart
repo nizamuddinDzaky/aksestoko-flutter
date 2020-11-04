@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/address.dart';
+import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/checkout_model.dart';
 import 'package:aksestokomobile/model/order_response.dart';
 import 'package:aksestokomobile/model/sales_model.dart';
@@ -53,21 +54,13 @@ class CheckoutController extends GetController {
   }
 
   postActionOrder(body) async {
-    // var json =
-    //     '{"status":"success","code":200,"message":"Berhasil melakukan pembuatan pesanan","request_time":"2020-10-26 13:33:57","response_time":"2020-10-26 13:33:57","rows":6,"data":{"sale_id":103368,"purchase_id":28124,"id_pemesanan":"SALE\/AT\/2020\/10\/0005","cara_pembayaran":"Bayar Sebelum Dikirim","bank ":"BNI","no_rekening ":"123456789a\/nSolusi Bangun Indonesia"}}';
-    // var orderResponse = OrderResponse.fromJson(jsonDecode(json)['data']);
-    // Get.offNamedUntil(
-    //   successScreen,
-    //   (route) => route.settings.name == parentScreen,
-    //   arguments: orderResponse,
-    // );
-    // debugPrint('orderResponse ${orderResponse?.toJson()}');
     var status = await ApiClient.methodPost(ApiConfig.urlActionOrder, body, {},
-        onBefore: (status) {}, onSuccess: (data, _) {
+        customHandle: true, onBefore: (status) {}, onSuccess: (data, _) {
       var orderResponse = OrderResponse.fromJson(data['data']);
       if (orderResponse != null) {
-        Get.toNamed(
+        Get.offNamedUntil(
           successScreen,
+          (route) => route.settings.name == parentScreen,
           arguments: orderResponse,
         );
       } else {
@@ -77,7 +70,11 @@ class CheckoutController extends GetController {
         );
       }
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text('Gagal'));
+      var response = BaseResponse.fromString(message);
+      Get.defaultDialog(
+        title: 'Operasi Gagal',
+        content: Text(response.message ?? 'Gagal'),
+      );
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text('Error'));
     }, onAfter: (status) {});

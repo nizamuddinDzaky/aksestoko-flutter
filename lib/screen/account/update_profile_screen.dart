@@ -12,6 +12,8 @@ class UpdateProfileScreen extends StatefulWidget {
 class _UpdateProfileScreenState extends UpdateProfileController {
   @override
   Widget build(BuildContext context) {
+    var colorVerified =
+        (profile?.isVerified ?? false) ? Colors.green : Colors.red;
     var formLayout = Container(
       child: Column(
         children: <Widget>[
@@ -22,7 +24,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
               children: <Widget>[
                 Center(
                   child: Text(
-                    "Perbarui Profile",
+                    "Perbarui Profil",
                     style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,
@@ -59,13 +61,13 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Lorem Ipsum",
+                        profile?.namaToko ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 4)),
                       Text(
-                        "IDC-123456789",
+                        profile?.kodeBk ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -79,7 +81,8 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => firstName = value,
+                                controller: firstNameTextController,
+                                onSaved: (value) => profile?.namaDepan = value,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
@@ -108,7 +111,9 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => lastName = value,
+                                controller: lastNameTextController,
+                                onSaved: (value) =>
+                                profile?.namaBelakang = value,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
@@ -137,7 +142,8 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: TextFormField(
-                                onSaved: (value) => email = value,
+                                controller: emailTextController,
+                                onSaved: (value) => profile?.email = value,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
@@ -165,32 +171,59 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                             ),
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
-                              child: TextFormField(
-                                onSaved: (value) => tlp = value,
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  contentPadding: MyDimen.paddingTxtField(),
-                                  labelText: 'No. Telepon',
-                                  labelStyle: TextStyle(
-                                    color: MyColor.txtField,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                              child: Stack(
+                                children: [
+                                  TextFormField(
+                                    controller: phoneTextController,
+                                    onSaved: (value) => profile?.noTlp = value,
+                                    keyboardType: TextInputType.phone,
+                                    decoration: InputDecoration(
+                                      contentPadding: MyDimen.paddingTxtField(),
+                                      labelText: 'No. Telepon',
+                                      labelStyle: TextStyle(
+                                        color: MyColor.txtField,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide:
+                                        BorderSide(color: MyColor.txtField),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColor.lineTxtField),
+                                      ),
+                                      errorText:
+                                      'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                                      errorStyle: TextStyle(
+                                        color: MyColor.redAT,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
                                   ),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: MyColor.txtField),
-                                  ),
-                                  focusedErrorBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: MyColor.lineTxtField),
-                                  ),
-                                  errorText:
-                                  'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
-                                  errorStyle: TextStyle(
-                                    color: MyColor.redAT,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
+                                  Positioned(
+                                    top: -4,
+                                    right: 0,
+                                    child: Row(
+                                      children: [
+                                        if (profile?.phoneIsVerified != null)
+                                          Icon(
+                                            (profile?.isVerified == true)
+                                                ? Icons.check
+                                                : Icons.clear,
+                                            color: colorVerified,
+                                          ),
+                                        Text(
+                                          profile?.phoneIsVerified ?? '',
+                                          style: TextStyle(
+                                            fontStyle: FontStyle.italic,
+                                            color: colorVerified,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                             MyDivider.spaceDividerLogin(custom: 22),
@@ -203,7 +236,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                     'Simpan',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: putUpdateProfile,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                       new BorderRadius.circular(30.0))),

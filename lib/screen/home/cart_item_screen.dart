@@ -43,6 +43,8 @@ class _CartItemScreenState extends State<CartItemScreen> {
         },
         cusQty: int.tryParse(_qtyTextController.text) ?? widget.product.qty,
       );
+    } else {
+      controller?.currentFocus = _focusNode;
     }
   }
 
@@ -143,7 +145,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                     children: <Widget>[
                                       Expanded(
                                         child: Text(
-                                          '${widget.product.productId} ${widget.product.nama}',
+                                          widget.product.nama ?? '',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xff333333),
@@ -159,7 +161,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                     children: <Widget>[
                                       Container(
                                         child: Text(
-                                          widget.product.kodeUnit,
+                                          widget.product.kodeUnit ?? '',
                                           style: TextStyle(
                                               color: Color(0xff999999),
                                               fontSize: 14),

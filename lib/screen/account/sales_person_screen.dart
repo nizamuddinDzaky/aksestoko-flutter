@@ -10,6 +10,12 @@ class SalesPersonScreen extends StatefulWidget {
 class _SalesPersonScreenState extends SalesPersonViewModel {
   @override
   Widget build(BuildContext context) {
+    List<String> address = [
+      salesPerson?.alamat,
+      salesPerson?.kecamatan,
+      salesPerson?.kabupaten,
+      salesPerson?.provincy,
+    ].where((element) => element != null).toList();
     var formLayout = Container(
       child: Column(
         children: <Widget>[
@@ -56,10 +62,14 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Row(),
                       Text(
-                        "Nama Toko Anda",
+                        salesPerson?.name ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
+                      ),
+                      Text(
+                        salesPerson?.company ?? '',
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 25)),
                       Text(
@@ -71,7 +81,7 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 4)),
                       Text(
-                        "SP-67890",
+                        salesPerson?.refenceNo ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
@@ -85,7 +95,7 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 4)),
                       Text(
-                        "youremail@mail.com",
+                        salesPerson?.email ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
@@ -99,7 +109,7 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 4)),
                       Text(
-                        "081335089667",
+                        salesPerson?.noTlp ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
@@ -113,7 +123,7 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 4)),
                       Text(
-                        "Gresik, Lorem ipsum Dolor Ismet, Indonesia",
+                        address.join(', '),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
