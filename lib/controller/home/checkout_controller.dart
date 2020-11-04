@@ -54,21 +54,13 @@ class CheckoutController extends GetController {
   }
 
   postActionOrder(body) async {
-    // var json =
-    //     '{"status":"success","code":200,"message":"Berhasil melakukan pembuatan pesanan","request_time":"2020-10-26 13:33:57","response_time":"2020-10-26 13:33:57","rows":6,"data":{"sale_id":103368,"purchase_id":28124,"id_pemesanan":"SALE\/AT\/2020\/10\/0005","cara_pembayaran":"Bayar Sebelum Dikirim","bank ":"BNI","no_rekening ":"123456789a\/nSolusi Bangun Indonesia"}}';
-    // var orderResponse = OrderResponse.fromJson(jsonDecode(json)['data']);
-    // Get.offNamedUntil(
-    //   successScreen,
-    //   (route) => route.settings.name == parentScreen,
-    //   arguments: orderResponse,
-    // );
-    // debugPrint('orderResponse ${orderResponse?.toJson()}');
     var status = await ApiClient.methodPost(ApiConfig.urlActionOrder, body, {},
         customHandle: true, onBefore: (status) {}, onSuccess: (data, _) {
       var orderResponse = OrderResponse.fromJson(data['data']);
       if (orderResponse != null) {
-        Get.toNamed(
+        Get.offNamedUntil(
           successScreen,
+          (route) => route.settings.name == parentScreen,
           arguments: orderResponse,
         );
       } else {
