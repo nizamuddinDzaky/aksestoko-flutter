@@ -37,7 +37,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
           ?.where((element) => element.value == 'pickup')
           ?.first;
       address = checkoutModel?.alamatPengiriman;
-      complete = true;
+      getShipment();
     }, onFailed: (title, message) {
       complete = false;
       var response = BaseResponse.fromJson(jsonDecode(message));
@@ -68,17 +68,33 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
       'delivery_method': selectShipping.value,
     };
     var status = await ApiClient.methodGet(ApiConfig.urlShipmentPrice,
-        params: params, onBefore: (status) {}, onSuccess: (data, _) {
+        params: params,
+        onBefore: (status) {},
+        customHandle: true, onSuccess: (data, _) {
       var response = BaseResponse.fromJson(data);
       var ringkasan = response?.data?.ringkasan;
       if (ringkasan?.label?.isNotEmpty ?? false) {
         selectShipping?.totalHarga = 0;
       }
       checkoutModel?.ringkasan = ringkasan;
-    },
-        onFailed: (title, message) {},
-        onError: (title, message) {},
-        onAfter: (status) {});
+      complete = true;
+    }, onFailed: (title, message) {
+      complete = false;
+      var response = BaseResponse.fromJson(jsonDecode(message));
+      Get.defaultDialog(
+          title: "Pemberitahuan",
+          content: Text("Proses tidak bisa dilanjutkan. ${response?.message}"),
+          textCancel: 'Tutup',
+          onCancel: () {
+            debugPrint('back 1');
+            Get.back();
+            Get.back(result: {
+              'errorcode': response?.code,
+            });
+          });
+    }, onError: (title, message) {
+      complete = false;
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });

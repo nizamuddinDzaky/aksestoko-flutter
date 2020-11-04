@@ -48,10 +48,12 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   List<Cart> listCart = [];
 
   searchProduct(String query) {
-    listSearch = listProduct
-        ?.where((p) =>
-            p.nama?.toLowerCase()?.contains(query?.toLowerCase()) ?? false)
-        ?.toList();
+    listSearch = listProduct?.where((p) {
+      var result =
+          p.nama?.toLowerCase()?.contains(query?.toLowerCase()) ?? false;
+      if (result) debugPrint('filter ${p.nama} $query $result');
+      return result;
+    })?.toList();
     setState(() {});
   }
 

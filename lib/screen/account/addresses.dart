@@ -1,9 +1,7 @@
 import 'package:aksestokomobile/model/alamat.dart';
-import 'package:aksestokomobile/screen/account/edit_alamat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:get/get.dart';
 
 class ListAddress extends StatefulWidget {
   final Alamat address;
@@ -69,16 +67,17 @@ class _ListAddressState extends State<ListAddress> {
                 ),
                 Row(
                   children: <Widget>[
-                    Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          size: 22,
-                          color: MyColor.redAT,
+                    if (widget.address?.canBeRemove ?? false)
+                      Container(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            size: 22,
+                            color: MyColor.redAT,
+                          ),
+                          onPressed: widget.onDelete,
                         ),
-                        onPressed: widget.onDelete,
                       ),
-                    ),
                   ],
                 ),
               ],

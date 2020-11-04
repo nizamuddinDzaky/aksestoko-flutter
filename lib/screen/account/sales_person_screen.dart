@@ -15,7 +15,7 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
       salesPerson?.kecamatan,
       salesPerson?.kabupaten,
       salesPerson?.provincy,
-    ];
+    ].where((element) => element != null).toList();
     var formLayout = Container(
       child: Column(
         children: <Widget>[

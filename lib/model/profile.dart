@@ -8,6 +8,8 @@ class Profile {
   String noTlp;
   String phoneIsVerified;
 
+  bool get isVerified => phoneIsVerified?.toLowerCase() == 'terverifikasi';
+
   Profile(
       {this.userId,
       this.namaDepan,

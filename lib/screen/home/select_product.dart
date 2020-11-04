@@ -175,8 +175,10 @@ class _SelectProductScreenState extends SelectProductViewModel {
       padding: EdgeInsets.only(top: 10, bottom: 16),
       physics: NeverScrollableScrollPhysics(),
       itemCount: listFilter.length,
-      itemBuilder: (context, index) =>
-          ListProductScreen(listProduct[index], controller, this),
+      itemBuilder: (context, index) => Container(
+        key: UniqueKey(),
+        child: ListProductScreen(listFilter[index], controller, this),
+      ),
     );
   }
 

@@ -6,6 +6,7 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -255,7 +256,7 @@ class _RegisterScreenState extends RegisterController {
               borderSide: BorderSide(color: MyColor.lineTxtField),
             ),
             errorText:
-            'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka',
+                'Kata Sandi minimal 8 karakter kombinasi dari huruf besar, huruf kecil dan angka',
             errorStyle: TextStyle(
               color: MyColor.redAT,
               fontStyle: FontStyle.italic,
@@ -470,10 +471,24 @@ class _RegisterScreenState extends RegisterController {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 22),
                     margin: EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                      'Silahkan isi formulir di bawah ini untuk membuat akun. Sudah punya akun? Silahkan login.',
-                      style: TextStyle(
-                        color: MyColor.txtField,
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              style: TextStyle(color: MyColor.txtField),
+                              text:
+                              'Silahkan isi formulir di bawah ini untuk membuat akun. Sudah punya akun? Silahkan '),
+                          TextSpan(
+                            style: TextStyle(color: Colors.blue),
+                            text: 'login',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => Get.back(),
+                          ),
+                          TextSpan(
+                            style: TextStyle(color: MyColor.txtField),
+                            text: '.',
+                          ),
+                        ],
                       ),
                     ),
                   ),

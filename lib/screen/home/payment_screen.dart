@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/widgets.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
+import 'package:get/get.dart';
 
 class PaymentScreen extends StatefulWidget {
   @override
@@ -18,9 +19,9 @@ class _PaymentScreenState extends PaymentController {
   listBank(int indexPayment) {
     List<ListBank> listBank = [];
     if (tempoDistributor)
-      listBank = [...paymentModel?.tempoDenganDistributor?.listBank];
+      listBank = [...(paymentModel?.tempoDenganDistributor?.listBank ?? [])];
     if (cashBeforeDelivery)
-      listBank = [...paymentModel?.bayarSebelumDikirim?.listBank];
+      listBank = [...(paymentModel?.bayarSebelumDikirim?.listBank ?? [])];
     listBank.insert(0, ListBank(bankName: 'Tunai'.toUpperCase()));
     return Wrap(
       spacing: 6,
@@ -72,7 +73,7 @@ class _PaymentScreenState extends PaymentController {
   }
 
   listTempo() {
-    List<Detail> listTempo = [...paymentModel?.kreditPro?.detail];
+    List<Detail> listTempo = paymentModel?.kreditPro?.detail ?? [];
     selectedKreditPro == selectedKreditPro ?? listTempo?.first;
     return Wrap(
       spacing: 6,
@@ -108,7 +109,7 @@ class _PaymentScreenState extends PaymentController {
               setState(() {
                 indexTempo = selected ? index : null;
                 selectedKreditPro =
-                indexTempo == null ? null : listTempo[index];
+                    indexTempo == null ? null : listTempo[index];
               });
             },
           ),
@@ -121,6 +122,10 @@ class _PaymentScreenState extends PaymentController {
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
       child: Container(
+        height: isFirst ? (Get.height - (MediaQuery
+            .of(context)
+            .padding
+            .top + kToolbarHeight)) : null,
         child: Column(
           children: <Widget>[
             Container(
@@ -190,7 +195,11 @@ class _PaymentScreenState extends PaymentController {
               color: Color(0xffEAEAEA),
               margin: EdgeInsets.only(top: 20),
             ),
-            if (currentTab == 0)
+            if (isFirst)
+              Flexible(
+                  child: Center(child: CircularProgressIndicator())
+              ),
+            if (currentTab == 0 && paymentModel?.bayarDitempat != null)
               Column(
                 children: <Widget>[
                   Container(
@@ -411,7 +420,7 @@ class _PaymentScreenState extends PaymentController {
                   ),
                 ],
               ),
-            if (currentTab == 0)
+            if (currentTab == 0 && paymentModel?.bayarSebelumDikirim != null)
               Column(
                 children: <Widget>[
                   Container(
@@ -691,7 +700,7 @@ class _PaymentScreenState extends PaymentController {
                   ),
                 ],
               ),
-            if (currentTab == 1)
+            if (currentTab == 1 && paymentModel?.tempoDenganDistributor != null)
               Column(
                 children: <Widget>[
                   Container(
@@ -1123,7 +1132,7 @@ class _PaymentScreenState extends PaymentController {
                   ),
                 ],
               ),
-            if (currentTab == 1)
+            if (currentTab == 1 && paymentModel?.kreditPro != null)
               Column(
                 children: <Widget>[
                   Container(
@@ -1459,33 +1468,6 @@ class _PaymentScreenState extends PaymentController {
                   ),
                 ],
               ),
-/*
-            Container(
-              margin: EdgeInsets.only(left: 25, right: 25),
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                color: MyColor.greenAT,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: FlatButton(
-                child: Text(
-                  "Selesaikan",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
-                ),
-                onPressed: () {
-                  Get.toNamed(successScreen);
-                },
-              ),
-            ),
-            Container(
-              height: 3,
-              color: Color(0xffEAEAEA),
-              margin: EdgeInsets.only(top: 20),
-            ),
-*/
           ],
         ),
       ),
