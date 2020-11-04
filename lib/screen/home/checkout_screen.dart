@@ -54,7 +54,10 @@ class _CheckoutScreenState extends CheckoutViewModel {
             : (complete == true
                 ? GetBuilder<CheckoutController>(
                     init: CheckoutController(),
-                    builder: (controller) => _layout(controller, context),
+                    builder: (controller) => RefreshIndicator(
+                      onRefresh: actionRefresh,
+                      child: _layout(controller, context),
+                    ),
                   )
                 : Center(
                     child: RaisedButton(

@@ -5,6 +5,7 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/account/sales_person_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 abstract class SalesPersonViewModel extends State<SalesPersonScreen> {
@@ -18,13 +19,18 @@ abstract class SalesPersonViewModel extends State<SalesPersonScreen> {
   getSalesPerson() async {
     var status = await ApiClient.methodGet(
       ApiConfig.urlDetailSalesPerson,
+      customHandle: true,
       onBefore: (status) {},
       onSuccess: (data, flag) {
         var response = BaseResponse.fromJson(data);
         salesPerson = response?.data?.salesPerson;
       },
       onFailed: (title, message) {
-        Get.defaultDialog(title: title, content: Text(message));
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onError: (title, message) {
         Get.defaultDialog(title: title, content: Text(message));

@@ -8,9 +8,13 @@ import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-abstract class PromoViewModel extends State<ListPromoScreen> {
-
+abstract class PromoViewModel extends State<ListPromoScreen>
+    with AutomaticKeepAliveClientMixin {
   List<Promo> listPromo = [];
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     getListPromo();
@@ -24,20 +28,20 @@ abstract class PromoViewModel extends State<ListPromoScreen> {
     var status = await ApiClient.methodGet(ApiConfig.urlListPromo,
         params: params, onBefore: (status) {
 //      Get.back();
-        }, onSuccess: (data, flag) {
-          var baseResponse = BaseResponse.fromJson(data);
-          List<Promo> newListPromo = baseResponse?.data?.listPromo ?? [];
-          listPromo.clear();
-          listPromo.addAll(newListPromo);
-          /*
+    }, onSuccess: (data, flag) {
+      var baseResponse = BaseResponse.fromJson(data);
+      List<Promo> newListPromo = baseResponse?.data?.listPromo ?? [];
+      listPromo.clear();
+      listPromo.addAll(newListPromo);
+      /*
           listProduct.clear();
           listProduct.addAll(newListProduct);
           buildCart();*/
-        }, onFailed: (title, message) {
-          Get.defaultDialog(title: title, content: Text(message));
-        }, onError: (title, message) {
-          Get.defaultDialog(title: title, content: Text(message));
-        }, onAfter: (status) {});
+    }, onFailed: (title, message) {
+      Get.defaultDialog(title: title, content: Text(message));
+    }, onError: (title, message) {
+      Get.defaultDialog(title: title, content: Text(message));
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });

@@ -45,24 +45,24 @@ class DataResponse {
   DataResponse({this.token});
 
   T ifExist<T>(json, key) {
-    if (json[key] != null) {
+    if (json[key] != null && json[key] is T) {
       return json[key];
     }
     return null;
   }
 
   T ifExistObject<T>(json, key, Function fromJson) {
-    if (json[key] != null) {
+    if (json[key] != null && json[key] is Map) {
       return fromJson(json[key]);
     }
     return null;
   }
 
   List<T> ifExistList<T>(json, key, Function fromJson) {
-    if (json[key] != null) {
+    if (json[key] != null && json[key] is List) {
       var tempList = new List<T>();
       json[key].forEach((v) {
-        tempList.add(fromJson(v));
+        if (v is Map) tempList.add(fromJson(v));
       });
       return tempList;
     }

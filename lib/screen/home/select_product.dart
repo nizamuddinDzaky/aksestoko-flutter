@@ -123,6 +123,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                   FocusScope.of(context).unfocus();
                 },
                 child: RefreshIndicator(
+                  key: refreshKey,
                   onRefresh: actionRefresh,
                   child: _body(vm),
                 ),

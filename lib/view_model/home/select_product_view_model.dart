@@ -12,6 +12,7 @@ import 'package:aksestokomobile/screen/home/select_product.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -19,15 +20,17 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
     with AutomaticKeepAliveClientMixin<SelectProductScreen> {
   var needUpdate = 0;
   var searchTextController = TextEditingController();
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
-    getDataProduct();
-    getDataCart();
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      refreshKey.currentState.show();
+    });
   }
 
   Future<void> actionRefresh() async {

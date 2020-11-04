@@ -10,7 +10,8 @@ abstract class SelectDistributorController
   List<Distributor> listDistributor = [];
 
   gotoParent(BuildContext context, Distributor distributor) {
-    if (MyPref.getIdDistributor() == distributor.id) {
+    var canPop = Navigator.of(context).canPop();
+    if (MyPref.getIdDistributor() == distributor.id && canPop) {
       Get.back();
       return;
     }
@@ -20,9 +21,11 @@ abstract class SelectDistributorController
     MyPref.setDisributorName(distributor.namaPrincipal);
     MyPref.setDisributorCode(distributor.kode);
     MyPref.setMap('distributor', distributor.toJson());
-    if (!MyPref.isIdDistributorExist()) {
+    if (!MyPref.isIdDistributorExist() || !canPop) {
+      debugPrint('cek offnamed');
       Get.offNamed(parentScreen);
     } else {
+      debugPrint('cek back');
       Get.back(result: distributor.id);
     }
   }

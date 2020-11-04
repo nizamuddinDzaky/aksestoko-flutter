@@ -3,19 +3,17 @@ import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/view_model/promo/promo_view_model.dart';
-import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:get/get.dart';
 
 class ListPromoScreen extends StatefulWidget {
   @override
   _ListPromoScreenState createState() => _ListPromoScreenState();
 }
-class _ListPromoScreenState extends PromoViewModel {
 
+class _ListPromoScreenState extends PromoViewModel {
   /*@override
   void initState() {
     debugPrint(MyPref.getATToken());
@@ -24,76 +22,23 @@ class _ListPromoScreenState extends PromoViewModel {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Container(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Container(
             //color: Colors.white,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-              ),
-              child: Text(
-                "Promo",
-                style: TextStyle(fontSize: 20),
-              )
-          ),
-          centerTitle: false,
-          actions: <Widget>[
-            Stack(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.notifications),
-                  onPressed: () {
-                    debugPrint('klik notif');
-                  },
-                ),
-                Positioned(
-                  right: 5,
-                  top: 4,
-                  child: CircleAvatar(
-                    maxRadius: 10,
-                    backgroundColor: MyColor.redAT,
-                    child: Text(
-                      '20',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
-            Stack(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.shopping_cart),
-                  onPressed: () {
-                    /*Get.toNamed(cartScreen).then((value){
-                      setState(() {});
-                    });*/
-                  },
-                ),
-                  Positioned(
-                    right: 5,
-                    top: 4,
-                    child: CircleAvatar(
-                      maxRadius: 10,
-                      backgroundColor: MyColor.redAT,
-                      child: Text(
-                        '0',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ],
-        ),
+            child: Text(
+              "Promo",
+              style: TextStyle(fontSize: 20),
+            )),
+        centerTitle: false,
+        actions: <Widget>[],
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -157,12 +102,11 @@ class _ListPromoScreenState extends PromoViewModel {
     );
   }
 
-  Widget item_promo(Promo promo){
+  Widget item_promo(Promo promo) {
     return Card(
       elevation: 2,
-      child : InkWell(
+      child: InkWell(
         child: Container(
-
           margin: EdgeInsets.symmetric(vertical: 10),
           /*decoration: BoxDecoration(
           color: Colors.white,
@@ -180,7 +124,7 @@ class _ListPromoScreenState extends PromoViewModel {
             children: <Widget>[
               Container(
                 child: AspectRatio(
-                  aspectRatio: 16/9,
+                  aspectRatio: 16 / 9,
                   child: FadeInImage.assetNetwork(
                     placeholder: kDistributor,
                     image: promo.urlImage,
@@ -243,7 +187,6 @@ class _ListPromoScreenState extends PromoViewModel {
           Get.toNamed(detailPromo, arguments: promo);
         },
       ),
-
     );
   }
 

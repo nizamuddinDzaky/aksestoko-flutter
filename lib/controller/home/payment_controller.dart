@@ -68,6 +68,17 @@ abstract class PaymentController extends State<PaymentScreen> {
     if (paymentMethod == listPaymentMethod[3]) {
       salesModel?.payment_durasi = selectedKreditPro?.durasiPembayaran;
     }
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
     to.savePaymentScreen(salesModel);
   }
 

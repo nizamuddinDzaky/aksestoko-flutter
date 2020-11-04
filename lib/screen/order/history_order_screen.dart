@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:aksestokomobile/util/my_color.dart';
-import 'package:aksestokomobile/screen/order/list_order_screen.dart' as inProses;
-import 'package:aksestokomobile/screen/order/order_done.dart' as done;
+import 'package:aksestokomobile/screen/order/list_order_screen.dart'
+    as inProses;
 
 class HistoryOrderScreen extends StatefulWidget {
   @override
@@ -10,8 +9,11 @@ class HistoryOrderScreen extends StatefulWidget {
 }
 
 class _HistoryOrderScreenState extends State<HistoryOrderScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController controller;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -27,6 +29,7 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -43,33 +46,7 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen>
             style: TextStyle(fontSize: 20),
           ),
         ),
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        actions: <Widget>[],
         bottom: TabBar(
           controller: controller,
           tabs: <Widget>[

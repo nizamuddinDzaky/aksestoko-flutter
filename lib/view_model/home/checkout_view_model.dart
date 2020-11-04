@@ -21,8 +21,16 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
   @override
   void initState() {
     cart = Get.arguments;
-    _getDetailCheckout();
+    actionRefresh();
     super.initState();
+  }
+
+  Future<void> actionRefresh() async {
+    setState(() {
+      complete = null;
+    });
+    _getDetailCheckout();
+    return Future.value();
   }
 
   void _getDetailCheckout() async {

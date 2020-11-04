@@ -49,10 +49,10 @@ abstract class LoginViewModel extends State<LoginScreen> {
   developerInit() {
     if (Foundation.kDebugMode) {
       currentData = Login(
-        username: '000001597',
-        password: 'Indonesia1',
-        // username: '900000010',
-        // password: 'Indonesia2020',
+        // username: '000001597',
+        // password: 'Indonesia1',
+        username: '900000010',
+        password: 'Indonesia2020',
       );
     }
   }
