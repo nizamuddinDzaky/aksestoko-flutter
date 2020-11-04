@@ -5,13 +5,13 @@ class OrderSummary {
   int totalHarga;
   String labelDiscount;
   int discount;
-  Null labelCharge;
+  String labelCharge;
   String notifikasiCharge;
   String charge;
-  Null labelCorrection;
+  String labelCorrection;
   String notifikasiCorrection;
   String correction;
-  Null labelThirdParty;
+  String labelThirdParty;
   String chargeThirdParty;
   int totalPembayaran;
 
@@ -39,7 +39,7 @@ class OrderSummary {
     totalHarga = json['total_harga'];
     labelDiscount = json['label_discount'];
     discount = json['discount'];
-    labelCharge = json['label_charge'];
+    labelCharge = json['label_charge'] ?? "";
     notifikasiCharge = json['notifikasi_charge'];
     charge = json['charge'];
     labelCorrection = json['label_correction'];

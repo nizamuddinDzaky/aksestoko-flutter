@@ -318,7 +318,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             Container(
                               child: FlatButton.icon(
                                 onPressed: () {
-                                  Get.toNamed(detailPaymentScreen);
+                                  Get.toNamed(detailPaymentScreen, arguments: orderDetail.detailPemesanan.idPemesanan);
                                 },
                                 icon: Icon(
                                   Icons.list,

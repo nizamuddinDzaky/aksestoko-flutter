@@ -47,6 +47,7 @@ class ApiConfig {
   static String urlListPayment = '${path}Purchase/list_payment';
   static String urlDetailAddPayment = '${path}Purchase/detail_payment';
   static String urlAddPayment = '${path}Purchase/add_payment';
+  static String urlListProofPayment = '${path}Purchase/list_proof_payment';
 
   //address
   static String urlListProvinsi = '${path}get_list_province.php';

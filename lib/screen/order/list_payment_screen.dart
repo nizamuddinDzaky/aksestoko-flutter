@@ -1,10 +1,14 @@
+import 'package:aksestokomobile/model/detail_payment.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ListPaymentScreen extends StatelessWidget{
   final int index;
-  ListPaymentScreen(this.index);
+  ListPembayaran listPembayaran;
+  ListPaymentScreen(this.listPembayaran, this.index);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,61 +49,24 @@ class ListPaymentScreen extends StatelessWidget{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (index == 0)
                 Text(
-                  "Rp 1.000.000",
+                  MyNumber.toNumberRpStr(listPembayaran.nominal.toString()),
                   style: TextStyle(color: MyColor.redAT, fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
-                if (index == 1)
-                  Text(
-                    "Rp 1.000.000",
-                    style: TextStyle(color: MyColor.redAT, fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                if (index == 2)
-                  Text(
-                    "Rp 2.000.000",
-                    style: TextStyle(color: MyColor.redAT, fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
                 Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                if (index == 0)
                 Text(
-                  "Diterima",
-                  style: TextStyle(color: MyColor.greenAT, fontSize: 16, fontWeight: FontWeight.bold),
+                  listPembayaran.status,
+                  style: TextStyle(color: statusColor(listPembayaran.labelStatus), fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
-                if (index == 1)
-                  Text(
-                    "Diterima",
-                    style: TextStyle(color: MyColor.greenAT, fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                if (index == 2)
-                  Text(
-                    "Menunggu Konfirmasi",
-                    style: TextStyle(color: MyColor.warningTextAT, fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
               ],
             ),
           ),
-          if (index == 0)
           Expanded(
             flex: 5,
-            child: Text("08 Desember 2019", textAlign: TextAlign.right,),
+            child: Text(listPembayaran.tanggalUnggah, textAlign: TextAlign.right,),
           ),
-          if (index == 1)
-            Expanded(
-              flex: 5,
-              child: Text("08 Januari 2019", textAlign: TextAlign.right,),
-            ),
-          if (index == 2)
-            Expanded(
-              flex: 5,
-              child: Text("08 Mei 2019", textAlign: TextAlign.right,),
-            ),
         ],
       ),
     );

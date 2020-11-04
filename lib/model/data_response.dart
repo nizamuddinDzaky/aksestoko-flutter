@@ -2,6 +2,7 @@ import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/model/customer.dart';
+import 'package:aksestokomobile/model/detail_payment.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/model/order_model.dart';
@@ -35,6 +36,7 @@ class DataResponse {
   List<String> pengiriman;
   Ringkasan ringkasan;
   PaymentData paymentData;
+  DetailPayment detailPayment;
 
   DataResponse({this.token});
 
@@ -141,6 +143,10 @@ class DataResponse {
     });
 
     idPurchase = ifExist(json, 'purchase_id');
+
+    /*detailPayment = ifExistObject(json, 'data_pembayaran', (obj) {
+      return PaymentData.fromJson(obj);
+    });*/
   }
 
   Map<String, dynamic> toJson() {
