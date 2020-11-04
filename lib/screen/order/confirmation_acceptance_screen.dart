@@ -75,7 +75,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
       return Text(
         "Belum ada gambar terpilih",
         style:
-            TextStyle(color: MyColor.greyTextAT, fontStyle: FontStyle.italic),
+        TextStyle(color: MyColor.greyTextAT, fontStyle: FontStyle.italic),
       );
     } else {
       return Image.file(

@@ -7,6 +7,7 @@ import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/model/order_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/promo.dart';
+import 'package:aksestokomobile/model/payment_data.dart';
 import 'package:aksestokomobile/model/ringkasan.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/util/my_util.dart';
@@ -33,6 +34,7 @@ class DataResponse {
   Distributor distributor;
   List<String> pengiriman;
   Ringkasan ringkasan;
+  PaymentData paymentData;
 
   DataResponse({this.token});
 
@@ -133,6 +135,11 @@ class DataResponse {
     distributor = ifExistObject(json, 'distributor', (obj) {
       return Distributor.fromJson(obj);
     });
+
+    paymentData = ifExistObject(json, 'data_pembayaran', (obj) {
+      return PaymentData.fromJson(obj);
+    });
+
     idPurchase = ifExist(json, 'purchase_id');
   }
 

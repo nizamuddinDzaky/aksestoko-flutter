@@ -359,7 +359,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                             fontSize: 12),
                       ),
                       onPressed: () {
-                        _dialogListAddress(context);
+                        _dialogListAddress(context, _order?.idPemesanan);
                         /*Get.toNamed(confirmationAcceptScreen);*/
                       },
                     ),
@@ -421,7 +421,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
     );
   }
 
-  _dialogListAddress(BuildContext context) async {
+  _dialogListAddress(BuildContext context, String idPurchase) async {
     return showDialog(
       context: context,
       child: AlertDialog(
@@ -431,7 +431,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
             Expanded(
               child: Container(
                   width: double.maxFinite,
-                  child: PreviewDeliveryScreen()
+                  child: PreviewDeliveryScreen(idPurchase)
               ),
             ),
             Row(

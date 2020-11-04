@@ -19,7 +19,7 @@ abstract class PromoViewModel extends State<ListPromoScreen> {
 
   void getListPromo() async {
     var params = {
-      MyString.KEY_ID_SUPPLIER: MyPref.getIdDistributor(),
+      MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListPromo,
         params: params, onBefore: (status) {

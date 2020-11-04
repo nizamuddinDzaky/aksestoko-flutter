@@ -1,16 +1,32 @@
+import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_util.dart';
+import 'package:aksestokomobile/view_model/order/preview_delivery_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PreviewDeliveryScreen extends StatefulWidget {
+  String idPurchase;
+  PreviewDeliveryScreen(String idPurchase){
+    this.idPurchase = idPurchase;
+  }
   @override
-  _PreviewDeliveryScreenState createState() => _PreviewDeliveryScreenState();
+  _PreviewDeliveryScreenState createState() => _PreviewDeliveryScreenState(idPurchase);
 }
 
-class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
-
-  Widget _delivery(){
+class _PreviewDeliveryScreenState extends PreviewDeliveryViewModel {
+  String idPurchase;
+  _PreviewDeliveryScreenState(String idPurchase){
+    this.idPurchase = idPurchase;
+  }
+  @override
+  void initState() {
+    super.initState();
+    actionRefresh(idPurchase);
+  }
+  Widget _delivery(DetailDelivery detailDelivery){
     return new Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.only(left: 0, right: 0, top: 10),
@@ -43,7 +59,7 @@ class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
                             fontSize: 14, color: MyColor.greyTextAT),
                       ),
                       Text(
-                        "DO/2020/10/0016",
+                        detailDelivery?.noSpj,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -64,11 +80,11 @@ class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
                             fontSize: 14, color: MyColor.greyTextAT),
                       ),
                       Text(
-                        "Dalam Pengiriman",
+                        detailDelivery?.statuPengiriman,
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: statusColor("danger")),
+                            color: statusColor(detailDelivery?.labelStatus)),
                       ),
                     ],
                   ),
@@ -91,7 +107,7 @@ class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
                             fontSize: 14, color: MyColor.greyTextAT),
                       ),
                       Text(
-                        "27 Oktober 2020",
+                        detailDelivery?.tanggalDikirim,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -112,7 +128,7 @@ class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
                             fontSize: 14, color: MyColor.greyTextAT),
                       ),
                       Text(
-                        "-",
+                        detailDelivery?.dikirimOleh,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -147,7 +163,11 @@ class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
                     fontSize: 12),
               ),
               onPressed: () {
-
+                Map<String, dynamic> param = {
+                  'purchase': orderDetail.detailPemesanan,
+                  'delivery': detailDelivery
+                };
+                Get.toNamed(confirmationAcceptScreen, arguments: param);
               },
             ),
           ),
@@ -159,8 +179,8 @@ class _PreviewDeliveryScreenState extends State<PreviewDeliveryScreen> {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemBuilder: (context, index) => _delivery(),
-      itemCount: 2,
+      itemBuilder: (context, index) => _delivery(listDetailDelivery[index]),
+      itemCount: listDetailDelivery.length,
     );
   }
 }

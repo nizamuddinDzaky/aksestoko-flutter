@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/resource/my_string.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -91,6 +93,34 @@ Color statusColor(String status){
   }
 
   return null;
+}
+
+String paymentMethode(String payment){
+  if(payment.toLowerCase() == "cash on delivery"){
+    return MyString.TXT_COD;
+  }
+  if(payment.toLowerCase() == "kredit"){
+    return MyString.TXT_KREDIT;
+  }
+
+  if(payment.toLowerCase() == "cash before delivery"){
+    return MyString.TXT_CBD;
+  }
+  return "";
+}
+
+String paymentIcon(String payment){
+  if(payment.toLowerCase() == "cash on delivery"){
+    return atPaymentCOD;
+  }
+  if(payment.toLowerCase() == "kredit"){
+    return atPaymentTempoDistributor;
+  }
+
+  if(payment.toLowerCase() == "cash before delivery"){
+    return atPaymentCBD;
+  }
+  return atPaymentCOD;
 }
 
 String strToDate(String txtDate, {BuildContext context}) {

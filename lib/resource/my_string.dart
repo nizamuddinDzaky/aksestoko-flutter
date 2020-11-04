@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/network/api_config.dart';
+
 class MyString {
   static const KEY_AT_TOKEN = "Aksestoko-Token";
   static const KEY_TOKEN = "token";
@@ -75,4 +77,10 @@ class MyString {
 
   // txt
   static const TXT_CONNECTION_FAILED = "Gagal tersambung, cek koneksi.";
+
+  //  payment
+  static const TXT_COD = "Bayar Di Tempat";
+  static const TXT_KREDIT = "Tempo Dengan Distributor";
+  static const TXT_CBD = "Bayar Sebelum Dikirim";
+  static String BASE_PATH_ICON_BANK = ApiConfig.host+"assets/uploads/" ;
 }
