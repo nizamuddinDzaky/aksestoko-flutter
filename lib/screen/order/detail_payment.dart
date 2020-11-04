@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/view_model/order/detail_payment_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/screen/order/list_payment_screen.dart'
@@ -7,7 +9,13 @@ class DetailPaymentScreen extends StatefulWidget {
   _DetailPaymentScreenState createState() => _DetailPaymentScreenState();
 }
 
-class _DetailPaymentScreenState extends State<DetailPaymentScreen> {
+class _DetailPaymentScreenState extends DetailPaymentViewModel {
+
+  @override
+  void initState() {
+    getListPayment();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
@@ -17,11 +25,11 @@ class _DetailPaymentScreenState extends State<DetailPaymentScreen> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: ListView.builder(
-                itemCount: 3,
+                itemCount: detailPayment.listPembayaran.length,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (buildcontext, index) {
-                  return listPayment.ListPaymentScreen(index);
+                  return listPayment.ListPaymentScreen(detailPayment.listPembayaran[index], index);
                 },
               ),
             ),
@@ -81,7 +89,7 @@ class _DetailPaymentScreenState extends State<DetailPaymentScreen> {
                     Expanded(
                       flex: 7,
                       child: Text(
-                        "Rp 2.000.000",
+                        detailPayment != null ? MyNumber.toNumberRpStr(detailPayment.totalPembayaran.toString()) : "Rp 0",
                         style: TextStyle(
                             color: MyColor.greenAT,
                             fontWeight: FontWeight.bold,
@@ -107,7 +115,7 @@ class _DetailPaymentScreenState extends State<DetailPaymentScreen> {
                     Expanded(
                       flex: 7,
                       child: Text(
-                        "Rp 10.000.000",
+                        detailPayment != null ? MyNumber.toNumberRpStr(detailPayment.jumlahYangHarusDibayar.toString()) : "Rp 0",
                         style: TextStyle(
                             color: MyColor.redAT,
                             fontWeight: FontWeight.bold,
