@@ -38,6 +38,15 @@ class SelectProductController extends GetController {
     update();
   }
 
+  resetCart() {
+    listCart?.forEach((product) {
+      product.idCart = 0;
+      product.qty = 0;
+    });
+    listCart?.clear();
+    update();
+  }
+
   clearCart() {
     listCart?.clear();
     update();

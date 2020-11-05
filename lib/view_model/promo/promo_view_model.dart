@@ -6,19 +6,28 @@ import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/screen/promo/list_promo.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 abstract class PromoViewModel extends State<ListPromoScreen>
     with AutomaticKeepAliveClientMixin {
   List<Promo> listPromo = [];
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
-    getListPromo();
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      refreshKey.currentState.show();
+    });
+  }
+
+  Future<void> actionRefresh() async {
+    getListPromo();
   }
 
   void getListPromo() async {

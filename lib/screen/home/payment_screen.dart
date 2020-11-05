@@ -121,11 +121,15 @@ class _PaymentScreenState extends PaymentController {
   @override
   Widget build(BuildContext context) {
     var formLayout = SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
       child: Container(
-        height: isFirst ? (Get.height - (MediaQuery
-            .of(context)
-            .padding
-            .top + kToolbarHeight)) : null,
+        height: isFirst ||
+                paymentModel == null ||
+                (currentTab == 1 && isEmptyCredit) ||
+                (currentTab == 0 && isEmptyCash)
+            ? (Get.height -
+                (MediaQuery.of(context).padding.top + kToolbarHeight))
+            : null,
         child: Column(
           children: <Widget>[
             Container(
@@ -196,8 +200,46 @@ class _PaymentScreenState extends PaymentController {
               margin: EdgeInsets.only(top: 20),
             ),
             if (isFirst)
+              Flexible(child: Center(child: CircularProgressIndicator())),
+            if (!isFirst && paymentModel == null)
               Flexible(
-                  child: Center(child: CircularProgressIndicator())
+                child: Center(
+                  child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Gagal load daftar pembayaran',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            if (!isFirst &&
+                ((currentTab == 1 && isEmptyCredit) ||
+                    (currentTab == 0 && isEmptyCash)))
+              Flexible(
+                child: Center(
+                  child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Tidak ada pembayaran tersedia',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
             if (currentTab == 0 && paymentModel?.bayarDitempat != null)
               Column(
@@ -500,35 +542,38 @@ class _PaymentScreenState extends PaymentController {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Nomor Rekening Tujuan",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: MyColor.greyTextAT,
-                                            fontSize: 16),
-                                      ),
-                                      MyDivider.spaceDividerElementsAT(
-                                          custom: 5),
-                                      Text(
-                                        '${selectedDelivery?.noRek ?? ' '}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: MyColor.blackTextAT,
-                                            fontSize: 16),
-                                      ),
-                                      MyDivider.spaceDividerElementsAT(
-                                          custom: 5),
-                                      Text(
-                                        'a.n. ${selectedDelivery?.nama ?? ' '}',
-                                        style: TextStyle(
-                                            color: MyColor.blackTextAT,
-                                            fontSize: 16),
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Nomor Rekening Tujuan",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: MyColor.greyTextAT,
+                                              fontSize: 16),
+                                        ),
+                                        MyDivider.spaceDividerElementsAT(
+                                            custom: 5),
+                                        Text(
+                                          '${selectedDelivery?.noRek ?? ' '}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: MyColor.blackTextAT,
+                                              fontSize: 16),
+                                        ),
+                                        MyDivider.spaceDividerElementsAT(
+                                            custom: 5),
+                                        Text(
+                                          'a.n. ${selectedDelivery?.nama ??
+                                              ' '}',
+                                          style: TextStyle(
+                                              color: MyColor.blackTextAT,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   if (selectedDelivery?.logoBank?.isNotEmpty ??
                                       false)
@@ -792,35 +837,37 @@ class _PaymentScreenState extends PaymentController {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Nomor Rekening Tujuan",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: MyColor.greyTextAT,
-                                            fontSize: 16),
-                                      ),
-                                      MyDivider.spaceDividerElementsAT(
-                                          custom: 5),
-                                      Text(
-                                        "${selectedDue?.noRek ?? ''}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: MyColor.blackTextAT,
-                                            fontSize: 16),
-                                      ),
-                                      MyDivider.spaceDividerElementsAT(
-                                          custom: 5),
-                                      Text(
-                                        "a/n ${selectedDue?.nama ?? ''}",
-                                        style: TextStyle(
-                                            color: MyColor.blackTextAT,
-                                            fontSize: 16),
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Nomor Rekening Tujuan",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: MyColor.greyTextAT,
+                                              fontSize: 16),
+                                        ),
+                                        MyDivider.spaceDividerElementsAT(
+                                            custom: 5),
+                                        Text(
+                                          "${selectedDue?.noRek ?? ''}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: MyColor.blackTextAT,
+                                              fontSize: 16),
+                                        ),
+                                        MyDivider.spaceDividerElementsAT(
+                                            custom: 5),
+                                        Text(
+                                          "a/n ${selectedDue?.nama ?? ''}",
+                                          style: TextStyle(
+                                              color: MyColor.blackTextAT,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   if (selectedDue?.logoBank?.isNotEmpty ??
                                       false)
@@ -1495,7 +1542,11 @@ class _PaymentScreenState extends PaymentController {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: formLayout,
+        child: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: actionRefresh,
+          child: formLayout,
+        ),
       ),
     );
   }

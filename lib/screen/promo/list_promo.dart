@@ -43,45 +43,74 @@ class _ListPromoScreenState extends PromoViewModel {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: _body(),
+        child: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: actionRefresh,
+          child: _body(),
+        ),
       ),
     );
   }
 
   Widget _body() {
     return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 20),
-            width: MediaQuery.of(context).size.width * 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(bgHeaderTop),
-                fit: BoxFit.cover,
+      physics: AlwaysScrollableScrollPhysics(),
+      child: Container(
+        height: listPromo?.isEmpty ?? true
+            ? (Get.height -
+                56 -
+                (MediaQuery.of(context).padding.top + kToolbarHeight))
+            : null,
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding:
+                  EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 20),
+              width: MediaQuery.of(context).size.width * 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(bgHeaderTop),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Daftar Promo',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  'Daftar Promo',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+            listPromo?.isEmpty ?? true
+                ? Flexible(
+                    child: Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Tidak ada promo tersedia',
+                              style: Theme.of(context).textTheme.headline6,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    margin: EdgeInsets.only(bottom: 100),
+                    child: _gridProduct(),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            margin: EdgeInsets.only(bottom: 100),
-            child: _gridProduct(),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

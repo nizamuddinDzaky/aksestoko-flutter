@@ -7,6 +7,7 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/home/payment_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 abstract class PaymentController extends State<PaymentScreen> {
@@ -32,6 +33,17 @@ abstract class PaymentController extends State<PaymentScreen> {
   List<int> indexBank = [0, 0];
   int indexTempo;
   bool isFirst = true;
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  bool get isEmptyCredit =>
+      paymentModel != null &&
+      paymentModel.kreditPro == null &&
+      paymentModel.tempoDenganDistributor == null;
+
+  bool get isEmptyCash =>
+      paymentModel != null &&
+      paymentModel.bayarDitempat == null &&
+      paymentModel.bayarSebelumDikirim == null;
 
   reInitConfig() {
     indexBank = [0, 0];
@@ -98,6 +110,7 @@ abstract class PaymentController extends State<PaymentScreen> {
       },
       onSuccess: (data, flag) {
         paymentModel = PaymentModel.fromJson(data['data']);
+        paymentModel.kreditPro = null;
         reInitConfig();
       },
       onFailed: (title, message) {
@@ -122,6 +135,10 @@ abstract class PaymentController extends State<PaymentScreen> {
     });
   }
 
+  Future<void> actionRefresh() async {
+    getPaymentMethod();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -132,6 +149,8 @@ abstract class PaymentController extends State<PaymentScreen> {
       Color(0xFF4db6ac)
     ];
     indexTempo = 0;
-    getPaymentMethod();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      refreshKey.currentState.show();
+    });
   }
 }

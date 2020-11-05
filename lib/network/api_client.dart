@@ -1,10 +1,14 @@
 import 'dart:convert';
 
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 var dio = Dio();
 
@@ -68,12 +72,51 @@ class ApiClient {
       var isLogin = e.request.uri.toString().contains('auth/login');
       var statusCode = e.response.statusCode;
       if (statusCode == 401 && !isLogin) {
-        MyPref.setATToken(null);
-//        Get.toNamed(root);
+        actionLogout();
         return null;
       }
       return e;
     }));
+  }
+
+  static actionLogout() {
+    Get.defaultDialog(
+      title: 'Pemberitahuan',
+      content: Container(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Center(
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    text:
+                        'Akses anda terdeteksi kadaluarsa, sebaiknya lakukan '),
+                TextSpan(
+                  style: TextStyle(color: Colors.blue, fontSize: 20),
+                  text: 'login',
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Get.back(result: -1);
+                    },
+                ),
+                TextSpan(
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  text: ' ulang.',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      textCancel: 'OK',
+    ).then((value) {
+      if (value == -1) {
+        MyPref.logout();
+        Get.offAndToNamed(loginScreen);
+      }
+    });
   }
 
   static Future<ApiResponse> methodDelete(

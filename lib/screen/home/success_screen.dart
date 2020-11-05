@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/view_model/order/success_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -173,6 +174,7 @@ class _SuccessScreenState extends SuccessViewModel {
                       fontSize: 14),
                 ),
                 onPressed: () {
+                  SelectProductController.to?.resetCart();
                   Get.back(result: -1);
                 },
               ),

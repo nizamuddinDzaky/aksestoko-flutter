@@ -4,6 +4,7 @@ import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/model/sales_person.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/screen/setting/version_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -124,11 +125,13 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 40),
+                  VersionScreen(),
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
-                    margin: EdgeInsets.symmetric(vertical: 40),
                   ),
+                  SizedBox(height: 40),
                   Column(
                     children: <Widget>[
                       Container(
