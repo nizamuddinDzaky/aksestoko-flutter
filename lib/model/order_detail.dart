@@ -7,34 +7,38 @@ class OrderDetail {
   OrderSummary ringkasan;
   Delivery pengiriman;
   CartModel daftarBelanja;
+  String pesan;
+  String info1;
+  String info2;
+  String info3;
+  String info4;
+  bool konfirmasiHargaPesanan;
   /*List<String> pembayaranKreditPro;
   Penerimaan penerimaan;
   Delivery pengiriman;
 
   ;
-  Null pesan;
-  Null info1;
-  Null info2;
-  Null info3;
-  Null info4;
-  Null konfirmasiHargaPesanan;*/
+
+  */
 
   OrderDetail(
       {this.detailPemesanan,
         this.ringkasan,
         this.pengiriman,
         this.daftarBelanja,
+        this.pesan,
+        this.info1,
+        this.info2,
+        this.info3,
+        this.info4,
+        this.konfirmasiHargaPesanan
       /*this.pembayaranKreditPro,
       this.penerimaan,
 
       ,
 
-      this.pesan,
-      this.info1,
-      this.info2,
-      this.info3,
-      this.info4,
-      this.konfirmasiHargaPesanan*/});
+      ,
+      */});
 
   OrderDetail.fromJson(Map<String, dynamic> json) {
     detailPemesanan = json['detail_pemesanan'] != null
@@ -51,6 +55,12 @@ class OrderDetail {
     daftarBelanja = json['daftar_belanja'] != null
         ? new CartModel.fromJson(json['daftar_belanja'])
         : null;
+    pesan = json['pesan'];
+    info1 = json['info_1'];
+    info2 = json['info_2'];
+    info3 = json['info_3'];
+    info4 = json['info_4'];
+    konfirmasiHargaPesanan = json['konfirmasi_harga_pesanan'];
     /*if (json['pembayaran_kredit_pro'] != null) {
       pembayaranKreditPro = new List<Null>();
       json['pembayaran_kredit_pro'].forEach((v) {
@@ -63,12 +73,8 @@ class OrderDetail {
 
 
 
-    pesan = json['pesan'];
-    info1 = json['info_1'];
-    info2 = json['info_2'];
-    info3 = json['info_3'];
-    info4 = json['info_4'];
-    konfirmasiHargaPesanan = json['konfirmasi_harga_pesanan'];*/
+
+    */
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +94,12 @@ class OrderDetail {
     if (this.daftarBelanja != null) {
       data['daftar_belanja'] = this.daftarBelanja.toJson();
     }
+    data['pesan'] = this.pesan;
+    data['info_1'] = this.info1;
+    data['info_2'] = this.info2;
+    data['info_3'] = this.info3;
+    data['info_4'] = this.info4;
+    data['konfirmasi_harga_pesanan'] = this.konfirmasiHargaPesanan;
     /*if (this.pembayaranKreditPro != null) {
       data['pembayaran_kredit_pro'] = this.pembayaranKreditPro;
     }
@@ -97,12 +109,8 @@ class OrderDetail {
 
 
 
-    data['pesan'] = this.pesan;
-    data['info_1'] = this.info1;
-    data['info_2'] = this.info2;
-    data['info_3'] = this.info3;
-    data['info_4'] = this.info4;
-    data['konfirmasi_harga_pesanan'] = this.konfirmasiHargaPesanan;*/
+
+    */
     return data;
   }
 }
