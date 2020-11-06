@@ -57,6 +57,64 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                 ],
               ),
             ),
+          if (_order?.notikasiCharge != null)
+            Container(
+              height: 40,
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: statusColor("info"),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Terdapat biaya tambahan sebesar Rp ${_order.charge}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 10
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 5, bottom: 5),
+                          decoration: BoxDecoration(
+                            color: MyColor.greenAT,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: FlatButton(
+                            child: Text(
+                              "Lihat Detail",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10),
+                            ),
+                            onPressed: () {
+                              Get.toNamed(
+                                  detailOrderScreen, arguments: _order?.idPemesanan);
+                              /*actionAddPayment();*/
+                              /*Get.toNamed(successScreen);*/
+                            },
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  )
+                  /*Text(
+                    '${_order?.duration} hari',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),*/
+                ],
+              ),
+            ),
           Container(
             margin: EdgeInsets.only(left: 15, right: 15, top: 16),
             child: Column(

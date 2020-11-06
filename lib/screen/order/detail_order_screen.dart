@@ -29,6 +29,114 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  if(orderDetail != null)
+                  if(orderDetail.konfirmasiHargaPesanan != null)
+                  Container(
+                    height: 40,
+                    margin: EdgeInsets.only(left: 25, right: 25),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: statusColor("info"),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Terdapat biaya tambahan sebesar Rp 100",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  if(orderDetail != null)
+                    if(orderDetail.konfirmasiHargaPesanan != null)
+                  Container(
+                    height: 40,
+                    margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(top: 5, bottom: 5),
+                                decoration: BoxDecoration(
+                                  color: MyColor.greenAT,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: FlatButton(
+                                  child: Text(
+                                    "Setuju",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10),
+                                  ),
+                                  onPressed: () {
+                                    /*Get.toNamed(
+                                        detailOrderScreen, arguments: _order?.idPemesanan);*/
+                                    /*actionAddPayment();*/
+                                    /*Get.toNamed(successScreen);*/
+                                  },
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(top: 5, bottom: 5),
+                                decoration: BoxDecoration(
+                                  color: MyColor.redAT,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: FlatButton(
+                                  child: Text(
+                                    "Tidak Setuju",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10),
+                                  ),
+                                  onPressed: () {
+                                    /*Get.toNamed(
+                                        detailOrderScreen, arguments: _order?.idPemesanan);*/
+                                    /*actionAddPayment();*/
+                                    /*Get.toNamed(successScreen);*/
+                                  },
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        )
+                        /*Text(
+                    '${_order?.duration} hari',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),*/
+                      ],
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
                     child: Text(
@@ -37,6 +145,30 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                           color: MyColor.blackTextAT,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  if(orderDetail != null && orderDetail.info1 != null)
+                  Container(
+                    height: 40,
+                    margin: EdgeInsets.only(left: 25, right: 25),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: statusColor(orderDetail.pesan),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "${orderDetail.info1}",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10
+                          ),
+                        ),
+
+                      ],
                     ),
                   ),
                   Container(
