@@ -4,6 +4,7 @@ class ApiConfig {
   static const String host = 'https://qp.forca.id/';
   static const String path = '${host}api/v1/retailer/';
   static const String local = '${host}api/Local/';
+  static const String urlRajaAPi = 'https://x.rajaapi.com';
 
   //auth
   static String urlLogin = '${path}Auth/login';
@@ -62,6 +63,11 @@ class ApiConfig {
   static String urlListKecamatan = '${path}get_list_kecamatan.php';
   static String urlListDesa = '${path}get_list_kelurahan.php';
   static String urlEditAddress = '${path}put_update_alamat.php';
+  static String urlTokenRajaApi = '${urlRajaAPi}/poe';
+  static String urlGetProvinsiRajaApi = 'm/wilayah/provinsi';
+  static String urlGetKabupatenRajaApi = 'm/wilayah/kabupaten?';
+  static String urlGetKecamatanRajaApi = 'm/wilayah/kecamatan?';
+  static String urlGetDesaRajaApi = 'm/wilayah/kelurahan?';
 
   //shipment
   static String urlListShipment = '${path}get_list_tipe_pengiriman.php';

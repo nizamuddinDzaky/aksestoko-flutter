@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-abstract class ListStoreAddressViewModel extends State<ListAddressScreen> {
+abstract class ListStoreAddressViewModel <T extends StatefulWidget> extends State<T> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
   List<Alamat> listAddress;
 

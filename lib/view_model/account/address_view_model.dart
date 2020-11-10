@@ -14,11 +14,13 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   @override
   void initState() {
     super.initState();
-    getProvinsi();
+    // getProvinsi();
+    _getTokenRajaApi();
   }
 
   Alamat address;
   Address curAddress;
+  String tokenRajaApi;
   String selectedValue;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -33,26 +35,23 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   Zone selectDistrict;
   Zone selectSubDistrict;
   Zone selectVillage;
-  Zona selectProvince2;
-  Zona selectDistrict2;
-  Zona selectSubDistrict2;
-  Zona selectVillage2;
 
   final provinceSelected = TextEditingController();
   final List<Zone> province = [];
   final List<Zone> district = [];
   final List<Zone> subDistrict = [];
   final List<Zone> village = [];
-  final List<Zona> province2 = [];
-  final List<Zona> district2 = [];
-  final List<Zona> subDistrict2 = [];
-  final List<Zona> village2 = [];
+  /*final List<Zona> province2 = [];*/
+  /*final List<Zona> district2 = [];*/
+  /*final List<Zona> subDistrict2 = [];*/
+  // final List<Zona> village2 = [];
 
   /*final districtSelected  = TextEditingController();
   final subDistrictSelected  = TextEditingController();
   final villageSelected  = TextEditingController();*/
 
-  setZona(Zona data, int step) async {
+  setZona(Zone data, int step) async {
+    debugPrint("step $step");
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -65,18 +64,20 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
           );
         });
     if (step == 1) {
-      selectProvince2 = data;
-      selectDistrict2 = data;
+      selectProvince = data;
+      /*selectDistrict2 = data;
       selectSubDistrict2 = data;
-      selectVillage2 = data;
-      // getKabupaten(data.kabupatenCode);
-      getsubDistrict(data.kecamatanCode);
+      selectVillage2 = data;*/
+      getKabupaten(data.id.toString());
+      /*getsubDistrict(data.id.toString());*/
     } else if (step == 2) {
-      selectDistrict2 = data;
+      selectDistrict = data;
+      getsubDistrict(data.id.toString());
     } else if (step == 3) {
-      selectSubDistrict2 = data;
+      selectSubDistrict = data;
+      getVillage(data.id.toString());
     } else if (step == 4) {
-      selectVillage2 = data;
+      selectVillage = data;
     }
   }
 
@@ -125,19 +126,19 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
             ),
           );
         });
-    getVillage(data.id == null ? 0 : data.id);
+    /*getVillage(data.id == null ? 0 : data.id);*/
   }
 
   void getProvinsi() async {
     var status = await ApiClient.methodGet(
-      ApiConfig.urlProvinsi,
+      "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetProvinsiRajaApi}",
       customHandle: true,
       onBefore: (status) {},
       onSuccess: (data, flag) {
         var listData = data['data'];
         if (listData is List) {
           listData.forEach((map) {
-            province2.add(Zona.fromJson(map));
+            province.add(Zone.fromJson(map));
           });
         }
       },
@@ -162,12 +163,12 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   }
 
   void getKabupaten(String idProvinsi) async {
-    district2.clear();
+    district.clear();
     var params = {
-      'province': idProvinsi,
+      'idpropinsi': idProvinsi,
     };
     var status = await ApiClient.methodGet(
-      ApiConfig.urlKabupaten,
+        "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetKabupatenRajaApi}",
       params: params,
       customHandle: true,
       onBefore: (status) {
@@ -177,7 +178,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
         var listData = data['data'];
         if (listData is List) {
           listData.forEach((map) {
-            district2.add(Zona.fromJson(map));
+            district.add(Zone.fromJson(map));
           });
         }
       },
@@ -201,12 +202,12 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   }
 
   void getsubDistrict(String idKabupaten) async {
-    subDistrict2.clear();
+    subDistrict.clear();
     var params = {
-      'city': idKabupaten,
+      'idkabupaten': idKabupaten,
     };
     var status = await ApiClient.methodGet(
-      ApiConfig.urlKecamatan,
+        "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetKecamatanRajaApi}",
       params: params,
       customHandle: true,
       onBefore: (status) {
@@ -216,7 +217,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
         var listData = data['data'];
         if (listData is List) {
           listData.forEach((map) {
-            subDistrict2.add(Zona.fromJson(map));
+            subDistrict.add(Zone.fromJson(map));
           });
         }
       },
@@ -239,23 +240,23 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     });
   }
 
-  void getVillage(int idKecamatan) async {
-    district2.clear();
+  void getVillage(String idKecamatan) async {
+    district.clear();
     var params = {
-      MyString.KEY_ID_KECAMATAN: idKecamatan,
+      "idkecamatan": idKecamatan,
     };
 
-    var status = await ApiClient.methodGet(ApiConfig.urlListDesa,
+    var status = await ApiClient.methodGet(
+        "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetDesaRajaApi}",
         params: params, onBefore: (status) {}, onSuccess: (data, flag) {
-      var baseResponse = BaseResponse.fromJson(data);
       // village.addAll(baseResponse?.data?.listDesa);
-      if (address != null) {
-        village2.forEach((vil) {
-          // if(vil.name.toLowerCase() == address.kelurahanName.toLowerCase()){
-          //   selectVillage = vil;
-          // }
-        });
-          }
+
+        var listData = data['data'];
+        if (listData is List) {
+          listData.forEach((map) {
+            village.add(Zone.fromJson(map));
+          });
+        }
           Navigator.of(context).pop();
         },
         onFailed: (title, message) {
@@ -316,7 +317,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       );
       return;
     }
-    if ([selectProvince2, selectDistrict2, selectSubDistrict2, selectVillage2]
+    if ([selectProvince, selectDistrict, selectSubDistrict, selectVillage]
         .where((element) => element != null)
         .toList()
         .length !=
@@ -344,12 +345,12 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       'no_tlp': curAddress.noTlpn,
       'alamat': curAddress.alamat,
       'kode_pos': curAddress.kodePos,
-      'provinsi': selectProvince2.provinceName,
-      'kabupaten': selectDistrict2.kabupatenName,
-      'kecamatan': selectSubDistrict2.kecamatanName,
-      'desa': selectVillage2.idWilayah.toString(),
+      'provinsi': selectProvince.name,
+      'kabupaten': selectDistrict.name,
+      'kecamatan': selectSubDistrict.name,
+      'desa': selectVillage.name,
     };
-    debugPrint('action api address $body');
+
     _postAddAddress(body);
     // debugPrint('action api ${isEdit ? 'edit' : 'add'} customer $body');
     // if (isEdit) {
@@ -374,6 +375,42 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
           gravity: ToastGravity.CENTER,
         );
         Get.back(result: -1);
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {},
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  _getTokenRajaApi() async{
+
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlTokenRajaApi,
+      customHandle: true,
+      onBefore: (status) {},
+      onSuccess: (data, flag) {
+        tokenRajaApi = data['token'];
+        getProvinsi();
+        /*var listData = data['data'];
+        if (listData is List) {
+          listData.forEach((map) {
+            province2.add(Zona.fromJson(map));
+          });
+        }*/
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);

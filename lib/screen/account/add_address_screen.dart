@@ -228,21 +228,21 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
-                                    items: province2,
+                                  child: DropdownSearch<Zone>(
+                                    items: province,
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
-                                    onChanged: (Zona data) => setZona(data, 1),
-                                    onSaved: (Zona data) =>
+                                    onChanged: (Zone data) => setZona(data, 1),
+                                    onSaved: (Zone data) =>
                                     {
                                       // vm.saveForm(
                                       //     provinceName: data.name,
                                       //     provinceId: data.id)
                                     },
-                                    selectedItem: selectProvince2,
+                                    selectedItem: selectProvince,
                                     showSearchBox: true,
-                                    itemAsString: (Zona prov) =>
-                                    prov.provinceName,
+                                    itemAsString: (Zone prov) =>
+                                    prov.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -259,21 +259,21 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
-                                    items: district2,
+                                  child: DropdownSearch<Zone>(
+                                    items: district,
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
-                                    onChanged: (Zona data) => setZona(data, 2),
-                                    onSaved: (Zona data) =>
+                                    onChanged: (Zone data) => setZona(data, 2),
+                                    onSaved: (Zone data) =>
                                     {
                                       // vm.saveForm(
                                       //     kabupatenName: data.name,
                                       //     kabupatenId: data.id)
                                     },
                                     showSearchBox: true,
-                                    selectedItem: selectDistrict2,
-                                    itemAsString: (Zona kab) =>
-                                    kab.kabupatenName,
+                                    selectedItem: selectDistrict,
+                                    itemAsString: (Zone kab) =>
+                                    kab.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -290,21 +290,21 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
-                                    items: subDistrict2,
+                                  child: DropdownSearch<Zone>(
+                                    items: subDistrict,
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
-                                    onChanged: (Zona data) => setZona(data, 3),
-                                    onSaved: (Zona data) =>
+                                    onChanged: (Zone data) => setZona(data, 3),
+                                    onSaved: (Zone data) =>
                                     {
                                       // vm.saveForm(
                                       //     kecamatanName: data.name,
                                       //     kecamatanId: data.id)
                                     },
-                                    selectedItem: selectSubDistrict2,
+                                    selectedItem: selectSubDistrict,
                                     showSearchBox: true,
-                                    itemAsString: (Zona kec) =>
-                                    kec.kecamatanName,
+                                    itemAsString: (Zone kec) =>
+                                    kec.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -321,22 +321,22 @@ class _AddAddressScreenState extends AddressViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
-                                    items: village2,
+                                  child: DropdownSearch<Zone>(
+                                    items: village,
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
-                                    onChanged: (Zona data) =>
-                                    {selectVillage2 = data},
-                                    onSaved: (Zona data) =>
+                                    onChanged: (Zone data) =>
+                                    {selectVillage = data},
+                                    onSaved: (Zone data) =>
                                     {
                                       // vm.saveForm(
                                       //     kecamatanName: data.name,
                                       //     kecamatanId: data.id)
                                     },
-                                    selectedItem: selectVillage2,
+                                    selectedItem: selectVillage,
                                     showSearchBox: true,
-                                    itemAsString: (Zona desa) =>
-                                        desa.idWilayah.toString(),
+                                    itemAsString: (Zone desa) =>
+                                        desa.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
