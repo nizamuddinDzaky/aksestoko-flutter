@@ -7,6 +7,7 @@ import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddressController extends GetController {
   static AddressController get to => Get.find();
@@ -155,38 +156,41 @@ class AddressController extends GetController {
     update();
   }
 
-  void deleteAddress(int idAddress, BuildContext context) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
-
+  postDeleteAddress(Alamat alamat) async {
     var status = await ApiClient.methodPost(
-      ApiConfig.urlAddAddress,
+      ApiConfig.urlDeleteAddress,
+      {
+        'address_id': alamat?.addressId,
+      },
       {},
-      {},
+      customHandle: true,
       onBefore: (status) {},
-      onSuccess: (data, _) {
-        getListAddress();
-        Navigator.of(context).pop();
-//        Get.back(result: "qqww");
+      onSuccess: (data, flag) {
+        Fluttertoast.showToast(
+          msg: 'Success',
+          gravity: ToastGravity.CENTER,
+        );
+        listAddress?.remove(alamat);
       },
       onFailed: (title, message) {
-        Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onError: (title, message) {
-        Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onAfter: (status) {},
     );
     status.execute();
     update();
+    /*setState(() {
+      status.execute();
+    });*/
   }
 }

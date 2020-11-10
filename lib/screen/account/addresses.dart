@@ -28,7 +28,7 @@ class _ListAddressState extends State<ListAddress> {
       widget.address?.addressPostalCode,
     ];
     return Container(
-      margin: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
+      margin: EdgeInsets.symmetric(horizontal: 2, vertical: 5),
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -61,7 +61,7 @@ class _ListAddressState extends State<ListAddress> {
                     Text(
                       widget?.address?.addressCompany ?? '',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -87,14 +87,14 @@ class _ListAddressState extends State<ListAddress> {
             margin: EdgeInsets.only(top: 15, bottom: 10, left: 10),
             child: Text(
               line1.join(', '),
-              style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+              style: TextStyle(fontSize: 14, color: MyColor.greyTextAT),
             ),
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10, left: 10),
             child: Text(
               line2.join(', '),
-              style: TextStyle(fontSize: 16, color: MyColor.greyTextAT),
+              style: TextStyle(fontSize: 14, color: MyColor.greyTextAT),
             ),
           ),
           Container(
@@ -103,6 +103,7 @@ class _ListAddressState extends State<ListAddress> {
                 "Perbarui Alamat",
                 style: TextStyle(
                   color: MyColor.redAT,
+                  fontSize: 16
                 ),
               ),
               onPressed: widget.onUpdate,

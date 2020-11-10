@@ -847,39 +847,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
           builder: (vm) {
             return AlertDialog(
               title: Text('Daftar Alamat Toko'),
-              content: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        width: double.maxFinite,
-                        child: ListAddressScreen(vm)
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text('Cancel'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FlatButton(
-                        child: Text(
-                          'Tambah Alamat',
-                          style: TextStyle(color: MyColor.redAT),
-                        ),
-                        onPressed: () {
-                          Get.toNamed(addAddressScreen, arguments: vm)
-                              .then((value) {
-                            vm.getListAddress();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              content: ListAddressScreen()
             );
           }),
     );

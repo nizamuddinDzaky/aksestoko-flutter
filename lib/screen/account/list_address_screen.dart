@@ -48,7 +48,7 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 10, left: 25, right: 25),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
