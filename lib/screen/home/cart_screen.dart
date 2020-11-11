@@ -215,13 +215,14 @@ class _CartScreenState extends State<CartScreen> {
               FocusScope.of(context).unfocus();
             },
             child: formLayout(controller)),
-        bottomNavigationBar: new Stack(
-          overflow: Overflow.visible,
+        bottomNavigationBar: new Column(
+          mainAxisSize: MainAxisSize.min,
+          /*overflow: Overflow.visible,*/
           children: [
             new Container(
               padding:
               EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
-              height: 100,
+              /*height: 100,*/
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -239,12 +240,13 @@ class _CartScreenState extends State<CartScreen> {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           minSize: 0,
                           child: Text(
-                            controller.promoCode ?? 'Kode Promo',
+                            controller.promoCode != null ? "${controller.promoName}(${controller.promoCode})": 'Kode Promo',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 14),
@@ -261,13 +263,42 @@ class _CartScreenState extends State<CartScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 16),
                         ),
-                        SizedBox(height: 5),
-                        Expanded(
+                        Flexible(
                           child: Text(
                             "${MyNumber.toNumberRpStr(controller.getTotalHarga().toString())}",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
-                        )
+                        ),
+                        SizedBox(height: 5),
+                        if(controller.promoValue != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Diskon",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                            IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: MyColor.redAT,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  controller.deletePromoCode();
+                                }
+                                )
+                          ],
+                        ),
+                        if(controller.promoValue != null)
+                        Flexible(
+                          child: Text(
+                            "${MyNumber.toNumberRpStr(controller.promoValue)}",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -286,6 +317,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         onPressed: () {
+                          // debugPrint("token : ${MyPref.getATToken()}");
                           confirm(controller, _alertDialog);
                           // Get.toNamed(checkoutScreen,
                           //     arguments: controller.listCart);

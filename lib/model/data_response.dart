@@ -41,6 +41,7 @@ class DataResponse {
   Ringkasan ringkasan;
   PaymentData paymentData;
   DetailPayment detailPayment;
+  Promo promo;
 
   DataResponse({this.token});
 
@@ -153,6 +154,10 @@ class DataResponse {
 
     paymentData = ifExistObject(json, 'data_pembayaran', (obj) {
       return PaymentData.fromJson(obj);
+    });
+    
+    promo = ifExistObject(json, "promo_data", (obj) {
+      return Promo.fromJson(obj);
     });
 
     idPurchase = ifExist(json, 'purchase_id');

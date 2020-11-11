@@ -37,6 +37,7 @@ class CheckoutController extends GetController {
       return;
     }
     salesModel
+      ..promo = productController.promoCode
       ..id_distributor = newSalesModel.id_distributor
       ..price_group_id = newSalesModel.price_group_id
       ..customer_group_id = newSalesModel.customer_group_id

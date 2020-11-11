@@ -595,6 +595,34 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             ],
                           ),
                         ),
+                        if(orderDetail != null)
+                        if(orderDetail.ringkasan.discount != null)
+                          Container(
+                            height: 3,
+                            color: Color(0xffEAEAEA),
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                          ),
+                        if(orderDetail != null)
+                        if(orderDetail.ringkasan.discount != null)
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Promo",
+                                  style: TextStyle(
+                                      fontSize: 14, color: MyColor.greyTextAT),
+                                ),
+                                Text(
+                                  orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.discount.toString()) : "0",
+                                  style: TextStyle(
+                                      color: statusColor(orderDetail.ringkasan.labelDiscount),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
                         Container(
                           height: 3,
                           color: Color(0xffEAEAEA),

@@ -111,7 +111,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
             Container(
                 margin: EdgeInsets.only(left: 10, right: 10),
                 child: Text(
-                  '${MyNumber.toNumberRpStr(_product.satuanHargaCash)}',
+                  '${MyNumber.toNumberRpStr(_product.satuanHargaCash.toString())}',
                   style: TextStyle(
                     color: Color(0xffB20838),
                     fontWeight: FontWeight.bold,

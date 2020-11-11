@@ -22,7 +22,7 @@ class Promo {
   String maxToko;
   String isDeleted;
   String status;
-  String value;
+  int value;
   String maxTotalDisc;
   String minPembelian;
   String isPopup;

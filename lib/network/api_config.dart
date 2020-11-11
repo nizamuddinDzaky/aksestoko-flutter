@@ -1,5 +1,5 @@
 class ApiConfig {
-  // static String host = 'http://10.15.4.102:9090/';
+  // static const String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
   static const String host = 'https://qp.forca.id/';
   static const String path = '${host}api/v1/retailer/';
@@ -31,7 +31,8 @@ class ApiConfig {
   static String urlDetailSalesPerson = '${path}Profile/detail_sales_person';
 
   //promo
-  static String urlListPromo = '${path}Order/list_promo';
+  static String urlListPromo = '${path}Purchase/list_promo';
+  static String urlAddPromo = '${path}Purchase/add_promo';
 
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
