@@ -37,7 +37,7 @@ class SalesModel {
     data['company_address_id'] = company_address_id;
     data['payment_method'] = payment_method;
     data['uuid'] = uuid;
-    data['promo'] = promo;
+    data['code_promo'] = promo;
     data['note'] = note;
     data['bank_id'] = bank_id;
     data['customer_group_id'] = customer_group_id;

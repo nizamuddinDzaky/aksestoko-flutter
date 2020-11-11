@@ -12,6 +12,8 @@ class SelectProductController extends GetController {
   static SelectProductController get to => Get.find();
   List<Product> listCart;
   String promoCode;
+  String promoName;
+  String promoValue;
   FocusNode currentFocus;
 
   void addToCart(Product p, {double qty = 1, double customQty}) {
@@ -249,12 +251,71 @@ class SelectProductController extends GetController {
   _actionPromo(String newCode) {
     Get.back();
     if (newCode?.isEmpty ?? false) {
-      promoCode = '';
+      promoCode = null;
       update();
     } else {
-      promoCode = newCode;
+      _actionGetPromo(newCode);
+      /*promoCode = newCode;*/
       update();
     }
+  }
+
+  _actionGetPromo(String codePromo) async{
+    /*showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });*/
+
+    var body = {
+      'id_distributor': MyPref.getIdDistributor(),
+      'code_promo': codePromo,
+    };
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlAddPromo,
+      body,
+      {},
+      customHandle: true,
+      onBefore: (status) {
+
+      },
+      onSuccess: (data, _) {
+        var response = BaseResponse.fromJson(data);
+        promoCode = response.data.promo.codePromo;
+        promoName = response.data.promo.name;
+        promoValue = response.data.promo.value.toString();
+        debugPrint("value : ${response.data.promo.value}");
+        update();
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {},
+    );
+    status.execute();
+  }
+
+  deletePromoCode(){
+    promoCode = null;
+    promoName = null;
+    promoValue = null;
+    update();
   }
 
 /// cart_screen.dart end

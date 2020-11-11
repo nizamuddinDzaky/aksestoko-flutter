@@ -192,7 +192,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                       ),
                                       Container(
                                         child: Text(
-                                          '${MyNumber.toNumberRpStr(widget.product.satuanHargaCash)}',
+                                          '${MyNumber.toNumberRpStr(widget.product.satuanHargaCash.toString())}',
                                           style: TextStyle(
                                               color: Color(0xff333333),
                                               fontSize: 14,
@@ -344,7 +344,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
 */
                       Text(
                         count(
-                            widget.product.satuanHargaCash, widget.product.qty),
+                            widget.product.satuanHargaCash.toString(), widget.product.qty),
                         style: TextStyle(
                           color: Color(0xff333333),
                           fontWeight: FontWeight.bold,
