@@ -16,6 +16,7 @@ class ApiConfig {
   static String urlSendOTP = '${path}auth/send_otp';
   static String urlCheckOTP = '${path}auth/check_otp';
   static String urlChangePassword = '${path}auth/change_password';
+  static String urlUpdatePassword = '${path}profile/update_password';
   static String urlProfile = '${path}auth/profile';
 
   //profile
