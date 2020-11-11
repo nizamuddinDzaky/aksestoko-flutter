@@ -880,7 +880,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
           ),
         ),
         actions: <Widget>[
-          Stack(
+          /*Stack(
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.notifications),
@@ -904,7 +904,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                 ),
               ),
             ],
-          ),
+          ),*/
         ],
       ),
       body: GestureDetector(
