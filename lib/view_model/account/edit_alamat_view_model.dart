@@ -4,6 +4,7 @@ import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/account/edit_alamat_screen.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,15 +19,17 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   var phoneTextController = TextEditingController();
   var addressTextController = TextEditingController();
   var postalCodeTextController = TextEditingController();
+  bool complete = null;
   Address address;
-  final List<Zona> village = [];
-  final List<Zona> province = [];
-  final List<Zona> district = [];
-  final List<Zona> subDistrict = [];
-  Zona selectVillage;
-  Zona selectProvince;
-  Zona selectSubDistrict;
-  Zona selectDistrict;
+  final List<Zone> province = [];
+  final List<Zone> village = [];
+  final List<Zone> district = [];
+  final List<Zone> subDistrict = [];
+  Zone selectVillage;
+  Zone selectProvince;
+  Zone selectSubDistrict;
+  Zone selectDistrict;
+  String tokenRajaApi;
 
   reInitText() {
     nameTextController.text = address?.namaPenerima;
@@ -34,17 +37,6 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     phoneTextController.text = address?.noTlpn;
     addressTextController.text = address?.alamat;
     postalCodeTextController.text = address?.kodePos;
-  }
-
-  reZona() {
-    selectProvince =
-        Zona(provinceName: address?.provinceName ?? address?.provinsi);
-    selectDistrict =
-        Zona(kabupatenName: address?.kabupatenName ?? address?.kabupaten);
-    selectSubDistrict =
-        Zona(kecamatanName: address?.kecamatanName ?? address?.kecamatan);
-    selectVillage =
-        Zona(idWilayah: address?.desa ?? selectSubDistrict?.kecamatanName);
   }
 
   void _getAddress() async {
@@ -61,8 +53,9 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
         if (data['data'] == null) return;
         if (data['data']['detail_address'] == null) return;
         address = Address.fromJson(data['data']['detail_address']);
+        debugPrint("no Telpon say :${data['data']['detail_address']['no_tlp']}");
         reInitText();
-        reZona();
+        _getTokenRajaApi();
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -84,45 +77,102 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     });
   }
 
-  setZona(Zona data, int step) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
+  setZona(Zone data, int step, {bool isFirstLoad = false}) async {
+    if(!isFirstLoad){
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (c) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[CircularProgressIndicator()],
+              ),
+            );
+          });
+    }
+
     if (step == 1) {
       selectProvince = data;
-      selectDistrict = data;
-      selectSubDistrict = data;
-      selectVillage = data;
-      getKabupaten(data.kabupatenCode);
-      // getsubDistrict(data.kecamatanCode);
+      if(selectProvince.name.toLowerCase() != address.provinsi.toLowerCase()){
+        selectDistrict = null;
+        selectSubDistrict = null;
+        selectVillage = null;
+      }
+        getKabupaten(data.id.toString(), isFirstLoad: isFirstLoad);
     } else if (step == 2) {
       selectDistrict = data;
+      if(getKabupatenName(selectDistrict.name) != getKabupatenName(address.kabupaten)){
+        selectSubDistrict = null;
+        selectVillage = null;
+      }
+      getKecamatan(data.id.toString(), isFirstLoad: isFirstLoad);
     } else if (step == 3) {
       selectSubDistrict = data;
-    } else if (step == 4) {
-      selectVillage = data;
+      if(selectSubDistrict.name.toLowerCase() != address.kecamatan.toLowerCase()){
+        selectVillage = null;
+      }
+      getDesa(data.id.toString(), isFirstLoad: isFirstLoad);
     }
+  }
+
+  _getTokenRajaApi() async{
+
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlTokenRajaApi,
+      customHandle: true,
+      onBefore: (status) {},
+      onSuccess: (data, flag) {
+        tokenRajaApi = data['token'];
+        getProvinsi();
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {},
+    );
+    setState(() {
+      status.execute();
+    });
   }
 
   void getProvinsi() async {
     var status = await ApiClient.methodGet(
-      ApiConfig.urlProvinsi,
+      "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetProvinsiRajaApi}",
       customHandle: true,
       onBefore: (status) {},
       onSuccess: (data, flag) {
+        /*if(address.provinsi == null){
+
+        }*/
+        var selected;
         var listData = data['data'];
         if (listData is List) {
-          listData.forEach((map) {
-            province.add(Zona.fromJson(map));
+          listData.forEach((item) {
+            var zone = Zone.fromJson(item);
+            province.add(zone);
+            if(address.provinsi != null){
+              if(zone.name.toLowerCase() == address.provinsi.toLowerCase()){
+                selected = zone;
+              }
+            }
           });
+          if(selected != null){
+            setZona(selected, 1, isFirstLoad: true);
+          }else{
+            complete = true;
+          }
+
         }
       },
       onFailed: (title, message) {
@@ -145,24 +195,41 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     });
   }
 
-  void getKabupaten(String idProvinsi) async {
+  void getKabupaten(String idProvinsi, {bool isFirstLoad = false}) async {
     district.clear();
     var params = {
-      'province': idProvinsi,
+      'idpropinsi': idProvinsi,
     };
     var status = await ApiClient.methodGet(
-      ApiConfig.urlKabupaten,
+      "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetKabupatenRajaApi}",
       params: params,
       customHandle: true,
       onBefore: (status) {
-        Get.back();
+
       },
       onSuccess: (data, flag) {
         var listData = data['data'];
+
+        if(!isFirstLoad){
+          Get.back();
+        }
+        var selected;
         if (listData is List) {
-          listData.forEach((map) {
-            district.add(Zona.fromJson(map));
+          listData.forEach((item) {
+            var zone = Zone.fromJson(item);
+            district.add(zone);
+            if(address.kabupaten != null){
+              if(getKabupatenName(zone.name) == getKabupatenName(address.kabupaten)){
+                /**/
+                selected = zone;
+              }
+            }
           });
+          if(selected != null){
+            setZona(selected, 2, isFirstLoad: true);
+          }else{
+            complete = true;
+          }
         }
       },
       onFailed: (title, message) {
@@ -184,24 +251,99 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     });
   }
 
-  void getsubDistrict(String idKabupaten) async {
+  void getKecamatan(String idKabupaten, {bool isFirstLoad = false}) async {
     subDistrict.clear();
     var params = {
-      'city': idKabupaten,
+      'idkabupaten': idKabupaten,
     };
     var status = await ApiClient.methodGet(
-      ApiConfig.urlKecamatan,
+      "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetKecamatanRajaApi}",
       params: params,
       customHandle: true,
       onBefore: (status) {
-        Get.back();
+        /*Get.back();*/
       },
       onSuccess: (data, flag) {
+        debugPrint("kecamatan sayang : ${address.kecamatan}");
+        /*if(address.kecamatan == null){
+          complete = true;
+        }*/
         var listData = data['data'];
+        if(!isFirstLoad){
+          Get.back();
+        }
+        var selected;
+        if (listData is List) {
+          listData.forEach((item) {
+            var zone = Zone.fromJson(item);
+            subDistrict.add(zone);
+            if(address.kecamatan != null){
+              if(zone.name.toLowerCase().trim() == address.kecamatan.toLowerCase().trim()){
+                selected = zone;
+                /**/
+              }
+            }
+          });
+          if(selected != null){
+            setZona(selected, 3, isFirstLoad: true);
+          }else{
+            complete = true;
+          }
+        }
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  void getDesa(String idKecamatan, {bool isFirstLoad = false}) async {
+    village.clear();
+    var params = {
+      "idkecamatan": idKecamatan,
+    };
+
+    var status = await ApiClient.methodGet(
+      "${ApiConfig.urlRajaAPi}/MeP7c5ne$tokenRajaApi/${ApiConfig.urlGetDesaRajaApi}}",
+      params: params,
+      customHandle: true,
+      onBefore: (status) {
+        /*Get.back();*/
+        if(!isFirstLoad){
+          Get.back();
+        }
+      },
+      onSuccess: (data, flag) {
+        complete = true;
+
+        var listData = data['data'];
+        var selected;
         if (listData is List) {
           listData.forEach((map) {
-            subDistrict.add(Zona.fromJson(map));
+            var zone = Zone.fromJson(map);
+            village.add(zone);
+            if(address.desa != null){
+              if(zone.name.toLowerCase().trim() == address.desa.toLowerCase().trim()){
+                selected = zone;
+              }
+            }
           });
+          if(selected != null){
+            selectVillage = selected;
+          }
         }
       },
       onFailed: (title, message) {
@@ -295,14 +437,13 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       'no_tlp': address.noTlpn,
       'alamat': address.alamat,
       'kode_pos': address.kodePos,
-      'provinsi': selectProvince.provinceName,
-      'kabupaten': selectDistrict.kabupatenName,
-      'kecamatan': selectSubDistrict.kecamatanName,
-      // 'desa': selectVillage.idWilayah,
+      'provinsi': selectProvince.name,
+      'kabupaten': selectDistrict.name,
+      'kecamatan': selectSubDistrict.name,
+      'desa': selectVillage.name,
       // 'provinsi': address.provinceName,
       // 'kabupaten': address.kabupatenName,
       // 'kecamatan': address.kecamatanName,
-      'desa': address.desa,
     };
     debugPrint('action api address $body');
     _putUpdateAddress(body);
@@ -346,18 +487,9 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
 
   @override
   void initState() {
-    getProvinsi();
-    address = Address(
-      namaPenerima: widget.address.addressName,
-      noTlpn: widget.address.addressPhone,
-      alamat: widget.address.address,
-      kodePos: widget.address.addressPostalCode,
-      provinceName: widget.address.addressCountry,
-      kabupatenName: widget.address.addressCity,
-      kecamatanName: widget.address.addressState,
-    );
+
     reInitText();
-    reZona();
+    /*reZona();*/
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _getAddress();

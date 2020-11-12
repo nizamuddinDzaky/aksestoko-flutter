@@ -57,7 +57,9 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
+              child: complete == null ?
+              Center(child: CircularProgressIndicator()) :
+              SingleChildScrollView(
                 padding: EdgeInsets.only(left: 60, right: 60, top: 50),
                 child: Column(
                   children: <Widget>[
@@ -231,15 +233,15 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
+                                  child: DropdownSearch<Zone>(
                                     items: province,
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
-                                    onChanged: (Zona data) => setZona(data, 1),
+                                    onChanged: (Zone data) => setZona(data, 1),
                                     selectedItem: selectProvince,
                                     showSearchBox: true,
-                                    itemAsString: (Zona prov) =>
-                                    prov.provinceName,
+                                    itemAsString: (Zone prov) =>
+                                    prov.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -256,15 +258,15 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
+                                  child: DropdownSearch<Zone>(
                                     items: district,
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
-                                    onChanged: (Zona data) => setZona(data, 2),
+                                    onChanged: (Zone data) => setZona(data, 2),
                                     showSearchBox: true,
                                     selectedItem: selectDistrict,
-                                    itemAsString: (Zona kab) =>
-                                    kab.kabupatenName,
+                                    itemAsString: (Zone kab) =>
+                                    kab.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -281,15 +283,15 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
+                                  child: DropdownSearch<Zone>(
                                     items: subDistrict,
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
-                                    onChanged: (Zona data) => setZona(data, 3),
+                                    onChanged: (Zone data) => setZona(data, 3),
                                     selectedItem: selectSubDistrict,
                                     showSearchBox: true,
-                                    itemAsString: (Zona kec) =>
-                                    kec.kecamatanName,
+                                    itemAsString: (Zone kec) =>
+                                    kec.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
@@ -306,15 +308,16 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zona>(
+                                  child: DropdownSearch<Zone>(
                                     items: village,
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
-                                    onChanged: (Zona data) => setZona(data, 4),
+                                    onChanged: (Zone data) =>
+                                    {selectVillage = data},
                                     selectedItem: selectVillage,
                                     showSearchBox: true,
-                                    itemAsString: (Zona desa) =>
-                                        desa.idWilayah.toString(),
+                                    itemAsString: (Zone desa) =>
+                                        desa.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:

@@ -32,7 +32,7 @@ class Product {
     productPrice = json['harga_product']?.toString()?.toDouble();
     totalPrice = json['jumlah_harga']?.toString()?.toDouble();
     nama = json['nama'] ?? json['product_name'] ?? json['nama_product'];
-    satuanHargaCash = json['satuan_harga_cash'] ?? json['product_price'];
+    satuanHargaCash = (json['satuan_harga_cash'] ?? json['product_price']).toString();
     satuanHargaCredit = json['satuan_harga_credit'];
     qty = json['quantity']?.toString()?.toDouble();
     kodeUnit = json['kode_unit'] ?? json['unit_name'] ?? json[''];
