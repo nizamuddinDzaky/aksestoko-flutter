@@ -211,7 +211,7 @@ class _LoginScreenState extends LoginScreenController {
                           child: Center(
                             child: Hero(
                               tag: 'logoForcaPoS',
-                              child: MyLogo.logoForcaPoSColor(),
+                              child: debugOnly(MyLogo.logoForcaPoSColor()),
                             ),
                           ),
                         ),

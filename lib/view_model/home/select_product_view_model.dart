@@ -63,6 +63,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   getDataProduct() async {
     var params = {
       MyString.KEY_ID_DISTRIBUTOR: MyPref.getIdDistributor(),
+      'price_group_id': MyPref.getPriceGroupId(),
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListProduct,
         params: params,

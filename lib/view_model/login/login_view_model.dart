@@ -20,8 +20,8 @@ abstract class LoginViewModel extends State<LoginScreen> {
     postLogin();
   }
 
-  postLogin() async {
-    formKey.currentState.save();
+  postLogin({skip}) async {
+    if (skip == null) formKey.currentState.save();
     var status = await ApiClient.methodPost(
         ApiConfig.urlLogin, currentData.toJson(), {}, onBefore: (status) {
       Get.back();

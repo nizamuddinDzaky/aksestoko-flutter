@@ -39,7 +39,15 @@ class _ListProductScreenState extends State<ListProductScreen> {
     if (!_focusNode.hasFocus) {
       double newValue = double.tryParse(_controller.text ?? 0.0) ?? 0.0;
       _product.countChange = 1;
-      controller.addToCart(_product, customQty: newValue);
+      int minQty = _product?.minOrder ?? 1;
+      minQty = minQty == 0 ? 1 : minQty;
+      if (newValue <= 0) {
+        _showAlertDialog(context, controller, _product);
+      } else {
+        var add = minQty - (newValue % minQty);
+        newValue += add % minQty;
+        controller.addToCart(_product, customQty: newValue);
+      }
     } else {
       controller?.currentFocus = _focusNode;
     }
@@ -70,19 +78,35 @@ class _ListProductScreenState extends State<ListProductScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Center(
-              child: Container(
-                height: 112,
-                width: 112,
-                child: kDebugMode
-                    ? Image.asset(kImageDynamix, height: 112)
-                    : FadeInImage.assetNetwork(
-                        placeholder: kImageDynamix,
-                        image: _product?.imageUrl ?? '',
-                        fit: BoxFit.cover,
-                        width: 112,
-                      ),
-              ),
+            Stack(
+              children: [
+                Center(
+                  child: Container(
+                    height: 112,
+                    width: 112,
+                    child: kDebugMode
+                        ? Image.asset(kImageDynamix, height: 112)
+                        : FadeInImage.assetNetwork(
+                            placeholder: kImageDynamix,
+                            image: _product?.imageUrl ?? '',
+                            fit: BoxFit.cover,
+                            width: 112,
+                          ),
+                  ),
+                ),
+                if ((_product?.minOrder ?? 0) > 0)
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.6),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          bottomRight: Radius.circular(10)),
+                    ),
+                    child: Text(
+                        'minQty: ${_product?.minOrder}${_product?.isMultiple == 1 ? '×' : ''}'),
+                  ),
+              ],
             ),
             SizedBox(height: 10),
             Container(
@@ -133,16 +157,19 @@ class _ListProductScreenState extends State<ListProductScreen> {
                         padding: EdgeInsets.all(8),
                         color: Color(0xFF387C2B),
                         onPressed: () {
+                          int minQty = _product?.minOrder ?? 1;
+                          minQty = minQty < 1 ? 1 : minQty;
                           int currentValue =
-                              (_product.qty != null ? _product.qty : 0).toInt();
-                          currentValue--;
+                          (_product.qty != null ? _product.qty : 0).toInt();
                           _product.countChange = 1;
-                          if (currentValue > 0) {
-                            _controller.text = currentValue.toString();
+                          if (currentValue <= minQty) {
+                            _showAlertDialog(context, controller, _product);
+                          } else {
+                            int multiple = _product?.isMultiple ?? 0;
+                            int min = multiple == 0 ? 1 : (multiple * minQty);
+                            currentValue -= min;
                             controller.reduceCart(_product,
                                 customQty: currentValue.toDouble());
-                          } else {
-                            _showAlertDialog(context, controller, _product);
                           }
                         },
                         child:
@@ -160,10 +187,12 @@ class _ListProductScreenState extends State<ListProductScreen> {
                           color: Color(0xFF333333),
                           fontWeight: FontWeight.bold,
                         ),
+                        maxLength: 8,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(0.0),
                           border: InputBorder.none,
                           isDense: true,
+                          counterText: '',
                         ),
                         controller: _controller,
                         keyboardType: TextInputType.numberWithOptions(
@@ -185,13 +214,19 @@ class _ListProductScreenState extends State<ListProductScreen> {
                         padding: EdgeInsets.all(8),
                         color: Color(0xFF387C2B),
                         onPressed: () {
+                          int minQty = _product?.minOrder ?? 1;
                           int currentValue =
                           (_product.qty != null ? _product.qty : 0).toInt();
-                          currentValue++;
+                          if (currentValue < minQty) {
+                            currentValue = minQty;
+                          } else {
+                            int multiple = _product?.isMultiple ?? 0;
+                            int add = multiple == 0 ? 1 : (multiple * minQty);
+                            currentValue += add;
+                          }
                           _product.countChange = 1;
                           controller.addToCart(_product,
                               customQty: currentValue.toDouble());
-                          _controller.text = (currentValue).toString();
                         },
                         child: Icon(Icons.add, size: 54, color: Colors.white),
                       ),
@@ -210,7 +245,6 @@ class _ListProductScreenState extends State<ListProductScreen> {
   _actionDelete(Product product) async {
     if (product == null) return;
     if (product.idCart == null) {
-      _controller.text = '0';
       controller.removeCart(_product);
       Get.back();
       return;
@@ -225,7 +259,6 @@ class _ListProductScreenState extends State<ListProductScreen> {
       {},
       customHandle: true,
       onSuccess: (data, _) {
-        _controller.text = '0';
         controller.removeCart(_product);
       },
       onFailed: (title, message) {
