@@ -243,8 +243,8 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: province,
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
-                                    onChanged: (Zone data) =>
-                                        searchKabupaten(data),
+                                    /*onChanged: (Zone data) =>
+                                        searchKabupaten(data),*/
                                     onSaved: (Zone data) => {
                                       vm.saveForm(
                                           provinceName: data.name,
@@ -273,8 +273,8 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: district,
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
-                                    onChanged: (Zone data) =>
-                                        searchKecamatan(data),
+                                    /*onChanged: (Zone data) =>
+                                        searchKecamatan(data),*/
                                     onSaved: (Zone data) => {
                                       vm.saveForm(
                                           kabupatenName: data.name,
@@ -303,7 +303,7 @@ class _EditAddressScreenState extends AddressViewModel {
                                     items: subDistrict,
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
-                                    onChanged: (Zone data) => searchDesa(data),
+                                    /*onChanged: (Zone data) => searchDesa(data),*/
                                     onSaved: (Zone data) => {
                                       vm.saveForm(
                                           kecamatanName: data.name,

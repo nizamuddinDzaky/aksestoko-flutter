@@ -35,12 +35,6 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  /*String recipientsName;
-  String email;
-  String tlp;
-  String address;
-  String postalCode;*/
-
   Zone selectProvince;
   Zone selectDistrict;
   Zone selectSubDistrict;
@@ -51,14 +45,6 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   final List<Zone> district = [];
   final List<Zone> subDistrict = [];
   final List<Zone> village = [];
-  /*final List<Zona> province2 = [];*/
-  /*final List<Zona> district2 = [];*/
-  /*final List<Zona> subDistrict2 = [];*/
-  // final List<Zona> village2 = [];
-
-  /*final districtSelected  = TextEditingController();
-  final subDistrictSelected  = TextEditingController();
-  final villageSelected  = TextEditingController();*/
 
   setZona(Zone data, int step) async {
     debugPrint("step $step");
@@ -75,68 +61,16 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
         });
     if (step == 1) {
       selectProvince = data;
-      /*selectDistrict2 = data;
-      selectSubDistrict2 = data;
-      selectVillage2 = data;*/
       getKabupaten(data.id.toString());
-      /*getsubDistrict(data.id.toString());*/
     } else if (step == 2) {
       selectDistrict = data;
-      getsubDistrict(data.id.toString());
+      getKecamatan(data.id.toString());
     } else if (step == 3) {
       selectSubDistrict = data;
-      getVillage(data.id.toString());
+      getDesa(data.id.toString());
     } else if (step == 4) {
       selectVillage = data;
     }
-  }
-
-  searchKabupaten(Zone data) async {
-    selectProvince = data;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
-    // getKabupaten(data.id == null ? 0 : data.id);
-  }
-
-  searchKecamatan(Zone data) async {
-    selectDistrict = data;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
-    // getsubDistrict(data.id == null ? 0 : data.id);
-  }
-
-  searchDesa(Zone data) async {
-    selectSubDistrict = data;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
-    /*getVillage(data.id == null ? 0 : data.id);*/
   }
 
   void getProvinsi() async {
@@ -212,7 +146,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     });
   }
 
-  void getsubDistrict(String idKabupaten) async {
+  void getKecamatan(String idKabupaten) async {
     subDistrict.clear();
     var params = {
       'idkabupaten': idKabupaten,
@@ -251,7 +185,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     });
   }
 
-  void getVillage(String idKecamatan) async {
+  void getDesa(String idKecamatan) async {
     district.clear();
     var params = {
       "idkecamatan": idKecamatan,

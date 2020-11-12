@@ -130,6 +130,18 @@ String strToDate(String txtDate, {BuildContext context}) {
   return dateFormatOut.format(DateTime.tryParse(txtDate));
 }
 
+String getKabupatenName(String kabupatenName){
+  if(kabupatenName.toLowerCase().contains("kabupaten")){
+    return kabupatenName.toLowerCase().replaceAll("kabupaten", "").trim();
+  }
+
+  if(kabupatenName.toLowerCase().contains("kota")){
+    return kabupatenName.toLowerCase().replaceAll("kota", "").trim();
+  }
+
+  return kabupatenName.toLowerCase().trim();
+}
+
 extension DateTimeExtension on DateTime {
   String toStr() {
     if (this == null) return '';

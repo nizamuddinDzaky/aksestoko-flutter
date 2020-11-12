@@ -58,7 +58,7 @@ class Address {
   Address.fromJson(Map<String, dynamic> json) {
     namaPenerima = json['nama_penerima'];
     email = json['email'];
-    noTlpn = json['no_tlpn'];
+    noTlpn = json['no_tlpn'] ?? json['no_telp'];
     alamat = json['alamat'];
     provinceName = json['province_name'];
     provinceId = json['province_id'];
