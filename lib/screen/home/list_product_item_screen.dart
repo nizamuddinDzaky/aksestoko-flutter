@@ -39,13 +39,14 @@ class _ListProductScreenState extends State<ListProductScreen> {
     if (!_focusNode.hasFocus) {
       double newValue = double.tryParse(_controller.text ?? 0.0) ?? 0.0;
       _product.countChange = 1;
+      int multiple = _product?.isMultiple == 1 ? 1 : 0;
       int minQty = _product?.minOrder ?? 1;
       minQty = minQty == 0 ? 1 : minQty;
       if (newValue <= 0) {
         _showAlertDialog(context, controller, _product);
       } else {
         var add = minQty - (newValue % minQty);
-        newValue += add % minQty;
+        newValue += (add % minQty) * (newValue < minQty ? 1 : multiple);
         controller.addToCart(_product, customQty: newValue);
       }
     } else {

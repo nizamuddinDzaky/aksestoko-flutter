@@ -128,6 +128,16 @@ class SelectProductController extends GetController {
       Fluttertoast.showToast(msg: 'Quantity tidak boleh kurang dari 0');
       return;
     }
+    int multiple = product?.isMultiple == 1 ? 1 : 0;
+    int minQty = product?.minOrder ?? 1;
+    if (qty >= 0) {
+      minQty = minQty == 0 ? 1 : minQty;
+      var add = minQty - (newQty % minQty);
+      newQty += (add % minQty) * (newQty < minQty ? 1 : multiple);
+    } else {
+      var min = newQty % minQty;
+      newQty -= (min * (newQty < minQty ? 1 : multiple));
+    }
     if (product != null && product.idCart == null) {
       actionAdd(product);
       return;
@@ -147,18 +157,7 @@ class SelectProductController extends GetController {
       onBefore: (status) {},
       onSuccess: (data, _) {
         SelectProductController controller = Get.find();
-        if (cusQty != null) {
-          controller?.addToCart(product, customQty: cusQty.toDouble());
-        } else if (qty < 0) {
-          controller?.reduceCart(product);
-        } else if (qty > 0) {
-          controller.addToCart(product);
-        } else {
-          Fluttertoast.showToast(
-            msg: 'Terjadi kesalahan data / koneksi',
-            gravity: ToastGravity.CENTER,
-          );
-        }
+        controller?.addToCart(product, customQty: newQty.toDouble());
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
