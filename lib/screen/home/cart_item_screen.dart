@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -125,11 +126,16 @@ class _CartItemScreenState extends State<CartItemScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        child: Image.asset(
-                          kImageDynamix,
-                          width: 90,
-                          fit: BoxFit.contain,
-                        ),
+                        height: 112,
+                        width: 90,
+                        child: kDebugMode
+                            ? Image.asset(kImageDynamix, height: 112)
+                            : FadeInImage.assetNetwork(
+                                placeholder: kImageDynamix,
+                                image: widget?.product?.imageUrl ?? '',
+                                fit: BoxFit.cover,
+                                width: 90,
+                              ),
                       ),
                       Expanded(
                         child: Column(children: [

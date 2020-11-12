@@ -149,7 +149,8 @@ class _CartScreenState extends State<CartScreen> {
             tag: 'logoForcaPoS',
             child: Text("Keranjang"),
           ),
-          bottom: controller.listCart?.isEmpty ?? true
+          // bottom: controller.listCart?.isEmpty ?? true
+          bottom: true
               ? null
               : PreferredSize(
                   preferredSize: const Size.fromHeight(48.0),
