@@ -1,14 +1,15 @@
+import 'package:aksestokomobile/view_model/account/change_password_view_model.dart';
+import 'package:aksestokomobile/view_model/account/change_password_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
-import 'package:aksestokomobile/screen/account/change_password_controller.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
 
-class _ChangePasswordScreenState extends ChangePasswordController {
+class _ChangePasswordScreenState extends ChangePasswordViewModel {
   @override
   Widget build(BuildContext context) {
 
@@ -52,7 +53,7 @@ class _ChangePasswordScreenState extends ChangePasswordController {
                 child: Column(
                   children: <Widget>[
                     Form(
-                      key: formKey,
+                      key: formKeyChangePassword,
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -61,6 +62,12 @@ class _ChangePasswordScreenState extends ChangePasswordController {
                               onSaved: (value) => oldPassword = value,
                               maxLength: 30,
                               obscureText: !isOldPassword,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Tidak Boleh Kosong';
+                                }
+                                return null;
+                              },
                               textInputAction: TextInputAction.go,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
@@ -96,6 +103,12 @@ class _ChangePasswordScreenState extends ChangePasswordController {
                               maxLength: 30,
                               obscureText: !isNewPassword,
                               textInputAction: TextInputAction.go,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Tidak Boleh Kosong';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'Password Baru',
@@ -135,6 +148,12 @@ class _ChangePasswordScreenState extends ChangePasswordController {
                               maxLength: 30,
                               obscureText: !isRepeatPassword,
                               textInputAction: TextInputAction.go,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Tidak Boleh Kosong';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'Ulangi Kata Sandi',
@@ -172,7 +191,9 @@ class _ChangePasswordScreenState extends ChangePasswordController {
                                   'Simpan',
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onPressed: (){},
+                                onPressed: (){
+                                  actionChangePassword();
+                                },
                                 shape: new RoundedRectangleBorder(
                                     borderRadius: new BorderRadius.circular(30.0))),
                           ),

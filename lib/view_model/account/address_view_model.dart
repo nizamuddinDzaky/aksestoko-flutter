@@ -11,11 +11,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
+
+  bool complete = null;
   @override
   void initState() {
     super.initState();
     // getProvinsi();
+    actionRefresh();
+  }
+
+  Future<void> actionRefresh() async {
+    setState(() {
+      complete = null;
+    });
     _getTokenRajaApi();
+    return Future.value();
   }
 
   Alamat address;
@@ -135,6 +145,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       customHandle: true,
       onBefore: (status) {},
       onSuccess: (data, flag) {
+        complete = true;
         var listData = data['data'];
         if (listData is List) {
           listData.forEach((map) {

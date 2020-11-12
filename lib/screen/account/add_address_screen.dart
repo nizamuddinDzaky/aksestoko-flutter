@@ -54,7 +54,9 @@ class _AddAddressScreenState extends AddressViewModel {
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
+              child: complete == null ?
+                Center(child: CircularProgressIndicator()) :
+              SingleChildScrollView(
                 padding: EdgeInsets.only(left: 60, right: 60, top: 50),
                 child: Column(
                   children: <Widget>[
