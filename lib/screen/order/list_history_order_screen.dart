@@ -2,6 +2,7 @@ import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/screen/order/preview_delivery_screen.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -247,10 +248,16 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Container(
-                        child: Image.asset(
-                          kImageDynamix,
-                          width: 100,
-                        ),
+                        height: 112,
+                        width: 90,
+                        child: kDebugMode
+                            ? Image.asset(kImageDynamix, height: 112)
+                            : FadeInImage.assetNetwork(
+                                placeholder: kImageDynamix,
+                                image: _order?.productImage ?? '',
+                                fit: BoxFit.cover,
+                                width: 90,
+                              ),
                       ),
                       Expanded(
                         child: Column(
