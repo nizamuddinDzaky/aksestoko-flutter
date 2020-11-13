@@ -7,6 +7,15 @@ import 'package:get/get.dart';
 
 abstract class DetailPaymentViewModel extends State<DetailPaymentScreen> {
   DetailPayment detailPayment;
+  bool completeLoad;
+
+  Future<void> actionRefresh() async {
+    setState(() {
+      completeLoad = null;
+    });
+    getListPayment();
+    return Future.value();
+  }
 
   getListPayment() async {
     if (Get.arguments == null) {
@@ -19,6 +28,7 @@ abstract class DetailPaymentViewModel extends State<DetailPaymentScreen> {
           'id_pemesanan': Get.arguments?.toString(),
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
+          completeLoad = true;
           detailPayment = DetailPayment.fromJson(data['data']);
         }, onFailed: (title, message) {
           Get.defaultDialog(title: title, content: Text(message));

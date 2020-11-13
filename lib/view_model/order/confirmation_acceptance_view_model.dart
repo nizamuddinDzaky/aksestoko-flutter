@@ -58,6 +58,19 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
   }
 
   postConfirmDelivery() async{
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
+
     var body = {
       "id_pemesanan" : detailPemesanan.idPemesanan,
       "date" : DateTime.now().toStr(),
@@ -84,7 +97,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
       onBefore: (status) {},
       onSuccess: (data, _) {
         Navigator.of(context).pop();
-        Get.back(result: "qqww");
+        Get.back(result: true);
       },
       onFailed: (title, message) {
         Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));

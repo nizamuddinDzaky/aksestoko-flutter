@@ -18,8 +18,17 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
   String base64File = "data:image/png;base64,";
   String idPemesanan = null;
   var nominalTextController =  TextEditingController();
+  bool completeLoad;
   File imageFile;
   //
+
+  Future<void> actionRefresh() async {
+    setState(() {
+      completeLoad = null;
+    });
+    getDetailPayment();
+    return Future.value();
+  }
   getDetailPayment() async{
     if (Get.arguments == null) {
       return;
@@ -30,6 +39,7 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
           'supplier_id' : MyPref.getIdDistributor()
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
+          completeLoad = true;
           var response = BaseResponse.fromJson(data);
           paymentData = response.data.paymentData;
           debugPrint("result => ${paymentData.metodePembayaran}");
@@ -50,6 +60,13 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
     }
     if(imageFile == null){
       Get.defaultDialog(title: "Warning", content: Text('File Tidak Boleh Kosong'));
+      return;
+    }
+
+    var crnPayment = double.parse(nominalTextController.text);
+    var maxPayment =double.parse(paymentData.total.replaceAll("Rp", "").replaceAll(",", "").trim());
+    if(crnPayment > maxPayment){
+      Get.defaultDialog(title: "Warning", content: Text('Pembayaran Melebihi Batas'));
       return;
     }
     /*debugPrint("${ImageSizeGetter.getSize(FileInput(imageFile))} ${imageFile.lengthSync()}");*/

@@ -91,12 +91,14 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
     super.initState();
     nominalTextController.text ='';
     idPemesanan = Get.arguments?.toString();
-    getDetailPayment();
+    actionRefresh();
   }
 
   @override
   Widget build(BuildContext context) {
     var formLayout =
+    completeLoad == null
+        ? Center(child: CircularProgressIndicator()) :
     SingleChildScrollView(
       child:Column(
         children: <Widget>[
@@ -303,7 +305,35 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
                                       paymentData != null ? paymentData.harga : "",
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: MyColor.greyTextAT,
+                                          color: MyColor.blackTextAT,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        if(paymentData != null)
+                          if(paymentData.diskon != null && paymentData.diskon != 0)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      "Diskon",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: MyColor.greyTextAT),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      paymentData != null ? paymentData.diskon : "",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: MyColor.blackTextAT,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),

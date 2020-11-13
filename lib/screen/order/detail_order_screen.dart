@@ -1054,7 +1054,11 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   'purchase': orderDetail.detailPemesanan,
                   'delivery': detailDelivery
                 };
-                Get.toNamed(confirmationAcceptScreen, arguments: param);
+                Get.toNamed(confirmationAcceptScreen, arguments: param).then((value){
+                    if(value) {
+                      actionRefresh();
+                    }
+                });
               },
             ),
           ),
