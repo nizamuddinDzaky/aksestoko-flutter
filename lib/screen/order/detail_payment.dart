@@ -13,12 +13,15 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
 
   @override
   void initState() {
-    getListPayment();
+    actionRefresh();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    var formLayout = SingleChildScrollView(
+    var formLayout =
+        completeLoad == null
+    ? Center(child: CircularProgressIndicator()) :
+    SingleChildScrollView(
       child: Container(
         child: Stack(
           children: <Widget>[
@@ -54,7 +57,8 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
         },
         child: formLayout,
       ),
-      bottomNavigationBar: new Stack(
+      bottomNavigationBar: completeLoad == null
+          ? Center(child: CircularProgressIndicator()) : new Stack(
         overflow: Overflow.visible,
         children: [
           new Container(
