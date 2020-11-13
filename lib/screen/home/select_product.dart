@@ -41,12 +41,8 @@ class _SelectProductScreenState extends SelectProductViewModel {
                           ? null
                           : InkWell(
                         onTap: () {
-                          setState(() {
-                            searchTextController.clear();
-                            listSearch = null;
-                            FocusScope.of(context).unfocus();
-                          });
-                        },
+                          cancelSearch();
+                              },
                         child: Icon(
                           Icons.highlight_remove_outlined,
                           color: Colors.grey,
@@ -177,7 +173,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
       physics: NeverScrollableScrollPhysics(),
       itemCount: listFilter.length,
       itemBuilder: (context, index) => Container(
-        key: UniqueKey(),
+        key: isSearch == true ? UniqueKey() : null,
         child: ListProductScreen(listFilter[index], controller, this),
       ),
     );

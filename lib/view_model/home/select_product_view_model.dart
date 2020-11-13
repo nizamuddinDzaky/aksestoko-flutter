@@ -21,6 +21,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   var needUpdate = 0;
   var searchTextController = TextEditingController();
   var refreshKey = GlobalKey<RefreshIndicatorState>();
+  bool isSearch = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -51,6 +52,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   List<Cart> listCart = [];
 
   searchProduct(String query) {
+    isSearch = true;
     listSearch = listProduct?.where((p) {
       var result =
           p.nama?.toLowerCase()?.contains(query?.toLowerCase()) ?? false;
@@ -58,6 +60,19 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
       return result;
     })?.toList();
     setState(() {});
+    Future.delayed(Duration(milliseconds: 200)).then((value) {
+      isSearch = false;
+      setState(() {});
+    });
+  }
+
+  cancelSearch() {
+    isSearch = false;
+    setState(() {
+      searchTextController.clear();
+      listSearch = null;
+      FocusScope.of(context).unfocus();
+    });
   }
 
   getDataProduct() async {
