@@ -2,6 +2,7 @@
 final String kForgotPassword = "assets/images/forgot_password_red.png";
 final String kAvatar = "assets/images/avatar_account.png";
 final String kImageDynamix = "assets/images/dynamix.jpg";
+final String kNoImage = "assets/images/no_image.png";
 final String kIconSale = "assets/icons/icon_sales.png";
 final String kIconDelivery = "assets/icons/icon_delivery.png";
 final String kIconPurchase = "assets/icons/icon_purchase.png";

@@ -86,9 +86,9 @@ class _ListProductScreenState extends State<ListProductScreen> {
                     height: 112,
                     width: 112,
                     child: kDebugMode
-                        ? Image.asset(kImageDynamix, height: 112)
+                        ? Image.asset(kNoImage, height: 112)
                         : FadeInImage.assetNetwork(
-                            placeholder: kImageDynamix,
+                            placeholder: kNoImage,
                             image: _product?.imageUrl ?? '',
                             fit: BoxFit.cover,
                             width: 112,
