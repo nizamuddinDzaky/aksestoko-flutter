@@ -50,7 +50,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
         },
         child: complete == null
             ? Center(child: CircularProgressIndicator())
-            : (complete == true
+            : (complete != 0
                 ? GetBuilder<CheckoutController>(
                     init: CheckoutController(),
                     builder: (controller) => RefreshIndicator(
@@ -516,6 +516,17 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       ),
                     ],
                   ),
+                  if (complete != 2)
+                    Text(
+                      'Gagal mengambil info biaya pengiriman',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(
+                          color: Colors.red, fontStyle: FontStyle.italic
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -668,10 +679,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       fontWeight: FontWeight.bold,
                       fontSize: 14),
                 ),
-                onPressed: () {
-                  controller.saveCheckoutScreen(
-                      checkoutModel, address, selectShipping);
-                },
+                onPressed: () => actionToPayment(controller),
               ),
             ),
             Container(
