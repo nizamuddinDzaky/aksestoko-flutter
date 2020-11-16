@@ -1,8 +1,10 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/checkout_model.dart';
+import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/model/order_response.dart';
 import 'package:aksestokomobile/model/sales_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -59,6 +61,26 @@ class CheckoutController extends GetController {
         customHandle: true, onBefore: (status) {}, onSuccess: (data, _) {
       var orderResponse = OrderResponse.fromJson(data['data']);
       if (orderResponse != null) {
+        var c = Get.find<ParentController>();
+        c.addOrder(Order(
+          idPemesanan: orderResponse?.saleId?.toString(),
+          noPemesanan: orderResponse?.idPemesanan,
+          tanggalPemensanan: strToDate(salesModel?.delivery_date),
+          statusPemesanan: 'Menunggu Konfirmasi',
+          statusPembayaran: 'Belum Bayar',
+          notikasiPemesanan: 'warning',
+          notikasiPembayaran: 'warning',
+          productImage: productController?.listCart?.first?.imageUrl,
+          productName: productController?.listCart?.first?.nama,
+          productCode: productController?.listCart?.first?.productCode,
+          unitCost: int.tryParse(
+              productController?.listCart?.first?.satuanHargaCash ?? ''),
+          quantity: productController?.listCart?.first?.qty?.toInt(),
+          satuan: productController?.listCart?.first?.kodeUnit,
+          jumlahBarang: productController?.listCart?.length,
+          hargaBarang: productController?.listCart?.first?.subTotal,
+          totalHarga: productController?.getTotalHarga()?.toInt(),
+        ));
         Get.offNamedUntil(
           successScreen,
           (route) => route.settings.name == parentScreen,

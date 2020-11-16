@@ -75,16 +75,18 @@ extension StringExtension on String {
   }
 }
 
-Color statusColor(String status){
-  if (status.toLowerCase() == 'success'){
+Color statusColor(String status) {
+  if (status == null) return null;
+
+  if (status.toLowerCase() == 'success') {
     return MyColor.successTextAT;
   }
 
-  if (status.toLowerCase() == 'warning'){
+  if (status.toLowerCase() == 'warning') {
     return MyColor.warningTextAT;
   }
 
-  if(status.toLowerCase() == 'info'){
+  if (status.toLowerCase() == 'info') {
     return MyColor.infoAT;
   }
 

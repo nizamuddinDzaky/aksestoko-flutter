@@ -400,13 +400,13 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   ),
                   child: Text("${_order?.notifikasiProduct}"),
                 ),
-                if (_order?.konfirmasiPenerimaan)
+                if (_order?.konfirmasiPenerimaan ?? false)
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
                     margin: EdgeInsets.symmetric(vertical: 0),
                   ),
-                if (_order?.konfirmasiPenerimaan)
+                if (_order?.konfirmasiPenerimaan ?? false)
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     height: 40,
