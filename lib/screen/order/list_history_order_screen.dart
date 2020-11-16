@@ -251,9 +251,9 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                         height: 112,
                         width: 90,
                         child: kDebugMode
-                            ? Image.asset(kImageDynamix, height: 112)
+                            ? Image.asset(kNoImage, height: 112)
                             : FadeInImage.assetNetwork(
-                                placeholder: kImageDynamix,
+                                placeholder: kNoImage,
                                 image: _order?.productImage ?? '',
                                 fit: BoxFit.cover,
                                 width: 90,
@@ -400,13 +400,13 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   ),
                   child: Text("${_order?.notifikasiProduct}"),
                 ),
-                if (_order?.konfirmasiPenerimaan)
+                if (_order?.konfirmasiPenerimaan ?? false)
                   Container(
                     height: 3,
                     color: Color(0xffEAEAEA),
                     margin: EdgeInsets.symmetric(vertical: 0),
                   ),
-                if (_order?.konfirmasiPenerimaan)
+                if (_order?.konfirmasiPenerimaan ?? false)
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     height: 40,

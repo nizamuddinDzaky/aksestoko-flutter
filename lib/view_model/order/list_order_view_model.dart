@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/base_response.dart';
+import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/model/order_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -14,8 +14,12 @@ abstract class ListOrderViewModel extends State<ListOrderScreen> {
 
   }*/
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
-  List<Order> listOrder;
+  List<Order> _listOrder;
   OrderModel orderModelDalamProses;
+  final ParentController controller = Get.find();
+
+  List<Order> get listOrder =>
+      [...(controller?.filter(widget?.status) ?? []), ...(_listOrder ?? [])];
 
   Future<void> actionRefresh(String status) async {
     await getListOrder(status);
@@ -30,8 +34,9 @@ abstract class ListOrderViewModel extends State<ListOrderScreen> {
         onBefore: (status) {}, onSuccess: (data, flag) {
       /*var response = BaseResponse.fromJson(data);*/
       orderModelDalamProses = OrderModel.fromJson(data['data'][status]);
-      listOrder = orderModelDalamProses.listOrderDalamProses;
-      debugPrint("orderModel : ${listOrder.length}");
+      _listOrder = orderModelDalamProses.listOrderDalamProses;
+      controller.clearOrder();
+      debugPrint("orderModel : ${_listOrder.length}");
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {

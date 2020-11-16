@@ -311,7 +311,7 @@ class _CartScreenState extends State<CartScreen> {
                       child: RaisedButton(
                         color: MyColor.redAT,
                         child: Text(
-                          'Checkout',
+                          'Lanjutkan',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

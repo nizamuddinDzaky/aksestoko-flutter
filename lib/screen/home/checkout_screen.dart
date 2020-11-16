@@ -12,7 +12,6 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:flutter/services.dart';
 
@@ -37,7 +36,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
           ),
           child: Container(
             child: Text(
-              "Checkout",
+              "Periksa",
               style: TextStyle(fontSize: 20),
             ),
           ),
@@ -51,7 +50,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
         },
         child: complete == null
             ? Center(child: CircularProgressIndicator())
-            : (complete == true
+            : (complete != 0
                 ? GetBuilder<CheckoutController>(
                     init: CheckoutController(),
                     builder: (controller) => RefreshIndicator(
@@ -517,6 +516,17 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       ),
                     ],
                   ),
+                  if (complete != 2)
+                    Text(
+                      'Gagal mengambil info biaya pengiriman',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(
+                          color: Colors.red, fontStyle: FontStyle.italic
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -669,10 +679,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                       fontWeight: FontWeight.bold,
                       fontSize: 14),
                 ),
-                onPressed: () {
-                  controller.saveCheckoutScreen(
-                      checkoutModel, address, selectShipping);
-                },
+                onPressed: () => actionToPayment(controller),
               ),
             ),
             Container(
@@ -721,10 +728,16 @@ class _CheckoutScreenState extends CheckoutViewModel {
             child: Row(
               children: <Widget>[
                 Container(
-                  child: Image.asset(
-                    kImageDynamix,
-                    width: 100,
-                  ),
+                  height: 112,
+                  width: 100,
+                  child: kDebugMode
+                      ? Image.asset(kNoImage, height: 112)
+                      : FadeInImage.assetNetwork(
+                          placeholder: kNoImage,
+                          image: _product?.imageUrl ?? '',
+                          fit: BoxFit.cover,
+                          width: 100,
+                        ),
                 ),
                 Container(
                   child: Expanded(

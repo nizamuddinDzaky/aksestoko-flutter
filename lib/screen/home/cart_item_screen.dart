@@ -129,9 +129,9 @@ class _CartItemScreenState extends State<CartItemScreen> {
                         height: 112,
                         width: 90,
                         child: kDebugMode
-                            ? Image.asset(kImageDynamix, height: 112)
+                            ? Image.asset(kNoImage, height: 112)
                             : FadeInImage.assetNetwork(
-                                placeholder: kImageDynamix,
+                                placeholder: kNoImage,
                                 image: widget?.product?.imageUrl ?? '',
                                 fit: BoxFit.cover,
                                 width: 90,

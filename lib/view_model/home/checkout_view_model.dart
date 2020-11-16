@@ -9,11 +9,12 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/home/checkout_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 abstract class CheckoutViewModel extends State<CheckoutScreen> {
   List<Product> cart;
-  bool complete;
+  int complete;
   Shipment selectShipping;
   CheckoutModel checkoutModel;
   Address address;
@@ -37,6 +38,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
     var status = await ApiClient.methodGet(ApiConfig.urlDetailCheckout,
         params: {
           'id_distributor': MyPref.getIdDistributor().toString(),
+          'price_group_id': MyPref.getPriceGroupId().toString(),
         },
         customHandle: true,
         onBefore: (status) {}, onSuccess: (data, flag) {
@@ -47,7 +49,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
       address = checkoutModel?.alamatPengiriman;
       getShipment();
     }, onFailed: (title, message) {
-      complete = false;
+          complete = 0;
       var response = BaseResponse.fromJson(jsonDecode(message));
       Get.defaultDialog(
           title: "Pemberitahuan",
@@ -61,7 +63,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
             });
           });
     }, onError: (title, message) {
-      complete = false;
+          complete = 0;
       // Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});
     setState(() {
@@ -79,32 +81,41 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
         params: params,
         onBefore: (status) {},
         customHandle: true, onSuccess: (data, _) {
-      var response = BaseResponse.fromJson(data);
-      var ringkasan = response?.data?.ringkasan;
-      if (ringkasan?.label?.isNotEmpty ?? false) {
-        selectShipping?.totalHarga = 0;
-      }
-      checkoutModel?.ringkasan = ringkasan;
-      complete = true;
+          var response = BaseResponse.fromJson(data);
+          var ringkasan = response?.data?.ringkasan;
+          if (ringkasan?.label?.isNotEmpty ?? false) {
+            selectShipping?.totalHarga = 0;
+          }
+          checkoutModel?.ringkasan = ringkasan;
+          complete = 2;
     }, onFailed: (title, message) {
-      complete = false;
-      var response = BaseResponse.fromJson(jsonDecode(message));
-      Get.defaultDialog(
-          title: "Pemberitahuan",
-          content: Text("Proses tidak bisa dilanjutkan. ${response?.message}"),
-          textCancel: 'Tutup',
-          onCancel: () {
-            debugPrint('back 1');
-            Get.back();
-            Get.back(result: {
-              'errorcode': response?.code,
-            });
-          });
-    }, onError: (title, message) {
-      complete = false;
-    }, onAfter: (status) {});
+          complete = checkoutModel == null ? 0 : 1;
+          var baseResponse = BaseResponse.fromJson(jsonDecode(message));
+          Fluttertoast.showToast(
+            msg: baseResponse.message,
+            gravity: ToastGravity.CENTER,
+          );
+        }, onError: (title, message) {
+          complete = checkoutModel == null ? 0 : 1;
+          Fluttertoast.showToast(
+            msg: 'Terjadi kesalahan data / koneksi',
+            gravity: ToastGravity.CENTER,
+          );
+        },
+        onAfter: (status) {});
     setState(() {
       status.execute();
     });
+  }
+
+  void actionToPayment(controller) {
+    if (complete != 2) {
+      Fluttertoast.showToast(
+        msg: 'Transaksi tidak dapat dilanjutkan',
+        gravity: ToastGravity.CENTER,
+      );
+      return;
+    }
+    controller.saveCheckoutScreen(checkoutModel, address, selectShipping);
   }
 }

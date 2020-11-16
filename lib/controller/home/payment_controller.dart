@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/payment_model.dart';
 import 'package:aksestokomobile/model/sales_model.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 
 abstract class PaymentController extends State<PaymentScreen> {
   static CheckoutController get to => Get.find();
+  final SelectProductController productController = Get.find();
   PaymentModel paymentModel;
   Detail selectedKreditPro;
   ListBank selectedDue;
@@ -101,6 +103,9 @@ abstract class PaymentController extends State<PaymentScreen> {
       ApiConfig.urlListPayment,
       params: {
         'id_distributor': MyPref.getIdDistributor().toString(),
+        'price_group_id': MyPref.getPriceGroupId().toString(),
+        if (productController?.promoCode?.isNotEmpty ?? false)
+          'promo': productController.promoCode,
         'is_checkout': 'true',
         'delivery_method': salesModel?.delivery_method,
       },

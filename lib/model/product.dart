@@ -16,6 +16,9 @@ class Product {
   int minOrder;
   int isMultiple;
 
+  int get subTotal =>
+      (qty?.toInt() ?? 0) * (int.tryParse(satuanHargaCash ?? '0') ?? 0);
+
   Product({
     this.nama,
     this.satuanHargaCash,

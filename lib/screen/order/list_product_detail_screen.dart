@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 
@@ -39,10 +40,16 @@ class _ListProductDetailOrderScreenState
       child: Row(
         children: <Widget>[
           Container(
-            child: Image.asset(
-              kImageDynamix,
-              width: 100,
-            ),
+            height: 112,
+            width: 100,
+            child: kDebugMode
+                ? Image.asset(kNoImage, height: 112)
+                : FadeInImage.assetNetwork(
+                    placeholder: kNoImage,
+                    image: cart?.imageUrl ?? '',
+                    fit: BoxFit.cover,
+                    width: 100,
+                  ),
           ),
           Expanded(
             child: Column(
