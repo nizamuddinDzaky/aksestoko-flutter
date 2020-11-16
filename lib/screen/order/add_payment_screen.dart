@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:clipboard/clipboard.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
@@ -417,15 +417,40 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Container(
-                                child: Text(
-                                  paymentData != null ? paymentData.total : "",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: MyColor.redAT,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      paymentData != null ? paymentData.total : "",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: MyColor.redAT,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Material(
+                                      child: InkWell(
+                                        onTap: () {
+                                          FlutterClipboard.copy(paymentData.total.replaceAll("Rp", "").replaceAll(",", "").trim());
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(left: 5),
+                                          child: ClipRRect(
+                                            /*borderRadius: BorderRadius.circular(20.0),*/
+                                            child: Icon(Icons.copy, size: 18) ,
+                                          ),),
+                                      )
+                                  )
+                                  /*Container(
+                                    margin: EdgeInsets.only(left: 5),
+                                    child: ClipRRect(
+                                      child:
+                                    )
+                                    *//*,*//*
+                                  ),*/
+                                ],
                               ),
+
                             ],
                           ),
                         ),
@@ -609,9 +634,9 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
                   MyDivider.spaceDividerElementsAT(custom: 10),
                   /*if (CashBeforeDelivery)*/
                   Container(
+                    width: double.maxFinite,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      /*mainAxisAlignment: MainAxisAlignment.center,*/
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.only(left: 10, right: 10),
@@ -621,7 +646,7 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
                           ),
                           child: FlatButton(
                             child: Text(
-                              "Seleseikan",
+                              "Unggah Bukti Pembayaran",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

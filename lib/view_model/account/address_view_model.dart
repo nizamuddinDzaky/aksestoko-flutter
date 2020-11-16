@@ -186,7 +186,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   }
 
   void getDesa(String idKecamatan) async {
-    district.clear();
+    village.clear();
     var params = {
       "idkecamatan": idKecamatan,
     };
