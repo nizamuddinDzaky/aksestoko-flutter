@@ -30,8 +30,8 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
 
   @override
   void initState() {
+
     baikControllerText.text = (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
-    debugPrint("asdsad :${itemDetailDelivery.baik}");
     badControllerText.text = (itemDetailDelivery.buruk ?? 0).toString();
     _focus.addListener(_onFocusChange);
     super.initState();
@@ -39,7 +39,8 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
 
   void _onFocusChange(){
     if(!_focus.hasFocus){
-      int crntVal = int.parse(badControllerText.text);
+      debugPrint("asdsad :${badControllerText.text != '' ? 'asdsad' : 0}");
+      int crntVal = int.parse(badControllerText.text != '' ? badControllerText.text : "0");
       if(crntVal > itemDetailDelivery.jumlah){
         itemDetailDelivery.baik = 0;
         itemDetailDelivery.buruk = itemDetailDelivery.jumlah;

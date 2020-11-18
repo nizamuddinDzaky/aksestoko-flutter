@@ -553,7 +553,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
               ),
             ),
             actions: <Widget>[
-              Stack(
+             /* Stack(
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.notifications),
@@ -577,7 +577,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                     ),
                   ),
                 ],
-              ),
+              ),*/
             ],
           ),
           body: GestureDetector(

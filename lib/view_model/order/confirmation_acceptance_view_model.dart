@@ -25,7 +25,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
     param = Get.arguments as Map<String, dynamic>;
     detailDelivery = param['delivery'] as DetailDelivery;
     detailPemesanan = param['purchase'] as DetailPemesanan;
-    debugPrint("argument => ${detailDelivery.listItemDetailDelivery}");
+    debugPrint("argument => ${detailDelivery.noSpj}");
     /*controller.sumItem();
     controller.sumGoodItem();
     controller.sumBadItem();*/
@@ -101,7 +101,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
           );
         });
     /*debugPrint('body : $body');*/
-    /*var status = await ApiClient.methodPost(
+    var status = await ApiClient.methodPost(
       ApiConfig.urlConfirmDelivery,
       body,
       {},
@@ -118,7 +118,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
       },
       onAfter: (status) {},
     );
-    status.execute();*/
+    status.execute();
   }
 
   onChangeBadItem(String badItem, ItemDetailDelivery itemDetailDelivery){

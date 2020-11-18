@@ -275,6 +275,7 @@ class SelectProductController extends GetController {
     var body = {
       'id_distributor': MyPref.getIdDistributor(),
       'code_promo': codePromo,
+      'price_group_id' : MyPref.getPriceGroupId()
     };
     var status = await ApiClient.methodPost(
       ApiConfig.urlAddPromo,
