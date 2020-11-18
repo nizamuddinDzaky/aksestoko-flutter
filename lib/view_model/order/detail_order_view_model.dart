@@ -37,12 +37,21 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
       status.execute();
     });
   }
-
-  void putCancelOrder(String idPurchase) async {
+  void putUpdateOrder(String idPurchase, int type) async {
+    var url = '';
+    if(type == 1){
+      url = ApiConfig.urlConfirmUpdatePrice;
+    }else if(type == 2){
+      url = ApiConfig.urlCancelUpdatePrice;
+    }else if(type == 3){
+      url = ApiConfig.urlCancelOrder;
+    }else{
+      return;
+    }
     var body = {
       'id_pemesanan': idPurchase,
     };
-    var status = await ApiClient.methodPut(ApiConfig.urlCancelOrder, body, {},
+    var status = await ApiClient.methodPut(url, body, {},
         onBefore: (status) {
           Get.back();
         }, onSuccess: (data, _) {
@@ -54,13 +63,11 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
         }, onError: (title, message) {
           Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
         }, onAfter: (status) {
-          /*if (status == ResponseStatus.success)
-        MyPref.setRemember(isRemember, currentData);*/
         });
     status.execute();
   }
 
-  showDialogProgress(String idPurchase) async {
+  showDialogLoader(String idPurchase, int type) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -72,7 +79,8 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
             ),
           );
         });
-    await putCancelOrder(idPurchase);
+
+    await putUpdateOrder(idPurchase, type);
   }
   @override
   void initState() {

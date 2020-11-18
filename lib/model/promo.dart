@@ -84,7 +84,7 @@ class Promo {
     maxToko = json['max_toko'];
     isDeleted = json['is_deleted'];
     status = json['status'];
-    value = json['value'];
+    value = (json['value']).toString();
     maxTotalDisc = json['max_total_disc'];
     minPembelian = json['min_pembelian'];
     isPopup = json['is_popup'];
