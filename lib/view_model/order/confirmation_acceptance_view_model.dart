@@ -25,7 +25,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
     param = Get.arguments as Map<String, dynamic>;
     detailDelivery = param['delivery'] as DetailDelivery;
     detailPemesanan = param['purchase'] as DetailPemesanan;
-    debugPrint("argument => $detailDelivery");
+    debugPrint("argument => ${detailDelivery.listItemDetailDelivery}");
     /*controller.sumItem();
     controller.sumGoodItem();
     controller.sumBadItem();*/
@@ -59,18 +59,8 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
 
   postConfirmDelivery() async{
 
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
 
+    bool isSetBadItem = false;
     var body = {
       "id_pemesanan" : detailPemesanan.idPemesanan,
       "date" : DateTime.now().toStr(),
@@ -78,6 +68,10 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
       "file" : base64File,
       "id_distributor" : MyPref.getIdDistributor(),
       "produk" : detailDelivery.listItemDetailDelivery.map((item) {
+        /*debugPrint("${item.buruk}");*/
+        if(item.buruk != 0 && item.buruk != null){
+          isSetBadItem = true;
+        }
         return {
           'id_produk': item.idProduct,
           'nama_produk' : item.namaProduct,
@@ -89,8 +83,25 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
         };
       }).toList(),
     };
+
+    if(isSetBadItem && imageFile == null){
+      Get.defaultDialog(title: "Warning", content: Text('File Tidak Boleh Kosong'));
+      return;
+    }
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
     /*debugPrint('body : $body');*/
-    var status = await ApiClient.methodPost(
+    /*var status = await ApiClient.methodPost(
       ApiConfig.urlConfirmDelivery,
       body,
       {},
@@ -107,7 +118,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
       },
       onAfter: (status) {},
     );
-    status.execute();
+    status.execute();*/
   }
 
   onChangeBadItem(String badItem, ItemDetailDelivery itemDetailDelivery){

@@ -1,7 +1,7 @@
 class ApiConfig {
-  // static const String host = 'http://10.15.4.102:9090/';
+  static const String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
-  static const String host = 'https://qp.forca.id/';
+  // static const String host = 'https://qp.forca.id/';
   static const String path = '${host}api/v1/retailer/';
   static const String local = '${host}api/Local/';
   static const String urlRajaAPi = 'https://x.rajaapi.com';
@@ -44,6 +44,8 @@ class ApiConfig {
   static String urlDetailOrder = '${path}Purchase/detail_order';
 
   static String urlCancelOrder = '${path}Purchase/cancel_order';
+  static String urlConfirmUpdatePrice = '${path}Purchase/confirm_update_price';
+  static String urlCancelUpdatePrice = '${path}Purchase/cancel_update_price';
   static String urlConfirmDelivery = '${path}Purchase/confirm_delivery';
 
   static String urlDetailCheckout = '${path}Purchase/detail_checkout';

@@ -87,6 +87,15 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                         fontSize: 10),
                                   ),
                                   onPressed: () {
+                                    createAlertDialog(
+                                        context,
+                                        (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0),
+                                        "Apakah Anda yakin mengonfirmasi harga pesanan ini?",
+                                        1,
+                                        title: "Konfirmasi Harga"
+                                    );
+                                    /*putConfirmUpdatePrice(orderDetail.);*/
+                                    /*actionCancelOrder(idPurchase);*/
                                     /*Get.toNamed(
                                         detailOrderScreen, arguments: _order?.idPemesanan);*/
                                     /*actionAddPayment();*/
@@ -118,6 +127,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                         fontSize: 10),
                                   ),
                                   onPressed: () {
+                                    createAlertDialog(
+                                        context,
+                                        (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0),
+                                        "Apakah Anda yakin membatalkan pesanan ini?",
+                                        2
+                                    );
                                     /*Get.toNamed(
                                         detailOrderScreen, arguments: _order?.idPemesanan);*/
                                     /*actionAddPayment();*/
@@ -623,6 +638,35 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               ],
                             ),
                           ),
+
+                        if(orderDetail != null)
+                          if(orderDetail.ringkasan.charge != null && orderDetail.ringkasan.charge.trim().toInt() != 0)
+                            Container(
+                              height: 3,
+                              color: Color(0xffEAEAEA),
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                            ),
+                        if(orderDetail != null)
+                          if(orderDetail.ringkasan.charge != null && orderDetail.ringkasan.charge.trim().toInt() != 0)
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    orderDetail.ringkasan.notifikasiCharge,
+                                    style: TextStyle(
+                                        fontSize: 14, color: MyColor.greyTextAT),
+                                  ),
+                                  Text(
+                                    orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.charge.toString()) : "0",
+                                    style: TextStyle(
+                                        color: statusColor(orderDetail.ringkasan.labelCharge),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
                         Container(
                           height: 3,
                           color: Color(0xffEAEAEA),
@@ -797,6 +841,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: orderDetail != null ? orderDetail.daftarBelanja.listBelanja.length : 0,
+                      // ignore: missing_return
                       itemBuilder: (buildcontext, index) {
                         if(orderDetail != null)
                           return listProduct.ListProductDetailOrderScreen(orderDetail.daftarBelanja.listBelanja[index]);
@@ -826,7 +871,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               fontSize: 14),
                         ),
                         onPressed: () {
-                          createAlertDialog(context, (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0));
+                          createAlertDialog(
+                              context,
+                              (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0),
+                              "Apakah Anda yakin membatalkan pesanan ini?",
+                            3
+                          );
                         },
                       ),
                     ),
@@ -1170,7 +1220,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
     );
   }
 
-  createAlertDialog(BuildContext context, String idPurchase) {
+  createAlertDialog(BuildContext context, String idPurchase, String message, int type, {String title = "Batalkan Pesanan"}) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -1185,7 +1235,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "Batalkan Pesanan",
+                    title,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Container(
@@ -1196,7 +1246,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   Expanded(
                     child: Center(
                         child: Text(
-                          "Apakah Anda yakin membatalkan Pesanan ini ?",
+                          message,
                           style: TextStyle(fontSize: 14),
                           textAlign: TextAlign.center,
                         )),
@@ -1242,7 +1292,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            showDialogProgress(idPurchase);
+                            showDialogLoader(idPurchase, type);
                           },
                         ),
                       ),

@@ -31,6 +31,7 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
   @override
   void initState() {
     baikControllerText.text = (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
+    debugPrint("asdsad :${itemDetailDelivery.baik}");
     badControllerText.text = (itemDetailDelivery.buruk ?? 0).toString();
     _focus.addListener(_onFocusChange);
     super.initState();
