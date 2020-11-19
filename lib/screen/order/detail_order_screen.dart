@@ -43,7 +43,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Terdapat biaya tambahan sebesar Rp 100",
+                          "Terdapat biaya tambahan sebesar ${MyNumber.toNumberRpStr(orderDetail.ringkasan.charge)}",
                           style: TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle.italic,
@@ -640,14 +640,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                           ),
 
                         if(orderDetail != null)
-                          if(orderDetail.ringkasan.charge != null && orderDetail.ringkasan.charge.trim().toInt() != 0)
+                          if(orderDetail.ringkasan.charge != null )
                             Container(
                               height: 3,
                               color: Color(0xffEAEAEA),
                               margin: EdgeInsets.symmetric(vertical: 10),
                             ),
                         if(orderDetail != null)
-                          if(orderDetail.ringkasan.charge != null && orderDetail.ringkasan.charge.trim().toInt() != 0)
+                          if(orderDetail.ringkasan.charge != null)
                             Container(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
