@@ -57,7 +57,7 @@ class _ParentScreenState extends State<ParentScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_activity),
-            label: 'Promo',
+            label: 'Berita',
           ),
           BottomNavigationBarItem(
             icon: Icon(IconAT.list_sales, size: 26),

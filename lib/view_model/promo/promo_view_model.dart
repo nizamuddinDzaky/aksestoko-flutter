@@ -37,7 +37,7 @@ abstract class PromoViewModel extends State<ListPromoScreen>
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListPromo,
         params: params, onBefore: (status) {
-//      Get.back();
+      listPromo.clear();
     }, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       List<Promo> newListPromo = baseResponse?.data?.listPromo ?? [];

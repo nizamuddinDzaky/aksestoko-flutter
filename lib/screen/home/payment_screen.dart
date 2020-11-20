@@ -350,48 +350,84 @@ class _PaymentScreenState extends PaymentController {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Text(
-                                            "Pengiriman Ditributor",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT),
+                                  if (paymentModel
+                                          ?.bayarDitempat?.detail?.charge !=
+                                      null)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Pengiriman Ditributor",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            MyNumber.toNumberRp(paymentModel
-                                                ?.bayarDitempat
-                                                ?.detail
-                                                ?.charge
-                                                ?.toDouble() ??
-                                                0.0),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT,
-                                                fontWeight: FontWeight.bold),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                      ?.bayarDitempat
+                                                      ?.detail
+                                                      ?.charge
+                                                      ?.toDouble() ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  if (paymentModel
+                                          ?.bayarDitempat?.detail?.disocunt !=
+                                      null)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Diskon",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                      ?.bayarDitempat
+                                                      ?.detail
+                                                      ?.disocunt ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   Container(
                                     height: 3,
                                     color: Color(0xffEAEAEA),
                                     margin:
-                                    EdgeInsets.only(top: 10, bottom: 20),
+                                        EdgeInsets.only(top: 10, bottom: 20),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(bottom: 10),
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Container(
                                           child: Text(
@@ -633,37 +669,75 @@ class _PaymentScreenState extends PaymentController {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Text(
-                                            "Pengiriman Ditributor",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT),
+                                  if ((paymentModel
+                                      ?.tempoDenganDistributor
+                                      ?.detail
+                                      ?.charge
+                                      ?.toDouble() ??
+                                      0.0) != 0)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Pengiriman Ditributor",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            MyNumber.toNumberRp(paymentModel
-                                                ?.bayarSebelumDikirim
-                                                ?.detail
-                                                ?.charge
-                                                ?.toDouble() ??
-                                                0.0),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT,
-                                                fontWeight: FontWeight.bold),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                  ?.bayarSebelumDikirim
+                                                  ?.detail
+                                                  ?.charge
+                                                  ?.toDouble() ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  if (paymentModel?.bayarDitempat?.detail
+                                      ?.disocunt != null)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Diskon",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                  ?.bayarDitempat
+                                                  ?.detail
+                                                  ?.disocunt ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   Container(
                                     height: 3,
                                     color: Color(0xffEAEAEA),
@@ -927,68 +1001,112 @@ class _PaymentScreenState extends PaymentController {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Text(
-                                            "Biaya Tempo",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT),
+                                  if ((paymentModel
+                                      ?.tempoDenganDistributor
+                                      ?.detail
+                                      ?.hargaTempo
+                                      ?.toDouble() ??
+                                      0.0) != 0)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Biaya Tempo",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            MyNumber.toNumberRp(paymentModel
-                                                ?.tempoDenganDistributor
-                                                ?.detail
-                                                ?.hargaTempo
-                                                ?.toDouble() ??
-                                                0.0),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT,
-                                                fontWeight: FontWeight.bold),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                  ?.tempoDenganDistributor
+                                                  ?.detail
+                                                  ?.hargaTempo
+                                                  ?.toDouble() ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Text(
-                                            "Pengiriman Ditributor",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT),
+                                  if ((paymentModel
+                                      ?.tempoDenganDistributor
+                                      ?.detail
+                                      ?.charge
+                                      ?.toDouble() ??
+                                      0.0) != 0)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Pengiriman Ditributor",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            MyNumber.toNumberRp(paymentModel
-                                                ?.tempoDenganDistributor
-                                                ?.detail
-                                                ?.charge
-                                                ?.toDouble() ??
-                                                0.0),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT,
-                                                fontWeight: FontWeight.bold),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                  ?.tempoDenganDistributor
+                                                  ?.detail
+                                                  ?.charge
+                                                  ?.toDouble() ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  if (paymentModel?.bayarDitempat?.detail
+                                      ?.disocunt != null)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Diskon",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(paymentModel
+                                                  ?.bayarDitempat
+                                                  ?.detail
+                                                  ?.disocunt ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   Container(
                                     height: 3,
                                     color: Color(0xffEAEAEA),
@@ -1310,35 +1428,65 @@ class _PaymentScreenState extends PaymentController {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Text(
-                                            "Pengiriman Ditributor",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT),
+                                  if ((selectedKreditPro?.charge ?? 0) != 0)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Pengiriman Ditributor",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            MyNumber.toNumberRp(
-                                                selectedKreditPro?.charge
-                                                    ?.toDouble() ??
-                                                    0.0),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColor.greyTextAT,
-                                                fontWeight: FontWeight.bold),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(
+                                                  selectedKreditPro?.charge
+                                                      ?.toDouble() ??
+                                                      0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  if ((selectedKreditPro?.disocunt ?? 0) != 0)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              "Diskon",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              MyNumber.toNumberRp(
+                                                  selectedKreditPro?.disocunt ??
+                                                      0.0),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColor.greyTextAT,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   Container(
                                     height: 3,
                                     color: Color(0xffEAEAEA),

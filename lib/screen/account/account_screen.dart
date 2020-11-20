@@ -205,36 +205,38 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: null,
-                              icon: Icon(Icons.info),
-                              label: Text(
-                                "Petunjuk Penggunaan",
-                                style: TextStyle(fontSize: 18),
+                      if (false)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            children: <Widget>[
+                              FlatButton.icon(
+                                onPressed: null,
+                                icon: Icon(Icons.info),
+                                label: Text(
+                                  "Petunjuk Penggunaan",
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 40),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: null,
-                              icon: Icon(Icons.live_help),
-                              label: Text(
-                                "Syarat dan Ketentuan",
-                                style: TextStyle(fontSize: 18),
+                      if (false)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 40),
+                          child: Row(
+                            children: <Widget>[
+                              FlatButton.icon(
+                                onPressed: null,
+                                icon: Icon(Icons.live_help),
+                                label: Text(
+                                  "Syarat dan Ketentuan",
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
                       Container(
                         margin: EdgeInsets.only(bottom: 40),
                         child: Row(
@@ -244,10 +246,14 @@ class _AccountScreenState extends State<AccountScreen> {
                                 MyPref.logout();
                                 Get.offNamed(loginScreen);
                               },
-                              icon: Icon(Icons.not_interested, color: Colors.red,),
+                              icon: Icon(
+                                Icons.not_interested,
+                                color: Colors.red,
+                              ),
                               label: Text(
                                 "Keluar",
-                                style: TextStyle(fontSize: 18, color: Colors.red),
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.red),
                               ),
                             ),
                           ],

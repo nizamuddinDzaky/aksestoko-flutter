@@ -75,13 +75,13 @@ class BayarDitempat {
 class Detail {
   int harga;
   int charge;
-  int disocunt;
+  double disocunt;
   int total;
   int hargaTempo;
   String durasiPembayaran;
   int subtotal;
   String interestRate;
-  int hargaInterestRate;
+  double hargaInterestRate;
 
   Detail({
     this.harga,
@@ -98,13 +98,14 @@ class Detail {
   Detail.fromJson(Map<String, dynamic> json) {
     harga = json['harga'];
     charge = json['charge'];
-    disocunt = json['disocunt'];
+    disocunt = double.tryParse(json['disocunt']?.toString() ?? '0');
     total = json['total'];
     hargaTempo = json['harga_tempo'];
     durasiPembayaran = json['durasi_pembayaran'];
     subtotal = json['subtotal'];
     interestRate = json['interest_rate'];
-    hargaInterestRate = json['harga_interest_rate'];
+    hargaInterestRate =
+        double.tryParse(json['harga_interest_rate']?.toString() ?? '0');
   }
 
   Map<String, dynamic> toJson() {

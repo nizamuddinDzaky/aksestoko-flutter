@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
-import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:get/get.dart';
 
 class DetailPromoScreen extends StatefulWidget {
@@ -27,75 +26,22 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    var title = promo?.typeNews == 'promo' ? 'Promo' : 'Berita';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Container(
-          //color: Colors.white,
+            //color: Colors.white,
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
             child: Text(
-              'Detail Promo',
+              'Detail $title',
               style: TextStyle(fontSize: 20),
-            )
-        ),
+            )),
         centerTitle: false,
-        actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  /*Get.toNamed(cartScreen).then((value){
-                      setState(() {});
-                    });*/
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '0',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {
@@ -154,10 +100,12 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
             children: <Widget>[
               Container(
                 child: AspectRatio(
-                  aspectRatio: 16/9,
-                  child: FadeInImage.assetNetwork(
-                    placeholder: kDistributor,
-                    image: promo.urlImage,
+                  aspectRatio: 16 / 9,
+                  child: (promo.urlImage?.isEmpty ?? true) || kDebugMode
+                      ? Image.asset(kNoImage)
+                      : FadeInImage.assetNetwork(
+                    placeholder: kNoImage,
+                    image: promo.urlImage ?? '',
                     fit: BoxFit.cover,
                   ),
                 ),

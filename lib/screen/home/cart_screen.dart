@@ -7,6 +7,7 @@ import 'package:aksestokomobile/screen/home/cart_item_screen.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
@@ -243,20 +244,23 @@ class _CartScreenState extends State<CartScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          minSize: 0,
-                          child: Text(
-                            controller.promoCode != null ? "${controller.promoName}(${controller.promoCode})": 'Kode Promo',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 14),
+                        if (kDebugMode)
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            child: Text(
+                              controller.promoCode != null
+                                  ? "${controller.promoName}(${controller.promoCode})"
+                                  : 'Kode Promo',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            onPressed: () {
+                              controller.inputPromoCode();
+                            },
                           ),
-                          onPressed: () {
-                            controller.inputPromoCode();
-                          },
-                        ),
-                        SizedBox(height: 5),
+                        if (kDebugMode) SizedBox(height: 5),
                         Text(
                           "Total",
                           style: TextStyle(

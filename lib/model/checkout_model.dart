@@ -10,6 +10,11 @@ class CheckoutModel {
   List<Shipment> listPengiriman;
   Ringkasan ringkasan;
   List<Product> listProduct;
+  Diskon diskon;
+
+  double get totalPembayaran =>
+      (ringkasan?.totalAkhir?.toDouble() ?? 0.0) -
+      (double.tryParse(diskon?.potonganHarga ?? '0') ?? 0.0);
 
   CheckoutModel(
       {this.alamatPengiriman,
@@ -29,6 +34,7 @@ class CheckoutModel {
     ringkasan = json['ringkasan'] != null
         ? new Ringkasan.fromJson(json['ringkasan'])
         : null;
+    diskon = Diskon.fromJson(json['diskon'] ?? {});
     if (json['list_product'] != null) {
       listProduct = new List<Product>();
       json['list_product'].forEach((v) {
@@ -92,5 +98,27 @@ class Shipment {
   @override
   String toString() {
     return name;
+  }
+}
+
+class Diskon {
+  String codePromo;
+  String potonganHarga;
+  int totalPebayaran;
+
+  Diskon({this.codePromo, this.potonganHarga, this.totalPebayaran});
+
+  Diskon.fromJson(Map<String, dynamic> json) {
+    codePromo = json['code_promo'];
+    potonganHarga = json['potongan_harga'];
+    totalPebayaran = json['total_pebayaran'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code_promo'] = this.codePromo;
+    data['potongan_harga'] = this.potonganHarga;
+    data['total_pebayaran'] = this.totalPebayaran;
+    return data;
   }
 }

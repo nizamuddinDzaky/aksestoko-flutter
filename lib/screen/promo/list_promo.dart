@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/view_model/promo/promo_view_model.dart';
@@ -33,7 +34,7 @@ class _ListPromoScreenState extends PromoViewModel {
               borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
             child: Text(
-              "Promo",
+              "Berita",
               style: TextStyle(fontSize: 20),
             )),
         centerTitle: false,
@@ -78,7 +79,7 @@ class _ListPromoScreenState extends PromoViewModel {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Daftar Promo',
+                    'Daftar Berita',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -96,7 +97,7 @@ class _ListPromoScreenState extends PromoViewModel {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Tidak ada promo tersedia',
+                              'Tidak ada berita tersedia',
                               style: Theme.of(context).textTheme.headline6,
                             )
                           ],
@@ -116,11 +117,6 @@ class _ListPromoScreenState extends PromoViewModel {
   }
 
   Widget _gridProduct() {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = 270;
-    final double itemWidth = size.width / 2;
     return ListView.builder(
       itemCount: listPromo.length,
       shrinkWrap: true,
@@ -154,9 +150,11 @@ class _ListPromoScreenState extends PromoViewModel {
               Container(
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: FadeInImage.assetNetwork(
-                    placeholder: kDistributor,
-                    image: promo.urlImage,
+                  child: (promo.urlImage?.isEmpty ?? true) || kDebugMode
+                      ? Image.asset(kNoImage)
+                      : FadeInImage.assetNetwork(
+                    placeholder: kNoImage,
+                    image: promo.urlImage ?? '',
                     fit: BoxFit.cover,
                   ),
                 ),

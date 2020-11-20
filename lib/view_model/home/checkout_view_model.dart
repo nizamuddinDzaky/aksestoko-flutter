@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/checkout_model.dart';
@@ -35,10 +36,13 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
   }
 
   void _getDetailCheckout() async {
+    var controller = SelectProductController.to;
     var status = await ApiClient.methodGet(ApiConfig.urlDetailCheckout,
         params: {
           'id_distributor': MyPref.getIdDistributor().toString(),
           'price_group_id': MyPref.getPriceGroupId().toString(),
+          if (controller?.promoCode?.isNotEmpty ?? false)
+            'promo': controller.promoCode,
         },
         customHandle: true,
         onBefore: (status) {}, onSuccess: (data, flag) {
@@ -49,7 +53,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
       address = checkoutModel?.alamatPengiriman;
       getShipment();
     }, onFailed: (title, message) {
-          complete = 0;
+      complete = 0;
       var response = BaseResponse.fromJson(jsonDecode(message));
       Get.defaultDialog(
           title: "Pemberitahuan",
@@ -63,7 +67,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
             });
           });
     }, onError: (title, message) {
-          complete = 0;
+      complete = 0;
       // Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});
     setState(() {
