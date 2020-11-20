@@ -100,12 +100,12 @@ Color statusColor(String status) {
   return null;
 }
 
-Future<File> testCompressAndGetFile(File file, String targetPath) async {
+Future<File> compressAndGetFile(File file, String targetPath) async {
   var result = await FlutterImageCompress.compressAndGetFile(
     file.absolute.path, targetPath,
-    quality: 60,
+    quality: 90,
     minHeight: 1000,
-    minWidth: 1500,
+    minWidth: 1000,
   );
 
   debugPrint("size1 ${file.lengthSync()}");

@@ -41,7 +41,7 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
     final splitted = picture.path.substring(0, (lastIndex));
     final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
 
-    imageFile = await testCompressAndGetFile(File(picture.path), outPath);;
+    imageFile = await compressAndGetFile(File(picture.path), outPath);
     final bytes = imageFile.readAsBytesSync();
     base64File += base64Encode(bytes);
     setState(() {});
@@ -54,7 +54,7 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
     final splitted = picture.path.substring(0, (lastIndex));
     final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
 
-    imageFile = await testCompressAndGetFile(File(picture.path), outPath);;
+    imageFile = await compressAndGetFile(File(picture.path), outPath);
     final bytes = imageFile.readAsBytesSync();
     base64File += base64Encode(bytes);
     setState(() {});
