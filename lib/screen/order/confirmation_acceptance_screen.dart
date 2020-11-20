@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
-import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/screen/order/item_confirmation_acceptance_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_util.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io' as Io;
 
 class ConfirmationAcceptScreen extends StatefulWidget {
   _ConfirmationAcceptScreen createState() => _ConfirmationAcceptScreen();
@@ -19,26 +17,42 @@ class ConfirmationAcceptScreen extends StatefulWidget {
 
 class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
 
-  _openGallery(BuildContext context) async {
-    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
-    final bytes = Io.File(picture.path).readAsBytesSync();
+  _processPicture(PickedFile picture) async {
+    Navigator.of(context).pop();
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[CircularProgressIndicator()],
+              ),
+            ),
+          );
+        });
+    final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = picture.path.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
+    imageFile = await compressAndGetFile(File(picture.path), outPath);;
+    final bytes = imageFile.readAsBytesSync();
     base64File += base64Encode(bytes);
-    // var decode = base64.decode(base64File);
-    /*debugPrint('decode : ${base64File}');*/
-    this.setState(() {
-      imageFile = File(picture.path);
-    });
+    setState(() {});
     Navigator.of(context).pop();
   }
 
-  _openCamera(BuildContext context) async {
-    var picture = await ImagePicker().getImage(source: ImageSource.camera);
-    final bytes = Io.File(picture.path).readAsBytesSync();
-    base64File += base64Encode(bytes);
-    this.setState(() {
-      imageFile = File(picture.path);
+  _openGallery(BuildContext context) async {
+    ImagePicker().getImage(source: ImageSource.gallery).then((picture) {
+      if (picture != null) _processPicture(picture);
     });
-    Navigator.of(context).pop();
+  }
+
+  _openCamera(BuildContext context) async {
+    ImagePicker().getImage(source: ImageSource.camera).then((picture) {
+      if (picture != null) _processPicture(picture);
+    });
   }
 
   Future<void> _showChoiceDialog(BuildContext context) {
@@ -137,7 +151,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                                 ),
                               ),
                               Text(
-                                detailDelivery.noSpj,
+                                detailDelivery?.noSpj ?? '',
                                 style: TextStyle(
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
@@ -158,9 +172,9 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                                 ),
                               ),
                               Text(
-                                detailDelivery.statuPengiriman,
+                                detailDelivery?.statuPengiriman ?? '',
                                 style: TextStyle(
-                                    fontSize: 14, color: statusColor(detailDelivery.labelStatus)),
+                                    fontSize: 14, color: statusColor(detailDelivery?.labelStatus)),
                               ),
                             ],
                           ),
@@ -185,7 +199,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                                 ),
                               ),
                               Text(
-                                detailDelivery.tanggalDikirim,
+                                detailDelivery?.tanggalDikirim ?? '',
                                 style: TextStyle(
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
@@ -205,7 +219,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                                 ),
                               ),
                               Text(
-                                detailDelivery.dikirimOleh,
+                                detailDelivery?.dikirimOleh ?? '',
                                 style: TextStyle(
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
@@ -245,7 +259,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                       child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: detailDelivery.listItemDetailDelivery.length,
+                        itemCount: detailDelivery?.listItemDetailDelivery?.length ?? 0,
                         itemBuilder: (buildcontext, index) {
                           return ItemConfirmationAcceptScreen(detailDelivery.listItemDetailDelivery[index]);
                         },

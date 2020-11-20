@@ -601,7 +601,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
                               Text(
-                                orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalHarga.toString()) : "0",
+                                orderDetail != null ? MyNumber.toNumberRpStr(orderDetail?.ringkasan?.totalHarga?.toString() ?? '0') : "0",
                                 style: TextStyle(
                                     color: MyColor.blackTextAT,
                                     fontWeight: FontWeight.bold,
@@ -640,14 +640,14 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                           ),
 
                         if(orderDetail != null)
-                          if(orderDetail.ringkasan.charge != null )
+                          if(orderDetail.ringkasan?.charge != null )
                             Container(
                               height: 3,
                               color: Color(0xffEAEAEA),
                               margin: EdgeInsets.symmetric(vertical: 10),
                             ),
                         if(orderDetail != null)
-                          if(orderDetail.ringkasan.charge != null)
+                          if(orderDetail.ringkasan?.charge != null)
                             Container(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

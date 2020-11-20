@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
-import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -25,7 +23,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
     param = Get.arguments as Map<String, dynamic>;
     detailDelivery = param['delivery'] as DetailDelivery;
     detailPemesanan = param['purchase'] as DetailPemesanan;
-    debugPrint("argument => ${detailDelivery.noSpj}");
+    debugPrint("argument => ${detailDelivery?.noSpj}");
     /*controller.sumItem();
     controller.sumGoodItem();
     controller.sumBadItem();*/
@@ -35,7 +33,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
 
   String sumGoodItem(){
     int sum = 0;
-    detailDelivery.listItemDetailDelivery.forEach((item) {
+    detailDelivery?.listItemDetailDelivery?.forEach((item) {
       sum += item.baik ?? item.jumlah;
     });
     return sum.toString();
@@ -43,7 +41,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
 
   String sumBadItem(){
     int sum = 0;
-    detailDelivery.listItemDetailDelivery.forEach((item) {
+    detailDelivery?.listItemDetailDelivery?.forEach((item) {
       sum += item.buruk ?? 0;
     });
     return sum.toString();
@@ -51,7 +49,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
 
   String sumItem(){
     int sum = 0;
-    detailDelivery.listItemDetailDelivery.forEach((item) {
+    detailDelivery?.listItemDetailDelivery?.forEach((item) {
       sum += item.jumlah ?? 0;
     });
     return sum.toString();

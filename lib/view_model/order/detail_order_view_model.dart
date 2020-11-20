@@ -85,7 +85,6 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
   @override
   void initState() {
     super.initState();
-    actionRefresh();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshKey?.currentState?.show();
     });

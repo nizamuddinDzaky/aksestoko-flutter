@@ -72,7 +72,7 @@ class DetailDelivery {
   String tanggalDikirim;
   String dikirimOleh;
   bool konfirmasiPenerimaan;
-  Null konfirmasiBadQty;
+  bool konfirmasiBadQty;
   String urlSpj;
   int jumlahDetailDelivery;
   List<ItemDetailDelivery> listItemDetailDelivery;
