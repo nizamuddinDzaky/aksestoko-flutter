@@ -9,9 +9,13 @@ import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/order/confirmation_acceptance_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io' as Io;
+
+import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 
 class ConfirmationAcceptScreen extends StatefulWidget {
   _ConfirmationAcceptScreen createState() => _ConfirmationAcceptScreen();
@@ -21,23 +25,31 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
 
   _openGallery(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.gallery);
-    final bytes = Io.File(picture.path).readAsBytesSync();
-    base64File += base64Encode(bytes);
+
     // var decode = base64.decode(base64File);
     /*debugPrint('decode : ${base64File}');*/
-    this.setState(() {
-      imageFile = File(picture.path);
-    });
+    final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = picture.path.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
+
+    imageFile = await testCompressAndGetFile(File(picture.path), outPath);;
+    final bytes = imageFile.readAsBytesSync();
+    base64File += base64Encode(bytes);
+
+    setState(() {});
     Navigator.of(context).pop();
   }
 
   _openCamera(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.camera);
-    final bytes = Io.File(picture.path).readAsBytesSync();
+    final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = picture.path.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
+
+    imageFile = await testCompressAndGetFile(File(picture.path), outPath);;
+    final bytes = imageFile.readAsBytesSync();
     base64File += base64Encode(bytes);
-    this.setState(() {
-      imageFile = File(picture.path);
-    });
+    setState(() {});
     Navigator.of(context).pop();
   }
 

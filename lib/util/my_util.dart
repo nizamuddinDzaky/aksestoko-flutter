@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
 
 import 'my_color.dart';
@@ -96,6 +99,21 @@ Color statusColor(String status) {
 
   return null;
 }
+
+Future<File> testCompressAndGetFile(File file, String targetPath) async {
+  var result = await FlutterImageCompress.compressAndGetFile(
+    file.absolute.path, targetPath,
+    quality: 60,
+    minHeight: 1000,
+    minWidth: 1500,
+  );
+
+  debugPrint("size1 ${file.lengthSync()}");
+  debugPrint("size2 ${result.lengthSync()}");
+
+  return result;
+}
+
 
 String paymentMethode(String payment){
   if(payment.toLowerCase() == "cash on delivery"){
