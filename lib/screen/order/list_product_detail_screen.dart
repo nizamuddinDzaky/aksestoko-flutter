@@ -93,45 +93,44 @@ class _ListProductDetailOrderScreenState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Jumlah",
-                            style: TextStyle(
-                              color: MyColor.blackTextAT,
-                              fontSize: 16,
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Jumlah",
+                              style: TextStyle(
+                                color: MyColor.blackTextAT,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                "${cart != null ? cart.qty : "0"}",
-                                style: TextStyle(
-                                  color: MyColor.blackTextAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                            RichText(
+                                text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: MyNumber.toNumberId(
+                                      cart?.qty?.toDouble() ?? 0),
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 2),
-                              ),
-                              Text(
-                                "${cart != null ? cart.unit : "SAK"}",
-                                style: TextStyle(
-                                  color: MyColor.blackTextAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                                TextSpan(text: ' '),
+                                TextSpan(
+                                  text: cart?.unit ?? 'SAK',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            )),
+                          ],
+                        ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width / 16),
-                      ),
+                      SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +139,7 @@ class _ListProductDetailOrderScreenState
                               "Harga",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
-                                fontSize: 14,
+                                fontSize: 16,
                               ),
                             ),
                             Text(

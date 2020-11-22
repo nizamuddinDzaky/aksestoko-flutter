@@ -302,58 +302,51 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Jumlah",
-                                        style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontSize: 16,
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Jumlah",
+                                          style: TextStyle(
+                                            color: MyColor.blackTextAT,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Text(
-                                            MyNumber.toNumberId(
-                                                _order?.quantity?.toDouble() ??
-                                                    0.0),
-                                            style: TextStyle(
-                                              color: MyColor.blackTextAT,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                        RichText(
+                                            text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: MyNumber.toNumberId(_order
+                                                      ?.quantity
+                                                      ?.toDouble() ??
+                                                  0.0),
+                                              style: TextStyle(
+                                                color: MyColor.blackTextAT,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 2),
-                                          ),
-                                          Text(
-                                            _order?.satuan ?? '',
-                                            style: TextStyle(
-                                              color: MyColor.blackTextAT,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                            TextSpan(text: ' '),
+                                            TextSpan(
+                                              text: _order?.satuan ?? '',
+                                              style: TextStyle(
+                                                color: MyColor.blackTextAT,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        )),
+                                      ],
+                                    ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                        MediaQuery
-                                            .of(context)
-                                            .size
-                                            .width /
-                                            16),
-                                  ),
+                                  SizedBox(width: 16),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           "Harga",

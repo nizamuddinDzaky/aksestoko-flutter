@@ -206,38 +206,42 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Container(
                           margin: EdgeInsets.only(bottom: 15),
                           child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "ID Pesnaan",
-                                      style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
-                                    ),
-                                    Text(
-                                      orderDetail != null ? orderDetail.detailPemesanan.noPemesanan :  "",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "ID Pesnaan",
+                                  style: TextStyle(
+                                      fontSize: 14, color: MyColor.greyTextAT),
                                 ),
-                              ),
-                              Expanded(
-                                flex: 5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "ID Bisnis Kokoh",
-                                      style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
-                                    ),
+                                Text(
+                                  orderDetail != null
+                                      ? orderDetail.detailPemesanan.noPemesanan
+                                      : "",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                            flex: 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "ID Bisnis Kokoh",
+                                  style: TextStyle(
+                                      fontSize: 14, color: MyColor.greyTextAT),
+                                ),
                                     Text(
                                       orderDetail != null ? orderDetail.detailPemesanan.idBk :  "",
                                       style: TextStyle(
@@ -254,6 +258,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Container(
                           margin: EdgeInsets.only(bottom: 15),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Expanded(
                                 flex: 5,
@@ -263,10 +268,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Tanggal Pemesanan",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
-                                      orderDetail != null ? orderDetail.detailPemesanan.tanggalPeesanan :  "",
+                                      orderDetail != null ? orderDetail
+                                          .detailPemesanan.tanggalPeesanan : "",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -275,6 +282,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   ],
                                 ),
                               ),
+                              SizedBox(width: 8),
                               Expanded(
                                 flex: 5,
                                 child: Column(
@@ -284,7 +292,8 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Tgl Ekspetasi Pengiriman",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
                                       orderDetail != null ? orderDetail.detailPemesanan.ekpestasi :  "",
@@ -302,6 +311,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Container(
                           margin: EdgeInsets.only(bottom: 15),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Expanded(
                                 flex: 5,
@@ -311,10 +321,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Kode Distributor",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
-                                      orderDetail != null ? orderDetail.detailPemesanan.kodeDistributor :  "",
+                                      orderDetail != null ? orderDetail
+                                          .detailPemesanan.kodeDistributor : "",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -323,6 +335,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   ],
                                 ),
                               ),
+                              SizedBox(width: 8),
                               Expanded(
                                 flex: 5,
                                 child: Column(
@@ -332,7 +345,8 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Nama Distributor",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
                                       orderDetail != null ? orderDetail.detailPemesanan.namaDistributor :  "",
@@ -350,6 +364,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Container(
                           margin: EdgeInsets.only(bottom: 15),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Expanded(
                                 flex: 5,
@@ -359,10 +374,12 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Cara Pengiriman",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
-                                      orderDetail != null ? orderDetail.detailPemesanan.caraPengiriman :  "",
+                                      orderDetail != null ? orderDetail
+                                          .detailPemesanan.caraPengiriman : "",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -371,6 +388,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   ],
                                 ),
                               ),
+                              SizedBox(width: 8),
                               Expanded(
                                 flex: 5,
                                 child: Column(
@@ -380,7 +398,8 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Cara Pembayaran",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
 
@@ -404,6 +423,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         Container(
                           margin: EdgeInsets.only(bottom: 15, top: 15),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Expanded(
                                 flex: 5,
@@ -413,19 +433,25 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Status Pesanan",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     Text(
-                                      orderDetail != null ? orderDetail.detailPemesanan.statusPemesanan :  "",
+                                      orderDetail != null ? orderDetail
+                                          .detailPemesanan.statusPemesanan : "",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
-                                        color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPemesanan :  ""),
+                                        color: statusColor(
+                                            orderDetail != null ? orderDetail
+                                                .detailPemesanan
+                                                .notifikasiPemesanan : ""),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
+                              SizedBox(width: 8),
                               Expanded(
                                 flex: 5,
                                 child: Column(
@@ -434,7 +460,8 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     Text(
                                       "Status Pembayaran",
                                       style: TextStyle(
-                                          fontSize: 14, color: MyColor.greyTextAT),
+                                          fontSize: 14,
+                                          color: MyColor.greyTextAT),
                                     ),
                                     /*if (index == 0)*/
                                     Text(
@@ -600,12 +627,17 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                 style: TextStyle(
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
-                              Text(
-                                orderDetail != null ? MyNumber.toNumberRpStr(orderDetail?.ringkasan?.totalHarga?.toString() ?? '0') : "0",
-                                style: TextStyle(
-                                    color: MyColor.blackTextAT,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
+                              SizedBox(width: 8),
+                              Flexible(
+                                child: Text(
+                                  orderDetail != null ? MyNumber.toNumberRpStr(
+                                      orderDetail?.ringkasan?.totalHarga
+                                          ?.toString() ?? '0') : "0",
+                                  style: TextStyle(
+                                      color: MyColor.blackTextAT,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
                               ),
                             ],
                           ),
@@ -628,12 +660,19 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   style: TextStyle(
                                       fontSize: 14, color: MyColor.greyTextAT),
                                 ),
-                                Text(
-                                  orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.discount.toString()) : "0",
-                                  style: TextStyle(
-                                      color: statusColor(orderDetail.ringkasan.labelDiscount),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
+                                SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    orderDetail != null ? MyNumber
+                                        .toNumberRpStr(
+                                        orderDetail.ringkasan.discount
+                                            .toString()) : "0",
+                                    style: TextStyle(
+                                        color: statusColor(orderDetail.ringkasan
+                                            .labelDiscount),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ],
                             ),
@@ -655,14 +694,23 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   Text(
                                     orderDetail.ringkasan.notifikasiCharge,
                                     style: TextStyle(
-                                        fontSize: 14, color: MyColor.greyTextAT),
+                                        fontSize: 14,
+                                        color: MyColor.greyTextAT),
                                   ),
-                                  Text(
-                                    orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.charge.toString()) : "0",
-                                    style: TextStyle(
-                                        color: statusColor(orderDetail.ringkasan.labelCharge),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
+                                  SizedBox(width: 8),
+                                  Flexible(
+                                    child: Text(
+                                      orderDetail != null ? MyNumber
+                                          .toNumberRpStr(
+                                          orderDetail.ringkasan.charge
+                                              .toString()) : "0",
+                                      style: TextStyle(
+                                          color: statusColor(
+                                              orderDetail.ringkasan
+                                                  .labelCharge),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -681,12 +729,17 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                 style: TextStyle(
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
-                              Text(
-                                orderDetail != null ? MyNumber.toNumberRpStr(orderDetail.ringkasan.totalPembayaran.toString()) : "0",
-                                style: TextStyle(
-                                    color: MyColor.redAT,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
+                              SizedBox(width: 8),
+                              Flexible(
+                                child: Text(
+                                  orderDetail != null ? MyNumber.toNumberRpStr(
+                                      orderDetail.ringkasan.totalPembayaran
+                                          .toString()) : "0",
+                                  style: TextStyle(
+                                      color: MyColor.redAT,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
                               ),
                             ],
                           ),
@@ -988,6 +1041,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
           Container(
             margin: EdgeInsets.only(bottom: 15),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   flex: 5,
@@ -1036,6 +1090,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
           Container(
             margin: EdgeInsets.only(bottom: 15),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   flex: 5,

@@ -98,7 +98,7 @@ class Detail {
   Detail.fromJson(Map<String, dynamic> json) {
     harga = json['harga'];
     charge = json['charge'];
-    disocunt = double.tryParse(json['disocunt']?.toString() ?? '0');
+    disocunt = double.tryParse(json['disocunt']?.toString() ?? '');
     total = json['total'];
     hargaTempo = json['harga_tempo'];
     durasiPembayaran = json['durasi_pembayaran'];

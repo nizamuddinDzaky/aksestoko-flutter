@@ -28,22 +28,25 @@ abstract class LoginScreenController extends LoginViewModel {
       Login(username: '000000000', password: 'Indonesia1'),
       Login(username: '220000011', password: 'Indonesia12'),
       Login(username: '100021595', password: 'Indonesia1'),
+      Login(username: '900000001', password: 'Indonesia1'),
     ];
-    return PopupMenuButton<int>(
-      child: child,
-      itemBuilder: (BuildContext context) => login
-          .mapIndexed((e, i) => PopupMenuItem<int>(
-                child: Text(e.username),
-                value: i,
-              ))
-          .toList(),
-      onSelected: (int idx) {
-        Future.delayed(Duration(milliseconds: 300)).then((value) {
-          currentData = login[idx];
-          debugPrint('cek currentData ${currentData?.toJson()}');
-          postLogin(skip: true);
-        });
-      },
+    return Material(
+      child: PopupMenuButton<int>(
+        child: child,
+        itemBuilder: (BuildContext context) => login
+            .mapIndexed((e, i) => PopupMenuItem<int>(
+                  child: Text(e.username),
+                  value: i,
+                ))
+            .toList(),
+        onSelected: (int idx) {
+          Future.delayed(Duration(milliseconds: 300)).then((value) {
+            currentData = login[idx];
+            debugPrint('cek currentData ${currentData?.toJson()}');
+            postLogin(skip: true);
+          });
+        },
+      ),
     );
   }
 }

@@ -32,19 +32,20 @@ abstract class ListOrderViewModel extends State<ListOrderScreen> {
           'limit': '10',
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
-      /*var response = BaseResponse.fromJson(data);*/
-      orderModelDalamProses = OrderModel.fromJson(data['data'][status]);
-      _listOrder = orderModelDalamProses.listOrderDalamProses;
+      if (data['data'][status] is Map) {
+        orderModelDalamProses = OrderModel.fromJson(data['data'][status]);
+        _listOrder = orderModelDalamProses.listOrderDalamProses;
+      }
       controller.clearOrder();
-      debugPrint("orderModel : ${_listOrder.length}");
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});
-    setState(() {
-      request.execute();
-    });
+    if (mounted)
+      setState(() {
+        request.execute();
+      });
   }
 
   @override

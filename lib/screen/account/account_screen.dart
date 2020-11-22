@@ -111,6 +111,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     child: Container(
                       child: Text(
                         profile?.namaToko ?? '',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -120,6 +121,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     child: Container(
                       child: Text(
                         profile?.email ?? '',
+                        textAlign: TextAlign.center,
                         style:
                             TextStyle(fontSize: 20, color: MyColor.greyTextAT),
                       ),

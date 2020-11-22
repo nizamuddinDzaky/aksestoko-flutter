@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/view_model/home/select_distributor_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/screen/home/list_distributor_screen.dart';
+import 'package:get/get.dart';
 
 class SelectDistributorScreen extends StatefulWidget {
   @override
@@ -72,6 +74,13 @@ class _SelectDistributorScreenState extends SelectDistributorViewModel {
           tag: 'logoForcaPoS',
           child: MyLogo.logoATWhite(width: 100),
         ),
+        leading: canBack == false
+            ? IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Get.offNamed(loginScreen);
+            })
+            : null,
       ),
       body: GestureDetector(
         onTap: () {

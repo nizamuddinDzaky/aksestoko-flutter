@@ -133,6 +133,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
               ),
             ),
             SizedBox(height: 5),
+            Flexible(child: Container()),
             Container(
                 margin: EdgeInsets.only(left: 10, right: 10),
                 child: Text(
@@ -143,8 +144,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   ),
                 )),
             SizedBox(height: 10),
-            Expanded(
-                child: Container(
+            Container(
               margin: EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -152,30 +152,28 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   Container(
                     height: 30,
                     width: 30,
-                    child: FittedBox(
-                      child: MaterialButton(
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(8),
-                        color: Color(0xFF387C2B),
-                        onPressed: () {
-                          int minQty = _product?.minOrder ?? 1;
-                          minQty = minQty < 1 ? 1 : minQty;
-                          int currentValue =
-                          (_product.qty != null ? _product.qty : 0).toInt();
-                          _product.countChange = 1;
-                          if (currentValue <= minQty) {
-                            _showAlertDialog(context, controller, _product);
-                          } else {
-                            int multiple = _product?.isMultiple ?? 0;
-                            int min = multiple == 0 ? 1 : (multiple * minQty);
-                            currentValue -= min;
-                            controller.reduceCart(_product,
-                                customQty: currentValue.toDouble());
-                          }
-                        },
-                        child:
-                            Icon(Icons.remove, size: 54, color: Colors.white),
-                      ),
+                    child: MaterialButton(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(7),
+                      color: Color(0xFF387C2B),
+                      onPressed: () {
+                        int minQty = _product?.minOrder ?? 1;
+                        minQty = minQty < 1 ? 1 : minQty;
+                        int currentValue =
+                        (_product.qty != null ? _product.qty : 0).toInt();
+                        _product.countChange = 1;
+                        if (currentValue <= minQty) {
+                          _showAlertDialog(context, controller, _product);
+                        } else {
+                          int multiple = _product?.isMultiple ?? 0;
+                          int min = multiple == 0 ? 1 : (multiple * minQty);
+                          currentValue -= min;
+                          controller.reduceCart(_product,
+                              customQty: currentValue.toDouble());
+                        }
+                      },
+                      child:
+                      Icon(Icons.remove, size: 16, color: Colors.white),
                     ),
                   ),
                   Expanded(
@@ -209,33 +207,31 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   Container(
                     height: 30,
                     width: 30,
-                    child: FittedBox(
-                      child: MaterialButton(
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(8),
-                        color: Color(0xFF387C2B),
-                        onPressed: () {
-                          int minQty = _product?.minOrder ?? 1;
-                          int currentValue =
-                          (_product.qty != null ? _product.qty : 0).toInt();
-                          if (currentValue < minQty) {
-                            currentValue = minQty;
-                          } else {
-                            int multiple = _product?.isMultiple ?? 0;
-                            int add = multiple == 0 ? 1 : (multiple * minQty);
-                            currentValue += add;
-                          }
-                          _product.countChange = 1;
-                          controller.addToCart(_product,
-                              customQty: currentValue.toDouble());
-                        },
-                        child: Icon(Icons.add, size: 54, color: Colors.white),
-                      ),
+                    child: MaterialButton(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(7),
+                      color: Color(0xFF387C2B),
+                      onPressed: () {
+                        int minQty = _product?.minOrder ?? 1;
+                        int currentValue =
+                        (_product.qty != null ? _product.qty : 0).toInt();
+                        if (currentValue < minQty) {
+                          currentValue = minQty;
+                        } else {
+                          int multiple = _product?.isMultiple ?? 0;
+                          int add = multiple == 0 ? 1 : (multiple * minQty);
+                          currentValue += add;
+                        }
+                        _product.countChange = 1;
+                        controller.addToCart(_product,
+                            customQty: currentValue.toDouble());
+                      },
+                      child: Icon(Icons.add, size: 16, color: Colors.white),
                     ),
                   ),
                 ],
               ),
-            )),
+            ),
             SizedBox(height: 10),
           ],
         ),
