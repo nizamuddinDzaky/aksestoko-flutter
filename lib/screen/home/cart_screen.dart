@@ -21,6 +21,28 @@ class _CartScreenState extends State<CartScreen> {
   bool CheckBoxValue = false;
   var needUpdate = 0;
 
+  void validationCart(SelectProductController vm, Function nextAct) {
+    needUpdate = 0;
+    vm.listCart?.forEach((product) {
+      if (1 > (product.idCart ?? 0) || (product.countChange ?? 0) > 0) {
+        needUpdate++;
+      }
+    });
+    if (needUpdate > 0) {
+      vm.listCart?.forEach((product) {
+        if (0 == (product.idCart ?? 0) && (product.countChange ?? 0) != 0) {
+          _postAddCart(product).then((_) {
+            if (needUpdate == 0) {
+              nextAct?.call();
+            }
+          });
+        }
+      });
+    } else {
+      nextAct?.call();
+    }
+  }
+
   void confirm(SelectProductController vm, _alertDialog()) async {
     if (vm.currentFocus != null) {
       vm.currentFocus?.unfocus();
@@ -244,22 +266,23 @@ class _CartScreenState extends State<CartScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        if (kDebugMode)
                           CupertinoButton(
                             padding: EdgeInsets.zero,
                             minSize: 0,
                             child: Text(
-                              controller.promoCode != null
-                                  ? "${controller.promoName}(${controller.promoCode})"
-                                  : 'Kode Promo',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            onPressed: () {
-                              controller.inputPromoCode();
-                            },
+                            controller.promoCode != null
+                                ? "${controller.promoName}(${controller.promoCode})"
+                                : 'Kode Promo',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14),
                           ),
+                          onPressed: () {
+                            validationCart(controller, () {
+                              controller.inputPromoCode();
+                            });
+                          },
+                        ),
                         if (kDebugMode) SizedBox(height: 5),
                         Text(
                           "Total",

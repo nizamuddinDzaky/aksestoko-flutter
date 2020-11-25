@@ -22,6 +22,19 @@ class CheckoutController extends GetController {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  CheckoutController() {
+    validationDate();
+  }
+
+  validationDate() {
+    var now = DateTime.now();
+    var limit = DateTime(now.year, now.month, now.day, 12);
+    DateTime initDate;
+    if (now.millisecondsSinceEpoch > limit.millisecondsSinceEpoch)
+      initDate = limit.add(Duration(hours: 12));
+    date = initDate ?? date;
+  }
+
   saveCheckoutScreen(
       CheckoutModel checkoutModel, Address address, Shipment shipment) {
     salesModel = SalesModel()

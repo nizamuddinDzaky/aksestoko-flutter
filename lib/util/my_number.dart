@@ -19,11 +19,13 @@ class MyNumber {
 
   static String toNumberRp(double newValue) {
     final fc = NumberFormat.currency(locale: 'id', symbol: 'Rp');
+    fc.maximumFractionDigits = 0;
     return fc.format(newValue);
   }
 
   static String toNumberRpStr(String newValue) {
     final fc = NumberFormat.currency(locale: 'id', symbol: 'Rp');
+    fc.maximumFractionDigits = 0;
     return fc.format(strUSToDouble(newValue));
   }
 

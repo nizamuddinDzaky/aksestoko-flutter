@@ -259,11 +259,11 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             DateTime picked = await showDatePicker(
                               context: context,
                               initialDate: controller.date,
-                              firstDate: DateTime(2015),
+                              firstDate: controller.date,
                               locale: Locale('in', 'ID'),
                               lastDate: DateTime(2030),
                             );
-                            controller.setDate(picked);
+                            if (picked != null) controller.setDate(picked);
                           },
                           child: IgnorePointer(
                             child: TextField(
