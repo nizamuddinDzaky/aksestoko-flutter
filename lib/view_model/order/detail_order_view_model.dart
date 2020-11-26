@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
@@ -82,6 +83,48 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
 
     await putUpdateOrder(idPurchase, type);
   }
+
+  actionPostUrlKreditPro(String idPurchase) async{
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CupertinoActivityIndicator()],
+            ),
+          );
+        });
+    await _postUrlKreditPro(idPurchase);
+  }
+
+  _postUrlKreditPro(String idPurchase)async{
+    var body = {
+      'id_pemesanan': idPurchase,
+    };
+    var status = await ApiClient.methodPost(ApiConfig.urlGetUrlKreditPro, body, {},
+        onBefore: (status) {
+          Get.back();
+        }, onSuccess: (data, _) {
+          var baseResponse = BaseResponse.fromJson(data);
+          var urlKrediPro = "${baseResponse.data.urlKreditPro}${baseResponse.data.paramKreditPro}";
+          /*debugPrint("result => ${baseResponse?.data.urlKreditPro}");*/
+          /*getListOrder();*/
+          Map<String, dynamic> _portaInfoMap = {
+            "urlKreditPro": urlKrediPro,
+            "idPurchase": idPurchase
+          };
+          Get.toNamed(paymentKreditProScreen, arguments: _portaInfoMap);
+        }, onFailed: (title, message) {
+          Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+        }, onError: (title, message) {
+          Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
+        }, onAfter: (status) {
+        });
+    status.execute();
+  }
+
   @override
   void initState() {
     super.initState();

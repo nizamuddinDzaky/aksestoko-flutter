@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/checkout_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
@@ -174,7 +175,18 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             _dialogListAddress(context).then((value) {
                               setState(() {
                                 if (value == null) return;
-                                address.namaPenerima =
+
+                                var selected = value as Alamat;
+                                address.id = selected.addressId;
+                                address.namaToko = selected.addressCompany;
+                                address.nama = selected.addressName;
+                                address.noTlp = selected.addressPhone;
+                                address.alamat = selected.address;
+                                // address.desa = selected.addressPhone;
+                                address.kecamatan = selected.addressState;
+                                address.kabupaten = selected.addressCity;
+                                address.provinsi = selected.addressCountry;
+                                /*address.namaPenerima =
                                     value?.namaPenerima ?? address.namaPenerima;
                                 address.email = value?.email ?? address.email;
                                 address.noTlpn = value?.noTlpn ?? address.noTlpn;
@@ -184,7 +196,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                 address.kabupatenName =
                                     value?.kabupatenName ?? address.kabupatenName;
                                 address.kecamatanName =
-                                    value?.kecamatanName ?? address.kecamatanName;
+                                    value?.kecamatanName ?? address.kecamatanName;*/
                               });
                             }),
                       ),

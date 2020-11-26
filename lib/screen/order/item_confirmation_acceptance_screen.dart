@@ -2,6 +2,7 @@ import 'package:aksestokomobile/controller/order/confirmation_acceptance_control
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ItemConfirmationAcceptScreen extends StatefulWidget {
@@ -192,10 +193,13 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
                     TextField(
                       controller: badControllerText,
                       focusNode: _focus,
-                      keyboardType: TextInputType.number,
-                      /*onChanged: (String value){
-                        itemDetailDelivery.buruk = 40;
-                      },*/
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: false,
+                        signed: true,
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xffEEEEEE),

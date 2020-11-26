@@ -53,14 +53,15 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
                               postDeleteAddress(address);
                             }
                           });
-                        },
-                            () {
+                        }, () {
                           var address = listAddress[idx];
                           Get.to(EditAlamatScreen(address)).then((value) {
                             if (value == -1) {
                               actionRefresh();
                             }
                           });
+                        },(){
+                          Get.back(result: listAddress[idx]);
                         },
                       );
                     },

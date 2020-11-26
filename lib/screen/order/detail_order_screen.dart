@@ -213,7 +213,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      "ID Pesnaan",
+                                      "ID Pesanan",
                                       style: TextStyle(
                                           fontSize: 14, color: MyColor.greyTextAT),
                                     ),
@@ -890,20 +890,25 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       ),
                       child: FlatButton(
                         child: Text(
-                          "Selesaikan Pembayaran",
+
+                          "${orderDetail.detailPemesanan.caraPembayaran.toLowerCase() == "kredit pro" ? "Ajukan Kredit" : "Selesaikan Pembayaran"}",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                         ),
                         onPressed: () {
-                          Get.toNamed(addPaymentScreen, arguments: orderDetail.detailPemesanan.idPemesanan).then((value) {
-                            if(value != null && value){
-                              getListOrder();
-                            }
-                          }
+                          if(orderDetail.detailPemesanan.caraPembayaran.toLowerCase() == "kredit pro"){
 
-                          );
+                            actionPostUrlKreditPro(orderDetail.detailPemesanan.idPemesanan);
+                          }else{
+                            Get.toNamed(addPaymentScreen, arguments: orderDetail.detailPemesanan.idPemesanan).then((value) {
+                                if(value != null && value){
+                                  getListOrder();
+                                }
+                              }
+                            );
+                          }
                         },
                       ),
                     )

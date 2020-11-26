@@ -32,6 +32,8 @@ class DataResponse {
   Address address;
   String shipmentPrice;
   String idPurchase;
+  String urlKreditPro;
+  String paramKreditPro;
   Customer customer;
   List<Alamat> listAlamat;
   OrderModel orderModelDalamProses;
@@ -161,6 +163,10 @@ class DataResponse {
     });
 
     idPurchase = ifExist(json, 'purchase_id');
+
+    urlKreditPro = ifExist(json, 'url');
+
+    paramKreditPro = ifExist(json, 'param');
 
     /*detailPayment = ifExistObject(json, 'data_pembayaran', (obj) {
       return PaymentData.fromJson(obj);

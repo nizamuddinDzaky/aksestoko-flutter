@@ -101,7 +101,9 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
                                   actionRefresh();
                                 }
                               });
-                            },
+                            },(){
+
+                          },
                           );
                         },
                         itemCount: listAddress?.length ?? 0,

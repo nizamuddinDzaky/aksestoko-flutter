@@ -6,6 +6,7 @@ import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:aksestokomobile/view_model/account/edit_alamat_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EditAlamatScreen extends StatefulWidget {
   final Alamat address;
@@ -135,10 +136,12 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
                               controller: phoneTextController,
+
                               onSaved: (value) {
                                 saveForm(noTlpn: value);
                               },
-                              keyboardType: TextInputType.phone,
+                              keyboardType: TextInputType.number,
+                              maxLength: 13,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'No. Telepon',
@@ -203,7 +206,14 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               onSaved: (value) {
                                 saveForm(kodePos: value);
                               },
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: false,
+                                signed: true,
+                              ),
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              maxLength: 6,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'Kode Pos',

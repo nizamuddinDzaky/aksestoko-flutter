@@ -6,6 +6,7 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -135,7 +136,8 @@ class _AddAddressScreenState extends AddressViewModel {
                                 // vm?.saveForm(noTlpn: value);
                                 saveForm(noTlpn: value);
                               },
-                              keyboardType: TextInputType.phone,
+                              keyboardType: TextInputType.number,
+                              maxLength: 13,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'No. Telepon',
@@ -200,7 +202,14 @@ class _AddAddressScreenState extends AddressViewModel {
                                 // vm?.saveForm(email: value);
                                 saveForm(kodePos: value);
                               },
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: false,
+                                signed: true,
+                              ),
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              maxLength: 6,
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'Kode Pos',

@@ -57,6 +57,7 @@ class ApiConfig {
   static String urlDetailAddPayment = '${path}Purchase/detail_payment';
   static String urlAddPayment = '${path}Purchase/add_payment';
   static String urlListProofPayment = '${path}Purchase/list_proof_payment';
+  static String urlGetUrlKreditPro = '${path}Purchase/apply_credit';
 
   //address
   static const String urlProvinsi = '${local}list_province';
