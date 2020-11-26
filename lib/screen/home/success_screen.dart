@@ -39,7 +39,7 @@ class _SuccessScreenState extends SuccessViewModel {
               margin: EdgeInsets.only(bottom: 30),
               child: Center(
                 child:
-                Image.asset(atSuccessIcon, height: 200, fit: BoxFit.fill),
+                    Image.asset(atSuccessIcon, height: 128, fit: BoxFit.fill),
               ),
             ),
             Container(
@@ -54,6 +54,10 @@ class _SuccessScreenState extends SuccessViewModel {
             ),
             Container(
               padding: EdgeInsets.all(15),
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),

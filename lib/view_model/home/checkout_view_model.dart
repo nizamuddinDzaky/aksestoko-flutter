@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:aksestokomobile/controller/home/checkout_controller.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
@@ -112,7 +113,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
     });
   }
 
-  void actionToPayment(controller) {
+  void actionToPayment(CheckoutController controller) {
     if (complete != 2) {
       Fluttertoast.showToast(
         msg: 'Transaksi tidak dapat dilanjutkan',

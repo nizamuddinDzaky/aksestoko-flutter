@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/checkout_model.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
@@ -149,8 +150,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
               ),
             ),
             MyDivider.spaceDividerLogin(custom: 10),
-            if (kDebugMode)
-              Container(
+            // if (kDebugMode)
+            Container(
                 margin: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -170,23 +171,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                         ),
-                        onPressed: () =>
-                            _dialogListAddress(context).then((value) {
-                              setState(() {
-                                if (value == null) return;
-                                address.namaPenerima =
-                                    value?.namaPenerima ?? address.namaPenerima;
-                                address.email = value?.email ?? address.email;
-                                address.noTlpn = value?.noTlpn ?? address.noTlpn;
-                                address.alamat = value?.alamat ?? address.alamat;
-                                address.provinceName =
-                                    value?.provinceName ?? address.provinceName;
-                                address.kabupatenName =
-                                    value?.kabupatenName ?? address.kabupatenName;
-                                address.kecamatanName =
-                                    value?.kecamatanName ?? address.kecamatanName;
-                              });
-                            }),
+                        onPressed: () => _dialogListAddress(context),
                       ),
                     ),
                   ],
@@ -962,10 +947,15 @@ class _CheckoutScreenState extends CheckoutViewModel {
           init: AddressController(),
           builder: (vm) {
             return AlertDialog(
-              title: Text('Daftar Alamat Toko'),
-              content: ListAddressScreen()
+                title: Text('Daftar Alamat Toko'),
+                content: ListAddressScreen()
             );
           }),
-    );
+    ).then((value) {
+      if (value != null && value is Alamat) {
+        address = value.toAddress();
+        setState(() {});
+      }
+    });
   }
 }

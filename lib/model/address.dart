@@ -27,9 +27,11 @@ class Address {
   String get line1 => [nama, noTlp].join(', ');
 
   String get line2 => [
-        [alamat, desa, kecamatan, kabupaten, provinsi].join(', '),
+        [alamat, desa, kecamatan, kabupaten, provinsi]
+            .where((element) => (element?.isNotEmpty ?? false))
+            .join(', '),
         kodePos
-      ].join(' - ');
+      ].where((element) => (element?.isNotEmpty ?? false)).join(' - ');
 
   Address(
       {this.namaPenerima,

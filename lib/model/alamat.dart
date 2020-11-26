@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/model/address.dart';
+
 class Alamat {
   String addressId;
   String addressCompany;
@@ -47,5 +49,20 @@ class Alamat {
     data['address_country'] = this.addressCountry;
     data['address_postal_code'] = this.addressPostalCode;
     return data;
+  }
+
+  Address toAddress() {
+    return Address(
+      id: addressId,
+      namaPenerima: addressName,
+      namaToko: addressCompany,
+      nama: addressName,
+      noTlp: addressPhone,
+      alamat: address,
+      kecamatan: addressState,
+      kabupaten: addressCity,
+      provinsi: addressCountry,
+      kodePos: addressPostalCode,
+    );
   }
 }

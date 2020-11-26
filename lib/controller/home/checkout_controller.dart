@@ -23,7 +23,7 @@ class CheckoutController extends GetController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   CheckoutController() {
-    validationDate();
+    // validationDate();
   }
 
   validationDate() {

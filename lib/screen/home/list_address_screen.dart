@@ -34,34 +34,38 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (bc, idx) {
-                        return ListAddress(
-                          listAddress[idx],
-                          () {
-                            var address = listAddress[idx];
-                            Get.defaultDialog(
-                                title: 'Hapus Alamat?',
-                                middleText: address.addressName ?? '',
-                                textConfirm: 'Lanjut',
-                                confirmTextColor: Colors.white,
-                                textCancel: 'Batal',
-                                onConfirm: () {
-                                  Get.back(result: -1);
-                                }).then((value) {
-                              if (value == -1) {
-                                debugPrint(
-                                    'delete address ${address?.toJson()}');
-                                postDeleteAddress(address);
-                              }
-                            });
+                        var alamat = listAddress[idx];
+                        return InkWell(
+                          onTap: () {
+                            Get.back(result: alamat);
                           },
-                          () {
-                            var address = listAddress[idx];
-                            Get.to(EditAlamatScreen(address)).then((value) {
-                              if (value == -1) {
-                                actionRefresh();
-                              }
-                            });
-                          },
+                          child: ListAddress(
+                            listAddress[idx],
+                            () {
+                              var address = listAddress[idx];
+                              Get.defaultDialog(
+                                  title: 'Hapus Alamat?',
+                                  middleText: address.addressName ?? '',
+                                  textConfirm: 'Lanjut',
+                                  confirmTextColor: Colors.white,
+                                  textCancel: 'Batal',
+                                  onConfirm: () {
+                                    Get.back(result: -1);
+                                  }).then((value) {
+                                if (value == -1) {
+                                  postDeleteAddress(address);
+                                }
+                              });
+                            },
+                            () {
+                              var address = listAddress[idx];
+                              Get.to(EditAlamatScreen(address)).then((value) {
+                                if (value == -1) {
+                                  actionRefresh();
+                                }
+                              });
+                            },
+                          ),
                         );
                       },
                       itemCount: listAddress?.length ?? 0,
