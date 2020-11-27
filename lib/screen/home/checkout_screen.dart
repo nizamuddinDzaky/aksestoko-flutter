@@ -150,8 +150,8 @@ class _CheckoutScreenState extends CheckoutViewModel {
               ),
             ),
             MyDivider.spaceDividerLogin(custom: 10),
-            // if (kDebugMode)
-            Container(
+            if (kDebugMode)
+              Container(
                 margin: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -171,7 +171,34 @@ class _CheckoutScreenState extends CheckoutViewModel {
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                         ),
-                        onPressed: () => _dialogListAddress(context),
+                        onPressed: () =>
+                            _dialogListAddress(context).then((value) {
+                              setState(() {
+                                if (value == null) return;
+
+                                var selected = value as Alamat;
+                                address.id = selected.addressId;
+                                address.namaToko = selected.addressCompany;
+                                address.nama = selected.addressName;
+                                address.noTlp = selected.addressPhone;
+                                address.alamat = selected.address;
+                                // address.desa = selected.addressPhone;
+                                address.kecamatan = selected.addressState;
+                                address.kabupaten = selected.addressCity;
+                                address.provinsi = selected.addressCountry;
+                                /*address.namaPenerima =
+                                    value?.namaPenerima ?? address.namaPenerima;
+                                address.email = value?.email ?? address.email;
+                                address.noTlpn = value?.noTlpn ?? address.noTlpn;
+                                address.alamat = value?.alamat ?? address.alamat;
+                                address.provinceName =
+                                    value?.provinceName ?? address.provinceName;
+                                address.kabupatenName =
+                                    value?.kabupatenName ?? address.kabupatenName;
+                                address.kecamatanName =
+                                    value?.kecamatanName ?? address.kecamatanName;*/
+                              });
+                            }),
                       ),
                     ),
                   ],
@@ -244,11 +271,11 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             DateTime picked = await showDatePicker(
                               context: context,
                               initialDate: controller.date,
-                              firstDate: controller.date,
+                              firstDate: DateTime(2015),
                               locale: Locale('in', 'ID'),
                               lastDate: DateTime(2030),
                             );
-                            if (picked != null) controller.setDate(picked);
+                            controller.setDate(picked);
                           },
                           child: IgnorePointer(
                             child: TextField(
@@ -648,109 +675,6 @@ class _CheckoutScreenState extends CheckoutViewModel {
               color: Color(0xffEAEAEA),
               margin: EdgeInsets.symmetric(vertical: 20),
             ),
-            //diskon
-            if (checkoutModel?.diskon?.potonganHarga?.isNotEmpty ?? false)
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 5,
-                          bottom: 15,
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              "Diskon",
-                              style: TextStyle(
-                                  color: MyColor.blackTextAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 5,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              "Kode Promo",
-                              style: TextStyle(
-                                  color: MyColor.greyTextAT, fontSize: 16),
-                            ),
-                            Text(
-                              checkoutModel?.diskon?.codePromo ?? '',
-                              style: TextStyle(
-                                  color: MyColor.greyTextAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 5,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "Potongan Harga",
-                                style: TextStyle(
-                                    color: MyColor.greyTextAT, fontSize: 16),
-                              ),
-                            ),
-                            Text(
-                              "${MyNumber.toNumberRpStr(checkoutModel?.diskon?.potonganHarga ?? '0')}",
-                              style: TextStyle(
-                                  color: MyColor.greyTextAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "Total Pembayaran",
-                                style: TextStyle(
-                                    color: MyColor.greyTextAT,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              "${MyNumber.toNumberRp(checkoutModel?.totalPembayaran ?? 0.0)}",
-                              style: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-            if (checkoutModel?.diskon?.potonganHarga?.isNotEmpty ?? false)
-              Container(
-                height: 3,
-                color: Color(0xffEAEAEA),
-                margin: EdgeInsets.symmetric(vertical: 20),
-              ),
             //lanjut pembayaran
             Container(
               margin: EdgeInsets.only(left: 25, right: 25),
@@ -818,14 +742,14 @@ class _CheckoutScreenState extends CheckoutViewModel {
                 Container(
                   height: 112,
                   width: 100,
-                  child: kDebugMode || (_product?.imageUrl?.isEmpty ?? true)
+                  child: kDebugMode
                       ? Image.asset(kNoImage, height: 112)
                       : FadeInImage.assetNetwork(
-                    placeholder: kNoImage,
-                    image: _product?.imageUrl ?? '',
-                    fit: BoxFit.cover,
-                    width: 100,
-                  ),
+                          placeholder: kNoImage,
+                          image: _product?.imageUrl ?? '',
+                          fit: BoxFit.cover,
+                          width: 100,
+                        ),
                 ),
                 Container(
                   child: Expanded(
@@ -947,15 +871,10 @@ class _CheckoutScreenState extends CheckoutViewModel {
           init: AddressController(),
           builder: (vm) {
             return AlertDialog(
-                title: Text('Daftar Alamat Toko'),
-                content: ListAddressScreen()
+              title: Text('Daftar Alamat Toko'),
+              content: ListAddressScreen()
             );
           }),
-    ).then((value) {
-      if (value != null && value is Alamat) {
-        address = value.toAddress();
-        setState(() {});
-      }
-    });
+    );
   }
 }

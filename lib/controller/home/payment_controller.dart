@@ -115,7 +115,7 @@ abstract class PaymentController extends State<PaymentScreen> {
       },
       onSuccess: (data, flag) {
         paymentModel = PaymentModel.fromJson(data['data']);
-        paymentModel.kreditPro = null;
+        // paymentModel.kreditPro = null;
         reInitConfig();
       },
       onFailed: (title, message) {

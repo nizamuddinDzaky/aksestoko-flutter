@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/screen/account/addresses.dart';
 import 'package:aksestokomobile/screen/account/edit_alamat_screen.dart';
@@ -24,53 +25,51 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
       children: <Widget>[
         Expanded(
           child:SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-                  width: double.maxFinite,
-                  child: RefreshIndicator(
-                    key: refreshKey,
-                    onRefresh: actionRefresh,
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (bc, idx) {
-                        var alamat = listAddress[idx];
-                        return InkWell(
-                          onTap: () {
-                            Get.back(result: alamat);
-                          },
-                          child: ListAddress(
-                            listAddress[idx],
+            child: Container(
+                width: double.maxFinite,
+                child: RefreshIndicator(
+                  key: refreshKey,
+                  onRefresh: actionRefresh,
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (bc, idx) {
+                      return ListAddress(
+                        listAddress[idx],
                             () {
-                              var address = listAddress[idx];
-                              Get.defaultDialog(
-                                  title: 'Hapus Alamat?',
-                                  middleText: address.addressName ?? '',
-                                  textConfirm: 'Lanjut',
-                                  confirmTextColor: Colors.white,
-                                  textCancel: 'Batal',
-                                  onConfirm: () {
-                                    Get.back(result: -1);
-                                  }).then((value) {
-                                if (value == -1) {
-                                  postDeleteAddress(address);
-                                }
-                              });
-                            },
-                            () {
-                              var address = listAddress[idx];
-                              Get.to(EditAlamatScreen(address)).then((value) {
-                                if (value == -1) {
-                                  actionRefresh();
-                                }
-                              });
-                            },
-                          ),
-                        );
-                      },
-                      itemCount: listAddress?.length ?? 0,
-                    ),
-                  ))),
+                          var address = listAddress[idx];
+                          Get.defaultDialog(
+                              title: 'Hapus Alamat?',
+                              middleText: address.addressName ?? '',
+                              textConfirm: 'Lanjut',
+                              confirmTextColor: Colors.white,
+                              textCancel: 'Batal',
+                              onConfirm: () {
+                                Get.back(result: -1);
+                              }).then((value) {
+                            if (value == -1) {
+                              debugPrint(
+                                  'delete address ${address?.toJson()}');
+                              postDeleteAddress(address);
+                            }
+                          });
+                        }, () {
+                          var address = listAddress[idx];
+                          Get.to(EditAlamatScreen(address)).then((value) {
+                            if (value == -1) {
+                              actionRefresh();
+                            }
+                          });
+                        },(){
+                          Get.back(result: listAddress[idx]);
+                        },
+                      );
+                    },
+                    itemCount: listAddress?.length ?? 0,
+                  ),
+                )
+            )
+          ),
           /**/
         ),
         Row(

@@ -9,15 +9,20 @@ import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/order/add_payment_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io' as Io;
+
+import 'package:intl/intl.dart';
 
 class AddPaymentScreen extends StatefulWidget {
   _AddPaymentScreenState createState() => _AddPaymentScreenState();
 }
 
 class _AddPaymentScreenState extends AddPaymentViewModel {
+
+  FocusNode _focusNode = FocusNode();
 
   Widget _decideImageView() {
     if (imageFile == null) {
@@ -102,11 +107,24 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
         });
   }
 
+  _actionUpdateNominal() {
+    if (!_focusNode.hasFocus) {
+      if(nominalTextController.text != ''){
+        nominalTextController.text = nominalTextController.text.toNumId();
+      }
+    } else {
+      nominalTextController.text = nominalTextController.text.replaceAll(new RegExp(r'[^0-9]'),'');;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     nominalTextController.text ='';
     idPemesanan = Get.arguments?.toString();
+    _focusNode?.addListener(() {
+      _actionUpdateNominal();
+    });
     actionRefresh();
   }
 
@@ -614,9 +632,16 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
                             children: <Widget>[
                               Text("Nominal"),
                               Padding(padding: EdgeInsets.all(5)),
-                              TextField(
+                              TextFormField(
+                                focusNode: _focusNode,
                                 controller: nominalTextController,
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.numberWithOptions(
+                                  decimal: false,
+                                  signed: true,
+                                ),
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Color(0xffEEEEEE),

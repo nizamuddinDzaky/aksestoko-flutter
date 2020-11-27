@@ -11,6 +11,7 @@ import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/screen/login/register_screen.dart';
 import 'package:aksestokomobile/screen/login/otp_screen.dart';
 import 'package:aksestokomobile/screen/order/add_payment_screen.dart';
+import 'package:aksestokomobile/screen/order/payment_kreditpro.dart';
 import 'package:aksestokomobile/screen/splash_screen.dart';
 import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
@@ -51,6 +52,7 @@ const addAddressScreen = "/AddAddressScreen";
 const editAddressScreen = "/EditAddressScreen";
 const salesPersonScreen = "/SalesPersonScreen";
 const changePasswordScreen = "/ChangePasswordScreen";
+const paymentKreditProScreen = "/PaymentKreditproScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -66,7 +68,13 @@ class MyRouter {
           transition: Transition.fade,
           page: ParentScreen(),
         );
-        case addPaymentScreen:
+      case paymentKreditProScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: PaymentKreditproScreen(),
+        );
+      case addPaymentScreen:
         return GetRouteBase(
           settings: settings,
           transition: Transition.fade,

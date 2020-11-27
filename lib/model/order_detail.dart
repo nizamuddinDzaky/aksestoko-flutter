@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/model/cart_model.dart';
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/model/order_summary.dart';
+import 'package:flutter/foundation.dart';
 
 class OrderDetail {
   DetailPemesanan detailPemesanan;
@@ -125,7 +126,7 @@ class DetailPemesanan {
   String namaDistributor;
   String caraPengiriman;
   String caraPembayaran;
-  Null jenisPembayaran;
+  String jenisPembayaran;
   String notifikasiPemesanan;
   String statusPemesanan;
   String notifikasiPembayaran;
