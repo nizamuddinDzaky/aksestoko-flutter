@@ -207,6 +207,23 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
+                                Get.toNamed(checkPermissionScreen);
+                              },
+                              icon: Icon(Icons.vpn_key),
+                              label: Text(
+                                "Periksa Izin",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       if (false)
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
