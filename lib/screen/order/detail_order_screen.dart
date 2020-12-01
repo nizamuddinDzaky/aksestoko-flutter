@@ -1096,7 +1096,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               ],
             ),
           ),
-          if(detailDelivery.statuPengiriman.toLowerCase() == 'dalam pengiriman')
+          if(detailDelivery.konfirmasiPenerimaan != null )
           Container(
             margin:
             EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -1149,7 +1149,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
             ),
             children: <Widget>[
               new Column(
-                children: _buildExpandableContent(detailDelivery?.listItemDetailDelivery),
+                children: _buildExpandableContent(detailDelivery?.listItemDetailDelivery, detailDelivery.statuPengiriman),
               ),
             ],
           )
@@ -1158,16 +1158,16 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
     );
   }
 
-  _buildExpandableContent(List<ItemDetailDelivery> listItemDetailDelivery) {
+  _buildExpandableContent(List<ItemDetailDelivery> listItemDetailDelivery, String statusPengiriman) {
     List<Widget> columnContent = [];
     for (var i = 0 ; i < listItemDetailDelivery.length ; i++)
       columnContent.add(
-          listProductShipment(listItemDetailDelivery[i])
+          listProductShipment(listItemDetailDelivery[i], statusPengiriman)
       );
     return columnContent;
   }
 
-  Widget listProductShipment(ItemDetailDelivery itemDetailDelivery) {
+  Widget listProductShipment(ItemDetailDelivery itemDetailDelivery, String statusPengiriman) {
     return Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.only(bottom: 10),
@@ -1223,7 +1223,57 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: MyColor.infoAT,
+                    color: MyColor.blackTextAT,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            ),
+          ),
+          if(statusPengiriman.toLowerCase() == 'barang diterima')
+          Expanded(
+            flex: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Baik",
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+                Text(
+                  "${itemDetailDelivery.baik} ${itemDetailDelivery.satuan}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: MyColor.blackTextAT,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            ),
+          ),
+          if(statusPengiriman.toLowerCase() == 'barang diterima')
+          Expanded(
+            flex: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Rusak",
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+                Text(
+                  "${itemDetailDelivery.buruk} ${itemDetailDelivery.satuan}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: MyColor.blackTextAT,
                   ),
                   textAlign: TextAlign.right,
                 ),

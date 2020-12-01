@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -32,10 +33,17 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
   @override
   void initState() {
 
-    baikControllerText.text = (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
+    baikControllerText.text = (itemDetailDelivery.jumlah ?? itemDetailDelivery.baik).toString();
+    debugPrint("item delivery ${itemDetailDelivery.toJson()}\n ${MyPref.getATToken()}");
     badControllerText.text = (itemDetailDelivery.buruk ?? 0).toString();
     _focus.addListener(_onFocusChange);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _focus?.dispose();
+    super.dispose();
   }
 
   void _onFocusChange(){
