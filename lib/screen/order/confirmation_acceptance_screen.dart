@@ -110,7 +110,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
             Container(
               margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
               child: Text(
-                detailPemesanan.noPemesanan,
+                detailPemesanan?.noPemesanan ?? '',
                 style: TextStyle(
                     color: MyColor.blackTextAT,
                     fontSize: 18,

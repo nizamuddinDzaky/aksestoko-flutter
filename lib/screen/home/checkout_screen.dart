@@ -150,7 +150,6 @@ class _CheckoutScreenState extends CheckoutViewModel {
               ),
             ),
             MyDivider.spaceDividerLogin(custom: 10),
-            if (kDebugMode)
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
@@ -271,11 +270,11 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             DateTime picked = await showDatePicker(
                               context: context,
                               initialDate: controller.date,
-                              firstDate: DateTime(2015),
+                              firstDate: controller.date,
                               locale: Locale('in', 'ID'),
                               lastDate: DateTime(2030),
                             );
-                            controller.setDate(picked);
+                            if (picked != null) controller.setDate(picked);
                           },
                           child: IgnorePointer(
                             child: TextField(
@@ -675,6 +674,109 @@ class _CheckoutScreenState extends CheckoutViewModel {
               color: Color(0xffEAEAEA),
               margin: EdgeInsets.symmetric(vertical: 20),
             ),
+            //diskon
+            if ((checkoutModel?.diskon?.potonganHarga ?? 0) != 0)
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: 5,
+                          bottom: 15,
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Diskon",
+                              style: TextStyle(
+                                  color: MyColor.blackTextAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: 5,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Kode Promo",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT, fontSize: 16),
+                            ),
+                            Text(
+                              checkoutModel?.diskon?.codePromo ?? '',
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: 5,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                "Potongan Harga",
+                                style: TextStyle(
+                                    color: MyColor.greyTextAT, fontSize: 16),
+                              ),
+                            ),
+                            Text(
+                              "${MyNumber.toNumberRp(checkoutModel?.diskon?.potonganHarga?.toDouble() ?? 0)}",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                "Total Pembayaran",
+                                style: TextStyle(
+                                    color: MyColor.greyTextAT,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              "${MyNumber.toNumberRp(checkoutModel?.totalPembayaran ?? 0.0)}",
+                              style: TextStyle(
+                                  color: MyColor.redAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            if ((checkoutModel?.diskon?.potonganHarga ?? 0) != 0)
+              Container(
+                height: 3,
+                color: Color(0xffEAEAEA),
+                margin: EdgeInsets.symmetric(vertical: 20),
+              ),
             //lanjut pembayaran
             Container(
               margin: EdgeInsets.only(left: 25, right: 25),

@@ -42,8 +42,8 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
         params: {
           'id_distributor': MyPref.getIdDistributor().toString(),
           'price_group_id': MyPref.getPriceGroupId().toString(),
-          if (controller?.promoCode?.isNotEmpty ?? false)
-            'promo': controller.promoCode,
+          if (controller?.currentPromo?.codePromo?.isNotEmpty ?? false)
+            'promo': controller.currentPromo?.codePromo,
         },
         customHandle: true,
         onBefore: (status) {}, onSuccess: (data, flag) {

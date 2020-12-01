@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
-import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 class AddAddressScreen extends StatefulWidget {
   _AddAddressScreenState createState() => _AddAddressScreenState();
@@ -133,32 +131,35 @@ class _AddAddressScreenState extends AddressViewModel {
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
                               onSaved: (value) {
-                                // vm?.saveForm(noTlpn: value);
-                                saveForm(noTlpn: value);
-                              },
-                              keyboardType: TextInputType.number,
-                              maxLength: 13,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'No. Telepon',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText:
-                                'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
-                                errorStyle: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontStyle: FontStyle.italic,
+                                      // vm?.saveForm(noTlpn: value);
+                                      saveForm(noTlpn: value);
+                                    },
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
+                                    maxLength: 13,
+                                    decoration: InputDecoration(
+                                      contentPadding: MyDimen.paddingTxtField(),
+                                      labelText: 'No. Telepon',
+                                      labelStyle: TextStyle(
+                                        color: MyColor.txtField,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: MyColor.txtField),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColor.lineTxtField),
+                                      ),
+                                      errorText:
+                                          'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                                      errorStyle: TextStyle(
+                                        color: MyColor.redAT,
+                                        fontStyle: FontStyle.italic,
                                 ),
                               ),
                             ),

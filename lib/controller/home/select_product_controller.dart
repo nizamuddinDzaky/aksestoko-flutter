@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/product.dart';
+import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
@@ -15,6 +16,7 @@ class SelectProductController extends GetController {
   String promoName;
   String promoValue;
   FocusNode currentFocus;
+  Promo currentPromo;
 
   void addToCart(Product p, {double qty = 1, double customQty}) {
     if (listCart == null) listCart = [];
@@ -130,6 +132,7 @@ class SelectProductController extends GetController {
     }
     int multiple = product?.isMultiple == 1 ? 1 : 0;
     int minQty = product?.minOrder ?? 1;
+    minQty = minQty < 1 ? 1 : minQty;
     if (qty >= 0) {
       minQty = minQty == 0 ? 1 : minQty;
       var add = minQty - (newQty % minQty);
@@ -156,8 +159,17 @@ class SelectProductController extends GetController {
       customHandle: true,
       onBefore: (status) {},
       onSuccess: (data, _) {
+        var response = BaseResponse.fromJson(data);
+        currentPromo = response?.data?.promo;
         SelectProductController controller = Get.find();
         controller?.addToCart(product, customQty: newQty.toDouble());
+        if (currentPromo == null && promoCode != null &&
+            response?.data?.statusPromo != null) {
+          Fluttertoast.showToast(
+            msg: response?.data?.statusPromo ?? '',
+            gravity: ToastGravity.CENTER,
+          );
+        }
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -287,6 +299,7 @@ class SelectProductController extends GetController {
       },
       onSuccess: (data, _) {
         var response = BaseResponse.fromJson(data);
+        currentPromo = response.data.promo;
         promoCode = response.data.promo.codePromo;
         promoName = response.data.promo.name;
         promoValue = response.data.promo.value.toString();
@@ -295,6 +308,7 @@ class SelectProductController extends GetController {
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
+        currentPromo = null;
         Fluttertoast.showToast(
           msg: response?.message ?? 'Gagal',
           gravity: ToastGravity.CENTER,
@@ -315,6 +329,7 @@ class SelectProductController extends GetController {
     promoCode = null;
     promoName = null;
     promoValue = null;
+    currentPromo = null;
     update();
   }
 

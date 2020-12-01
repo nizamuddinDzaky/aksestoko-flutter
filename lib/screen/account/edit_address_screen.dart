@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class EditAddressScreen extends StatefulWidget {
@@ -143,7 +144,10 @@ class _EditAddressScreenState extends AddressViewModel {
                             child: TextFormField(
                               initialValue: address?.addressPhone,
                               onSaved: (value) => {vm.saveForm(noTlpn: value)},
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.phone,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'No. Telepon',
@@ -209,7 +213,10 @@ class _EditAddressScreenState extends AddressViewModel {
                                         ? 0
                                         : int.parse(value))
                               },
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
                               decoration: InputDecoration(
                                 contentPadding: MyDimen.paddingTxtField(),
                                 labelText: 'Kode Pos',

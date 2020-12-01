@@ -266,24 +266,41 @@ class _CartScreenState extends State<CartScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                          CupertinoButton(
-                            padding: EdgeInsets.zero,
-                            minSize: 0,
-                            child: Text(
-                            controller.promoCode != null
-                                ? "${controller.promoName}(${controller.promoCode})"
-                                : 'Kode Promo',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          onPressed: () {
-                            validationCart(controller, () {
-                              controller.inputPromoCode();
-                            });
-                          },
+                        Row(
+                          children: [
+                            if (controller.currentPromo == null &&
+                                controller.promoCode != null)
+                              InkWell(
+                                child: Icon(Icons.delete_outline),
+                                onTap: () {
+                                  controller.deletePromoCode();
+                                },
+                              ),
+                            if (controller.currentPromo == null &&
+                                controller.promoCode != null)
+                              SizedBox(width: 8),
+                            Flexible(
+                              child: CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                minSize: 0,
+                                child: Text(
+                                  controller.currentPromo != null
+                                      ? "${controller.currentPromo.name} (${controller.currentPromo.codePromo})"
+                                      : (controller.promoCode ?? 'Kode Promo'),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                onPressed: () {
+                                  validationCart(controller, () {
+                                    controller.inputPromoCode();
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        if (kDebugMode) SizedBox(height: 5),
+                        SizedBox(height: 5),
                         Text(
                           "Total",
                           style: TextStyle(
@@ -298,35 +315,35 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         SizedBox(height: 5),
-                        if(controller.promoValue != null)
-                        Row(
-                          children: [
-                            Text(
-                              "Diskon",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: MyColor.redAT,
-                                  size: 15,
-                                ),
-                                onPressed: () {
-                                  controller.deletePromoCode();
-                                }
-                                )
-                          ],
-                        ),
-                        if(controller.promoValue != null)
-                        Flexible(
-                          child: Text(
-                            "${MyNumber.toNumberRpStr(controller.promoValue)}",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                        if (controller.currentPromo != null)
+                          Row(
+                            children: [
+                              Text(
+                                "Diskon",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: MyColor.redAT,
+                                    size: 15,
+                                  ),
+                                  onPressed: () {
+                                    controller.deletePromoCode();
+                                  })
+                            ],
                           ),
-                        ),
+                        if (controller.currentPromo != null)
+                          Flexible(
+                            child: Text(
+                              "${MyNumber.toNumberRpStr(controller.currentPromo?.value)}",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
+                            ),
+                          ),
                       ],
                     ),
                   ),

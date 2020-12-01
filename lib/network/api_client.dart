@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
@@ -23,7 +24,9 @@ typedef APIFailedCallback = dynamic Function(String title, String message);
 
 class ApiClient {
   static addInterceptor() {
-    // addInterceptor1();
+    if (isProd != true && kDebugMode) {
+      addInterceptor1();
+    }
     addInterceptor2();
   }
 
@@ -389,7 +392,16 @@ class ApiResponse {
   execute() async {
     if (onBefore != null) onBefore(responseStatus);
     if (responseStatus == ResponseStatus.success) {
-      if (onSuccess != null) await onSuccess(dataResponse, tagOrFlag);
+      if (onSuccess != null) {
+        try {
+          await onSuccess(dataResponse, tagOrFlag);
+        } catch (e) {
+          var message = {
+            'message': 'Gagal memperoleh data.',
+          };
+          onFailed('Kesalahan', jsonEncode(message));
+        }
+      }
     } else if (responseStatus == ResponseStatus.failed) {
       if (onFailed != null) onFailed(title, message);
     } else if (responseStatus == ResponseStatus.error) {

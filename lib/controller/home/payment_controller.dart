@@ -104,8 +104,8 @@ abstract class PaymentController extends State<PaymentScreen> {
       params: {
         'id_distributor': MyPref.getIdDistributor().toString(),
         'price_group_id': MyPref.getPriceGroupId().toString(),
-        if (productController?.promoCode?.isNotEmpty ?? false)
-          'promo': productController.promoCode,
+        if (productController?.currentPromo?.codePromo?.isNotEmpty ?? false)
+          'promo': productController.currentPromo?.codePromo,
         'is_checkout': 'true',
         'delivery_method': salesModel?.delivery_method,
       },

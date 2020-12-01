@@ -44,6 +44,7 @@ class DataResponse {
   PaymentData paymentData;
   DetailPayment detailPayment;
   Promo promo;
+  String statusPromo;
 
   DataResponse({this.token});
 
@@ -157,7 +158,7 @@ class DataResponse {
     paymentData = ifExistObject(json, 'data_pembayaran', (obj) {
       return PaymentData.fromJson(obj);
     });
-    
+
     promo = ifExistObject(json, "promo_data", (obj) {
       return Promo.fromJson(obj);
     });
@@ -167,6 +168,8 @@ class DataResponse {
     urlKreditPro = ifExist(json, 'url');
 
     paramKreditPro = ifExist(json, 'param');
+
+    statusPromo = ifExist(json, 'status_promo');
 
     /*detailPayment = ifExistObject(json, 'data_pembayaran', (obj) {
       return PaymentData.fromJson(obj);

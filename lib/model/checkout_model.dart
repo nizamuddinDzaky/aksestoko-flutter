@@ -14,7 +14,7 @@ class CheckoutModel {
 
   double get totalPembayaran =>
       (ringkasan?.totalAkhir?.toDouble() ?? 0.0) -
-      (double.tryParse(diskon?.potonganHarga ?? '0') ?? 0.0);
+      (diskon?.potonganHarga?.toDouble() ?? 0.0);
 
   CheckoutModel(
       {this.alamatPengiriman,
@@ -103,7 +103,7 @@ class Shipment {
 
 class Diskon {
   String codePromo;
-  String potonganHarga;
+  int potonganHarga;
   int totalPebayaran;
 
   Diskon({this.codePromo, this.potonganHarga, this.totalPebayaran});

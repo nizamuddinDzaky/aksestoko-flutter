@@ -136,33 +136,35 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
                               controller: phoneTextController,
-
-                              onSaved: (value) {
-                                saveForm(noTlpn: value);
-                              },
-                              keyboardType: TextInputType.number,
-                              maxLength: 13,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'No. Telepon',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText:
-                                'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
-                                errorStyle: TextStyle(
-                                  color: MyColor.redAT,
-                                  fontStyle: FontStyle.italic,
+                                    onSaved: (value) {
+                                      saveForm(noTlpn: value);
+                                    },
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
+                                    maxLength: 13,
+                                    decoration: InputDecoration(
+                                      contentPadding: MyDimen.paddingTxtField(),
+                                      labelText: 'No. Telepon',
+                                      labelStyle: TextStyle(
+                                        color: MyColor.txtField,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: MyColor.txtField),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColor.lineTxtField),
+                                      ),
+                                      errorText:
+                                          'Gunakan No Telepon yang valid untuk menerima SMS Kode Aktivasi',
+                                      errorStyle: TextStyle(
+                                        color: MyColor.redAT,
+                                        fontStyle: FontStyle.italic,
                                 ),
                               ),
                             ),
