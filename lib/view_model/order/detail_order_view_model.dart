@@ -20,7 +20,7 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
 
   getListOrder() async {
     if (Get.arguments == null) {
-      debugPrint('argument kosong');
+      debugPrint('argument kosong123 ${Get.arguments}');
       return;
     }
     var status = await ApiClient.methodGet(ApiConfig.urlDetailOrder,

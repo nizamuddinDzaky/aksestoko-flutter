@@ -63,7 +63,7 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
       return;
     }
 
-    var crnPayment = double.parse(nominalTextController.text);
+    var crnPayment = double.parse(nominalTextController.text.replaceAll("Rp", "").replaceAll(".", "").trim());
     var maxPayment =double.parse(paymentData.total.replaceAll("Rp", "").replaceAll(",", "").trim());
     if(crnPayment > maxPayment){
       Get.defaultDialog(title: "Warning", content: Text('Pembayaran Melebihi Batas'));

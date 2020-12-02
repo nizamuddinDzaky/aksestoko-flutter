@@ -42,6 +42,8 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
 
   @override
   void dispose() {
+    itemDetailDelivery.buruk = 0;
+    itemDetailDelivery.baik = itemDetailDelivery.jumlah;
     _focus?.dispose();
     super.dispose();
   }

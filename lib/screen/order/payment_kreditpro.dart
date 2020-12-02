@@ -23,9 +23,9 @@ class _PaymentKreditproScreenState extends State<PaymentKreditproScreen> {
     idPurchase = param['idPurchase'] as String;
     // TODO: implement initState
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
-
+      debugPrint("current url $url");
       if (mounted) {
-        if(url.contains("success_kreditPro")){
+        if(url.contains("success_kreditpro#")){
           Get.offNamedUntil(
             detailOrderScreen,
                 (route) => route.settings.name == parentScreen,
@@ -34,6 +34,7 @@ class _PaymentKreditproScreenState extends State<PaymentKreditproScreen> {
         }
       }
     });
+
     super.initState();
   }
   @override
@@ -46,6 +47,7 @@ class _PaymentKreditproScreenState extends State<PaymentKreditproScreen> {
       withJavascript: true,
       withLocalStorage: true,
       withZoom: false,
+      /*javascriptChannels: ,*/
 
     );
   }
