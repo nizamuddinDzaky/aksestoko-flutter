@@ -52,37 +52,32 @@ class _ListAddressState extends State<ListAddress> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.home,
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Icon(
+                      Icons.home,
+                      color: MyColor.redAT,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget?.address?.addressCompany ?? '',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  if (widget.address?.canBeRemove ?? false)
+                    Container(
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(
+                          Icons.delete,
+                          size: 22,
                           color: MyColor.redAT,
                         ),
+                        onPressed: widget.onDelete,
                       ),
-                      Text(
-                        widget?.address?.addressCompany ?? '',
-                        style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      if (widget.address?.canBeRemove ?? false)
-                        Container(
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              size: 22,
-                              color: MyColor.redAT,
-                            ),
-                            onPressed: widget.onDelete,
-                          ),
-                        ),
-                    ],
-                  ),
+                    ),
                 ],
               ),
             ),
