@@ -134,7 +134,11 @@ class _AddAddressScreenState extends AddressViewModel {
                                       // vm?.saveForm(noTlpn: value);
                                       saveForm(noTlpn: value);
                                     },
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                      decimal: false,
+                                      signed: true,
+                                    ),
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly,
                                     ],

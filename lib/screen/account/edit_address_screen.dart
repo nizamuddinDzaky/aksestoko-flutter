@@ -144,7 +144,10 @@ class _EditAddressScreenState extends AddressViewModel {
                             child: TextFormField(
                               initialValue: address?.addressPhone,
                               onSaved: (value) => {vm.saveForm(noTlpn: value)},
-                              keyboardType: TextInputType.phone,
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: false,
+                                signed: true,
+                              ),
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                               ],

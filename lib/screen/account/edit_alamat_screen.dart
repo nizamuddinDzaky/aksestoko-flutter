@@ -139,7 +139,11 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                     onSaved: (value) {
                                       saveForm(noTlpn: value);
                                     },
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                      decimal: false,
+                                      signed: true,
+                                    ),
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly,
                                     ],
