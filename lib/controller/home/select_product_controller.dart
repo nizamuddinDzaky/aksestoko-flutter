@@ -43,6 +43,8 @@ class SelectProductController extends GetController {
   }
 
   resetCart() {
+    promoCode = null;
+    currentPromo = null;
     listCart?.forEach((product) {
       product.idCart = 0;
       product.qty = 0;
