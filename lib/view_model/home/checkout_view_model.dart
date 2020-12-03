@@ -52,6 +52,9 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
           ?.where((element) => element.value == 'pickup')
           ?.first;
       address = checkoutModel?.alamatPengiriman;
+      if (checkoutModel?.diskon == null) {
+        controller.currentPromo = null;
+      }
       getShipment();
     }, onFailed: (title, message) {
       complete = 0;

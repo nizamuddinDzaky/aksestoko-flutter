@@ -58,7 +58,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
   void initState() {
     super.initState();
     _focusNode?.addListener(() {
-      _actionUpdateData();
+      if (mounted) _actionUpdateData();
     });
   }
 

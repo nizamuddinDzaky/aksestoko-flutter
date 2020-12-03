@@ -17,6 +17,7 @@ class SelectProductController extends GetController {
   String promoValue;
   FocusNode currentFocus;
   Promo currentPromo;
+  Function onThen;
 
   void addToCart(Product p, {double qty = 1, double customQty}) {
     if (listCart == null) listCart = [];
@@ -102,25 +103,28 @@ class SelectProductController extends GetController {
     } else {}
   }
 
-  actionAdd(Product product) async {
+  actionAdd(Product product, {VoidCallback onRefresh}) async {
     var fields = {
       'id_distributor': MyPref.getIdDistributor(),
       'product_id': product?.productId,
       'quantity': product?.qty,
     };
     var status = await ApiClient.methodPost(
-      ApiConfig.urlAddItemCart,
-      fields,
-      {},
-      customHandle: true,
-      onSuccess: (data, _) {
-        if (data != null &&
-            data['data'] != null &&
-            data['data']['id_cart'] != null) {
-          product.idCart = data['data']['id_cart'];
-          product.countChange = 0;
+        ApiConfig.urlAddItemCart,
+        fields,
+        {},
+        customHandle: true,
+        onSuccess: (data, _) {
+          if (data != null &&
+              data['data'] != null &&
+              data['data']['id_cart'] != null) {
+            product.idCart = data['data']['id_cart'];
+            product.countChange = 0;
+          }
+        },
+        onAfter: (_) {
+          onRefresh?.call();
         }
-      },
     );
     status.execute();
   }
@@ -144,7 +148,7 @@ class SelectProductController extends GetController {
       newQty -= (min * (newQty < minQty ? 1 : multiple));
     }
     if (product != null && product.idCart == null) {
-      actionAdd(product);
+      actionAdd(product, onRefresh: onRefresh);
       return;
     }
     var fields = {
@@ -161,6 +165,7 @@ class SelectProductController extends GetController {
       customHandle: true,
       onBefore: (status) {},
       onSuccess: (data, _) {
+        product.countChange = 0;
         var response = BaseResponse.fromJson(data);
         currentPromo = response?.data?.promo;
         SelectProductController controller = Get.find();
@@ -197,6 +202,12 @@ class SelectProductController extends GetController {
     SelectProductController controller = Get.find();
     product?.idCart = null;
     controller?.removeCart(product);
+    checkPromo();
+  }
+
+  checkPromo() {
+    if ((promoCode?.isNotEmpty ?? false) && (listCart?.isNotEmpty ?? false))
+      _actionGetPromo(promoCode);
   }
 
   _actionDelete(Product product) async {
@@ -274,18 +285,6 @@ class SelectProductController extends GetController {
   }
 
   _actionGetPromo(String codePromo) async{
-    /*showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });*/
-
     var body = {
       'id_distributor': MyPref.getIdDistributor(),
       'code_promo': codePromo,
@@ -309,12 +308,13 @@ class SelectProductController extends GetController {
         update();
       },
       onFailed: (title, message) {
-        var response = BaseResponse.fromString(message);
         currentPromo = null;
-        Fluttertoast.showToast(
-          msg: response?.message ?? 'Gagal',
-          gravity: ToastGravity.CENTER,
-        );
+        // sudah di handle saat action update
+        // var response = BaseResponse.fromString(message);
+        // Fluttertoast.showToast(
+        //   msg: response?.message ?? 'Gagal',
+        //   gravity: ToastGravity.CENTER,
+        // );
       },
       onError: (title, message) {
         Fluttertoast.showToast(
@@ -322,17 +322,54 @@ class SelectProductController extends GetController {
           gravity: ToastGravity.CENTER,
         );
       },
-      onAfter: (status) {},
+      onAfter: (status) {
+        onThen?.call();
+        update();
+      },
     );
     status.execute();
   }
 
-  deletePromoCode(){
+  deletePromoCode() {
     promoCode = null;
     promoName = null;
     promoValue = null;
     currentPromo = null;
     update();
+  }
+
+  var needUpdate = 0;
+
+  void validationCart(Function nextAct) {
+    needUpdate = 0;
+    listCart?.forEach((product) {
+      var idCart = (product.idCart ?? 0);
+      var countChange = (product.countChange ?? 0);
+      needUpdate += (idCart == 0 || countChange == 1) ? 1 : 0;
+    });
+    if (needUpdate > 0) {
+      listCart?.forEach((product) {
+        var idCart = (product.idCart ?? 0);
+        var countChange = (product.countChange ?? 0);
+        // if ((0 == idCart && countChange != 0) || (0 != idCart && countChange != 0)) {
+        if (idCart == 0 || countChange == 1) {
+          debugPrint('action update');
+          actionUpdate(
+            product,
+            0,
+            cusQty: product.qty?.toInt() ?? 0,
+            onRefresh: () {
+              needUpdate--;
+              if (needUpdate == 0) {
+                nextAct?.call();
+              }
+            },
+          );
+        }
+      });
+    } else {
+      nextAct?.call();
+    }
   }
 
 /// cart_screen.dart end

@@ -21,6 +21,19 @@ class _CartScreenState extends State<CartScreen> {
   bool CheckBoxValue = false;
   var needUpdate = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    SelectProductController controller = Get.find();
+    controller.onThen = () => setState(() {});
+    Future.delayed(Duration(milliseconds: 200)).then((value) {
+      controller.validationCart(() {
+        debugPrint('OnRefresh3');
+        controller?.checkPromo();
+      });
+    });
+  }
+
   void validationCart(SelectProductController vm, Function nextAct) {
     needUpdate = 0;
     vm.listCart?.forEach((product) {
@@ -134,30 +147,30 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget formLayout(SelectProductController controller) {
-    return SingleChildScrollView(
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child:
-                  controller.listCart == null || controller.listCart.length < 1
-                      ? new Text('Keranjang Kosong')
-                      : _gridCart(controller),
-            ),
-          ],
-        ),
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            child: controller.listCart == null || controller.listCart.length < 1
+                ? new Text('Keranjang Kosong')
+                : _gridCart(controller),
+          ),
+        ],
       ),
     );
   }
 
   Widget _gridCart(SelectProductController controller) {
     return ListView.builder(
-        itemCount: controller.listCart.length,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) =>
-            CartItemScreen(controller.listCart[index]));
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      itemCount: controller.listCart.length,
+      shrinkWrap: true,
+      // physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => Container(
+        // key: UniqueKey(),
+        child: CartItemScreen(controller.listCart[index]),
+      ),
+    );
   }
 
   @override
