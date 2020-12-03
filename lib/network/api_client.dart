@@ -229,6 +229,7 @@ class ApiClient {
               title, 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
           debugPrint('error gan $error ${error.response}');
+          responseApi._setFailed(title, error.response.toString());
         }
       }
     }

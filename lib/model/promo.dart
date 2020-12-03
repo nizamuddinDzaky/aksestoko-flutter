@@ -28,6 +28,7 @@ class Promo {
   String isPopup;
   String imagePopup;
   String videoPopup;
+  bool getDetail;
 
   Promo(
       {this.id,

@@ -20,6 +20,8 @@ class ApiConfig {
   static String urlChangePassword = '${path}auth/change_password';
   static String urlUpdatePassword = '${path}profile/update_password';
   static String urlProfile = '${path}auth/profile';
+  static String urlUpdateToken = '${path}auth/addorupdatetoken_notif';
+  static String urlGetToken = '${path}auth/user_notif_token';
 
   //profile
   static const String urlAddAddress = '${path}Profile/add_address';

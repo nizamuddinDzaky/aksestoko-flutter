@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:aksestokomobile/at_icon.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:aksestokomobile/helper/item.dart';
+import 'package:aksestokomobile/helper/my_notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -12,62 +11,7 @@ import 'package:aksestokomobile/screen/order/history_order_screen.dart'
     as historyOrder;
 import 'package:aksestokomobile/screen/promo/list_promo.dart' as listPromo;
 import 'package:aksestokomobile/screen/account/account_screen.dart' as Account;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-
-var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-var initializationSettingsAndroid =
-    AndroidInitializationSettings('mipmap/ic_launcher');
-const IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
-  requestAlertPermission: false,
-  requestBadgePermission: false,
-  requestSoundPermission: false,
-);
-final InitializationSettings initializationSettings = InitializationSettings(
-  initializationSettingsAndroid,
-  initializationSettingsIOS,
-);
-
-Future<void> showNotification(String title, String body) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    'your channel id',
-    'your channel name',
-    'your channel description',
-    importance: Importance.Max,
-    priority: Priority.Max,
-    ticker: 'ticker',
-    color: Colors.red,
-    playSound: true,
-    // sound: RawResourceAndroidNotificationSound('arrive')
-  );
-
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-
-  var platformChannelSpecifics = NotificationDetails(
-    androidPlatformChannelSpecifics,
-    iOSPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    0,
-    title,
-    body,
-    platformChannelSpecifics,
-    payload: 'Custom_Sound',
-  );
-}
-
-Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
-  var messageData = message['data'];
-  print('on background $message');
-  if (messageData is Map && messageData.isNotEmpty) {
-    final data = message['data'];
-    final title = data['title'];
-    final body = data['message'];
-    showNotification(title, body);
-  }
-  return Future<void>.value();
-}
 
 class ParentScreen extends StatefulWidget {
   @override
@@ -77,69 +21,74 @@ class ParentScreen extends StatefulWidget {
 class _ParentScreenState extends State<ParentScreen> {
   int selectedPage;
   PageController _myPage;
-  String _homeScreenText = "Waiting for token...";
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  var myNotification = MyNotification();
 
-  void fcmSubscribe() {
-    _firebaseMessaging.subscribeToTopic('promo');
-    _firebaseMessaging.subscribeToTopic('alluser');
-  }
-
-  void fcmUnSubscribe() {
-    _firebaseMessaging.unsubscribeFromTopic('promo');
-  }
-
-  void _initFirebaseMessaging() {
-    _firebaseMessaging.configure(
-      onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        // _showItemDialog(message);
-        showNotification('title', 'body');
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        // _navigateToItemDetail(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        // _navigateToItemDetail(message);
-      },
+  Widget _buildDialog(BuildContext context, Item item) {
+    return AlertDialog(
+      content: Text("Item ${item.itemId} has been updated"),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CLOSE'),
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+        ),
+        FlatButton(
+          child: const Text('SHOW'),
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
+      ],
     );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      setState(() {
-        _homeScreenText = "Push Messaging token: $token";
-      });
-      print(_homeScreenText);
-    });
-    fcmSubscribe();
   }
 
-  _initLocalNotification() async {
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String payload) async {
-      if (payload != null) {
-        debugPrint('notification payload: $payload');
+  void _showItemDialog(Map<String, dynamic> message) {
+    showDialog<bool>(
+      context: context,
+      builder: (_) => _buildDialog(context, itemForMessage(message)),
+    ).then((bool shouldNavigate) {
+      if (shouldNavigate == true) {
+        _navigateToItemDetail(message);
       }
-      // selectNotificationSubject.add(payload);
     });
+  }
+
+  void _navigateToItemDetail(Map<String, dynamic> message) {
+    final Item item = itemForMessage(message);
+    // Clear away dialogs
+    Navigator.popUntil(context, (Route<dynamic> route) {
+      // return route is ParentScreen;
+      debugPrint("route name ${route.settings.name}");
+      return route is PageRoute;
+    });
+    if (!item.route.isCurrent) {
+      Navigator.push(context, item.route);
+    }
   }
 
   @override
   void initState() {
     super.initState();
     selectedPage = 0;
+    triggerOnMessage = (message) {
+      _showItemDialog(message);
+    };
+    triggerOnResume = (message) {
+      _navigateToItemDetail(message);
+    };
+    myNotification.init(context);
+    myNotification.actionTriggerOnBackground((message) {
+      debugPrint('pindah halaman ${message != null}');
+      _navigateToItemDetail(message);
+    });
     _myPage = PageController(initialPage: selectedPage);
-    _initLocalNotification();
-    _initFirebaseMessaging();
+  }
+
+  @override
+  void dispose() {
+    myNotification.dispose();
+    super.dispose();
   }
 
   @override

@@ -10,16 +10,21 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:get/get.dart';
 
 class DetailPromoScreen extends StatefulWidget {
+  final Promo promo;
+
+  DetailPromoScreen({this.promo});
+
   @override
   _DetailPromoScreenState createState() => _DetailPromoScreenState();
 }
+
 class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTickerProviderStateMixin {
 
   Promo promo;
 
   @override
   void initState() {
-    promo = Get.arguments as Promo;
+    promo = Get.arguments as Promo ?? widget.promo;
     // TODO: implement initState
     super.initState();
   }
@@ -70,7 +75,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  promo.name,
+                  promo?.name ?? '',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -113,7 +118,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
               Container(
                 margin: EdgeInsets.symmetric(vertical: 5),
                 child: Text(
-                  promo.name,
+                  promo?.name ?? '',
                   style: TextStyle(
                     color: MyColor.blackTextAT,
                     fontWeight: FontWeight.bold,
@@ -128,7 +133,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      promo.codePromo,
+                      promo?.codePromo ?? '',
                       style: TextStyle(
                           color: MyColor.greyTextAT,
                           fontWeight: FontWeight.bold),
@@ -175,7 +180,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
                     Container(
                         margin: EdgeInsets.only(top: 5, bottom: 0, left: 10),
                         child: Text(
-                          promo.description,
+                          promo?.description ?? '',
                           style: TextStyle(color: MyColor.greyTextAT),
                         ),
                     )
