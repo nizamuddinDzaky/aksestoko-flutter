@@ -76,7 +76,7 @@ class CheckoutController extends GetController {
       if (orderResponse != null) {
         var c = Get.find<ParentController>();
         c.addOrder(Order(
-          idPemesanan: orderResponse?.saleId?.toString(),
+          idPemesanan: orderResponse?.purchaseId?.toString(),
           noPemesanan: orderResponse?.idPemesanan,
           tanggalPemensanan: strToDate(salesModel?.delivery_date),
           statusPemesanan: 'Menunggu Konfirmasi',

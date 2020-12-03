@@ -15,6 +15,14 @@ class DetailOrderScreen extends StatefulWidget {
 }
 
 class _DetailOrderScreenState extends DetailOrderViewModel {
+
+  String get line2 => [
+    [orderDetail.pengiriman.alamat, orderDetail.pengiriman.kecamatan, orderDetail.pengiriman.kabupaten, orderDetail.pengiriman.provinsi]
+        .where((element) => (element?.isNotEmpty ?? false))
+        .join(', '),
+    orderDetail.pengiriman.kodePos
+  ].where((element) => (element?.isNotEmpty ?? false)).join(' - ');
+
   @override
   Widget build(BuildContext context) {
     var formLayout =
@@ -767,6 +775,13 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                               ),
                               Container(
                                 child: Text(
+                                  " ",
+                                  style: TextStyle(
+                                      fontSize: 14, color: MyColor.greyTextAT),
+                                ),
+                              ),
+                              Container(
+                                child: Text(
                                   orderDetail != null ? orderDetail.pengiriman.noTlp : "",
                                   style: TextStyle(
                                       fontSize: 15, color: MyColor.greyTextAT),
@@ -781,7 +796,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  orderDetail != null ? orderDetail.pengiriman.alamat : "",
+                                  orderDetail != null ? line2 : "",
                                   style: TextStyle(
                                       fontSize: 14, color: MyColor.greyTextAT),
                                 ),
