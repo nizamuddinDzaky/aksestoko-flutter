@@ -147,7 +147,7 @@ class SelectProductController extends GetController {
       var min = newQty % minQty;
       newQty -= (min * (newQty < minQty ? 1 : multiple));
     }
-    if (product != null && product.idCart == null) {
+    if (product != null && (product.idCart ?? 0) == 0) {
       actionAdd(product, onRefresh: onRefresh);
       return;
     }
@@ -353,7 +353,6 @@ class SelectProductController extends GetController {
         var countChange = (product.countChange ?? 0);
         // if ((0 == idCart && countChange != 0) || (0 != idCart && countChange != 0)) {
         if (idCart == 0 || countChange == 1) {
-          debugPrint('action update');
           actionUpdate(
             product,
             0,

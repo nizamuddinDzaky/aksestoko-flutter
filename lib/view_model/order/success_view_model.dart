@@ -16,9 +16,11 @@ abstract class SuccessViewModel extends State<SuccessScreen> {
   @override
   void initState() {
     super.initState();
-    SelectProductController.to?.resetCart();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       initData();
+      Future.delayed(Duration(milliseconds: 200)).then((value) {
+        SelectProductController.to?.resetCart();
+      });
     });
   }
 }

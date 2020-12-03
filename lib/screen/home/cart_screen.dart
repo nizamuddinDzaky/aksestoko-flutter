@@ -28,7 +28,6 @@ class _CartScreenState extends State<CartScreen> {
     controller.onThen = () => setState(() {});
     Future.delayed(Duration(milliseconds: 200)).then((value) {
       controller.validationCart(() {
-        debugPrint('OnRefresh3');
         controller?.checkPromo();
       });
     });
@@ -64,31 +63,10 @@ class _CartScreenState extends State<CartScreen> {
     if (vm.listCart == null || vm.listCart.length < 1) {
       _alertDialog();
     } else {
-      needUpdate = 0;
-      vm.listCart?.forEach((product) {
-        debugPrint('cek countUpdate ${product.countChange}');
-        if (1 > (product.idCart ?? 0) || (product.countChange ?? 0) > 0) {
-          needUpdate++;
-        }
+      vm.validationCart(() {
+        Get.toNamed(checkoutScreen, arguments: vm.listCart);
       });
-      debugPrint('action check cart $needUpdate');
-      if (needUpdate > 0) {
-        _addDataToServer(vm);
-      } else {
-        _actionNextToCheckout(vm);
-      }
     }
-  }
-
-  _addDataToServer(vm) {
-    vm.listCart?.forEach((product) {
-      if (0 == (product.idCart ?? 0) && (product.countChange ?? 0) != 0) {
-        _postAddCart(product).then((_) => _actionNextToCheckout(vm));
-      } else if (0 != (product.idCart ?? 0) &&
-          (product.countChange ?? 0) != 0) {
-        // _postUpdate(product).then((_) => _actionNextToCheckout(vm));
-      }
-    });
   }
 
   _postAddCart(Product product) async {
@@ -113,17 +91,6 @@ class _CartScreenState extends State<CartScreen> {
       },
     );
     status.execute();
-  }
-
-  _actionNextToCheckout(vm) {
-    if (needUpdate == 0) {
-      Get.toNamed(checkoutScreen, arguments: vm.listCart).then((value) {
-        debugPrint('cek value $value');
-        if (value != null && value['errorcode'] == 400) {
-          debugPrint('hapus cart');
-        }
-      });
-    }
   }
 
   void _alertDialog() {
