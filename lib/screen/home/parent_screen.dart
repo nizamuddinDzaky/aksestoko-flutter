@@ -1,5 +1,7 @@
 import 'package:aksestokomobile/at_icon.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
+import 'package:aksestokomobile/helper/item.dart';
+import 'package:aksestokomobile/helper/my_notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -19,12 +21,74 @@ class ParentScreen extends StatefulWidget {
 class _ParentScreenState extends State<ParentScreen> {
   int selectedPage;
   PageController _myPage;
+  var myNotification = MyNotification();
+
+  Widget _buildDialog(BuildContext context, Item item) {
+    return AlertDialog(
+      content: Text("Item ${item.itemId} has been updated"),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CLOSE'),
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+        ),
+        FlatButton(
+          child: const Text('SHOW'),
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
+      ],
+    );
+  }
+
+  void _showItemDialog(Map<String, dynamic> message) {
+    showDialog<bool>(
+      context: context,
+      builder: (_) => _buildDialog(context, itemForMessage(message)),
+    ).then((bool shouldNavigate) {
+      if (shouldNavigate == true) {
+        _navigateToItemDetail(message);
+      }
+    });
+  }
+
+  void _navigateToItemDetail(Map<String, dynamic> message) {
+    final Item item = itemForMessage(message);
+    // Clear away dialogs
+    Navigator.popUntil(context, (Route<dynamic> route) {
+      // return route is ParentScreen;
+      debugPrint("route name ${route.settings.name}");
+      return route is PageRoute;
+    });
+    if (!item.route.isCurrent) {
+      Navigator.push(context, item.route);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     selectedPage = 0;
+    triggerOnMessage = (message) {
+      _showItemDialog(message);
+    };
+    triggerOnResume = (message) {
+      _navigateToItemDetail(message);
+    };
+    myNotification.init(context);
+    myNotification.actionTriggerOnBackground((message) {
+      debugPrint('pindah halaman ${message != null}');
+      _navigateToItemDetail(message);
+    });
     _myPage = PageController(initialPage: selectedPage);
+  }
+
+  @override
+  void dispose() {
+    myNotification.dispose();
+    super.dispose();
   }
 
   @override

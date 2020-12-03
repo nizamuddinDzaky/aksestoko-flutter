@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1093412336802",
+    "firebase_url": "https://aksestokom.firebaseio.com",
+    "project_id": "aksestokom",
+    "storage_bucket": "aksestokom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093412336802:android:de35d4ae9c66eed37293fb",
+        "android_client_info": {
+          "package_name": "id.sisi.aksestokomobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093412336802-5egmtfka8php1aagcji5601l9hujini4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyXxVETWqfUZD6NMl1ZZb0DyIF8motzuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093412336802-5egmtfka8php1aagcji5601l9hujini4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093412336802:android:e31781dff16b9e127293fb",
+        "android_client_info": {
+          "package_name": "id.sisi.aksestokomobile.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093412336802-5egmtfka8php1aagcji5601l9hujini4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyXxVETWqfUZD6NMl1ZZb0DyIF8motzuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093412336802-5egmtfka8php1aagcji5601l9hujini4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

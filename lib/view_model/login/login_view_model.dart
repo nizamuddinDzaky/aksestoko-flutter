@@ -5,6 +5,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,6 +66,7 @@ abstract class LoginViewModel extends State<LoginScreen> {
     );
     isRemember = MyPref.getRemember();
     developerInit();
+    FirebaseMessaging().deleteInstanceID();
     super.initState();
   }
 }

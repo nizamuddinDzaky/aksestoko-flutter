@@ -12,6 +12,7 @@ import 'package:aksestokomobile/screen/login/register_screen.dart';
 import 'package:aksestokomobile/screen/login/otp_screen.dart';
 import 'package:aksestokomobile/screen/order/add_payment_screen.dart';
 import 'package:aksestokomobile/screen/order/payment_kreditpro.dart';
+import 'package:aksestokomobile/screen/setting/check_permission_screen.dart';
 import 'package:aksestokomobile/screen/splash_screen.dart';
 import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
@@ -29,21 +30,21 @@ import 'package:get/get.dart';
 
 const String root = "/";
 const loginScreen = "/LoginScreen";
-const parentScreen ="/ParentScreen";
+const parentScreen = "/ParentScreen";
 const registerScreen = "/RegisterScreen";
 const forgotPasswordScreen = "/ForgotPasswordScreen";
 const homeScreen = "/HomeScreen";
 const requestOtpScreen = "/RequestOtpScreen";
 const selectDistributorScreen = "/SelectDistributorScreen";
 const selectProductScreen = "/SelectProductScreen";
-const cartScreen ="/CartScreen";
+const cartScreen = "/CartScreen";
 const checkoutScreen = "/CheckoutScreen";
 const paymentScreen = "/PaymentScreen";
 const successScreen = "/SuccessScreen";
 const historyOrderScreen = "/HistoryOrderScreen";
 const detailOrderScreen = "/DetailOrderScreen";
 const detailPromo = "/DetailPromoScreen";
-const confirmationAcceptScreen ="/ConfirmationAcceptScreen";
+const confirmationAcceptScreen = "/ConfirmationAcceptScreen";
 const detailPaymentScreen = "/DetailPaymentScreen";
 const addPaymentScreen = "/AddPaymentScreen";
 const updateProfileScreen = "/UpdateProfileScreen";
@@ -53,6 +54,7 @@ const editAddressScreen = "/EditAddressScreen";
 const salesPersonScreen = "/SalesPersonScreen";
 const changePasswordScreen = "/ChangePasswordScreen";
 const paymentKreditProScreen = "/PaymentKreditproScreen";
+const checkPermissionScreen = "/CheckPermissionScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -73,6 +75,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: PaymentKreditproScreen(),
+        );
+      case checkPermissionScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: CheckPermissionScreen(),
         );
       case addPaymentScreen:
         return GetRouteBase(
