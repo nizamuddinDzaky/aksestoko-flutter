@@ -15,6 +15,7 @@ abstract class PreviewDeliveryViewModel extends State<PreviewDeliveryScreen> {
       debugPrint('argument kosong');
       return;
     }*/
+    listDetailDelivery.clear();
     var status = await ApiClient.methodGet(ApiConfig.urlDetailOrder,
         params: {
           'id_pemesanan': idPurchase,

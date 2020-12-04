@@ -1,8 +1,11 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/view_model/order/list_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/screen/order/list_history_order_screen.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 
 class ListOrderScreen extends StatefulWidget {
   String status;
@@ -80,7 +83,16 @@ class _ListOrderScreenState extends ListOrderViewModel {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (buildcontext, index) {
-                    return ListHistoryOrderProductScreen(listOrder[index]);
+                    return ListHistoryOrderProductScreen(listOrder[index], (param){
+                      Navigator.of(context).pop();
+                      Get.toNamed(confirmationAcceptScreen, arguments: param).then((value){
+                        if(value){
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            refreshKey?.currentState?.show();
+                          });
+                        }
+                      });
+                    });
                   },
                 ),
               ),

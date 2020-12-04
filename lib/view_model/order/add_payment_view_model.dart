@@ -64,12 +64,17 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
     }
 
     var crnPayment = double.parse(nominalTextController.text.replaceAll("Rp", "").replaceAll(".", "").trim());
-    var maxPayment =double.parse(paymentData.total.replaceAll("Rp", "").replaceAll(",", "").trim());
+    var maxPayment = double.parse(paymentData.total.replaceAll("Rp", "").replaceAll(",", "").trim());
     if(crnPayment > maxPayment){
       Get.defaultDialog(title: "Warning", content: Text('Pembayaran Melebihi Batas'));
       return;
     }
-    /*debugPrint("${ImageSizeGetter.getSize(FileInput(imageFile))} ${imageFile.lengthSync()}");*/
+
+    if(crnPayment <= 0 ){
+      Get.defaultDialog(title: "Warning", content: Text('Pembayaran Tidak Boleh Nol'));
+      return;
+    }
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -84,7 +89,7 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
 
     var body = {
       "id_pemesanan" : idPemesanan,
-      "nominal" : nominalTextController.text,
+      "nominal" : crnPayment,
       "file" : base64File,
     };
 
@@ -98,6 +103,7 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
         Get.back(result: true);
       },
       onFailed: (title, message) {
+        Navigator.of(context).pop();
         Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
       },
       onError: (title, message) {

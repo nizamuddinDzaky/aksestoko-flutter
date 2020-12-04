@@ -9,9 +9,9 @@ import 'package:get/get.dart';
 
 class PreviewDeliveryScreen extends StatefulWidget {
   String idPurchase;
-  PreviewDeliveryScreen(String idPurchase){
-    this.idPurchase = idPurchase;
-  }
+  final Function(Map<String, dynamic>) onSelectDelivery;
+
+  PreviewDeliveryScreen(this.idPurchase, this.onSelectDelivery);
   @override
   _PreviewDeliveryScreenState createState() => _PreviewDeliveryScreenState(idPurchase);
 }
@@ -167,7 +167,7 @@ class _PreviewDeliveryScreenState extends PreviewDeliveryViewModel {
                   'purchase': orderDetail.detailPemesanan,
                   'delivery': detailDelivery
                 };
-                Get.toNamed(confirmationAcceptScreen, arguments: param);
+                widget.onSelectDelivery(param);
               },
             ),
           ),
