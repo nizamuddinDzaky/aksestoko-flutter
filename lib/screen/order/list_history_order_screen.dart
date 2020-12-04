@@ -12,8 +12,9 @@ import 'package:get/get.dart';
 
 class ListHistoryOrderProductScreen extends StatelessWidget {
   final Order _order;
+  final Function(Map<String, dynamic>) onSelectDelivery;
 
-  ListHistoryOrderProductScreen(this._order);
+  ListHistoryOrderProductScreen(this._order, this.onSelectDelivery);
 
   @override
   Widget build(BuildContext context) {
@@ -489,7 +490,10 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
             Expanded(
               child: Container(
                   width: double.maxFinite,
-                  child: PreviewDeliveryScreen(idPurchase)
+                  child: PreviewDeliveryScreen(idPurchase, (param){
+                    onSelectDelivery(param);
+                    /*debugPrint("param : $param");*/
+                  })
               ),
             ),
             Row(
