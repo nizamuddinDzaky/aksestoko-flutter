@@ -119,7 +119,23 @@ class _CartScreenState extends State<CartScreen> {
         children: <Widget>[
           Container(
             child: controller.listCart == null || controller.listCart.length < 1
-                ? new Text('Keranjang Kosong')
+                ? Center(
+                    child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/icons/pemesanan-grey.png',
+                        width: 64,
+                        height: 64,
+                        color: MyColor.redAT,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Keranjang Kosong',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ],
+                  ))
                 : _gridCart(controller),
           ),
         ],

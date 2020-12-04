@@ -8,7 +8,7 @@ import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 abstract class PromoViewModel extends State<ListPromoScreen>
     with AutomaticKeepAliveClientMixin {
@@ -36,7 +36,7 @@ abstract class PromoViewModel extends State<ListPromoScreen>
       'supplier_id': MyPref.getIdDistributor(),
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListPromo,
-        params: params, onBefore: (status) {
+        customHandle: true, params: params, onBefore: (status) {
       listPromo.clear();
     }, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
@@ -48,10 +48,17 @@ abstract class PromoViewModel extends State<ListPromoScreen>
           listProduct.addAll(newListProduct);
           buildCart();*/
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onError: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+          var response = BaseResponse.fromString(message);
+          Fluttertoast.showToast(
+            msg: response?.message ?? 'Gagal',
+            gravity: ToastGravity.CENTER,
+          );
+        }, onError: (title, message) {
+          Fluttertoast.showToast(
+            msg: 'Terjadi kesalahan data / koneksi',
+            gravity: ToastGravity.CENTER,
+          );
+        }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
