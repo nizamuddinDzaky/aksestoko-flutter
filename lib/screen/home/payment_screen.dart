@@ -142,7 +142,7 @@ class _PaymentScreenState extends PaymentController {
                       bottom: 15,
                     ),
                     child: Text(
-                      "Silahkan Pilih Methode Pembayaran",
+                      "Silahkan Pilih Metode Pembayaran",
                       style: TextStyle(
                           color: MyColor.blackTextAT,
                           fontWeight: FontWeight.bold,
@@ -1161,7 +1161,7 @@ class _PaymentScreenState extends PaymentController {
                                         bottom: 5,
                                       ),
                                       child: Text(
-                                        "Tanggal Ekspetasi Pengiriman",
+                                        "Rencana Pelunasan",
                                         style: TextStyle(
                                             color: MyColor.blackTextAT,
                                             fontWeight: FontWeight.bold,
@@ -1679,7 +1679,7 @@ class _PaymentScreenState extends PaymentController {
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
           child: Text(
-            "Methode Pembayaran",
+            "Metode Pembayaran",
             style: TextStyle(fontSize: 20),
           ),
         ),
