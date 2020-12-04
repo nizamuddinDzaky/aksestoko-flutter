@@ -28,13 +28,14 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: ListView.builder(
-                itemCount: detailPayment.listPembayaran.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (buildcontext, index) {
-                  return listPayment.ListPaymentScreen(detailPayment.listPembayaran[index], index);
-                },
-              ),
+                itemCount: detailPayment?.listPembayaran?.length ?? 0,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (buildcontext, index) {
+                        return listPayment.ListPaymentScreen(
+                            detailPayment.listPembayaran[index], index);
+                      },
+                    ),
             ),
           ],
         ),

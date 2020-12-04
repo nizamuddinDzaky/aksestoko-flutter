@@ -1198,9 +1198,11 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
           )
         ],
       ),
-      child: Row(
+      child: IntrinsicHeight(
+          child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
+          Flexible(
             flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1212,6 +1214,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                       color: MyColor.redAT,
                       fontWeight: FontWeight.bold),
                 ),
+                Flexible(child: Container()),
                 Text(
                   itemDetailDelivery.kodeProduct,
                   style: TextStyle(
@@ -1221,18 +1224,20 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               ],
             ),
           ),
+          SizedBox(width: 5),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   "Jumlah",
                   style: TextStyle(
                     fontSize: 14,
                   ),
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.center,
                 ),
+                Flexible(child: Container()),
                 Text(
                   "${itemDetailDelivery.jumlah} ${itemDetailDelivery.satuan}",
                   style: TextStyle(
@@ -1240,63 +1245,69 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                     fontWeight: FontWeight.bold,
                     color: MyColor.blackTextAT,
                   ),
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
           ),
-          if(statusPengiriman.toLowerCase() == 'barang diterima')
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Baik",
-                  style: TextStyle(
-                    fontSize: 14,
+          if (statusPengiriman.toLowerCase() == 'barang diterima')
+            SizedBox(width: 5),
+          if (statusPengiriman.toLowerCase() == 'barang diterima')
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Baik",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.right,
-                ),
-                Text(
-                  "${itemDetailDelivery.baik} ${itemDetailDelivery.satuan}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: MyColor.blackTextAT,
+                  Flexible(child: Container()),
+                  Text(
+                    "${itemDetailDelivery.baik} ${itemDetailDelivery.satuan}",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: MyColor.blackTextAT,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.right,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          if(statusPengiriman.toLowerCase() == 'barang diterima')
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Rusak",
-                  style: TextStyle(
-                    fontSize: 14,
+          if (statusPengiriman.toLowerCase() == 'barang diterima')
+            SizedBox(width: 5),
+          if (statusPengiriman.toLowerCase() == 'barang diterima')
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Rusak",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.right,
-                ),
-                Text(
-                  "${itemDetailDelivery.buruk} ${itemDetailDelivery.satuan}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: MyColor.blackTextAT,
+                  Flexible(child: Container()),
+                  Text(
+                    "${itemDetailDelivery.buruk} ${itemDetailDelivery.satuan}",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: MyColor.blackTextAT,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.right,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ],
-      ),
+      )),
     );
   }
 

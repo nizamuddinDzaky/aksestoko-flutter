@@ -206,8 +206,12 @@ class SelectProductController extends GetController {
   }
 
   checkPromo() {
-    if ((promoCode?.isNotEmpty ?? false) && (listCart?.isNotEmpty ?? false))
+    if ((promoCode?.isNotEmpty ?? false) && (listCart?.isNotEmpty ?? false)) {
       _actionGetPromo(promoCode);
+    } else if (listCart?.isEmpty ?? true) {
+      currentPromo = null;
+      update();
+    }
   }
 
   _actionDelete(Product product) async {
@@ -310,11 +314,11 @@ class SelectProductController extends GetController {
       onFailed: (title, message) {
         currentPromo = null;
         // sudah di handle saat action update
-        // var response = BaseResponse.fromString(message);
-        // Fluttertoast.showToast(
-        //   msg: response?.message ?? 'Gagal',
-        //   gravity: ToastGravity.CENTER,
-        // );
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
       },
       onError: (title, message) {
         Fluttertoast.showToast(

@@ -9,9 +9,9 @@ class DetailPayment {
   DetailPayment.fromJson(Map<String, dynamic> json) {
     totalPembayaran = json['total_pembayaran'];
     jumlahYangHarusDibayar = json['jumlah_yang_harus_dibayar'];
-    if (json['list_pembayaran'] != null) {
+    if (json['list_pembayaran'] is List) {
       listPembayaran = new List<ListPembayaran>();
-      json['list_pembayaran'].forEach((v) {
+      json['list_pembayaran']?.forEach((v) {
         listPembayaran.add(new ListPembayaran.fromJson(v));
       });
     }

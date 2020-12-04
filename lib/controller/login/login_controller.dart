@@ -30,6 +30,7 @@ abstract class LoginScreenController extends LoginViewModel {
       Login(username: '100021595', password: 'Indonesia1'),
       Login(username: '900000001', password: 'Indonesia1'),
       Login(username: '121212157', password: 'Indonesia1'),
+      Login(username: '010001111', password: 'Indonesia1'),
     ];
     return Material(
       child: PopupMenuButton<int>(

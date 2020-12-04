@@ -86,7 +86,7 @@ class _ListOrderScreenState extends ListOrderViewModel {
                     return ListHistoryOrderProductScreen(listOrder[index], (param){
                       Navigator.of(context).pop();
                       Get.toNamed(confirmationAcceptScreen, arguments: param).then((value){
-                        if(value){
+                        if (value != null) {
                           SchedulerBinding.instance.addPostFrameCallback((_) {
                             refreshKey?.currentState?.show();
                           });
