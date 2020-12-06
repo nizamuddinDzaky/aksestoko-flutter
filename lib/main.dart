@@ -3,7 +3,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-const isProd = false;
+const isProd = true;
 
 void main() async {
   ApiClient.addInterceptor();

@@ -1,11 +1,12 @@
+import 'package:aksestokomobile/main.dart';
+
 class ApiConfig {
   // static const String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
-  static const String host = 'https://qp.forca.id/';
-
-  // static const String host = 'https://pos.forca.id/';
-  static const String path = '${host}api/v1/retailer/';
-  static const String local = '${host}api/Local/';
+  static const String hostDev = 'https://qp.forca.id/';
+  static const String host = 'https://pos.forca.id/';
+  static const String path = '${isProd ? host : hostDev}api/v1/retailer/';
+  static const String local = '${isProd ? host : hostDev}api/Local/';
   static const String urlRajaAPi = 'https://x.rajaapi.com';
 
   //auth

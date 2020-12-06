@@ -43,10 +43,6 @@ abstract class PromoViewModel extends State<ListPromoScreen>
       List<Promo> newListPromo = baseResponse?.data?.listPromo ?? [];
       listPromo.clear();
       listPromo.addAll(newListPromo);
-      /*
-          listProduct.clear();
-          listProduct.addAll(newListProduct);
-          buildCart();*/
     }, onFailed: (title, message) {
           var response = BaseResponse.fromString(message);
           Fluttertoast.showToast(

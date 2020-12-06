@@ -137,6 +137,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                 width: 90,
                               ),
                       ),
+                      SizedBox(width: 5),
                       Expanded(
                         child: Column(children: [
                           Container(
@@ -179,7 +180,6 @@ class _CartItemScreenState extends State<CartItemScreen> {
                               )),
                           Container(
                             height: 40,
-                            padding: EdgeInsets.symmetric(horizontal: 5),
                             child: Row(
                               children: <Widget>[
                                 Expanded(
@@ -198,7 +198,9 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                       ),
                                       Container(
                                         child: Text(
-                                          '${MyNumber.toNumberRpStr(widget.product.satuanHargaCash.toString())}',
+                                          '${MyNumber.toNumberRpStr(
+                                              widget.product.satuanHargaCash
+                                                  .toString())}',
                                           style: TextStyle(
                                               color: Color(0xff333333),
                                               fontSize: 14,
@@ -208,6 +210,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(width: 5),
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,

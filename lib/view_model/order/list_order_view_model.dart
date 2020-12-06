@@ -8,11 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
-abstract class ListOrderViewModel extends State<ListOrderScreen> {
-  /*String status ;
-  ListOrderViewModel(String status){
-
-  }*/
+abstract class ListOrderViewModel extends State<ListOrderScreen>
+    with AutomaticKeepAliveClientMixin {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
   List<Order> _listOrder;
   OrderModel orderModelDalamProses;
@@ -55,4 +52,7 @@ abstract class ListOrderViewModel extends State<ListOrderScreen> {
       refreshKey?.currentState?.show();
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

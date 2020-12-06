@@ -853,6 +853,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                           width: 100,
                         ),
                 ),
+                SizedBox(width: 5),
                 Container(
                   child: Expanded(
                     child: Column(
@@ -899,6 +900,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 5),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,

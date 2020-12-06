@@ -462,8 +462,8 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                         fontWeight: FontWeight.bold,
                                         color: statusColor(orderDetail != null ? orderDetail.detailPemesanan.notifikasiPembayaran :  ""),
                                       ),
-                                    ),
-                                    /*if (index == 1)
+                                ),
+                                /*if (index == 1)
                                 Text(
                                   "Diterima Sebagian",
                                   style: TextStyle(
@@ -472,30 +472,44 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                     color: MyColor.infoAT,
                                   ),
                                 ),*/
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (orderDetail?.detailPemesanan?.statusPembayaran
+                            ?.toLowerCase() ==
+                        'kredit ditolak')
+                      Text(
+                        'Silakan kunjungi aksestoko.id untuk ganti metode pembayaran.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    if (orderDetail != null)
+                      if (orderDetail.detailPemesanan.daftarPembayaran != null)
+                        Container(
+                          child: FlatButton.icon(
+                            onPressed: () {
+                              Get.toNamed(detailPaymentScreen,
+                                  arguments:
+                                      orderDetail.detailPemesanan.idPemesanan);
+                            },
+                            icon: Icon(
+                              Icons.list,
+                              color: MyColor.redAT,
+                            ),
+                            label: Text(
+                              "Daftar Pembayaran",
+                              style:
+                                  TextStyle(color: MyColor.redAT, fontSize: 14),
+                            ),
                           ),
                         ),
-                        if(orderDetail != null )
-                          if (orderDetail.detailPemesanan.daftarPembayaran != null)
-                            Container(
-                              child: FlatButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(detailPaymentScreen, arguments: orderDetail.detailPemesanan.idPemesanan);
-                                },
-                                icon: Icon(
-                                  Icons.list,
-                                  color: MyColor.redAT,
-                                ),
-                                label: Text(
-                                  "Daftar Pembayaran",
-                                  style: TextStyle(color: MyColor.redAT, fontSize: 14),
-                                ),
-                              ),
-                            ),
-                      ],
+                  ],
                     ),
                   ),
                   Container(
@@ -898,45 +912,56 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         onPressed: () {
                           createAlertDialog(
                               context,
-                              (orderDetail !=null ? orderDetail.detailPemesanan.idPemesanan : 0),
+                              (orderDetail != null ? orderDetail.detailPemesanan
+                                  .idPemesanan : 0),
                               "Apakah Anda yakin membatalkan pesanan ini?",
-                            3
+                              3
                           );
                         },
                       ),
                     ),
-                  if (orderDetail != null && orderDetail.detailPemesanan.konfirmasiPembayaran != null)
-                    Container(
-                      margin: EdgeInsets.only(left: 25, right: 25),
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: MyColor.successTextAT,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: FlatButton(
-                        child: Text(
-
-                          "${orderDetail.detailPemesanan.caraPembayaran.toLowerCase() == "kredit pro" ? "Ajukan Kredit" : "Selesaikan Pembayaran"}",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
+                  if (orderDetail?.detailPemesanan?.statusPembayaran
+                      ?.toLowerCase() != 'kredit ditolak')
+                    if (orderDetail != null &&
+                        orderDetail.detailPemesanan.konfirmasiPembayaran !=
+                            null)
+                      Container(
+                        margin: EdgeInsets.only(left: 25, right: 25),
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: MyColor.successTextAT,
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                        onPressed: () {
-                          if(orderDetail.detailPemesanan.caraPembayaran.toLowerCase() == "kredit pro"){
+                        child: FlatButton(
+                          child: Text(
 
-                            actionPostUrlKreditPro(orderDetail.detailPemesanan.idPemesanan);
-                          }else{
-                            Get.toNamed(addPaymentScreen, arguments: orderDetail.detailPemesanan.idPemesanan).then((value) {
-                                if(value != null && value){
+                            "${orderDetail.detailPemesanan.caraPembayaran
+                                .toLowerCase() == "kredit pro"
+                                ? "Ajukan Kredit"
+                                : "Selesaikan Pembayaran"}",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          onPressed: () {
+                            if (orderDetail.detailPemesanan.caraPembayaran
+                                .toLowerCase() == "kredit pro") {
+                              actionPostUrlKreditPro(orderDetail.detailPemesanan
+                                  .idPemesanan);
+                            } else {
+                              Get.toNamed(addPaymentScreen,
+                                  arguments: orderDetail.detailPemesanan
+                                      .idPemesanan).then((value) {
+                                if (value != null && value) {
                                   getListOrder();
                                 }
                               }
-                            );
-                          }
-                        },
-                      ),
-                    )
+                              );
+                            }
+                          },
+                        ),
+                      )
                 ],
               ),
             ),
