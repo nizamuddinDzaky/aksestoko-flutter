@@ -24,26 +24,42 @@ abstract class LoginViewModel extends State<LoginScreen> {
   postLogin({skip}) async {
     if (skip == null) formKey.currentState.save();
     var status = await ApiClient.methodPost(
-        ApiConfig.urlLogin, currentData.toJson(), {}, onBefore: (status) {
-      Get.back();
-    }, onSuccess: (data, _) {
-      var baseResponse = BaseResponse.fromJson(data);
-      Get.back();
-      var valid = (baseResponse?.data?.token?.isNotEmpty ?? false);
-      valid &= (baseResponse?.data?.idBK ?? 0) > 0;
-      if (valid) {
-        MyPref.setATToken(baseResponse?.data?.token);
-        MyPref.setIdBk(baseResponse?.data?.idBK);
-            Get.offNamed(selectDistributorScreen);
-          }
-        }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text('Login Gagal'));
-    }, onError: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
-    }, onAfter: (status) {
-      if (status == ResponseStatus.success)
-        MyPref.setRemember(isRemember, currentData);
-    });
+      ApiConfig.urlLogin,
+      currentData.toJson(),
+      {},
+      customHandle: true,
+      onBefore: (status) {
+        Get.back();
+      },
+      onSuccess: (data, _) {
+        var baseResponse = BaseResponse.fromJson(data);
+        Get.back();
+        var valid = (baseResponse?.data?.token?.isNotEmpty ?? false);
+        valid &= (baseResponse?.data?.idBK ?? 0) > 0;
+        if (valid) {
+          MyPref.setATToken(baseResponse?.data?.token);
+          MyPref.setIdBk(baseResponse?.data?.idBK);
+          Get.offNamed(selectDistributorScreen);
+        }
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Get.defaultDialog(
+          title: 'Kesalahan',
+          content: Text(response?.message ?? 'Login Gagal'),
+        );
+      },
+      onError: (title, message) {
+        Get.defaultDialog(
+          title: 'Kesalahan',
+          content: Text('Terjadi kesalahan data / koneksi'),
+        );
+      },
+      onAfter: (status) {
+        if (status == ResponseStatus.success)
+          MyPref.setRemember(isRemember, currentData);
+      },
+    );
     status.execute();
   }
 
