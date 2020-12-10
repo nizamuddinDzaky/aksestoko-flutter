@@ -134,6 +134,8 @@ class DetailPemesanan {
   String urlInvoice;
   bool konfirmasiPembayaran;
   bool daftarPembayaran;
+  bool ajukanKredit;
+  bool pilihMetodePembayaran;
 
   DetailPemesanan(
       {this.idPemesanan,
@@ -152,7 +154,10 @@ class DetailPemesanan {
         this.statusPembayaran,
         this.urlInvoice,
         this.konfirmasiPembayaran,
-        this.daftarPembayaran});
+        this.daftarPembayaran,
+        this.ajukanKredit,
+        this.pilihMetodePembayaran
+      });
 
   DetailPemesanan.fromJson(Map<String, dynamic> json) {
     idPemesanan = json['id_pemesanan'];
@@ -172,6 +177,8 @@ class DetailPemesanan {
     urlInvoice = json['url_invoice'];
     konfirmasiPembayaran = json['konfirmasi_pembayaran'];
     daftarPembayaran = json['daftar_pembayaran'];
+    ajukanKredit = json['ajukan_kredit'];
+    pilihMetodePembayaran = json['pilih_metode_pembayaran'];
   }
 
   Map<String, dynamic> toJson() {
@@ -193,6 +200,8 @@ class DetailPemesanan {
     data['url_invoice'] = this.urlInvoice;
     data['konfirmasi_pembayaran'] = this.konfirmasiPembayaran;
     data['daftar_pembayaran'] = this.daftarPembayaran;
+    data['ajukan_kredit'] = this.ajukanKredit;
+    data['pilih_metode_pembayaran'] = this.pilihMetodePembayaran;
     return data;
   }
 }

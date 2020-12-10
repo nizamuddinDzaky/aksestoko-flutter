@@ -12,6 +12,7 @@ class SalesModel {
   int customer_group_id;
   String payment_durasi;
   int input_payment_durasi;
+  String id_pemesanan;
 
   SalesModel(
       {this.id_distributor,
@@ -26,7 +27,8 @@ class SalesModel {
       this.bank_id,
       this.customer_group_id,
       this.payment_durasi,
-      this.input_payment_durasi});
+      this.input_payment_durasi,
+      this.id_pemesanan});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

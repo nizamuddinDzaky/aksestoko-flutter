@@ -2,9 +2,11 @@ import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
+import 'package:aksestokomobile/model/sales_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
+import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -123,6 +125,33 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
         }, onAfter: (status) {
         });
     status.execute();
+  }
+
+  String textButton(){
+    if(orderDetail?.detailPemesanan?.statusPemesanan.toLowerCase() == 'menunggu konfirmasi'){
+      return "Batalkan Pesanan";
+    }else if(orderDetail?.detailPemesanan.ajukanKredit != null){
+      return "Ajukan Kredit";
+    }else if(orderDetail?.detailPemesanan.konfirmasiPembayaran != null){
+      return "Selesaikan Pembayaran";
+    }else if(orderDetail?.detailPemesanan.pilihMetodePembayaran != null){
+      return "Pilih Metode Pembayaran";
+    }
+  }
+
+  toPaymentScreent(){
+    var salesModel = SalesModel()
+      ..delivery_method = _getShipmentMethod()
+        ..id_pemesanan = orderDetail?.detailPemesanan.idPemesanan;
+    Get.toNamed(paymentScreen, arguments: salesModel);
+  }
+
+  String _getShipmentMethod(){
+    if(orderDetail?.detailPemesanan.caraPengiriman.toLowerCase() == "pengiriman distributor"){
+      return "delivery";
+    }else if(orderDetail?.detailPemesanan.caraPengiriman.toLowerCase() == "pengambilan sendiri"){
+      return "pickup";
+    }
   }
 
   @override
