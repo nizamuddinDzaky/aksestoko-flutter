@@ -108,6 +108,8 @@ abstract class PaymentController extends State<PaymentScreen> {
           'promo': productController.currentPromo?.codePromo,
         'is_checkout': 'true',
         'delivery_method': salesModel?.delivery_method,
+        if(salesModel.id_pemesanan != null)
+          'purchase_id' : salesModel.id_pemesanan
       },
       customHandle: true,
       onBefore: (status) {
