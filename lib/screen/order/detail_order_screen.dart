@@ -893,75 +893,13 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                     color: Color(0xffEAEAEA),
                     margin: EdgeInsets.symmetric(vertical: 20),
                   ),
-                  if (orderDetail != null && orderDetail.detailPemesanan.statusPemesanan.toLowerCase() == 'menunggu konfirmasi')
-                    Container(
-                      margin: EdgeInsets.only(left: 25, right: 25),
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: MyColor.orangeAT,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: FlatButton(
-                        child: Text(
-                          "Batalkan Pesanan",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                        ),
-                        onPressed: () {
-                          createAlertDialog(
-                              context,
-                              (orderDetail != null ? orderDetail.detailPemesanan
-                                  .idPemesanan : 0),
-                              "Apakah Anda yakin membatalkan pesanan ini?",
-                              3
-                          );
-                        },
-                      ),
-                    ),
-                  if (orderDetail?.detailPemesanan?.statusPembayaran
-                      ?.toLowerCase() != 'kredit ditolak')
-                    if (orderDetail != null &&
-                        orderDetail.detailPemesanan.konfirmasiPembayaran !=
-                            null)
-                      Container(
-                        margin: EdgeInsets.only(left: 25, right: 25),
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                          color: MyColor.successTextAT,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: FlatButton(
-                          child: Text(
-
-                            "${orderDetail.detailPemesanan.caraPembayaran
-                                .toLowerCase() == "kredit pro"
-                                ? "Ajukan Kredit"
-                                : "Selesaikan Pembayaran"}",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          onPressed: () {
-                            if (orderDetail.detailPemesanan.caraPembayaran
-                                .toLowerCase() == "kredit pro") {
-                              actionPostUrlKreditPro(orderDetail.detailPemesanan
-                                  .idPemesanan);
-                            } else {
-                              Get.toNamed(addPaymentScreen,
-                                  arguments: orderDetail.detailPemesanan
-                                      .idPemesanan).then((value) {
-                                if (value != null && value) {
-                                  getListOrder();
-                                }
-                              }
-                              );
-                            }
-                          },
-                        ),
-                      )
+                  if(orderDetail?.detailPemesanan != null)
+                    if(orderDetail?.detailPemesanan?.statusPemesanan?.toLowerCase() == 'menunggu konfirmasi' ||
+                        orderDetail?.detailPemesanan.ajukanKredit != null ||
+                        orderDetail?.detailPemesanan.pilihMetodePembayaran != null ||
+                        orderDetail?.detailPemesanan.konfirmasiPembayaran != null
+                    )
+                     buttonDetailOrder()
                 ],
               ),
             ),
@@ -1334,6 +1272,52 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
         ],
       )),
     );
+  }
+
+  Widget buttonDetailOrder(){
+    debugPrint("pilih pembayaran : ${orderDetail?.detailPemesanan?.toJson()}");
+      return Container(
+        margin: EdgeInsets.only(left: 25, right: 25),
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          color: (orderDetail?.detailPemesanan?.statusPemesanan.toLowerCase() == 'menunggu konfirmasi'? MyColor.orangeAT : MyColor.successTextAT),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: FlatButton(
+          child: Text(
+              textButton(),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14)
+          ),
+          onPressed: () {
+            if(orderDetail?.detailPemesanan?.statusPemesanan.toLowerCase() == 'menunggu konfirmasi'){
+              createAlertDialog(
+                  context,
+                  (orderDetail != null ? orderDetail.detailPemesanan
+                      .idPemesanan : 0),
+                  "Apakah Anda yakin membatalkan pesanan ini?",
+                  3
+              );
+            }else if(orderDetail?.detailPemesanan.ajukanKredit != null){
+              actionPostUrlKreditPro(orderDetail.detailPemesanan
+                  .idPemesanan);
+            }else if(orderDetail?.detailPemesanan.konfirmasiPembayaran != null){
+              Get.toNamed(addPaymentScreen,
+                  arguments: orderDetail.detailPemesanan
+                      .idPemesanan).then((value) {
+                if (value != null && value) {
+                  getListOrder();
+                }
+              }
+              );
+            }else if(orderDetail?.detailPemesanan.pilihMetodePembayaran != null){
+              toPaymentScreent();
+            }
+          },
+        ),
+      );
   }
 
   createAlertDialog(BuildContext context, String idPurchase, String message, int type, {String title = "Batalkan Pesanan"}) {
