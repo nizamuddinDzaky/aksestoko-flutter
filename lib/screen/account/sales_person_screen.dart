@@ -95,12 +95,12 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                   ),
                 ],
               ),
-              child: salesPerson == null
-                  ? _layoutReferralCode()
-                  : RefreshIndicator(
-                      key: refreshKey,
-                      onRefresh: actionRefresh,
-                      child: SingleChildScrollView(
+              child: RefreshIndicator(
+                key: refreshKey,
+                onRefresh: actionRefresh,
+                child: salesPerson == null
+                    ? _layoutReferralCode()
+                    : SingleChildScrollView(
                         padding:
                             EdgeInsets.symmetric(horizontal: 60, vertical: 50),
                         child: Column(
@@ -110,70 +110,74 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                             Text(
                               salesPerson?.name ?? '',
                               style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
+                                  fontWeight: FontWeight.bold, fontSize: 26),
+                            ),
+                            Text(
+                              salesPerson?.company ?? '',
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 25)),
+                            Text(
+                              "Reference No",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: MyColor.greyTextAT),
+                            ),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                            Text(
+                              salesPerson?.refenceNo ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 26),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20)),
+                            Text(
+                              "Email",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: MyColor.greyTextAT),
+                            ),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                            Text(
+                              salesPerson?.email ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 26),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20)),
+                            Text(
+                              "No Hp",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: MyColor.greyTextAT),
+                            ),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                            Text(
+                              salesPerson?.noTlp ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 26),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20)),
+                            Text(
+                              "Alamat",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: MyColor.greyTextAT),
+                            ),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                            Text(
+                              address.join(', '),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 26),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        salesPerson?.company ?? '',
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 25)),
-                      Text(
-                        "Reference No",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: MyColor.greyTextAT),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                      Text(
-                        salesPerson?.refenceNo ?? '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                      Text(
-                        "Email",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: MyColor.greyTextAT),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                      Text(
-                        salesPerson?.email ?? '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                      Text(
-                        "No Hp",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: MyColor.greyTextAT),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                      Text(
-                        salesPerson?.noTlp ?? '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                      Text(
-                        "Alamat",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: MyColor.greyTextAT),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 4)),
-                      Text(
-                        address.join(', '),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
           ),

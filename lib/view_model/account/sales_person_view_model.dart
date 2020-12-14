@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 abstract class SalesPersonViewModel extends State<SalesPersonScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
-  SalesPerson salesPerson;
+  SalesPerson salesPerson = SalesPerson();
   var referralCodeTextController = TextEditingController();
 
   Future<void> actionRefresh() async {
@@ -56,6 +56,7 @@ abstract class SalesPersonViewModel extends State<SalesPersonScreen> {
       onSuccess: (data, flag) {
         var response = BaseResponse.fromJson(data);
         salesPerson = response?.data?.salesPerson;
+        _actionRefresh();
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -76,11 +77,15 @@ abstract class SalesPersonViewModel extends State<SalesPersonScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void _actionRefresh() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshKey?.currentState?.show();
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _actionRefresh();
   }
 }
