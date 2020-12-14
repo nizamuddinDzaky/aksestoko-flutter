@@ -35,6 +35,7 @@ class ApiConfig {
   static String urlDetailAddress = '${path}Profile/detail_address';
   static String urlListAddress = '${path}Profile/list_address';
   static String urlDetailSalesPerson = '${path}Profile/detail_sales_person';
+  static String urlUpdateSalesPerson = '${path}Profile/update_sales_person';
 
   //promo
   static String urlListPromo = '${path}Purchase/list_promo';

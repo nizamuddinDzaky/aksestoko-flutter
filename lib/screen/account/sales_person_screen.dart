@@ -8,6 +8,47 @@ class SalesPersonScreen extends StatefulWidget {
 }
 
 class _SalesPersonScreenState extends SalesPersonViewModel {
+  Widget _layoutReferralCode() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+      child: Column(
+        children: [
+          Text(
+            'Data Salesperson yang mendaftarkan toko.',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: referralCodeTextController,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+            onFieldSubmitted: (text) {
+              putReferralCode(text);
+            },
+            decoration: InputDecoration(
+              labelText: 'Kode Referal',
+            ),
+          ),
+          SizedBox(height: 32),
+          SizedBox(
+            width: double.infinity,
+            height: 46,
+            child: FlatButton(
+                color: MyColor.redAT,
+                child: Text(
+                  'Simpan',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                onPressed: () {
+                  putReferralCode(referralCodeTextController.text);
+                },
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0))),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<String> address = [
@@ -54,18 +95,21 @@ class _SalesPersonScreenState extends SalesPersonViewModel {
                   ),
                 ],
               ),
-              child: RefreshIndicator(
-                key: refreshKey,
-                onRefresh: actionRefresh,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(),
-                      Text(
-                        salesPerson?.name ?? '',
-                        style: TextStyle(
+              child: salesPerson == null
+                  ? _layoutReferralCode()
+                  : RefreshIndicator(
+                      key: refreshKey,
+                      onRefresh: actionRefresh,
+                      child: SingleChildScrollView(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(),
+                            Text(
+                              salesPerson?.name ?? '',
+                              style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 26),
                       ),
                       Text(
