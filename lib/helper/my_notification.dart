@@ -110,18 +110,19 @@ class MyNotification {
       onMessage: (Map<String, dynamic> message) async {
         print(
             "${triggerOnResume == null} ${DateTime.now()} $triggerOnResume onMessage: $message");
-        // triggerOnMessage?.call(message);
+        triggerOnMessage?.call(message);
         // _showItemDialog(message);
         // showNotification('title', 'body');
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        triggerOnResume?.call(message);
         // triggerOnLaunch?.call(message);
         // _navigateToItemDetail(message);
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        // triggerOnResume?.call(message);
+        triggerOnResume?.call(message);
         // _navigateToItemDetail(message);
       },
     );

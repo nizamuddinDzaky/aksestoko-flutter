@@ -25,16 +25,16 @@ class _ParentScreenState extends State<ParentScreen> {
 
   Widget _buildDialog(BuildContext context, Item item) {
     return AlertDialog(
-      content: Text("Item ${item.itemId} has been updated"),
+      content: Text(item?.title ?? 'Ada notifikasi masuk'),
       actions: <Widget>[
         FlatButton(
-          child: const Text('CLOSE'),
+          child: const Text('Tutup'),
           onPressed: () {
             Navigator.pop(context, false);
           },
         ),
         FlatButton(
-          child: const Text('SHOW'),
+          child: const Text('Detail'),
           onPressed: () {
             Navigator.pop(context, true);
           },

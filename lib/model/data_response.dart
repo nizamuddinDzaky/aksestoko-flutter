@@ -163,6 +163,11 @@ class DataResponse {
       return Promo.fromJson(obj);
     });
 
+    if (promo == null)
+      promo = ifExistObject(json, "detail_promo", (obj) {
+        return Promo.fromJson(obj);
+      });
+
     idPurchase = ifExist(json, 'purchase_id');
 
     urlKreditPro = ifExist(json, 'url');

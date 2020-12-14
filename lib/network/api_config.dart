@@ -48,6 +48,7 @@ class ApiConfig {
   static String urlAddItemCart = '${path}Purchase/add_to_cart';
   static String urlListOrder = '${path}Purchase/list_order';
   static String urlDetailOrder = '${path}Purchase/detail_order';
+  static String urlDetailPromo = '${path}Purchase/detail_promo';
 
   static String urlCancelOrder = '${path}Purchase/cancel_order';
   static String urlConfirmUpdatePrice = '${path}Purchase/confirm_update_price';

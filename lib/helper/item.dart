@@ -12,7 +12,7 @@ Item itemForMessage(Map<String, dynamic> message) {
   final String itemId =
       data['id'] ?? '${DateTime.now().millisecondsSinceEpoch}';
   final Item item = items.putIfAbsent(itemId, () => Item(itemId: itemId))
-    ..status = data['id_promo']
+    ..status = data['id_promo'] ?? data['id_pemesanan']
     ..title = data['title']
     ..body = data['body']
     ..type = data['type'];

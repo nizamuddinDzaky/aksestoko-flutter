@@ -1,4 +1,7 @@
+import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/promo.dart';
+import 'package:aksestokomobile/network/api_client.dart';
+import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_util.dart';
@@ -7,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class DetailPromoScreen extends StatefulWidget {
@@ -18,16 +23,62 @@ class DetailPromoScreen extends StatefulWidget {
   _DetailPromoScreenState createState() => _DetailPromoScreenState();
 }
 
-class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTickerProviderStateMixin {
-
+class _DetailPromoScreenState extends State<DetailPromoScreen>
+    with SingleTickerProviderStateMixin {
+  GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
   Promo promo;
+  String idPromo;
+  String errorMessage;
+
+  void _getDetail() async {
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlDetailPromo,
+      params: {
+        'promo_id': idPromo,
+      },
+      customHandle: true,
+      onBefore: (status) {},
+      onSuccess: (data, flag) {
+        var response = BaseResponse.fromJson(data);
+        promo = response?.data?.promo;
+      },
+      onFailed: (title, message) {
+        promo = null;
+        var response = BaseResponse.fromString(message);
+        errorMessage = response?.message;
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Get.defaultDialog(title: title, content: Text(message));
+      },
+      onAfter: (status) {},
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  Future<void> actionRefresh() async {
+    if (promo?.id != null) idPromo = promo.id;
+    if (idPromo != null) _getDetail();
+  }
+
+  void _actionRefresh() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      refreshKey?.currentState?.show();
+    });
+  }
 
   @override
   void initState() {
     promo = Get.arguments as Promo ?? widget.promo;
-    // TODO: implement initState
+    _actionRefresh();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,7 +87,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Container(
-            //color: Colors.white,
+          //color: Colors.white,
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -52,13 +103,18 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: _body(),
+        child: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: actionRefresh,
+          child: promo == null ? _message() : _body(),
+        ),
       ),
     );
   }
 
-  Widget _body(){
+  Widget _body() {
     return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
       child: Column(
         children: <Widget>[
           Container(
@@ -95,24 +151,32 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
     );
   }
 
-  Widget _content(){
+  Widget _message() {
+    return Center(
+      child: Container(
+        child: Text(
+          '${errorMessage ?? ''}',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _content() {
     return Card(
       elevation: 2,
-      child : InkWell(
+      child: InkWell(
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Column(
             children: <Widget>[
               Container(
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: (promo.urlImage?.isEmpty ?? true) || kDebugMode
-                      ? Image.asset(kNoImage)
-                      : FadeInImage.assetNetwork(
-                    placeholder: kNoImage,
-                    image: promo.urlImage ?? '',
-                    fit: BoxFit.cover,
-                  ),
+                child: (promo?.urlImage?.isEmpty ?? true) //|| kDebugMode
+                    ? Image.asset(kNoImage)
+                    : FadeInImage.assetNetwork(
+                  placeholder: kNoImage,
+                  image: promo.urlImage ?? '',
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               Container(
@@ -166,11 +230,10 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
                 child: Row(
                   children: <Widget>[
                     Container(
-                      height: 1,
-                      width: 100,
-                      color: MyColor.redAT,
-                      margin: EdgeInsets.only(top: 0, bottom: 0, left: 5)
-                    )
+                        height: 1,
+                        width: 100,
+                        color: MyColor.redAT,
+                        margin: EdgeInsets.only(top: 0, bottom: 0, left: 5))
                   ],
                 ),
               ),
@@ -178,11 +241,11 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
                 child: Wrap(
                   children: <Widget>[
                     Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 0, left: 10),
-                        child: Text(
-                          promo?.description ?? '',
-                          style: TextStyle(color: MyColor.greyTextAT),
-                        ),
+                      margin: EdgeInsets.only(top: 5, bottom: 0, left: 10),
+                      child: Text(
+                        promo?.description ?? '',
+                        style: TextStyle(color: MyColor.greyTextAT),
+                      ),
                     )
                   ],
                 ),
@@ -194,8 +257,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
                         height: 1,
                         width: 100,
                         color: MyColor.redAT,
-                        margin: EdgeInsets.only(top: 5, bottom: 0, left: 5)
-                    )
+                        margin: EdgeInsets.only(top: 5, bottom: 0, left: 5))
                   ],
                 ),
               ),
@@ -205,7 +267,11 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
                     Container(
                       margin: EdgeInsets.only(top: 5, bottom: 0, left: 10),
                       child: Text(
-                        "Min Pembelian ${MyNumber.toNumberRpStr(promo.minPembelian)} | Max Potongan ${MyNumber.toNumberRpStr(promo.maxTotalDisc)} | Berlaku sampai ${strToDate(promo.endDate)}",
+                        "Min Pembelian ${MyNumber.toNumberRpStr(
+                            promo?.minPembelian ??
+                                '')} | Max Potongan ${MyNumber.toNumberRpStr(
+                            promo?.maxTotalDisc ?? '')} | Berlaku sampai ${promo
+                            ?.endDate == null ? '' : strToDate(promo.endDate)}",
                         style: TextStyle(color: MyColor.greyTextAT),
                       ),
                     )
@@ -220,7 +286,6 @@ class _DetailPromoScreenState extends State<DetailPromoScreen> with SingleTicker
           // await gotoParent(context, distributor);
         },
       ),
-
     );
   }
 }
