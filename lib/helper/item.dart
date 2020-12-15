@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:aksestokomobile/model/promo.dart';
-import 'package:aksestokomobile/screen/notification/detail_page.dart';
+import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
 import 'package:aksestokomobile/screen/promo/detail_promo.dart';
 import 'package:flutter/material.dart';
 
@@ -46,14 +46,25 @@ class Item {
     final String routeName = '/detail/$itemId';
     // var now = DateTime.now();
     // final String routeName = '/detail/$itemId${now.millisecondsSinceEpoch}';
+    switch (type) {
+      case 'sms_notif_promo':
+        return routes.putIfAbsent(
+          routeName,
+          () => MaterialPageRoute<void>(
+            settings: RouteSettings(name: routeName),
+            builder: (BuildContext context) => DetailPromoScreen(
+              promo: Promo(id: status, name: title, description: body)
+                ..getDetail = true,
+            ),
+          ),
+        );
+    }
     return routes.putIfAbsent(
       routeName,
       () => MaterialPageRoute<void>(
         settings: RouteSettings(name: routeName),
-        // builder: (BuildContext context) => DetailPage(itemId),
-        builder: (BuildContext context) => DetailPromoScreen(
-          promo: Promo(id: status, name: title, description: body)
-            ..getDetail = true,
+        builder: (BuildContext context) => DetailOrderScreen(
+          idPemesanan: status,
         ),
       ),
     );

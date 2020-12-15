@@ -11,6 +11,10 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 
 class DetailOrderScreen extends StatefulWidget {
+  final String idPemesanan;
+
+  DetailOrderScreen({this.idPemesanan});
+
   _DetailOrderScreenState createState() => _DetailOrderScreenState();
 }
 

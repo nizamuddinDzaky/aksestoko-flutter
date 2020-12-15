@@ -24,8 +24,12 @@ class _ParentScreenState extends State<ParentScreen> {
   var myNotification = MyNotification();
 
   Widget _buildDialog(BuildContext context, Item item) {
+    var content = [item?.title, item?.body]
+        ?.where((element) => element != null)
+        ?.join('\n');
+    content = content.isEmpty ? null : content;
     return AlertDialog(
-      content: Text(item?.title ?? 'Ada notifikasi masuk'),
+      content: Text(content ?? 'Ada notifikasi masuk'),
       actions: <Widget>[
         FlatButton(
           child: const Text('Tutup'),

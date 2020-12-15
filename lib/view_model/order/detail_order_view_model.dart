@@ -21,17 +21,18 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
   }
 
   getListOrder() async {
-    if (Get.arguments == null) {
-      debugPrint('argument kosong123 ${Get.arguments}');
+    var idPemesanan = Get.arguments ?? widget.idPemesanan;
+    if (idPemesanan == null) {
+      debugPrint('argument kosong123 ${idPemesanan}');
       return;
     }
     var status = await ApiClient.methodGet(ApiConfig.urlDetailOrder,
         params: {
-          'id_pemesanan': Get.arguments?.toString(),
+          'id_pemesanan': '$idPemesanan',
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
       orderDetail = OrderDetail.fromJson(data['data']);
-    }, onFailed: (title, message) { 
+    }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
