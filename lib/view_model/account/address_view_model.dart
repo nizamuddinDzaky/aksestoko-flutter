@@ -13,20 +13,8 @@ import 'package:get/get.dart';
 abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
 
   bool complete = null;
-  @override
-  void initState() {
-    super.initState();
-    // getProvinsi();
-    actionRefresh();
-  }
-
-  Future<void> actionRefresh() async {
-    setState(() {
-      complete = null;
-    });
-    _getTokenRajaApi();
-    return Future.value();
-  }
+  TextEditingController kodePosController = TextEditingController();
+  FocusNode nodeKodePos = new FocusNode();
 
   Alamat address;
   Address curAddress;
@@ -45,6 +33,138 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   final List<Zone> district = [];
   final List<Zone> subDistrict = [];
   final List<Zone> village = [];
+  final List<Address> listAddress = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // getProvinsi();
+    actionRefresh();
+  }
+
+  Future<void> actionRefresh() async {
+    setState(() {
+      complete = null;
+    });
+    _getTokenRajaApi();
+    return Future.value();
+  }
+
+  getRegionByPostalCode() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
+
+    var params = {
+      'postal_code': kodePosController.text,
+    };
+    var status = await ApiClient.methodGet(
+      "${ApiConfig.urlPostalCode}",
+      params: params,
+      customHandle: true,
+      onBefore: (status) {
+        province.clear();
+        district.clear();
+        subDistrict.clear();
+        village.clear();
+        listAddress.clear();
+      },
+      onSuccess: (data, flag) {
+        var listData = data['data']['kodepos'];
+        if (listData is List) {
+          listData.forEach((map) {
+            var alamat = Address.fromJson(map);
+            listAddress.add(alamat);
+          });
+          _setZoneByPostalCode();
+        }
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        _resetRegion();
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        _resetRegion();
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status){
+        Get.back();
+      }
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  _resetRegion(){
+    actionRefresh();
+    setState(() {
+      province.clear();
+      district.clear();
+      subDistrict.clear();
+      village.clear();
+
+      selectVillage = null;
+      selectSubDistrict = null;
+      selectDistrict = null;
+      selectProvince = null;
+
+    });
+  }
+
+  _setZoneByPostalCode(){
+    listAddress.forEach((address) {
+      var check_provinsi = province.where((element) => element.name.contains(address.provinsi));
+      var checkKabupaten = district.where((element) => element.name.contains(address.kabupaten));
+      var checkKecamatan = subDistrict.where((element) => element.name.contains(address.kecamatan));
+      var checkDesa = village.where((element) => element.name.contains(address.kelurahanName));
+      if(check_provinsi.isEmpty){
+        province.add(Zone(name: address.provinsi));
+      }
+
+      if(checkKabupaten.isEmpty){
+        district.add(Zone(name: address.kabupaten));
+      }
+
+      if(checkKecamatan.isEmpty){
+        subDistrict.add(Zone(name: address.kecamatan));
+      }
+
+      if(checkDesa.isEmpty){
+        village.add(Zone(name: address.kelurahanName));
+      }
+    });
+    if(province.length == 1){
+      selectProvince = province.first;
+    }
+
+    if(district.length == 1){
+      selectDistrict = district.first;
+    }
+
+    if(subDistrict.length == 1){
+      selectSubDistrict = subDistrict.first;
+    }
+
+    if(village.length == 1){
+      selectVillage = village.first;
+    }
+  }
 
   setZona(Zone data, int step) async {
     debugPrint("step $step");

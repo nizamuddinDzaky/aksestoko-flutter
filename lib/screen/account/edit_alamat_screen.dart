@@ -209,6 +209,10 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
                               controller: postalCodeTextController,
+                              onEditingComplete: (){
+                                if(postalCodeTextController.text != "")
+                                  getRegionByPostalCode();
+                              },
                               onSaved: (value) {
                                 saveForm(kodePos: value);
                               },
@@ -251,6 +255,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: province,
+                                    key: UniqueKey(),
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
                                     onChanged: (Zone data) => setZona(data, 1),
@@ -276,6 +281,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: district,
+                                    key: UniqueKey(),
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
                                     onChanged: (Zone data) => setZona(data, 2),
@@ -301,6 +307,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: subDistrict,
+                                    key: UniqueKey(),
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
                                     onChanged: (Zone data) => setZona(data, 3),
@@ -326,6 +333,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: village,
+                                    key: UniqueKey(),
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
                                     onChanged: (Zone data) =>
