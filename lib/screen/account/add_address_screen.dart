@@ -15,6 +15,7 @@ class _AddAddressScreenState extends AddressViewModel {
   // AddressController vm;
 
   Widget _formLayout() {
+    /*selectProvince = Zone(name: "jawa selatan");*/
     return Container(
       child: Column(
         children: <Widget>[
@@ -203,10 +204,18 @@ class _AddAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
+                              controller: kodePosController,
+                              onEditingComplete: (){
+                                if(kodePosController.text != "")
+                                  getRegionByPostalCode();
+                                /*nodeKodePos.nextFocus();*/
+                              },
+                              /*focusNode: nodeKodePos,*/
                               onSaved: (value) {
                                 // vm?.saveForm(email: value);
                                 saveForm(kodePos: value);
                               },
+                              textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.numberWithOptions(
                                 decimal: false,
                                 signed: true,
@@ -246,15 +255,13 @@ class _AddAddressScreenState extends AddressViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: province,
+                                    key: UniqueKey(),
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
                                     onChanged: (Zone data) => setZona(data, 1),
                                     onSaved: (Zone data) =>
-                                    {
-                                      // vm.saveForm(
-                                      //     provinceName: data.name,
-                                      //     provinceId: data.id)
-                                    },
+                                    {},
+                                    /*showSelectedItem: true,*/
                                     selectedItem: selectProvince,
                                     showSearchBox: true,
                                     itemAsString: (Zone prov) =>
@@ -277,6 +284,7 @@ class _AddAddressScreenState extends AddressViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: district,
+                                    key: UniqueKey(),
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
                                     onChanged: (Zone data) => setZona(data, 2),
@@ -308,6 +316,7 @@ class _AddAddressScreenState extends AddressViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: subDistrict,
+                                    key: UniqueKey(),
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
                                     onChanged: (Zone data) => setZona(data, 3),
@@ -339,6 +348,7 @@ class _AddAddressScreenState extends AddressViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: village,
+                                    key: UniqueKey(),
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
                                     onChanged: (Zone data) =>
