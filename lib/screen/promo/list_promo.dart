@@ -128,14 +128,17 @@ class _ListPromoScreenState extends PromoViewModel {
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Column(
             children: <Widget>[
-              Container(
-                child: (promo.urlImage?.isEmpty ?? true) || kDebugMode
-                    ? Image.asset(kNoImage)
-                    : FadeInImage.assetNetwork(
-                        placeholder: kNoImage,
-                        image: promo.urlImage ?? '',
-                        fit: BoxFit.fitWidth,
-                      ),
+              AspectRatio(
+                aspectRatio: 2 / 1,
+                child: Container(
+                  child: (promo.urlImage?.isEmpty ?? true) || kDebugMode
+                      ? Image.asset(kNoImageLandscape)
+                      : FadeInImage.assetNetwork(
+                          placeholder: kNoImageLandscape,
+                          image: promo.urlImage ?? '',
+                          fit: BoxFit.fitWidth,
+                        ),
+                ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 5),
