@@ -45,11 +45,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
       onFailed: (title, message) {
         promo = null;
         var response = BaseResponse.fromString(message);
-        errorMessage = response?.message;
-        Fluttertoast.showToast(
-          msg: response?.message ?? 'Gagal',
-          gravity: ToastGravity.CENTER,
-        );
+        errorMessage = response?.message ?? 'Gagal';
       },
       onError: (title, message) {
         Get.defaultDialog(title: title, content: Text(message));
@@ -75,7 +71,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
   @override
   void initState() {
     promo = Get.arguments as Promo ?? widget.promo;
-    _actionRefresh();
+    if (promo?.getDetail == true) _actionRefresh();
     super.initState();
   }
 
