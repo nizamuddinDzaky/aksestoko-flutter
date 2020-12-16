@@ -30,10 +30,15 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
         params: {
           'id_pemesanan': '$idPemesanan',
         },
+        customHandle: true,
         onBefore: (status) {}, onSuccess: (data, flag) {
       orderDetail = OrderDetail.fromJson(data['data']);
     }, onFailed: (title, message) {
-      Get.defaultDialog(title: title, content: Text(message));
+      var response = BaseResponse.fromString(message);
+      Get.defaultDialog(
+        title: 'Gagal',
+        content: Text(response?.message ?? 'Gagal'),
+      );
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onAfter: (status) {});
