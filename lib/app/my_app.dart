@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/app/middle_ware.dart';
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -10,8 +11,8 @@ import 'package:get/get.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: kDebugMode,
+    var materialApp = MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'AksesToko',
       theme: ThemeData(
         primaryColor: MyColor.mainRed,
@@ -41,6 +42,19 @@ class MyApp extends StatelessWidget {
       ],
       onGenerateRoute: MyRouter.generateRoute,
     );
+
+    if (isProd == false || kDebugMode) {
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Banner(
+          message: 'QA',
+          location: BannerLocation.bottomEnd,
+          child: materialApp,
+        ),
+      );
+    }
+
+    return materialApp;
   }
 }
 
