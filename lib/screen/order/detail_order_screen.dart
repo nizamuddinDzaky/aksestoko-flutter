@@ -1078,18 +1078,17 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
               ],
             ),
           ),
-          if(detailDelivery.konfirmasiPenerimaan != null )
-          Container(
-            margin:
-            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            height: 40,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: MyColor.greenAT,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: FlatButton(
-              child: Text(
+          if (detailDelivery?.konfirmasiPenerimaan != null)
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              height: 40,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: MyColor.greenAT,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: FlatButton(
+                child: Text(
                 "Konfirmasi Penerimaan",
                 style: TextStyle(
                     color: Colors.white,
@@ -1101,14 +1100,47 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   'purchase': orderDetail.detailPemesanan,
                   'delivery': detailDelivery
                 };
-                Get.toNamed(confirmationAcceptScreen, arguments: param).then((value){
-                    if(value) {
-                      actionRefresh();
-                    }
+                Get.toNamed(confirmationAcceptScreen, arguments: param).then((
+                    value) {
+                  if (value) {
+                    actionRefresh();
+                  }
                 });
               },
+              ),
             ),
-          ),
+          if(detailDelivery.konfirmasiBadQty != null )
+            Container(
+              margin:
+              EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              height: 40,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: MyColor.redAT,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: FlatButton(
+                child: Text(
+                  "Konfirmasi Bad Qty",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12),
+                ),
+                onPressed: () {
+                  Map<String, dynamic> param = {
+                    'purchase': orderDetail.detailPemesanan,
+                    'delivery': detailDelivery
+                  };
+                  Get.toNamed(confirmationAcceptScreen, arguments: param).then((
+                      value) {
+                    if (value) {
+                      actionRefresh();
+                    }
+                  });
+                },
+              ),
+            ),
           Container(
             height: 3,
             color: Color(0xffEAEAEA),

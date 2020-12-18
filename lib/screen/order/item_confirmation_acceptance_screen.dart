@@ -33,8 +33,10 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
   @override
   void initState() {
 
-    baikControllerText.text = (itemDetailDelivery.jumlah ?? itemDetailDelivery.baik).toString();
-    debugPrint("item delivery ${itemDetailDelivery.toJson()}\n ${MyPref.getATToken()}");
+    baikControllerText.text =
+        (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
+    debugPrint(
+        "item delivery ${itemDetailDelivery.toJson()}\n ${MyPref.getATToken()}");
     badControllerText.text = (itemDetailDelivery.buruk ?? 0).toString();
     _focus.addListener(_onFocusChange);
     super.initState();
@@ -42,15 +44,14 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
 
   @override
   void dispose() {
-    itemDetailDelivery.buruk = 0;
-    itemDetailDelivery.baik = itemDetailDelivery.jumlah;
+    // itemDetailDelivery.buruk = 0;
+    // itemDetailDelivery.baik = itemDetailDelivery.jumlah;
     _focus?.dispose();
     super.dispose();
   }
 
   void _onFocusChange(){
     if(!_focus.hasFocus){
-      debugPrint("asdsad :${badControllerText.text != '' ? 'asdsad' : 0}");
       int crntVal = int.parse(badControllerText.text != '' ? badControllerText.text : "0");
       if(crntVal > itemDetailDelivery.jumlah){
         itemDetailDelivery.baik = 0;
