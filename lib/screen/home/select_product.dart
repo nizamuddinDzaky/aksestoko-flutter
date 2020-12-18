@@ -1,4 +1,6 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/screen/notification/list_notification_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,33 +59,36 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 ),
                 centerTitle: false,
                 actions: <Widget>[
-/*
-                  Stack(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.notifications),
-                        onPressed: () {
-                          debugPrint('klik notif');
-                        },
-                      ),
-                      Positioned(
-                        right: 5,
-                        top: 4,
-                        child: CircleAvatar(
-                          maxRadius: 10,
-                          backgroundColor: MyColor.redAT,
-                          child: Text(
-                            '20',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
+// /*
+                  if (!isProd)
+                    Stack(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.notifications),
+                          onPressed: () {
+                            debugPrint('klik notif');
+                            Get.to(ListNotificationScreen());
+                          },
                         ),
-                      ),
-                    ],
-                  ),
-*/
+                        if (false)
+                          Positioned(
+                            right: 5,
+                            top: 4,
+                            child: CircleAvatar(
+                              maxRadius: 10,
+                              backgroundColor: MyColor.redAT,
+                              child: Text(
+                                '20',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+// */
                   Stack(
                     children: <Widget>[
                       IconButton(

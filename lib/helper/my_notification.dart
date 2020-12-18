@@ -92,35 +92,35 @@ Function(Map<String, dynamic>) triggerOnLaunch;
 Function(Map<String, dynamic>) triggerOnResume;
 Function(String) triggerOnBackground;
 
+bool validationNotif(String value) {
+  var type = [
+    'sms_notif_berita',
+    'sms_notif_change_price',
+    'sms_notif_delivery',
+    'sms_notif_return_approve',
+    'sms_notif_return_reject',
+    'sms_notif_payment_paid',
+    'sms_notif_payment_partial',
+    'sms_notif_payment_reject',
+    'sms_notif_promo',
+    'sms_notif_update_status',
+  ];
+  return type.contains(value?.toLowerCase());
+}
+
+bool isNotifValid(Map<String, dynamic> message) {
+  var count = 0;
+  if (message == null) return false;
+  var data = message['data'] ?? message;
+  if (!validationNotif(data['type'])) return false;
+  count += data['id_promo'] == null ? 0 : 1;
+  count += data['id_pemesanan'] == null ? 0 : 1;
+  debugPrint('is valid $data ${count == 1}');
+  return count == 1;
+}
+
 class MyNotification {
   BuildContext context;
-
-  bool validationNotif(String value) {
-    var type = [
-      'sms_notif_berita',
-      'sms_notif_change_price',
-      'sms_notif_delivery',
-      'sms_notif_return_approve',
-      'sms_notif_return_reject',
-      'sms_notif_payment_paid',
-      'sms_notif_payment_partial',
-      'sms_notif_payment_reject',
-      'sms_notif_promo',
-      'sms_notif_update_status',
-    ];
-    return type.contains(value?.toLowerCase());
-  }
-
-  bool isNotifValid(Map<String, dynamic> message) {
-    var count = 0;
-    if (message == null || message['data'] == null) return false;
-    var data = message['data'] ?? Map<String, dynamic>();
-    if (!validationNotif(data['type'])) return false;
-    count += data['id_promo'] == null ? 0 : 1;
-    count += data['id_pemesanan'] == null ? 0 : 1;
-    debugPrint('is valid ${count == 1}');
-    return count == 1;
-  }
 
   void fcmSubscribe() {
     _firebaseMessaging.subscribeToTopic('promo');
