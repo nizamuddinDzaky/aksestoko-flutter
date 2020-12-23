@@ -136,6 +136,7 @@ class DetailPemesanan {
   bool daftarPembayaran;
   bool ajukanKredit;
   bool pilihMetodePembayaran;
+  String tanggalJatuhTempo;
 
   DetailPemesanan(
       {this.idPemesanan,
@@ -156,7 +157,8 @@ class DetailPemesanan {
         this.konfirmasiPembayaran,
         this.daftarPembayaran,
         this.ajukanKredit,
-        this.pilihMetodePembayaran
+        this.pilihMetodePembayaran,
+        this.tanggalJatuhTempo
       });
 
   DetailPemesanan.fromJson(Map<String, dynamic> json) {
@@ -179,6 +181,7 @@ class DetailPemesanan {
     daftarPembayaran = json['daftar_pembayaran'];
     ajukanKredit = json['ajukan_kredit'];
     pilihMetodePembayaran = json['pilih_metode_pembayaran'];
+    tanggalJatuhTempo = json['tanggal_jatuh_tempo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -202,6 +205,7 @@ class DetailPemesanan {
     data['daftar_pembayaran'] = this.daftarPembayaran;
     data['ajukan_kredit'] = this.ajukanKredit;
     data['pilih_metode_pembayaran'] = this.pilihMetodePembayaran;
+    data['tanggal_jatuh_tempo'] = this.tanggalJatuhTempo;
     return data;
   }
 }
