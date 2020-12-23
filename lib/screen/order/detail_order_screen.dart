@@ -416,6 +416,35 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             ],
                           ),
                         ),
+                        if(orderDetail?.detailPemesanan?.tanggalJatuhTempo != null)
+                          Container(
+                            margin: EdgeInsets.only(bottom: 15),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 5,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Tanggal Jatuh Tempo",
+                                        style: TextStyle(
+                                            fontSize: 14, color: MyColor.greyTextAT),
+                                      ),
+                                      Text(
+                                        orderDetail != null ? orderDetail.detailPemesanan.tanggalJatuhTempo :  "",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         Container(
                           height: 3,
                           color: Color(0xffEAEAEA),

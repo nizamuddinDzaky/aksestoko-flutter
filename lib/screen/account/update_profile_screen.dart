@@ -4,6 +4,7 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:aksestokomobile/screen/account/update_profile_controller.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
+import 'package:flutter/services.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
@@ -176,7 +177,13 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                   TextFormField(
                                     controller: phoneTextController,
                                     onSaved: (value) => profile?.noTlp = value,
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType: TextInputType.numberWithOptions(
+                                      decimal: false,
+                                      signed: true,
+                                    ),
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
                                     decoration: InputDecoration(
                                       contentPadding: MyDimen.paddingTxtField(),
                                       labelText: 'No. Telepon',
