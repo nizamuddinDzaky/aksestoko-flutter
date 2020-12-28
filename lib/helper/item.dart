@@ -12,9 +12,10 @@ Item itemForMessage(Map<String, dynamic> message) {
   final String itemId =
       data['id'] ?? '${DateTime.now().millisecondsSinceEpoch}';
   final Item item = items.putIfAbsent(itemId, () => Item(itemId: itemId))
-    ..status = data['id_promo'] ?? data['id_pemesanan']
+    ..status = data['id_promo'] ?? data['id_pemesanan'] ?? data['status']
     ..title = data['title']
     ..body = data['body']
+    ..isRead = data['is_read']
     ..type = data['type'];
   return item;
 }
@@ -26,6 +27,7 @@ class Item {
   String title;
   String body;
   String type;
+  bool isRead;
 
   StreamController<Item> _controller = StreamController<Item>.broadcast();
 
@@ -70,18 +72,20 @@ class Item {
     data['title'] = this.title;
     data['body'] = this.body;
     data['type'] = this.type;
+    data['status'] = this.status;
+    data['is_read'] = this.isRead;
     switch (this.type ?? '') {
       case 'sms_notif_promo':
       case 'sms_notif_berita':
       case '':
-        data['id_promo'] = this.itemId;
+        data['id_promo'] = this.status;
         break;
       case 'sms_notif_delivery':
       case 'sms_notif_':
-        data['id_pemesanan'] = this.itemId;
+        data['id_pemesanan'] = this.status;
         break;
       default:
-        data['id'] = this.itemId;
+        data['id'] = this.status;
     }
     return data;
   }

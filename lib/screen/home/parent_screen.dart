@@ -81,6 +81,14 @@ class _ParentScreenState extends State<ParentScreen> {
     triggerOnResume = (message) {
       _navigateToItemDetail(message);
     };
+    triggerOnSave = (message) {
+      try {
+        ParentController to = Get.find();
+        to.addNotif(item: itemForMessage(message));
+      } catch (e) {
+        debugPrint('$e');
+      }
+    };
     myNotification.init(context);
     myNotification.actionTriggerOnBackground((message) {
       debugPrint('pindah halaman ${message != null}');

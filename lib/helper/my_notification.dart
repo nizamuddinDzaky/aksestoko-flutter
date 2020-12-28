@@ -8,7 +8,6 @@ import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:package_info/package_info.dart';
 import 'package:rxdart/subjects.dart';
 
 var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -90,6 +89,7 @@ final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 Function(Map<String, dynamic>) triggerOnMessage;
 Function(Map<String, dynamic>) triggerOnLaunch;
 Function(Map<String, dynamic>) triggerOnResume;
+Function(Map<String, dynamic>) triggerOnSave;
 Function(String) triggerOnBackground;
 
 bool validationNotif(String value) {
@@ -138,18 +138,21 @@ class MyNotification {
         print(
             "${triggerOnResume == null} ${DateTime.now()} $triggerOnResume onMessage: $message");
         if (isNotifValid(message)) triggerOnMessage?.call(message);
+        if (isNotifValid(message)) triggerOnSave?.call(message);
         // _showItemDialog(message);
         // showNotification('title', 'body');
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
         if (isNotifValid(message)) triggerOnResume?.call(message);
+        if (isNotifValid(message)) triggerOnSave?.call(message);
         // triggerOnLaunch?.call(message);
         // _navigateToItemDetail(message);
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
         if (isNotifValid(message)) triggerOnResume?.call(message);
+        if (isNotifValid(message)) triggerOnSave?.call(message);
         // _navigateToItemDetail(message);
       },
     );

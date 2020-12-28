@@ -177,13 +177,15 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                   TextFormField(
                                     controller: phoneTextController,
                                     onSaved: (value) => profile?.noTlp = value,
-                                    keyboardType: TextInputType.numberWithOptions(
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
                                       decimal: false,
                                       signed: true,
                                     ),
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly,
                                     ],
+                                    maxLength: 13,
                                     decoration: InputDecoration(
                                       contentPadding: MyDimen.paddingTxtField(),
                                       labelText: 'No. Telepon',
@@ -194,7 +196,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide:
-                                        BorderSide(color: MyColor.txtField),
+                                            BorderSide(color: MyColor.txtField),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(

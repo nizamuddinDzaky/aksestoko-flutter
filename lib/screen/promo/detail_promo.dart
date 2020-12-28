@@ -11,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class DetailPromoScreen extends StatefulWidget {
@@ -150,6 +149,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
   Widget _message() {
     return Center(
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Text(
           '${errorMessage ?? ''}',
           textAlign: TextAlign.center,

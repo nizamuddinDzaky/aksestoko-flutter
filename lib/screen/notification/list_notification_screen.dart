@@ -1,5 +1,7 @@
+import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,34 +11,20 @@ class ListNotificationScreen extends StatefulWidget {
 }
 
 class _ListNotificationScreenState extends State<ListNotificationScreen> {
-  var listNotif = List<Item>();
-
-  void _updateList() {
-    listNotif?.clear();
-    listNotif = [];
-    // for (int i = 0; i < 6; i++) listNotif.add(Item(itemId: 'index$i'));
-    listNotif.add(Item(
-      itemId: '77',
-      title: 'Promo Akhir Tahun',
-      body: 'Selamat anda memenangkan hadiah\n'
-          'Selamat anda memenangkan hadiah\n'
-          'Selamat anda memenangkan hadiah\n'
-          'Selamat anda memenangkan hadiah\n'
-          'Selamat anda memenangkan hadiah',
-      type: 'sms_notif_promo',
-    ));
-    listNotif.add(Item(
-      itemId: '28613',
-      title: 'Pengiriman Barang',
-      body: 'Ada proses pengiriman barang',
-      type: 'sms_notif_delivery',
-    ));
-    listNotif.add(Item(
-      itemId: '28613',
-      title: 'Pengiriman Barang',
-      body: 'Ada proses pengiriman barang',
-    ));
-    setState(() {});
+  Widget _empty() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Riwayat Notifikasi Kosong',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _childItem(Item data) {
@@ -57,7 +45,8 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
                 confirmTextColor: Colors.white,
                 textCancel: 'Abaikan',
                 onConfirm: () {
-                  listNotif?.remove(data);
+                  ParentController parentController = Get.find();
+                  parentController?.removeItem(data);
                   setState(() {});
                   Get.back();
                 });
@@ -91,43 +80,67 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
   }
 
   @override
-  void initState() {
-    _updateList();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var appBar = AppBar(
-      title: Text('Informasi'),
+      title: Text('Daftar Informasi'),
       actions: [
-        if (false)
+        if (kDebugMode)
           IconButton(
               icon: Icon(Icons.refresh),
               onPressed: () {
-                _updateList();
+                ParentController parentController = Get.find();
+                parentController?.updateItems();
+              }),
+        if (kDebugMode)
+          IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                ParentController parentController = Get.find();
+                parentController?.clearItems();
               }),
       ],
     );
 
-    var body = ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-      physics: BouncingScrollPhysics(),
-      itemBuilder: (bc, idx) {
-        var data = listNotif[idx];
-        return _childItem(data);
-      },
-      separatorBuilder: (bc, idx) {
-        return SizedBox(height: 4);
-      },
-      itemCount: listNotif?.length ?? 0,
-    );
-
-    var scaffold = Scaffold(
-      appBar: appBar,
-      body: body,
-    );
-
-    return scaffold;
+    return GetBuilder<ParentController>(
+        builder: (vm) => Scaffold(
+              appBar: appBar,
+              body: (vm.items?.isEmpty ?? true)
+                  ? _empty()
+                  : ListView.separated(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (bc, idx) {
+                        var newIdx = (vm.items.length - idx) - 1;
+                        var data = vm.items[newIdx];
+                        return Dismissible(
+                          // key: Key(data.itemId ?? '$newIdx'),
+                          key: UniqueKey(),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (status) {
+                            vm.removeItem(data);
+                          },
+                          confirmDismiss: (direction) async {
+                            return direction == DismissDirection.endToStart;
+                          },
+                          background: Container(
+                            padding: EdgeInsets.only(right: 20.0),
+                            alignment: Alignment.centerRight,
+                            color: Colors.red,
+                            child: Text(
+                              'Hapus',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          child: _childItem(data),
+                        );
+                      },
+                      separatorBuilder: (bc, idx) {
+                        return SizedBox(height: 4);
+                      },
+                      itemCount: vm?.items?.length ?? 0,
+                    ),
+            ));
   }
 }

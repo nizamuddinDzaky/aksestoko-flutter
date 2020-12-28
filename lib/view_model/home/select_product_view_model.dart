@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/product.dart';
@@ -22,6 +23,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   var searchTextController = TextEditingController();
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   bool isSearch = false;
+  ParentController parentController;
 
   @override
   bool get wantKeepAlive => true;
@@ -31,6 +33,9 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       refreshKey.currentState.show();
+      Future.delayed(Duration(milliseconds: 200), () {
+        parentController = Get.find();
+      });
     });
   }
 
@@ -147,102 +152,6 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
       setState(() {});
     });
     return;
-    if (vm.currentFocus != null) {
-      vm.currentFocus?.unfocus();
-      await Future.delayed(Duration(milliseconds: 200));
-    }
-    if (vm.listCart == null || vm.listCart.length < 1) {
-      _alertDialog();
-    } else {
-      needUpdate = 0;
-      vm.listCart?.forEach((product) {
-        debugPrint('cek countUpdate ${product.countChange}');
-        if (1 > (product.idCart ?? 0) || (product.countChange ?? 0) > 0) {
-          needUpdate++;
-        }
-      });
-      debugPrint('action check cart $needUpdate');
-      if (needUpdate > 0) {
-        _updateDataToServer(vm);
-      } else {
-        _actionNextToCheckout(vm);
-      }
-    }
-  }
-
-  _actionNextToCheckout(vm) {
-    if (needUpdate == 0) {
-      Get.toNamed(checkoutScreen, arguments: vm.listCart).then((value) {
-        debugPrint('cek value $value');
-        if (value != null && value['errorcode'] == 400) {
-          debugPrint('hapus cart');
-        }
-      });
-    }
-  }
-
-  _updateDataToServer(vm) async {
-    vm.listCart?.forEach((product) {
-      if (0 == (product.idCart ?? 0) && (product.countChange ?? 0) != 0) {
-        _postAdd(product).then((_) => _actionNextToCheckout(vm));
-      } else if (0 != (product.idCart ?? 0) &&
-          (product.countChange ?? 0) != 0) {
-        _postUpdate(product).then((_) => _actionNextToCheckout(vm));
-      }
-    });
-  }
-
-  Future<void> _postAdd(Product product) async {
-    if (product.qty <= 0) {
-      Fluttertoast.showToast(msg: 'Quantity tidak boleh <= 0');
-      return;
-    }
-    var fields = {
-      'id_distributor': MyPref.getIdDistributor(),
-      'product_id': product?.productId,
-      'quantity': product?.qty,
-    };
-    var status = await ApiClient.methodPost(
-      ApiConfig.urlAddItemCart,
-      fields,
-      {},
-      customHandle: true,
-      onSuccess: (data, _) {
-        if (data != null &&
-            data['data'] != null &&
-            data['data']['id_cart'] != null) {
-          product.idCart = data['data']['id_cart'];
-          product.countChange = 0;
-        }
-        needUpdate--;
-      },
-    );
-    status.execute();
-  }
-
-  Future<void> _postUpdate(Product product) async {
-    if (product.qty <= 0) {
-      Fluttertoast.showToast(msg: 'Quantity tidak boleh <= 0');
-      return;
-    }
-    var fields = {
-      'id_distributor': MyPref.getIdDistributor(),
-      'id_cart': product?.idCart,
-      'quantity': product?.qty,
-      'price_group_id': MyPref.getPriceGroupId(),
-      // 'promo': promoCode,
-    };
-    var status = await ApiClient.methodPut(
-      ApiConfig.urlUpdateItemCart,
-      fields,
-      {},
-      customHandle: true,
-      onSuccess: (data, _) {
-        product.countChange = 0;
-        needUpdate--;
-      },
-    );
-    status.execute();
   }
 
   showDetailDistributor() {
