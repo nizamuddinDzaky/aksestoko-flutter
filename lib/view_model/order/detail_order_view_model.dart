@@ -1,12 +1,11 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/model/base_response.dart';
-import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
 import 'package:aksestokomobile/model/sales_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
-import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -41,7 +40,12 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
       );
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+    }, onAfter: (status) {
+      if (widget.item != null) {
+        ParentController to = Get.find();
+        to.readNotif(itemId: widget.item.itemId);
+      }
+    });
     setState(() {
       status.execute();
     });

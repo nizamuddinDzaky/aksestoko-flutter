@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/controller/parent_controller.dart';
+import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -15,8 +17,9 @@ import 'package:get/get.dart';
 
 class DetailPromoScreen extends StatefulWidget {
   final Promo promo;
+  final Item item;
 
-  DetailPromoScreen({this.promo});
+  DetailPromoScreen({this.promo, this.item});
 
   @override
   _DetailPromoScreenState createState() => _DetailPromoScreenState();
@@ -49,7 +52,12 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
       onError: (title, message) {
         Get.defaultDialog(title: title, content: Text(message));
       },
-      onAfter: (status) {},
+      onAfter: (status) {
+        if (widget.item != null) {
+          ParentController to = Get.find();
+          to.readNotif(itemId: widget.item.itemId);
+        }
+      },
     );
     setState(() {
       status.execute();

@@ -137,6 +137,10 @@ class MyNotification {
       onMessage: (Map<String, dynamic> message) async {
         print(
             "${triggerOnResume == null} ${DateTime.now()} $triggerOnResume onMessage: $message");
+        try {
+          var addId = DateTime.now().millisecondsSinceEpoch.toString();
+          message['data']['id'] = addId;
+        } catch (_) {}
         if (isNotifValid(message)) triggerOnMessage?.call(message);
         if (isNotifValid(message)) triggerOnSave?.call(message);
         // _showItemDialog(message);
@@ -144,6 +148,13 @@ class MyNotification {
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        try {
+          var addId = DateTime
+              .now()
+              .millisecondsSinceEpoch
+              .toString();
+          message['data']['id'] = addId;
+        } catch (_) {}
         if (isNotifValid(message)) triggerOnResume?.call(message);
         if (isNotifValid(message)) triggerOnSave?.call(message);
         // triggerOnLaunch?.call(message);
@@ -151,6 +162,13 @@ class MyNotification {
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+        try {
+          var addId = DateTime
+              .now()
+              .millisecondsSinceEpoch
+              .toString();
+          message['data']['id'] = addId;
+        } catch (_) {}
         if (isNotifValid(message)) triggerOnResume?.call(message);
         if (isNotifValid(message)) triggerOnSave?.call(message);
         // _navigateToItemDetail(message);

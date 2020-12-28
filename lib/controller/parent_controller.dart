@@ -16,34 +16,22 @@ class ParentController extends GetController {
   int get countItems =>
       items?.where((element) => element.isRead != true)?.length ?? 0;
 
+  void readNotif({Item item, String itemId}) {
+    items?.firstWhere(
+      (element) {
+        debugPrint('cek data ${element.itemId == (item?.itemId ?? itemId)}');
+        return element.itemId == (item?.itemId ?? itemId);
+      },
+      orElse: () => null,
+    )?.isRead = true;
+    notifPref.setNotif(items);
+    update();
+  }
+
   void addNotif({Item item}) {
     if (kReleaseMode && item == null) return;
     debugPrint('add notif ${item?.toJson()}');
-    if (DateTime.now().millisecond % 2 == 0) {
-      items?.add(item ??
-          Item(
-            itemId: '77',
-            title: 'Promo Akhir Tahun',
-            body: 'Selamat anda memenangkan hadiah\n'
-                'Selamat anda memenangkan hadiah\n'
-                'Selamat anda memenangkan hadiah\n'
-                'Selamat anda memenangkan hadiah\n'
-                'Selamat anda memenangkan hadiah',
-            type: 'sms_notif_promo',
-          )
-        ..status = '77');
-    } else {
-      items?.add(item ??
-          Item(
-            // itemId: '28613',
-            // itemId: '28517',
-            itemId: '28616',
-            title: 'Pengiriman Barang',
-            body: 'Ada proses pengiriman barang',
-            type: 'sms_notif_delivery',
-          )
-        ..status = '28616');
-    }
+    items?.add(item);
     if (items != null && items.length > 10) {
       items.removeAt(0);
     }

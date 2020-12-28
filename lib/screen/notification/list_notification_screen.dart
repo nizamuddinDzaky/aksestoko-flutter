@@ -1,6 +1,9 @@
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
+import 'package:aksestokomobile/model/promo.dart';
+import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
+import 'package:aksestokomobile/screen/promo/detail_promo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,9 +38,25 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
         onTap: () {
           debugPrint('notif ${data.itemId} ${data.type}');
           var map = data.toJson();
-          if (isNotifValid(map))
-            triggerOnResume?.call(map);
-          else
+          if (isNotifValid(map)) {
+            // triggerOnResume?.call(map);
+            switch (data.type) {
+              case 'sms_notif_promo':
+                Get.to(DetailPromoScreen(
+                  promo: Promo(
+                      id: data.status, name: data.title, description: data.body)
+                    ..getDetail = true,
+                  item: data,
+                ));
+                break;
+              default:
+                Get.to(DetailOrderScreen(
+                  idPemesanan: data.status,
+                  item: data,
+                ));
+                break;
+            }
+          } else
             Get.defaultDialog(
                 title: 'Informasi Salah',
                 content: Text('Hapus informasi?'),
@@ -57,19 +76,37 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (data?.getType?.isNotEmpty ?? false)
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 4),
-                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                decoration: BoxDecoration(
-                  color: data?.getColor,
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                child: Text(
-                  data?.getType,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+            Row(
+              children: [
+                if (data?.isRead != true)
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Text(
+                      'new',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                if (data?.isRead != true) SizedBox(width: 8),
+                if (data?.getType?.isNotEmpty ?? false)
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: data?.getColor,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Text(
+                      data?.getType,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+              ],
+            ),
             Text(
               data?.body ?? '',
             ),

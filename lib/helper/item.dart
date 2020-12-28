@@ -87,6 +87,7 @@ class Item {
       default:
         data['id'] = this.status;
     }
+    data['id'] = this.itemId;
     return data;
   }
 
@@ -110,6 +111,7 @@ class Item {
             builder: (BuildContext context) => DetailPromoScreen(
               promo: Promo(id: status, name: title, description: body)
                 ..getDetail = true,
+              item: this,
             ),
           ),
         );
@@ -120,6 +122,7 @@ class Item {
         settings: RouteSettings(name: routeName),
         builder: (BuildContext context) => DetailOrderScreen(
           idPemesanan: status,
+          item: this,
         ),
       ),
     );
