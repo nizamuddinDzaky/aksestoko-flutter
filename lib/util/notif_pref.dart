@@ -23,7 +23,9 @@ class NotifPref {
                 title: e['title'],
                 body: e['body'],
                 type: e['type'],
-              )..status = e['status'])
+              )
+                ..status = e['status']
+                ..isRead = e['is_read'])
           .toList();
     }
     // print('data empty ${data['items']} $data');
