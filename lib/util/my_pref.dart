@@ -61,6 +61,7 @@ class MyPref {
     ].forEach((key) {
       _prefs?.remove(key);
     });
+    clearNotif();
     setIdDristributor(null);
     setCustomerGroupId(null);
     setPriceGroupId(null);
@@ -146,5 +147,27 @@ class MyPref {
 
   static setPriceGroupId(int priceGroupId) {
     setInt(MyString.KEY_ID_PRICE_GROUP, priceGroupId);
+  }
+
+  static Future<bool> setKeyNotif(String keyNotif) async {
+    var prefs = await _instance;
+    var listString = await getKeyNotif();
+    if (!listString.contains(keyNotif)) listString.add(keyNotif);
+    return prefs?.setStringList('notif', listString) ?? Future.value(false);
+  }
+
+  static clearNotif() async {
+    try {
+      _prefsInstance.remove('notif${getIdDistributor() ?? ''}');
+      var listString = await getKeyNotif();
+      listString?.forEach((key) {
+        _prefsInstance.remove(key);
+      });
+    } catch (_) {}
+    _prefsInstance.remove('notif');
+  }
+
+  static Future<List<String>> getKeyNotif() async {
+    return _prefsInstance.getStringList('notif') ?? [];
   }
 }

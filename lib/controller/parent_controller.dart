@@ -52,6 +52,10 @@ class ParentController extends GetController {
     update();
   }
 
+  void refreshNotif() {
+    _getNotif();
+  }
+
   void clearItems() {
     items?.clear();
     notifPref.setNotif(items);

@@ -42,6 +42,8 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   Future<void> actionRefresh() async {
     final SelectProductController controller = Get.find();
     controller?.clearCart();
+    final ParentController parentController = Get.find();
+    parentController?.refreshNotif();
     listProduct = [];
     listCart = [];
     setState(() {});

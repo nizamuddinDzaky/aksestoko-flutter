@@ -9,11 +9,15 @@ class NotifPref {
       'items': items?.map((e) => e.toJson())?.toList(),
     };
     String json = jsonEncode(mapItem);
-    MyPref.setString('notif', json);
+    var distributorId = MyPref.getIdDistributor();
+    MyPref.setKeyNotif('notif${distributorId ?? ''}');
+    MyPref.setString('notif${distributorId ?? ''}', json);
   }
 
   List<Item> getNotif() {
-    String json = MyPref.getString('notif', '{"items": null}');
+    var distributorId = MyPref.getIdDistributor();
+    String json =
+        MyPref.getString('notif${distributorId ?? ''}', '{"items": null}');
     var data = jsonDecode(json);
     if (data['items'] is List) {
       // log('data ${data['items']} $data');
