@@ -1,7 +1,9 @@
 import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
 import 'package:aksestokomobile/model/delivery.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,15 +11,18 @@ import 'package:get/get.dart';
 class ItemConfirmationAcceptScreen extends StatefulWidget {
   int index;
   ItemDetailDelivery itemDetailDelivery;
-  ItemConfirmationAcceptScreen(ItemDetailDelivery itemDetailDelivery){
+
+  ItemConfirmationAcceptScreen(ItemDetailDelivery itemDetailDelivery) {
     this.itemDetailDelivery = itemDetailDelivery;
     // this.index = index;
   }
-  _ItemConfirmationAcceptScreen createState() => _ItemConfirmationAcceptScreen(itemDetailDelivery);
+
+  _ItemConfirmationAcceptScreen createState() =>
+      _ItemConfirmationAcceptScreen(itemDetailDelivery);
 }
 
-class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> {
-
+class _ItemConfirmationAcceptScreen
+    extends State<ItemConfirmationAcceptScreen> {
   TextEditingController baikControllerText = TextEditingController();
   TextEditingController badControllerText = TextEditingController();
 
@@ -25,14 +30,14 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
   int i;
   ConfirmationAcceptanceController controller = Get.find();
   ItemDetailDelivery itemDetailDelivery;
-  _ItemConfirmationAcceptScreen(ItemDetailDelivery itemDetailDelivery){
+
+  _ItemConfirmationAcceptScreen(ItemDetailDelivery itemDetailDelivery) {
     this.itemDetailDelivery = itemDetailDelivery;
     // this.itemDetailDelivery = controller.detailDelivery.listItemDetailDelivery[index];
   }
 
   @override
   void initState() {
-
     baikControllerText.text =
         (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
     debugPrint(
@@ -50,20 +55,22 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
     super.dispose();
   }
 
-  void _onFocusChange(){
-    if(!_focus.hasFocus){
-      int crntVal = int.parse(badControllerText.text != '' ? badControllerText.text : "0");
-      if(crntVal > itemDetailDelivery.jumlah){
+  void _onFocusChange() {
+    if (!_focus.hasFocus) {
+      int crntVal = int.parse(
+          badControllerText.text != '' ? badControllerText.text : "0");
+      if (crntVal > itemDetailDelivery.jumlah) {
         itemDetailDelivery.baik = 0;
         itemDetailDelivery.buruk = itemDetailDelivery.jumlah;
-      }else{
+      } else {
         itemDetailDelivery.baik = itemDetailDelivery.jumlah - crntVal;
         itemDetailDelivery.buruk = crntVal;
       }
 
       controller.updateScreen();
       setState(() {
-        baikControllerText.text = (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
+        baikControllerText.text =
+            (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
         badControllerText.text = (itemDetailDelivery.buruk ?? 0).toString();
       });
     }
@@ -71,7 +78,6 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -95,20 +101,13 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
               Container(
                 width: 60,
                 height: 60,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: MyColor.redAT,
-                ),
-                child: Text(
-                  "S",
-                  style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300),
-                  textAlign: TextAlign.center,
-                ),
+                child: kDebugMode
+                    ? Image.asset(kNoImage, height: 60)
+                    : FadeInImage.assetNetwork(
+                        placeholder: kNoImage,
+                        image: itemDetailDelivery.imageBarang ?? '',
+                        fit: BoxFit.cover,
+                      ),
               ),
               Expanded(
                 child: Column(
@@ -173,8 +172,8 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
                         hintText: "100",
                         contentPadding: const EdgeInsets.only(left: 10),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color(0xffC8C8C8), width: 1.0),
+                          borderSide:
+                          BorderSide(color: Color(0xffC8C8C8), width: 1.0),
                           borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(5.0),
                             bottomRight: Radius.circular(5.0),
@@ -217,8 +216,8 @@ class _ItemConfirmationAcceptScreen extends State<ItemConfirmationAcceptScreen> 
                         hintText: "100",
                         contentPadding: const EdgeInsets.only(left: 10),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color(0xffC8C8C8), width: 1.0),
+                          borderSide:
+                          BorderSide(color: Color(0xffC8C8C8), width: 1.0),
                           borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(5.0),
                             bottomRight: Radius.circular(5.0),

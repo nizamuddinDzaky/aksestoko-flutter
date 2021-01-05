@@ -139,16 +139,17 @@ class ItemDetailDelivery {
   String satuan;
   int baik;
   int buruk;
+  String imageBarang;
 
   ItemDetailDelivery(
       {this.idProduct,
-        this.deliveryItemId,
-        this.namaProduct,
-        this.kodeProduct,
-        this.jumlah,
-        this.satuan,
-        this.baik,
-        this.buruk});
+      this.deliveryItemId,
+      this.namaProduct,
+      this.kodeProduct,
+      this.jumlah,
+      this.satuan,
+      this.baik,
+      this.buruk});
 
   ItemDetailDelivery.fromJson(Map<String, dynamic> json) {
     idProduct = json['id_product'];
@@ -159,6 +160,7 @@ class ItemDetailDelivery {
     satuan = json['satuan'];
     baik = json['baik'];
     buruk = json['buruk'];
+    imageBarang = json['image_barang'];
   }
 
   Map<String, dynamic> toJson() {
