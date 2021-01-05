@@ -115,6 +115,7 @@ bool isNotifValid(Map<String, dynamic> message) {
   if (!validationNotif(data['type'])) return false;
   count += data['id_promo'] == null ? 0 : 1;
   count += data['id_pemesanan'] == null ? 0 : 1;
+  if (count == 0) count += data['status'] == null ? 0 : 1;
   debugPrint('is valid $data ${count == 1}');
   return count == 1;
 }
