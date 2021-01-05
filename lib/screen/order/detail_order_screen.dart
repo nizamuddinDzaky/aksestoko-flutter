@@ -536,7 +536,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         ?.toLowerCase() ==
                         'kredit ditolak')
                       Text(
-                        'Silakan kunjungi aksestoko.id untuk ganti metode pembayaran.',
+                        'Pemesanan telah dibatalkan, karena pengajuan kredit ditolak.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.red,
@@ -1181,7 +1181,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                   };
                   Get.toNamed(confirmationAcceptScreen, arguments: param).then((
                       value) {
-                    if (value) {
+                    if (value != null) {
                       actionRefresh();
                     }
                   });
