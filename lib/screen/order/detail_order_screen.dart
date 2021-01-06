@@ -817,17 +817,34 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                 style: TextStyle(
                                     fontSize: 14, color: MyColor.greyTextAT),
                               ),
-                              Text(
-                                orderDetail != null
-                                    ? MyNumber.toNumberRpStr(
-                                    orderDetail.ringkasan.charge.toString())
-                                    : "0",
-                                style: TextStyle(
-                                    color: statusColor(
-                                        orderDetail.ringkasan.labelCharge),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              ),
+                              if (orderDetail.ringkasan.chargeThirdParty !=
+                                  ' 0')
+                                Text(
+                                  orderDetail != null
+                                      ? MyNumber.toNumberRpStr(orderDetail
+                                          .ringkasan.chargeThirdParty
+                                          .toString())
+                                      : "0",
+                                  style: TextStyle(
+                                      color: statusColor(orderDetail
+                                          .ringkasan.labelThirdParty),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                              if (orderDetail.ringkasan.chargeThirdParty ==
+                                  ' 0')
+                                Text(
+                                  orderDetail != null
+                                      ? MyNumber.toNumberRpStr(orderDetail
+                                          .ringkasan.charge
+                                          .toString())
+                                      : "0",
+                                  style: TextStyle(
+                                      color: statusColor(
+                                          orderDetail.ringkasan.labelCharge),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
                             ],
                           ),
                         ),
