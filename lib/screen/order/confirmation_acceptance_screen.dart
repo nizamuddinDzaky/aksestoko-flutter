@@ -33,6 +33,7 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
             ),
           );
         });
+    base64File = "data:image/png;base64,";
     final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
     final splitted = picture.path.substring(0, (lastIndex));
     final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";

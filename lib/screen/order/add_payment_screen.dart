@@ -12,9 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io' as Io;
-
-import 'package:intl/intl.dart';
 
 class AddPaymentScreen extends StatefulWidget {
   _AddPaymentScreenState createState() => _AddPaymentScreenState();
@@ -56,10 +53,12 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
             ),
           );
         });
+    base64File = "data:image/png;base64,";
     final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
     final splitted = picture.path.substring(0, (lastIndex));
     final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
-    imageFile = await compressAndGetFile(File(picture.path), outPath);;
+    imageFile = await compressAndGetFile(File(picture.path), outPath);
+    ;
     final bytes = imageFile.readAsBytesSync();
     base64File += base64Encode(bytes);
     setState(() {});

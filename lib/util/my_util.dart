@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:math' as math;
 
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -103,14 +103,22 @@ Color statusColor(String status) {
 
 Future<File> compressAndGetFile(File file, String targetPath) async {
   var decodeImage = await decodeImageFromList(file.readAsBytesSync());
-  var isVertical = decodeImage.width < decodeImage.height;
+  var w = decodeImage.width;
+  var h = decodeImage.height;
+  var max = [decodeImage.width, decodeImage.height].reduce(math.max);
+  max = max > 1000 ? 1000 : max;
+  var isVertical = w < h;
+  // debugPrint('ukuran awal ${decodeImage.width} ${decodeImage.height}');
   var result = await FlutterImageCompress.compressAndGetFile(
-    file.absolute.path, targetPath,
+    file.absolute.path,
+    targetPath,
     quality: 90,
-    minHeight: 1000,
-    minWidth: 1000,
+    minHeight: isVertical ? max : (h * max ~/ w),
+    minWidth: isVertical ? (w * max ~/ h) : max,
     rotate: isVertical ? 0 : 90,
   );
+  // var decodeImage2 = await decodeImageFromList(result.readAsBytesSync());
+  // debugPrint('ukuran akhir ${decodeImage2.width} ${decodeImage2.height}');
   return result;
 }
 
