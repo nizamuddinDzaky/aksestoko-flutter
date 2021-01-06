@@ -10,6 +10,7 @@ import 'package:aksestokomobile/screen/order/list_product_detail_screen.dart'
     as listProduct;
 import 'package:get/get.dart';
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class DetailOrderScreen extends StatefulWidget {
   final String idPemesanan;
@@ -457,11 +458,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                           ],
                         ),
                       ),
-                    Container(
-                      height: 3,
-                      color: Color(0xffEAEAEA),
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                    ),
+                    Divider(thickness: 2),
                     Container(
                       margin: EdgeInsets.only(bottom: 15, top: 15),
                       child: Row(
@@ -559,10 +556,77 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                             label: Text(
                               "Daftar Pembayaran",
                               style:
-                              TextStyle(color: MyColor.redAT, fontSize: 14),
+                                  TextStyle(color: MyColor.redAT, fontSize: 14),
                             ),
                           ),
                         ),
+                    if (orderDetail?.pembayaranKreditPro != null)
+                      Card(
+                        elevation: 4,
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Pembayaran Kredit",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  if (orderDetail?.pembayaranKreditPro?.image !=
+                                      null)
+                                    Image.network(
+                                      orderDetail?.pembayaranKreditPro?.image,
+                                      height: 24,
+                                    ),
+                                ],
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                child: LinearPercentIndicator(
+                                  lineHeight: 18,
+                                  percent: orderDetail
+                                          ?.pembayaranKreditPro?.percent ??
+                                      0,
+                                  center: Text(
+                                    orderDetail?.pembayaranKreditPro?.status ??
+                                        '',
+                                    style: TextStyle(
+                                        fontSize: 14.0, color: Colors.white),
+                                  ),
+                                  backgroundColor: Colors.grey,
+                                  progressColor: MyColor.mainGreen,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    MyNumber.toNumberRpStr(orderDetail
+                                            ?.pembayaranKreditPro?.start
+                                            ?.toString() ??
+                                        '0'),
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  Text(
+                                    ' / ',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  Text(
+                                    MyNumber.toNumberRpStr(orderDetail
+                                            ?.pembayaranKreditPro?.end
+                                            ?.toString() ??
+                                        '0'),
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),

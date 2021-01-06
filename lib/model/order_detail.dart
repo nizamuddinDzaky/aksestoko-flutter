@@ -1,7 +1,6 @@
 import 'package:aksestokomobile/model/cart_model.dart';
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/model/order_summary.dart';
-import 'package:flutter/foundation.dart';
 
 class OrderDetail {
   DetailPemesanan detailPemesanan;
@@ -14,8 +13,9 @@ class OrderDetail {
   String info3;
   String info4;
   bool konfirmasiHargaPesanan;
-  /*List<String> pembayaranKreditPro;
-  Penerimaan penerimaan;
+  PembayaranKreditPro pembayaranKreditPro;
+
+  /*Penerimaan penerimaan;
   Delivery pengiriman;
 
   ;
@@ -24,15 +24,15 @@ class OrderDetail {
 
   OrderDetail(
       {this.detailPemesanan,
-        this.ringkasan,
-        this.pengiriman,
-        this.daftarBelanja,
-        this.pesan,
-        this.info1,
-        this.info2,
-        this.info3,
-        this.info4,
-        this.konfirmasiHargaPesanan
+      this.ringkasan,
+      this.pengiriman,
+      this.daftarBelanja,
+      this.pesan,
+      this.info1,
+      this.info2,
+      this.info3,
+      this.info4,
+      this.konfirmasiHargaPesanan
       /*this.pembayaranKreditPro,
       this.penerimaan,
 
@@ -62,12 +62,10 @@ class OrderDetail {
     info3 = json['info_3'];
     info4 = json['info_4'];
     konfirmasiHargaPesanan = json['konfirmasi_harga_pesanan'];
-    /*if (json['pembayaran_kredit_pro'] != null) {
-      pembayaranKreditPro = new List<Null>();
-      json['pembayaran_kredit_pro'].forEach((v) {
-        pembayaranKreditPro.add(v);
-      });
-    }*/
+    if (json['pembayaran_kredit_pro'] is Map<String, dynamic>) {
+      pembayaranKreditPro =
+          PembayaranKreditPro.fromJson(json['pembayaran_kredit_pro']);
+    }
     /*penerimaan = json['penerimaan'] != null
         ? new Penerimaan.fromJson(json['penerimaan'])
         : null;
@@ -274,6 +272,53 @@ class DetailDiterima {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['barang_baik'] = this.barangBaik;
     data['barang_rusak'] = this.barangRusak;
+    return data;
+  }
+}
+
+class PembayaranKreditPro {
+  String image;
+  String progress;
+  String proses;
+  String perbandingan;
+  int start;
+  int end;
+
+  double get percent {
+    if ((end ?? 0) <= 0) return 0;
+    return (start ?? 0) / end;
+  }
+
+  String get status {
+    if (proses?.isNotEmpty ?? false) return proses;
+    return progress ?? '';
+  }
+
+  PembayaranKreditPro(
+      {this.image, this.progress, this.proses, this.perbandingan});
+
+  PembayaranKreditPro.fromJson(Map<String, dynamic> json) {
+    image = json['image'];
+    progress = json['progress'];
+    proses = json['proses'];
+    perbandingan = json['perbandingan'];
+    if (perbandingan != null) {
+      var vals = perbandingan.split('/');
+      if (vals?.length == 2) {
+        try {
+          start = int.tryParse(vals[0]);
+          end = int.tryParse(vals[1]);
+        } catch (e) {}
+      }
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['image'] = this.image;
+    data['progress'] = this.progress;
+    data['proses'] = this.proses;
+    data['perbandingan'] = this.perbandingan;
     return data;
   }
 }
