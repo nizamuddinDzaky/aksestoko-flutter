@@ -36,7 +36,8 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
     final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
     final splitted = picture.path.substring(0, (lastIndex));
     final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
-    imageFile = await compressAndGetFile(File(picture.path), outPath);;
+    imageFile = await compressAndGetFile(File(picture.path), outPath);
+    ;
     final bytes = imageFile.readAsBytesSync();
     base64File += base64Encode(bytes);
     setState(() {});
@@ -562,9 +563,9 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
               child: Text(
-                "Konfrimasi Penerimaan",
-                style: TextStyle(fontSize: 20),
-              ),
+                "Konfirmasi Penerimaan",
+                    style: TextStyle(fontSize: 20),
+                  ),
             ),
             actions: <Widget>[
              /* Stack(
