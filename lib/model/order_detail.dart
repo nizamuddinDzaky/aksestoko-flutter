@@ -291,6 +291,7 @@ class PembayaranKreditPro {
 
   double get percent {
     if ((end ?? 0) <= 0) return 0;
+    // start = 200000;
     return (start ?? 0) / end;
   }
 
@@ -303,6 +304,8 @@ class PembayaranKreditPro {
     //return progress ?? '';
     return format(percent * 100) ?? '';
   }
+
+  int get unPaid => end - start;
 
   PembayaranKreditPro(
       {this.image, this.progress, this.proses, this.perbandingan});

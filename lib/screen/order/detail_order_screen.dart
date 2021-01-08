@@ -611,34 +611,74 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   percent: orderDetail
                                           ?.pembayaranKreditPro?.percent ??
                                       0,
+                                  center: Row(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (false)
+                                        Text(
+                                          MyNumber.toNumberRpStr(orderDetail
+                                                  ?.pembayaranKreditPro?.start
+                                                  ?.toString() ??
+                                              '0'),
+                                          // style: TextStyle(fontSize: 14),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
+                                      Text(
+                                        (orderDetail?.pembayaranKreditPro
+                                                    ?.proses?.isNotEmpty ??
+                                                false)
+                                            ? orderDetail
+                                                ?.pembayaranKreditPro?.proses
+                                            : MyNumber.toNumberRpStr(orderDetail
+                                                    ?.pembayaranKreditPro
+                                                    ?.unPaid
+                                                    ?.toString() ??
+                                                '0'),
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+/*
                                   center: Text(
                                     orderDetail?.pembayaranKreditPro?.status ??
                                         '',
                                     style: TextStyle(
                                         fontSize: 14.0, color: Colors.white),
                                   ),
+*/
                                   backgroundColor: Colors.grey,
                                   progressColor: MyColor.mainGreen,
                                 ),
                               ),
                               Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  if (false)
+                                    Text(
+                                      '(${orderDetail?.pembayaranKreditPro
+                                          ?.status ?? ''}) ',
+                                      style: TextStyle(
+                                        // fontSize: 14.0, color: Colors.white),
+                                          fontSize: 14.0),
+                                    ),
                                   Text(
                                     MyNumber.toNumberRpStr(orderDetail
-                                            ?.pembayaranKreditPro?.start
-                                            ?.toString() ??
+                                        ?.pembayaranKreditPro?.start
+                                        ?.toString() ??
                                         '0'),
                                     style: TextStyle(fontSize: 14),
                                   ),
-                                  Text(
-                                    ' / ',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
+                                  Text(' / '),
                                   Text(
                                     MyNumber.toNumberRpStr(orderDetail
-                                            ?.pembayaranKreditPro?.end
-                                            ?.toString() ??
+                                        ?.pembayaranKreditPro?.end
+                                        ?.toString() ??
                                         '0'),
                                     style: TextStyle(fontSize: 14),
                                   ),
