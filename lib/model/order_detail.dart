@@ -136,16 +136,21 @@ class DetailPemesanan {
   bool pilihMetodePembayaran;
   String tanggalJatuhTempo;
 
+  String get statusPembayaranStr =>
+      statusPembayaran?.trim()?.toLowerCase() == 'telah dibayar'
+          ? 'Lunas'
+          : statusPembayaran;
+
   DetailPemesanan(
       {this.idPemesanan,
-        this.noPemesanan,
-        this.idBk,
-        this.tanggalPeesanan,
-        this.ekpestasi,
-        this.kodeDistributor,
-        this.namaDistributor,
-        this.caraPengiriman,
-        this.caraPembayaran,
+      this.noPemesanan,
+      this.idBk,
+      this.tanggalPeesanan,
+      this.ekpestasi,
+      this.kodeDistributor,
+      this.namaDistributor,
+      this.caraPengiriman,
+      this.caraPembayaran,
         this.jenisPembayaran,
         this.notifikasiPemesanan,
         this.statusPemesanan,
@@ -289,9 +294,14 @@ class PembayaranKreditPro {
     return (start ?? 0) / end;
   }
 
+  String format(double n) {
+    return '${n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1)}%';
+  }
+
   String get status {
     if (proses?.isNotEmpty ?? false) return proses;
-    return progress ?? '';
+    //return progress ?? '';
+    return format(percent * 100) ?? '';
   }
 
   PembayaranKreditPro(

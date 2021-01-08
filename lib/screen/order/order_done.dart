@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/screen/order/list_history_order_done_screen.dart'
     as listOrder;
 
+@deprecated
 class OrderDoneScreen extends StatefulWidget {
   @override
   _OrderDoneScreenState createState() => _OrderDoneScreenState();

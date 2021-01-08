@@ -24,6 +24,11 @@ class Order {
   String notifikasiProduct;
   bool konfirmasiPenerimaan;
 
+  String get statusPembayaranStr =>
+      statusPembayaran?.trim()?.toLowerCase() == 'telah dibayar'
+          ? 'Lunas'
+          : statusPembayaran;
+
   Order({
     this.idPemesanan,
     this.pesan,

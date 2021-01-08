@@ -427,12 +427,13 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                         ],
                       ),
                     ),
-                    if(orderDetail?.detailPemesanan?.tanggalJatuhTempo != null)
                       Container(
                         margin: EdgeInsets.only(bottom: 15),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                          if (orderDetail?.detailPemesanan?.tanggalJatuhTempo !=
+                              null)
                             Expanded(
                               flex: 5,
                               child: Column(
@@ -445,8 +446,10 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                         color: MyColor.greyTextAT),
                                   ),
                                   Text(
-                                    orderDetail != null ? orderDetail
-                                        .detailPemesanan.tanggalJatuhTempo : "",
+                                    orderDetail != null
+                                        ? orderDetail
+                                            .detailPemesanan.tanggalJatuhTempo
+                                        : "",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -455,7 +458,35 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                 ],
                               ),
                             ),
-                          ],
+                          if (orderDetail?.detailPemesanan?.tanggalJatuhTempo !=
+                              null)
+                            SizedBox(width: 8),
+                          if (orderDetail?.detailPemesanan?.jenisPembayaran !=
+                              null)
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Jenis Pembayaran",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: MyColor.greyTextAT),
+                                  ),
+                                  Text(
+                                    orderDetail?.detailPemesanan
+                                            ?.jenisPembayaran ??
+                                        '',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
                         ),
                       ),
                     Divider(thickness: 2),
@@ -501,10 +532,9 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                   style: TextStyle(
                                       fontSize: 14, color: MyColor.greyTextAT),
                                 ),
-                                /*if (index == 0)*/
                                 Text(
-                                  orderDetail != null ? orderDetail
-                                      .detailPemesanan.statusPembayaran : "",
+                                  orderDetail?.detailPemesanan
+                                      ?.statusPembayaranStr ?? '',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -514,15 +544,6 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                             .notifikasiPembayaran : ""),
                                   ),
                                 ),
-                                /*if (index == 1)
-                                Text(
-                                  "Diterima Sebagian",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: MyColor.infoAT,
-                                  ),
-                                ),*/
                               ],
                             ),
                           ),

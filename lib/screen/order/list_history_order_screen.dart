@@ -206,7 +206,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                               color: MyColor.greyTextAT, fontSize: 15),
                         ),
                         Text(
-                          _order?.statusPembayaran ?? '',
+                          _order?.statusPembayaranStr ?? '',
                           style: TextStyle(
                               color: statusColor(_order?.notikasiPembayaran),
                               fontSize: 14,
@@ -260,6 +260,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                 width: 90,
                               ),
                       ),
+                      SizedBox(width: 8),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

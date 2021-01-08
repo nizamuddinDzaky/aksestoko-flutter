@@ -5,6 +5,7 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+@deprecated
 class ListHistoryOrderDoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -229,7 +230,7 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
                                   children: <Widget>[
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           "Jumlah",
@@ -267,14 +268,14 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                              .size
+                                              .width /
                                               16),
                                     ),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
                                             "Harga",
@@ -311,7 +312,7 @@ class ListHistoryOrderDoneScreen extends StatelessWidget {
                 ),
                 Container(
                   padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                  EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
