@@ -7,7 +7,6 @@ import 'package:aksestokomobile/screen/home/cart_item_screen.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
@@ -168,67 +167,6 @@ class _CartScreenState extends State<CartScreen> {
             tag: 'logoForcaPoS',
             child: Text("Keranjang"),
           ),
-          // bottom: controller.listCart?.isEmpty ?? true
-          bottom: true
-              ? null
-              : PreferredSize(
-                  preferredSize: const Size.fromHeight(48.0),
-                  child: Container(
-                    color: Colors.white,
-                    height: 48,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Checkbox(
-                              value: CheckBoxValue,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  CheckBoxValue = value;
-                                });
-                              },
-                            ),
-                            Text("Pilih Semua"),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.only(right: 15),
-                              child: CupertinoButton(
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(right: 2),
-                                      child: Text(
-                                        'Hapus',
-                                        style: TextStyle(
-                                            color: MyColor.blackTextAT,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Text(
-                                      '(${controller.listCart?.length})',
-                                      style: TextStyle(
-                                          color: MyColor.blackTextAT,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                onPressed: () {
-                                  // openDialog(step: 1, data: );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
         ),
         body: GestureDetector(
             onTap: () {
@@ -241,7 +179,7 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             new Container(
               padding:
-              EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+                  EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
               /*height: 100,*/
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -258,6 +196,7 @@ class _CartScreenState extends State<CartScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
+                    flex: 55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -266,34 +205,46 @@ class _CartScreenState extends State<CartScreen> {
                           children: [
                             if (controller.currentPromo == null &&
                                 controller.promoCode != null)
-                              InkWell(
-                                child: Icon(Icons.delete_outline),
-                                onTap: () {
-                                  controller.deletePromoCode();
-                                },
-                              ),
-                            if (controller.currentPromo == null &&
-                                controller.promoCode != null)
                               SizedBox(width: 8),
-                            Flexible(
-                              child: CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                minSize: 0,
-                                child: Text(
-                                  controller.currentPromo != null
-                                      ? "${controller.currentPromo.name} (${controller.currentPromo.codePromo})"
-                                      : (controller.promoCode ?? 'Kode Promo'),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 14),
+                            if (controller.currentPromo != null ||
+                                controller.promoCode != null)
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: CupertinoButton(
+                                        padding: EdgeInsets.zero,
+                                        minSize: 0,
+                                        child: Text(
+                                          controller.currentPromo != null
+                                              ? "${controller.currentPromo
+                                              .name} (${controller.currentPromo
+                                              .codePromo})"
+                                              : (controller.promoCode ??
+                                              'Kode Promo'),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        onPressed: () {
+                                          validationCart(controller, () {
+                                            controller.inputPromoCode();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    IconButton(
+                                        icon: Icon(
+                                          Icons.clear,
+                                          color: MyColor.redAT,
+                                          size: 24,
+                                        ),
+                                        onPressed: () {
+                                          controller.deletePromoCode();
+                                        })
+                                  ],
                                 ),
-                                onPressed: () {
-                                  validationCart(controller, () {
-                                    controller.inputPromoCode();
-                                  });
-                                },
                               ),
-                            ),
                           ],
                         ),
                         SizedBox(height: 5),
@@ -321,15 +272,6 @@ class _CartScreenState extends State<CartScreen> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16),
                               ),
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: MyColor.redAT,
-                                    size: 15,
-                                  ),
-                                  onPressed: () {
-                                    controller.deletePromoCode();
-                                  })
                             ],
                           ),
                         if (controller.currentPromo != null)
@@ -337,35 +279,66 @@ class _CartScreenState extends State<CartScreen> {
                             child: Text(
                               "${MyNumber.toNumberRpStr(controller.currentPromo?.value)}",
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
+                              TextStyle(color: Colors.black, fontSize: 16),
                             ),
                           ),
                       ],
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 0),
-                      width: double.maxFinite,
-                      height: 50,
-                      child: RaisedButton(
-                        color: MyColor.redAT,
-                        child: Text(
-                          'Lanjutkan',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                    flex: 45,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 0),
+                          width: double.maxFinite,
+                          height: 30,
+                          child: RaisedButton(
+                            color: MyColor.blueDio,
+                            child: Text(
+                              'Kode Promo',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            onPressed: (controller.currentPromo != null ||
+                                controller.promoCode != null)
+                                ? null
+                                : () {
+                              validationCart(controller, () {
+                                controller.inputPromoCode();
+                              });
+                            },
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20.0)),
                           ),
                         ),
-                        onPressed: () {
-                          // debugPrint("token : ${MyPref.getATToken()}");
-                          confirm(controller, _alertDialog);
-                          // Get.toNamed(checkoutScreen,
-                          //     arguments: controller.listCart);
-                        },
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(20.0)),
-                      ),
+                        SizedBox(height: 8),
+                        Container(
+                          margin: EdgeInsets.only(left: 0),
+                          width: double.maxFinite,
+                          height: 50,
+                          child: RaisedButton(
+                            color: MyColor.redAT,
+                            child: Text(
+                              'Lanjutkan',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            onPressed: (controller.currentPromo == null &&
+                                controller.promoCode != null)
+                                ? null
+                                : () {
+                              confirm(controller, _alertDialog);
+                            },
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20.0)),
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 ],
