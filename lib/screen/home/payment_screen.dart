@@ -253,13 +253,13 @@ class _PaymentScreenState extends PaymentController {
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Checkbox(
-                                    value: cashOnDelivery,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        setIndexMethod(PaymentController
-                                            .listPaymentMethod[0]);
-                                      });
+                                  Radio(
+                                    groupValue: paymentMethod,
+                                    value:
+                                        PaymentController.listPaymentMethod[0],
+                                    onChanged: (val) {
+                                      setIndexMethod(val);
+                                      setState(() {});
                                     },
                                   ),
                                   Container(
@@ -511,13 +511,13 @@ class _PaymentScreenState extends PaymentController {
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    Checkbox(
-                                      value: cashBeforeDelivery,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          setIndexMethod(PaymentController
-                                              .listPaymentMethod[1]);
-                                        });
+                                    Radio(
+                                      groupValue: paymentMethod,
+                                      value: PaymentController
+                                          .listPaymentMethod[1],
+                                      onChanged: (val) {
+                                        setIndexMethod(val);
+                                        setState(() {});
                                       },
                                     ),
                                     Container(
@@ -832,13 +832,13 @@ class _PaymentScreenState extends PaymentController {
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    Checkbox(
-                                      value: tempoDistributor,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          setIndexMethod(PaymentController
-                                              .listPaymentMethod[2]);
-                                        });
+                                    Radio(
+                                      groupValue: paymentMethod,
+                                      value: PaymentController
+                                          .listPaymentMethod[2],
+                                      onChanged: (val) {
+                                        setIndexMethod(val);
+                                        setState(() {});
                                       },
                                     ),
                                     Container(
@@ -1310,13 +1310,13 @@ class _PaymentScreenState extends PaymentController {
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    Checkbox(
-                                      value: kreditPro,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          setIndexMethod(PaymentController
-                                              .listPaymentMethod[3]);
-                                        });
+                                    Radio(
+                                      groupValue: paymentMethod,
+                                      value: PaymentController
+                                          .listPaymentMethod[3],
+                                      onChanged: (val) {
+                                        setIndexMethod(val);
+                                        setState(() {});
                                       },
                                     ),
                                     Container(
