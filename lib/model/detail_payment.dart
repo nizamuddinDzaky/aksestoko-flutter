@@ -3,6 +3,9 @@ class DetailPayment {
   int jumlahYangHarusDibayar;
   List<ListPembayaran> listPembayaran;
 
+  int get sisaPembayaran =>
+      (jumlahYangHarusDibayar ?? 0) - (totalPembayaran ?? 0);
+
   DetailPayment(
       {this.totalPembayaran, this.jumlahYangHarusDibayar, this.listPembayaran});
 

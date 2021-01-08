@@ -115,22 +115,53 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 7,
+                            child: Text(
+                              detailPayment != null
+                                  ? MyNumber.toNumberRpStr(detailPayment
+                                      .jumlahYangHarusDibayar
+                                      .toString())
+                                  : "Rp 0",
+                              style: TextStyle(
+                                  color: MyColor.redAT,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                              textAlign: TextAlign.right,
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: Text(
-                        detailPayment != null ? MyNumber.toNumberRpStr(detailPayment.jumlahYangHarusDibayar.toString()) : "Rp 0",
-                        style: TextStyle(
-                            color: MyColor.redAT,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                        textAlign: TextAlign.right,
-                      ),
-                    )
-                  ],
-                ),
-              ],
+                      if ((detailPayment?.sisaPembayaran ?? 0) > 0)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "Sisa Pembayaran",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Text(
+                                MyNumber.toNumberRpStr(
+                                    detailPayment?.sisaPembayaran?.toString() ??
+                                        ''),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                                textAlign: TextAlign.right,
+                              ),
+                            )
+                          ],
+                        ),
+                    ],
             ),
           ),
         ],
