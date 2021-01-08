@@ -30,6 +30,8 @@ class ApiConfig {
   static const String urlUpdateAddress = '${path}Profile/update_address';
   static const String urlDetailProfile = '${path}Profile/detail_profile';
   static const String urlUpdateProfile = '${path}Profile/update_profile';
+  static const String urlGenerateOTP = '${path}Profile/generate_phone_otp';
+  static const String urlVerivyOTP = '${path}Profile/verify_phone_otp';
   static String urlListProduct = '${path}Profile/list_product';
   static String urlListDistributor = '${path}Profile/list_distributor';
   static String urlDetailAddress = '${path}Profile/detail_address';

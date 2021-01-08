@@ -53,6 +53,15 @@ class MyPref {
     return prefs?.setInt(key, value) ?? Future.value(false);
   }
 
+  static double getDouble(String key, [double defValue]) {
+    return _prefsInstance.getDouble(key) ?? defValue;
+  }
+
+  static Future<bool> setDouble(String key, double value) async {
+    var prefs = await _instance;
+    return prefs?.setDouble(key, value) ?? Future.value(false);
+  }
+
   //action
   static logout() {
     //setRemember(false, null);
@@ -169,5 +178,13 @@ class MyPref {
 
   static Future<List<String>> getKeyNotif() async {
     return _prefsInstance.getStringList('notif') ?? [];
+  }
+
+  static void setOtpVerPhone(double milis) {
+    setDouble('otpVerPhone', milis);
+  }
+
+  static Future<double> getOtpVerPhone() async {
+    return _prefsInstance.getDouble('otpVerPhone') ?? 0;
   }
 }

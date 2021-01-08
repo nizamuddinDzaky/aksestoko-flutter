@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/model/base_response.dart';
+import 'package:aksestokomobile/model/otp_response.dart';
 import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 abstract class UpdateProfileController extends State<UpdateProfileScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
@@ -18,6 +20,8 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
   var emailTextController = TextEditingController();
   var phoneTextController = TextEditingController();
   Profile profile;
+  DateTime endOtp;
+  bool isDialogShowing;
 
   Future<void> actionRefresh() async {
     await getProfile();
@@ -55,9 +59,10 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
         newProfile?.kodeBk = profile?.kodeBk;
         profile = newProfile;
         Fluttertoast.showToast(
-          msg: 'Data berhasil berubah',
+          msg: response?.data?.message ?? 'Data berhasil berubah',
           gravity: ToastGravity.CENTER,
         );
+        getProfile();
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -114,9 +119,85 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
     });
   }
 
+  getPhoneOtp({Function(OTPResponse) onSuccess}) async {
+    var format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlGenerateOTP,
+      params: {
+        if (endOtp != null) 'phone_otp_valid_until': format.format(endOtp),
+      },
+      customHandle: true,
+      onBefore: (status) {},
+      onSuccess: (data, flag) {
+        var response = OTPResponse.fromJson(data['data']);
+        if (response != null) onSuccess?.call(response);
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {},
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  postVerifyPhone(phoneOtp) async {
+    var body = {
+      'phone_otp': phoneOtp,
+    };
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlVerivyOTP,
+      body,
+      {},
+      customHandle: true,
+      onBefore: (status) {},
+      onSuccess: (data, flag) {
+        if (isDialogShowing) Get.back();
+        getProfile();
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {
+        saveProfile();
+        reInitText();
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    if (endOtp == null) {
+      MyPref.getOtpVerPhone().then((milis) {
+        if (milis != null && milis != 0)
+          endOtp = DateTime.fromMillisecondsSinceEpoch(milis.toInt());
+      });
+    }
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshKey?.currentState?.show();
     });

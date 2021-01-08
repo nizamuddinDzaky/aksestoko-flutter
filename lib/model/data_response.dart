@@ -45,6 +45,7 @@ class DataResponse {
   DetailPayment detailPayment;
   Promo promo;
   String statusPromo;
+  String message;
 
   DataResponse({this.token});
 
@@ -77,6 +78,7 @@ class DataResponse {
     profile = ifExistObject(json, 'profile', (obj) {
       return Profile.fromJson(obj);
     });
+    message = ifExist(json, 'message');
     salesPerson = ifExistObject(json, 'sales_person', (obj) {
           return SalesPerson.fromJson(obj);
         }) ??
