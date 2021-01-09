@@ -612,19 +612,19 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                           ?.pembayaranKreditPro?.percent ??
                                       0,
                                   center: Row(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    // mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      if (false)
-                                        Text(
-                                          MyNumber.toNumberRpStr(orderDetail
-                                                  ?.pembayaranKreditPro?.start
-                                                  ?.toString() ??
-                                              '0'),
-                                          // style: TextStyle(fontSize: 14),
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.white),
+                                      // if (false)
+                                      Text(
+                                        MyNumber.toNumberRpStr(orderDetail
+                                                ?.pembayaranKreditPro?.start
+                                                ?.toString() ??
+                                            '0'),
+                                        // style: TextStyle(fontSize: 14),
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.white),
                                         ),
                                       Text(
                                         (orderDetail?.pembayaranKreditPro
@@ -667,14 +667,16 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
                                         // fontSize: 14.0, color: Colors.white),
                                           fontSize: 14.0),
                                     ),
-                                  Text(
-                                    MyNumber.toNumberRpStr(orderDetail
-                                        ?.pembayaranKreditPro?.start
-                                        ?.toString() ??
-                                        '0'),
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  Text(' / '),
+                                  if (false)
+                                    Text(
+                                      MyNumber.toNumberRpStr(orderDetail
+                                          ?.pembayaranKreditPro?.start
+                                          ?.toString() ??
+                                          '0'),
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  if (false)
+                                    Text(' / '),
                                   Text(
                                     MyNumber.toNumberRpStr(orderDetail
                                         ?.pembayaranKreditPro?.end

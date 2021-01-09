@@ -280,8 +280,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
 
   void _showAlertDialog(BuildContext context,
       SelectProductController controller, Product _product) {
-    // set up the buttons
-
+    if ((_product?.qty ?? 0) == 0) return;
     Widget cancelButton = FlatButton(
       child: Text("Batal"),
       onPressed: () {
