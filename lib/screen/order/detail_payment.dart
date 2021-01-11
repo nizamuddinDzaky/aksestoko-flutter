@@ -10,25 +10,24 @@ class DetailPaymentScreen extends StatefulWidget {
 }
 
 class _DetailPaymentScreenState extends DetailPaymentViewModel {
-
   @override
   void initState() {
     actionRefresh();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    var formLayout =
-        completeLoad == null
-    ? Center(child: CircularProgressIndicator()) :
-    SingleChildScrollView(
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
-              child: ListView.builder(
-                itemCount: detailPayment?.listPembayaran?.length ?? 0,
+    var formLayout = completeLoad == null
+        ? Center(child: CircularProgressIndicator())
+        : SingleChildScrollView(
+            child: Container(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 15),
+                    child: ListView.builder(
+                      itemCount: detailPayment?.listPembayaran?.length ?? 0,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (buildcontext, index) {
@@ -36,11 +35,11 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                             detailPayment.listPembayaran[index], index);
                       },
                     ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
 
     return Scaffold(
       appBar: AppBar(
@@ -59,12 +58,13 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
         child: formLayout,
       ),
       bottomNavigationBar: completeLoad == null
-          ? Center(child: CircularProgressIndicator()) : new Stack(
+          ? Center(child: CircularProgressIndicator())
+          : new Stack(
         overflow: Overflow.visible,
         children: [
           new Container(
-            padding: EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
-            height: 80,
+            padding:
+            EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -77,6 +77,7 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
               ],
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +95,10 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                     Expanded(
                       flex: 7,
                       child: Text(
-                        detailPayment != null ? MyNumber.toNumberRpStr(detailPayment.totalPembayaran.toString()) : "Rp 0",
+                        detailPayment != null
+                            ? MyNumber.toNumberRpStr(
+                            detailPayment.totalPembayaran.toString())
+                            : "Rp 0",
                         style: TextStyle(
                             color: MyColor.greenAT,
                             fontWeight: FontWeight.bold,
@@ -115,16 +119,16 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 7,
-                            child: Text(
-                              detailPayment != null
-                                  ? MyNumber.toNumberRpStr(detailPayment
-                                      .jumlahYangHarusDibayar
-                                      .toString())
-                                  : "Rp 0",
+                      ),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Text(
+                        detailPayment != null
+                            ? MyNumber.toNumberRpStr(detailPayment
+                            .jumlahYangHarusDibayar
+                            .toString())
+                            : "Rp 0",
                               style: TextStyle(
                                   color: MyColor.redAT,
                                   fontWeight: FontWeight.bold,
@@ -137,9 +141,9 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                       if ((detailPayment?.sisaPembayaran ?? 0) > 0)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Expanded(
-                              flex: 4,
                               child: Text(
                                 "Sisa Pembayaran",
                                 style: TextStyle(
@@ -149,7 +153,6 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                               ),
                             ),
                             Expanded(
-                              flex: 7,
                               child: Text(
                                 MyNumber.toNumberRpStr(
                                     detailPayment?.sisaPembayaran?.toString() ??
@@ -161,7 +164,7 @@ class _DetailPaymentScreenState extends DetailPaymentViewModel {
                             )
                           ],
                         ),
-                    ],
+              ],
             ),
           ),
         ],
