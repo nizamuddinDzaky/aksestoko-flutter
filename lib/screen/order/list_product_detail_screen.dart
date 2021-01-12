@@ -51,6 +51,7 @@ class _ListProductDetailOrderScreenState
                     width: 100,
                   ),
           ),
+          SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
