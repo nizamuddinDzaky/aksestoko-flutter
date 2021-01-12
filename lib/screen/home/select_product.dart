@@ -241,22 +241,24 @@ class _SelectProductScreenState extends SelectProductViewModel {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Get.toNamed(selectDistributorScreen).then((result) {
-                          if (result != null) {
-                            actionRefresh();
-                          }
-                        });
-                      },
-                      icon: Icon(
-                        Icons.settings,
-                        color: Colors.white,
+                    if (countDistributor > 1)
+                      SizedBox(
+                        width: 8,
                       ),
-                    ),
+                    if (countDistributor > 1)
+                      IconButton(
+                        onPressed: () {
+                          Get.toNamed(selectDistributorScreen).then((result) {
+                            if (result != null) {
+                              actionRefresh();
+                            }
+                          });
+                        },
+                        icon: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                        ),
+                      ),
                   ],
                 ),
               ],

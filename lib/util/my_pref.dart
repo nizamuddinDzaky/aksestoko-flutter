@@ -187,4 +187,12 @@ class MyPref {
   static Future<double> getOtpVerPhone() async {
     return _prefsInstance.getDouble('otpVerPhone') ?? 0;
   }
+
+  static void setDistributorCount(int count) {
+    setInt('setDistributorCount', count);
+  }
+
+  static int getDistributorCount() {
+    return _prefsInstance.getInt('setDistributorCount') ?? 0;
+  }
 }

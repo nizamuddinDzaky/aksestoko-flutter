@@ -25,6 +25,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   bool isSearch = false;
   ParentController parentController;
+  int countDistributor = 0;
 
   @override
   bool get wantKeepAlive => true;
@@ -33,6 +34,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      countDistributor = MyPref.getDistributorCount();
       refreshKey.currentState.show();
       Future.delayed(Duration(milliseconds: 200), () {
         parentController = Get.find();

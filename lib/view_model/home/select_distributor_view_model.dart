@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,11 +20,11 @@ abstract class SelectDistributorViewModel extends SelectDistributorController {
   void getDataDistributor() async {
     var status = await ApiClient.methodGet(ApiConfig.urlListDistributor,
         customHandle: true, onBefore: (status) {}, onSuccess: (data, flag) {
-      var baseResponse = BaseResponse.fromJson(data);
+          var baseResponse = BaseResponse.fromJson(data);
       List<Distributor> newListDistributor =
           baseResponse?.data?.listDistributor ?? [];
       listDistributor.addAll(newListDistributor);
-
+      MyPref.setDistributorCount(listDistributor.length);
       if (listDistributor.length == 1) {
         gotoParent(context, listDistributor[0]);
       }
