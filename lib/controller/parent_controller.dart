@@ -14,7 +14,10 @@ class ParentController extends GetController {
   }
 
   int get countItems =>
-      items?.where((element) => element.isRead != true)?.length ?? 0;
+      items
+          ?.where((element) => element != null && element.isRead != true)
+          ?.length ??
+      0;
 
   void readNotif({Item item, String itemId}) {
     items?.firstWhere(
@@ -29,7 +32,7 @@ class ParentController extends GetController {
   }
 
   void addNotif({Item item}) {
-    if (kReleaseMode && item == null) return;
+    if (item == null) return;
     debugPrint('add notif ${item?.toJson()}');
     items?.add(item);
     if (items != null && items.length > 10) {

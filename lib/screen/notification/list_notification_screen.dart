@@ -79,7 +79,7 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
           children: [
             Row(
               children: [
-                if (data?.isRead != true)
+                if (data != null && data.isRead != true)
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 4),
                     padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),

@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:aksestokomobile/helper/item.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 
 class NotifPref {
   void setNotif(List<Item> items) {
     var mapItem = {
-      'items': items?.map((e) => e.toJson())?.toList(),
+      'items': items?.map((e) => e?.toJson())?.toList(),
     };
     String json = jsonEncode(mapItem);
     var distributorId = MyPref.getIdDistributor();
@@ -20,16 +22,18 @@ class NotifPref {
         MyPref.getString('notif${distributorId ?? ''}', '{"items": null}');
     var data = jsonDecode(json);
     if (data['items'] is List) {
-      // log('data ${data['items']} $data');
+      if (isDebugOnly) log('data ${data['items']} $data');
       return (data['items'] as List)
-          .map((e) => Item(
-                itemId: e['id'] ?? e['id_promo'] ?? e['id_pemesanan'],
-                title: e['title'],
-                body: e['body'],
-                type: e['type'],
-              )
+          .map((e) => e == null
+              ? null
+              : (Item(
+                  itemId: e['id'] ?? e['id_promo'] ?? e['id_pemesanan'],
+                  title: e['title'],
+                  body: e['body'],
+                  type: e['type'],
+                )
                 ..status = e['status']
-                ..isRead = e['is_read'])
+                ..isRead = e['is_read']))
           .toList();
     }
     // print('data empty ${data['items']} $data');
