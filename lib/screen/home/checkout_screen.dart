@@ -497,6 +497,15 @@ class _CheckoutScreenState extends CheckoutViewModel {
                             },
                             showSearchBox: true,
                             selectedItem: selectShipping,
+                            dropdownSearchDecoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: MyColor.redAT,
+                                ),
+                              ),
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                            ),
                             searchBoxDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),

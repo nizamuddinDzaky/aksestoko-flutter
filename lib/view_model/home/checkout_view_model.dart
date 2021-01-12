@@ -49,7 +49,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
         onBefore: (status) {}, onSuccess: (data, flag) {
       checkoutModel = CheckoutModel.fromJson(data['data']);
       selectShipping = checkoutModel?.listPengiriman
-          ?.where((element) => element.value == 'pickup')
+          ?.where((element) => element.value == 'delivery')
           ?.first;
       address = checkoutModel?.alamatPengiriman;
       if (checkoutModel?.diskon == null) {
