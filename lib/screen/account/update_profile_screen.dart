@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:aksestokomobile/helper/my_stateful_builder.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -11,8 +10,10 @@ import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:aksestokomobile/screen/account/update_profile_controller.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
@@ -20,32 +21,67 @@ class UpdateProfileScreen extends StatefulWidget {
 
 class _UpdateProfileScreenState extends UpdateProfileController {
   _verifikasiNoTelepon() {
-    var format = DateFormat('dd MMM yy HH:mm:ss');
     var otpTextController = TextEditingController();
-    Timer _timer;
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    var styleBlack = TextStyle(color: MyColor.txtField, fontSize: 16);
+    var styleRed = TextStyle(color: MyColor.redAT, fontSize: 16);
+    var styleBlue = TextStyle(color: MyColor.blueDio, fontSize: 16);
+    CountdownTimerController controller;
     isDialogShowing = true;
     return showDialog(
       context: context,
       builder: (c) {
         return Dialog(
           child: MyStatefulBuilder(
-            dispose: () {
-              _timer?.cancel();
-            },
+            dispose: () {},
             builder: (_context, _setState) {
               var now = DateTime.now();
               var status = (endOtp?.millisecondsSinceEpoch ?? 0) >
                   now.millisecondsSinceEpoch;
               debugPrint('status $status $now $endOtp');
-              if (status && _timer == null) {
-                _timer = Timer(
-                    Duration(
-                        milliseconds:
-                            endOtp.difference(now).inMilliseconds + 500), () {
-                  debugPrint('update timer');
-                  _setState(() {});
-                });
-              }
+              if (status)
+                controller = CountdownTimerController(
+                  endTime: endOtp.millisecondsSinceEpoch + 500,
+                  onEnd: () {
+                    debugPrint('selesai timer');
+                  },
+                );
+              var actionGetOTP = () {
+                getPhoneOtp(
+                  onSuccess: (otp) {
+                    debugPrint('kirim kode');
+                    var duration = Duration(seconds: otp?.timeleft ?? 300);
+                    endOtp = DateTime.now().add(duration);
+                    MyPref.setOtpVerPhone(
+                        endOtp.millisecondsSinceEpoch.toDouble());
+                    _setState(() {});
+                  },
+                );
+              };
+              var actionTestOTP = () {
+                debugPrint('kirim kode');
+                var duration = Duration(seconds: 10);
+                endOtp = DateTime.now().add(duration);
+                MyPref.setOtpVerPhone(endOtp.millisecondsSinceEpoch.toDouble());
+                _setState(() {});
+              };
+              var timeOut = RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(style: styleBlack, text: 'Tekan '),
+                    TextSpan(
+                      style: styleBlue,
+                      text: 'Kirim Kode',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = isDebugOnly ? actionTestOTP : actionGetOTP,
+                    ),
+                    TextSpan(
+                        style: styleBlack,
+                        text: ' untuk menerima kode verifikasi No Telepon'),
+                  ],
+                ),
+              );
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -63,63 +99,34 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (!status)
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                    style: TextStyle(color: MyColor.txtField),
-                                    text: 'Tekan '),
-                                TextSpan(
-                                  style: TextStyle(color: Colors.blue),
-                                  text: 'Kirim Kode',
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => getPhoneOtp(
-                                          onSuccess: (otp) {
-                                            // () {
-                                            debugPrint('berhasil kirim kode');
-                                            // var duration = Duration(seconds: 10);
-                                            var duration = Duration(
-                                                seconds: otp?.timeleft ?? 300);
-                                            endOtp =
-                                                DateTime.now().add(duration);
-                                            MyPref.setOtpVerPhone(endOtp
-                                                .millisecondsSinceEpoch
-                                                .toDouble());
-                                            _setState(() {});
-                                            _timer = Timer(duration, () {
-                                              debugPrint('update timer');
-                                              _setState(() {});
-                                            });
-                                          },
-                                        ),
-                                ),
-                                TextSpan(
-                                    style: TextStyle(color: MyColor.txtField),
-                                    text:
-                                        ' untuk menerima kode verifikasi No Telepon'),
-                              ],
-                            ),
-                          ),
-                        if (status && endOtp != null)
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                    style: TextStyle(color: MyColor.txtField),
-                                    text: 'Tunggu sampai pukul '),
-                                TextSpan(
-                                  style: TextStyle(color: MyColor.redAT),
-                                  text: format.format(endOtp) ?? '',
-                                ),
-                                TextSpan(
-                                    style: TextStyle(color: MyColor.txtField),
-                                    text:
+                        if (!status) timeOut,
+                        if (controller != null && endOtp != null && status)
+                          CountdownTimer(
+                            controller: controller,
+                            widgetBuilder: (_, CurrentRemainingTime time) {
+                              if (time == null) {
+                                return timeOut;
+                              }
+                              return RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        style: styleBlack, text: 'Tunggu '),
+                                    TextSpan(
+                                      style: styleRed,
+                                      text:
+                                      '${twoDigits(time.min ?? 0)}:${twoDigits(
+                                          time.sec ?? 0)}',
+                                    ),
+                                    TextSpan(
+                                        style: styleBlack,
+                                        text:
                                         ' untuk dapat mengirim kode verifikasi lagi.'),
-                              ],
-                            ),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
                         TextFormField(
                           controller: otpTextController,
@@ -177,7 +184,8 @@ class _UpdateProfileScreenState extends UpdateProfileController {
       },
     ).then((value) {
       isDialogShowing = false;
-      _timer?.cancel();
+      controller?.disposeTimer();
+      controller?.dispose();
     });
   }
 
