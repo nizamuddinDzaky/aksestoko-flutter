@@ -1,6 +1,5 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
-import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/screen/notification/list_notification_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
@@ -61,7 +60,6 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 ),
                 centerTitle: false,
                 actions: <Widget>[
-// /*
                   if (kDebugMode)
                     IconButton(
                         icon: Icon(Icons.refresh),
@@ -76,36 +74,33 @@ class _SelectProductScreenState extends SelectProductViewModel {
                           ParentController parentController = Get.find();
                           parentController?.clearItems();
                         }),
-                  if (!isProd)
-                    // if (kReleaseMode)
-                    Stack(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.notifications),
-                          onPressed: () {
-                            debugPrint('klik notif');
-                            Get.to(ListNotificationScreen());
-                          },
-                        ),
-                        if ((parentController?.countItems ?? 0) != 0)
-                          Positioned(
-                            right: 5,
-                            top: 4,
-                            child: CircleAvatar(
-                              maxRadius: 10,
-                              backgroundColor: MyColor.redAT,
-                              child: Text(
-                                '${parentController?.countItems}',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
+                  Stack(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.notifications),
+                        onPressed: () {
+                          debugPrint('klik notif');
+                          Get.to(ListNotificationScreen());
+                        },
+                      ),
+                      if ((parentController?.countItems ?? 0) != 0)
+                        Positioned(
+                          right: 5,
+                          top: 4,
+                          child: CircleAvatar(
+                            maxRadius: 10,
+                            backgroundColor: MyColor.redAT,
+                            child: Text(
+                              '${parentController?.countItems}',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ),
-                      ],
-                    ),
-// */
+                        ),
+                    ],
+                  ),
                   Stack(
                     children: <Widget>[
                       IconButton(
