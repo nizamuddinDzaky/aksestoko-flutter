@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -7,7 +8,6 @@ import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/services.dart';
@@ -85,7 +85,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   child: Container(
                     height: 112,
                     width: 112,
-                    child: kDebugMode
+                    child: (_product?.imageUrl?.isEmpty ?? true) || isDebugOnly
                         ? Image.asset(kNoImage, height: 112)
                         : FadeInImage.assetNetwork(
                             placeholder: kNoImage,

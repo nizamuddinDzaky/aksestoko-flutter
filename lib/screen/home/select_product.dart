@@ -1,10 +1,10 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/screen/notification/list_notification_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:get/get.dart';
@@ -60,14 +60,14 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 ),
                 centerTitle: false,
                 actions: <Widget>[
-                  if (kDebugMode)
+                  if (isDebugOnly)
                     IconButton(
                         icon: Icon(Icons.refresh),
                         onPressed: () {
                           ParentController parentController = Get.find();
                           parentController?.addNotif();
                         }),
-                  if (kDebugMode)
+                  if (isDebugOnly)
                     IconButton(
                         icon: Icon(Icons.clear),
                         onPressed: () {

@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/controller/home/checkout_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/checkout_model.dart';
 import 'package:aksestokomobile/model/product.dart';
@@ -7,7 +8,6 @@ import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/home/checkout_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -824,7 +824,7 @@ class _CheckoutScreenState extends CheckoutViewModel {
                 Container(
                   height: 112,
                   width: 100,
-                  child: kDebugMode
+                  child: (_product?.imageUrl?.isEmpty ?? true) || isDebugOnly
                       ? Image.asset(kNoImage, height: 112)
                       : FadeInImage.assetNetwork(
                           placeholder: kNoImage,

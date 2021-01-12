@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -9,7 +10,6 @@ import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:flutter/scheduler.dart';
@@ -177,11 +177,11 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
               AspectRatio(
                 aspectRatio: 2 / 1,
                 child: Container(
-                  child: (promo?.urlImage?.isEmpty ?? true) || kDebugMode
+                  child: (promo?.urlImage?.isEmpty ?? true) || isDebugOnly
                       ? Image.asset(kNoImageLandscape)
                       : FadeInImage.assetNetwork(
                           placeholder: kNoImageLandscape,
-                          image: promo.urlImage ?? '',
+                          image: promo?.urlImage ?? '',
                           fit: BoxFit.fitWidth,
                         ),
                 ),

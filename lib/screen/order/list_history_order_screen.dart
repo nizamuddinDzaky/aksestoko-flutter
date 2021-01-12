@@ -1,8 +1,8 @@
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/order.dart';
 import 'package:aksestokomobile/screen/order/preview_delivery_screen.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_util.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -73,10 +73,9 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   Text(
                     "Terdapat biaya tambahan sebesar Rp ${_order.charge}",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 10
-                    ),
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 10),
                   ),
                   Container(
                     child: Row(
@@ -126,50 +125,50 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   children: [
                     Expanded(
                         child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "ID Pemesanan",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 15),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                        ),
-                        Text(
-                          _order?.noPemesanan ?? '',
-                          style: TextStyle(
-                              color: MyColor.redAT,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          "(Forca POS)",
-                          style: TextStyle(color: MyColor.redAT),
-                        ),
-                      ],
-                    )),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "ID Pemesanan",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT, fontSize: 15),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                            ),
+                            Text(
+                              _order?.noPemesanan ?? '',
+                              style: TextStyle(
+                                  color: MyColor.redAT,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                            Text(
+                              "(Forca POS)",
+                              style: TextStyle(color: MyColor.redAT),
+                            ),
+                          ],
+                        )),
                     SizedBox(width: 8),
                     Expanded(
                         child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Tanggal",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 15),
-                        ),
-                        Text(
-                          _order?.tanggalPemensanan ?? '',
-                          style: TextStyle(
-                              color: MyColor.blackTextAT,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    )),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Tanggal",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT, fontSize: 15),
+                            ),
+                            Text(
+                              _order?.tanggalPemensanan ?? '',
+                              style: TextStyle(
+                                  color: MyColor.blackTextAT,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        )),
                   ],
                 ),
                 SizedBox(height: 8),
@@ -178,43 +177,44 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   children: [
                     Expanded(
                         child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Status Pesanan",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 15),
-                        ),
-                        Text(
-                          _order?.statusPemesanan ?? '',
-                          style: TextStyle(
-                              color: statusColor(_order?.notikasiPemesanan),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    )),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Status Pesanan",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT, fontSize: 15),
+                            ),
+                            Text(
+                              _order?.statusPemesanan ?? '',
+                              style: TextStyle(
+                                  color: statusColor(_order?.notikasiPemesanan),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        )),
                     SizedBox(width: 8),
                     Expanded(
                         child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Status Pembayaran",
-                          style: TextStyle(
-                              color: MyColor.greyTextAT, fontSize: 15),
-                        ),
-                        Text(
-                          _order?.statusPembayaranStr ?? '',
-                          style: TextStyle(
-                              color: statusColor(_order?.notikasiPembayaran),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    )),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Status Pembayaran",
+                              style: TextStyle(
+                                  color: MyColor.greyTextAT, fontSize: 15),
+                            ),
+                            Text(
+                              _order?.statusPembayaranStr ?? '',
+                              style: TextStyle(
+                                  color: statusColor(
+                                      _order?.notikasiPembayaran),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        )),
                   ],
                 ),
               ],
@@ -251,14 +251,15 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                       Container(
                         height: 112,
                         width: 90,
-                        child: kDebugMode
+                        child: (_order?.productImage?.isEmpty ?? true) ||
+                            isDebugOnly
                             ? Image.asset(kNoImage, height: 112)
                             : FadeInImage.assetNetwork(
-                                placeholder: kNoImage,
-                                image: _order?.productImage ?? '',
-                                fit: BoxFit.cover,
-                                width: 90,
-                              ),
+                          placeholder: kNoImage,
+                          image: _order?.productImage ?? '',
+                          fit: BoxFit.cover,
+                          width: 90,
+                        ),
                       ),
                       SizedBox(width: 8),
                       Expanded(
@@ -307,7 +308,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                   Flexible(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           "Jumlah",
@@ -318,29 +319,30 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                         ),
                                         RichText(
                                             text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: MyNumber.toNumberId(_order
-                                                      ?.quantity
-                                                      ?.toDouble() ??
-                                                  0.0),
-                                              style: TextStyle(
-                                                color: MyColor.blackTextAT,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            TextSpan(text: ' '),
-                                            TextSpan(
-                                              text: _order?.satuan ?? '',
-                                              style: TextStyle(
-                                                color: MyColor.blackTextAT,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ],
-                                        )),
+                                              children: [
+                                                TextSpan(
+                                                  text: MyNumber.toNumberId(
+                                                      _order
+                                                          ?.quantity
+                                                          ?.toDouble() ??
+                                                          0.0),
+                                                  style: TextStyle(
+                                                    color: MyColor.blackTextAT,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                TextSpan(text: ' '),
+                                                TextSpan(
+                                                  text: _order?.satuan ?? '',
+                                                  style: TextStyle(
+                                                    color: MyColor.blackTextAT,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
                                       ],
                                     ),
                                   ),
@@ -348,7 +350,7 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           "Harga",
@@ -380,21 +382,21 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                   ),
                 ),
                 if(_order?.notifikasiProduct != null)
-                Container(
-                  height: 3,
-                  color: Color(0xffEAEAEA),
-                  margin: EdgeInsets.symmetric(vertical: 0),
-                ),
-                if(_order?.notifikasiProduct != null)
-                Container(
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
+                  Container(
+                    height: 3,
+                    color: Color(0xffEAEAEA),
+                    margin: EdgeInsets.symmetric(vertical: 0),
                   ),
-                  child: Text("${_order?.notifikasiProduct}"),
-                ),
+                if(_order?.notifikasiProduct != null)
+                  Container(
+                    padding:
+                    EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: Text("${_order?.notifikasiProduct}"),
+                  ),
                 if (_order?.konfirmasiPenerimaan ?? false)
                   Container(
                     height: 3,
@@ -483,34 +485,34 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
 
   _dialogListAddress(BuildContext context, String idPurchase) async {
     return showDialog(
-      context: context,
-      child: AlertDialog(
-        title: Text('Terima Barang'),
-        content: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                  width: double.maxFinite,
-                  child: PreviewDeliveryScreen(idPurchase, (param){
-                    onSelectDelivery(param);
-                    /*debugPrint("param : $param");*/
-                  })
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FlatButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+        context: context,
+        child: AlertDialog(
+          title: Text('Terima Barang'),
+          content: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                    width: double.maxFinite,
+                    child: PreviewDeliveryScreen(idPurchase, (param) {
+                      onSelectDelivery(param);
+                      /*debugPrint("param : $param");*/
+                    })
                 ),
-              ],
-            ),
-          ],
-        ),
-      )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/login_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
@@ -6,7 +7,6 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -64,7 +64,7 @@ abstract class LoginViewModel extends State<LoginScreen> {
   }
 
   developerInit() {
-    if (Foundation.kDebugMode) {
+    if (isDebugOnly) {
       currentData = Login(
         // username: '000001597',
         // password: 'Indonesia1',

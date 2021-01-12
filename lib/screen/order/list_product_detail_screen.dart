@@ -1,15 +1,17 @@
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 
 class ListProductDetailOrderScreen extends StatefulWidget {
   Cart cart;
+
   ListProductDetailOrderScreen(Cart cart){
     this.cart = cart;
   }
+
   _ListProductDetailOrderScreenState createState() =>
       _ListProductDetailOrderScreenState(cart);
 }
@@ -17,9 +19,11 @@ class ListProductDetailOrderScreen extends StatefulWidget {
 class _ListProductDetailOrderScreenState
     extends State<ListProductDetailOrderScreen> {
   Cart cart;
-  _ListProductDetailOrderScreenState(Cart cart){
+
+  _ListProductDetailOrderScreenState(Cart cart) {
     this.cart = cart;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +46,7 @@ class _ListProductDetailOrderScreenState
           Container(
             height: 112,
             width: 100,
-            child: kDebugMode
+            child: (cart?.imageUrl?.isEmpty ?? true) || isDebugOnly
                 ? Image.asset(kNoImage, height: 112)
                 : FadeInImage.assetNetwork(
                     placeholder: kNoImage,
@@ -107,27 +111,27 @@ class _ListProductDetailOrderScreenState
                             ),
                             RichText(
                                 text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: MyNumber.toNumberId(
-                                      cart?.qty?.toDouble() ?? 0),
-                                  style: TextStyle(
-                                    color: MyColor.blackTextAT,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                TextSpan(text: ' '),
-                                TextSpan(
-                                  text: cart?.unit ?? 'SAK',
-                                  style: TextStyle(
-                                    color: MyColor.blackTextAT,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            )),
+                                  children: [
+                                    TextSpan(
+                                      text: MyNumber.toNumberId(
+                                          cart?.qty?.toDouble() ?? 0),
+                                      style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    TextSpan(text: ' '),
+                                    TextSpan(
+                                      text: cart?.unit ?? 'SAK',
+                                      style: TextStyle(
+                                        color: MyColor.blackTextAT,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                )),
                           ],
                         ),
                       ),

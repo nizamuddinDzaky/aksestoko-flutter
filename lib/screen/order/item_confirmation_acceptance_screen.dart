@@ -1,9 +1,9 @@
 import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -101,11 +101,12 @@ class _ItemConfirmationAcceptScreen
               Container(
                 width: 60,
                 height: 60,
-                child: kDebugMode
+                child: (itemDetailDelivery?.imageBarang?.isEmpty ?? true) ||
+                        isDebugOnly
                     ? Image.asset(kNoImage, height: 60)
                     : FadeInImage.assetNetwork(
                         placeholder: kNoImage,
-                        image: itemDetailDelivery.imageBarang ?? '',
+                        image: itemDetailDelivery?.imageBarang ?? '',
                         fit: BoxFit.cover,
                       ),
               ),

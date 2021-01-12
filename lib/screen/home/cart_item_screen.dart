@@ -1,9 +1,9 @@
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -128,7 +128,8 @@ class _CartItemScreenState extends State<CartItemScreen> {
                       Container(
                         height: 112,
                         width: 90,
-                        child: kDebugMode
+                        child: (widget?.product?.imageUrl?.isEmpty ?? true) ||
+                                isDebugOnly
                             ? Image.asset(kNoImage, height: 112)
                             : FadeInImage.assetNetwork(
                                 placeholder: kNoImage,

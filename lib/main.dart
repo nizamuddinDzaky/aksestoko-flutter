@@ -10,6 +10,10 @@ import 'package:get/get.dart';
 
 const isProd = kReleaseMode;
 
+bool get isDebugQA => kDebugMode || !isProd;
+
+bool get isDebugOnly => kDebugMode;
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {

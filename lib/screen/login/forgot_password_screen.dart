@@ -1,10 +1,10 @@
 import 'package:aksestokomobile/controller/login/forgot_pasword_controller.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,7 +47,7 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                     Container(
                       padding: MyDimen.marginLayout(),
                       child: TextFormField(
-                        initialValue: kDebugMode ? '900000010' : null,
+                        initialValue: isDebugOnly ? '900000010' : null,
                         onSaved: (value) => idBisnisKokoh = value,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -75,7 +75,7 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                     Container(
                       padding: MyDimen.marginLayout(),
                       child: TextFormField(
-                        initialValue: kDebugMode ? '3520' : null,
+                        initialValue: isDebugOnly ? '3520' : null,
                         onSaved: (value) => phoneDigit = value,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(

@@ -1,11 +1,11 @@
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/controller/login/register_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/principal.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -496,7 +496,7 @@ class _RegisterScreenState extends RegisterController {
                     padding: MyDimen.marginLayout(),
                     margin: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
-                      initialValue: kDebugMode ? '900000010' : null,
+                      initialValue: isDebugOnly ? '900000010' : null,
                       onSaved: (value) => idBK = value,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(

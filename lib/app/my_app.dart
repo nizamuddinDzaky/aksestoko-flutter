@@ -5,7 +5,6 @@ import 'package:aksestokomobile/util/my_color.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: MyRouter.generateRoute,
     );
 
-    if (isProd == false || kDebugMode) {
+    if (isDebugQA) {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Banner(
