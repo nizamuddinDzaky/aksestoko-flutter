@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/product.dart';
@@ -103,11 +104,11 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
         gravity: ToastGravity.CENTER,
       );
     }, onError: (title, message) {
-          Fluttertoast.showToast(
-            msg: 'Terjadi kesalahan data / koneksi',
-            gravity: ToastGravity.CENTER,
-          );
-        }, onAfter: (status) {});
+      Fluttertoast.showToast(
+        msg: 'Terjadi kesalahan data / koneksi',
+        gravity: ToastGravity.CENTER,
+      );
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
@@ -167,7 +168,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 32),
-            kReleaseMode
+            (distributor?.imageUrl?.isEmpty ?? true) || isDebugOnly
                 ? Image.asset(kDistributor, width: 112)
                 : Container(
               height: 100,
@@ -177,8 +178,6 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
                   placeholder: kDistributor,
                   image: distributor?.imageUrl ?? '',
                   fit: BoxFit.cover,
-                  // width: 100,
-                  // height: 100,
                 ),
               ),
             ),

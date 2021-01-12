@@ -1,7 +1,7 @@
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/login_model.dart';
 import 'package:aksestokomobile/view_model/login/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 abstract class LoginScreenController extends LoginViewModel {
@@ -21,7 +21,7 @@ abstract class LoginScreenController extends LoginViewModel {
   }
 
   debugOnly(Widget child) {
-    if (kReleaseMode) return child;
+    if (!isDebugOnly) return child;
     var login = [
       Login(username: '900000010', password: 'Indonesia2020'),
       Login(username: '000001597', password: 'Indonesia1'),
@@ -38,9 +38,9 @@ abstract class LoginScreenController extends LoginViewModel {
         child: child,
         itemBuilder: (BuildContext context) => login
             .mapIndexed((e, i) => PopupMenuItem<int>(
-                  child: Text(e.username),
-                  value: i,
-                ))
+          child: Text(e.username),
+          value: i,
+        ))
             .toList(),
         onSelected: (int idx) {
           Future.delayed(Duration(milliseconds: 300)).then((value) {
