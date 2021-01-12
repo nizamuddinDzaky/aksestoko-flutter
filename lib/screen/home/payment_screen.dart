@@ -1314,10 +1314,14 @@ class _PaymentScreenState extends PaymentController {
                                       groupValue: paymentMethod,
                                       value: PaymentController
                                           .listPaymentMethod[3],
-                                      onChanged: (val) {
-                                        setIndexMethod(val);
-                                        setState(() {});
-                                      },
+                                      onChanged:
+                                          paymentModel?.kreditPro?.detail ==
+                                                  null
+                                              ? null
+                                              : (val) {
+                                                  setIndexMethod(val);
+                                                  setState(() {});
+                                                },
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(right: 5),
@@ -1344,28 +1348,44 @@ class _PaymentScreenState extends PaymentController {
                                   ],
                                 ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    MyNumber.toNumberRp(
-                                        selectedKreditPro?.total?.toDouble() ??
-                                            0.0),
-                                    style: TextStyle(
-                                        color: MyColor.redAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                              if (paymentModel?.kreditPro?.detail != null)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      MyNumber.toNumberRp(
+                                          selectedKreditPro?.total
+                                              ?.toDouble() ??
+                                              0.0),
+                                      style: TextStyle(
+                                          color: MyColor.redAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    Text(
+                                      "(${selectedKreditPro?.durasiPembayaran ??
+                                          '-'})",
+                                      style: TextStyle(
+                                          color: MyColor.greyTextAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    )
+                                  ],
+                                ),
+                              if (paymentModel?.kreditPro?.detail == null)
+                                Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      paymentModel?.kreditPro?.total ?? '',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                          color: MyColor.redAT,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
                                   ),
-                                  Text(
-                                    "(${selectedKreditPro?.durasiPembayaran ??
-                                        '-'})",
-                                    style: TextStyle(
-                                        color: MyColor.greyTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  )
-                                ],
-                              ),
+                                )
                             ],
                           ),
                           Container(
@@ -1373,7 +1393,8 @@ class _PaymentScreenState extends PaymentController {
                             color: Color(0xffEAEAEA),
                             margin: EdgeInsets.only(top: 10, bottom: 20),
                           ),
-                          if (kreditPro)
+                          if (kreditPro &&
+                              paymentModel?.kreditPro?.detail != null)
                             Container(
                               margin: EdgeInsets.only(bottom: 20),
                               child: SingleChildScrollView(
@@ -1381,7 +1402,8 @@ class _PaymentScreenState extends PaymentController {
                                 child: listTempo(),
                               ),
                             ),
-                          if (kreditPro)
+                          if (kreditPro &&
+                              paymentModel?.kreditPro?.detail != null)
                             Container(
                               padding: EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -1609,9 +1631,11 @@ class _PaymentScreenState extends PaymentController {
                                 ],
                               ),
                             ),
-                          if (kreditPro)
+                          if (kreditPro &&
+                              paymentModel?.kreditPro?.detail != null)
                             MyDivider.spaceDividerElementsAT(custom: 20),
-                          if (kreditPro)
+                          if (kreditPro &&
+                              paymentModel?.kreditPro?.detail != null)
                             Container(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
