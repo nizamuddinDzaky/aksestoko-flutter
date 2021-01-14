@@ -104,6 +104,7 @@ bool validationNotif(String value) {
     'sms_notif_payment_reject',
     'sms_notif_promo',
     'sms_notif_update_status',
+    'sms_notif_reminder_payment',
   ];
   return type.contains(value?.toLowerCase());
 }
