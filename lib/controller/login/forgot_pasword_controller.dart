@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
@@ -20,6 +21,55 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   var repeatInputController = TextEditingController();
 
   void _actionResetPassword() async {
+    if (isDebugOnly) {
+      // if (false) {
+      Get.back();
+      Map<String, dynamic> dataE = {
+        "status": "success",
+        "code": 200,
+        "message": "Berhasil melakukan aksi lupa password.",
+        "request_time": "2021-01-14 21:23:34",
+        "response_time": "2021-01-14 21:23:34",
+        "rows": 4,
+        "data": {
+          "id_forget_password": 150,
+          "store_code": "121212157",
+          "phone": "3388",
+          "service":
+              "Nomor Telepon belum terverifikasi tidak dapat memilih layanan"
+        }
+      };
+      Map<String, dynamic> data = {
+        "status": "success",
+        "code": 200,
+        "message": "Berhasil melakukan aksi lupa password.",
+        "request_time": "2021-01-14 22:46:40",
+        "response_time": "2021-01-14 22:46:40",
+        "rows": 4,
+        "data": {
+          "id_forget_password": 152,
+          "store_code": "121212157",
+          "phone": "3388",
+          "service": ["sms", "wa"]
+        }
+      };
+      var service = data['data']['service'];
+      if (service == null || service is String) {
+        Get.defaultDialog(
+          title: 'Gagal',
+          content: Text(
+            service ?? 'Belum ada layanan OTP tersedia.',
+            textAlign: TextAlign.center,
+          ),
+          textCancel: 'OK',
+        );
+        return;
+      }
+      chooseService(
+          id: dataE['data']['id_forget_password'],
+          service: service.cast<String>());
+      return;
+    }
     var status = await ApiClient.methodPost(
       ApiConfig.urlResetPass,
       {
@@ -93,6 +143,24 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   postSendOTP(data) async {
+    if (isDebugOnly) {
+      // if (false) {
+      Get.back();
+      showInputOTP({
+        "status": "success",
+        "code": 200,
+        "message": "Berhasil melakukan pengiriman otp.",
+        "request_time": "2021-01-14 22:49:34",
+        "response_time": "2021-01-14 22:49:34",
+        "rows": 2,
+        "data": {
+          "id_forget_password": 150,
+          "message":
+          "QA AKSESTOKO - Gunakan 20336 untuk lupa kata sandi. Berlaku sampai 2021-01-14 21:53:34"
+        }
+      });
+      return;
+    }
     var status = await ApiClient.methodPost(
       ApiConfig.urlSendOTP,
       data,
@@ -156,9 +224,28 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   showInputOTP(data) {
-    var date = "2020-10-27 09:49:00";
-    date = DateFormat("dd MMM yy HH:mm")
-        .format(DateTime.tryParse(date)?.add(Duration(minutes: 5)));
+    var countError = 0;
+    if (data == null || data['data'] == null ||
+        data['data']['message'] == null) {
+      countError++;
+    }
+    if (!(data['data']['message'] is String)) {
+      countError++;
+    }
+    var message = (data['data']['message']).split('Berlaku sampai ');
+    if (message.length < 2) {
+      countError++;
+    }
+    if (countError > 0) {
+      Fluttertoast.showToast(
+        msg: 'Terjadi kesalahan data.',
+        gravity: ToastGravity.CENTER,
+      );
+      return;
+    }
+    var date = message[1];
+    date = DateFormat("dd MMM yy HH:mm").format(
+        DateTime.tryParse(date)); //?.add(Duration(minutes: 5)));
     var otpTextController = TextEditingController();
     Get.defaultDialog(
       title: 'Reset Password',
@@ -196,7 +283,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
       confirmTextColor: Colors.white,
       onConfirm: () {
         var otp = otpTextController.text;
-        actionCheckOTP(otp, data);
+        actionCheckOTP(otp, data['data']);
       },
     );
   }
@@ -216,6 +303,21 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   postCheckOTP(fields) async {
+    if (isDebugOnly) {
+      Get.back();
+      if (false) {
+        Fluttertoast.showToast(
+          msg: 'Koden salah',
+          gravity: ToastGravity.CENTER,
+        );
+        return;
+      }
+      Get.until((route) => route.settings.name == forgotPasswordScreen);
+      setState(() {
+        idForgetPassword = fields['id_forget_password']?.toString();
+      });
+      return;
+    }
     var status = await ApiClient.methodPost(
       ApiConfig.urlCheckOTP,
       fields,
@@ -278,6 +380,23 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   postChangePassword() async {
+    if (isDebugOnly) {
+      if (false) {
+        Get.back();
+        Fluttertoast.showToast(
+          msg: 'Reset password gagal.',
+          gravity: ToastGravity.CENTER,
+        );
+        return;
+      }
+      Get.until((route) => route.isFirst);
+      Fluttertoast.showToast(
+        msg: 'Reset password berhasil.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+      );
+      return;
+    }
     var fields = {
       'id_forget_password': idForgetPassword,
       'password_baru': passInputController.text,
@@ -295,6 +414,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
         Get.back();
         Fluttertoast.showToast(
           msg: 'Reset password berhasil.',
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
         );
       },
