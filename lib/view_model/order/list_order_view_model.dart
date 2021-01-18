@@ -18,6 +18,11 @@ abstract class ListOrderViewModel extends State<ListOrderScreen>
   var isLoading = 0;
   int lastOffset;
   int limit = 10;
+  bool isSearch = false;
+  String querySearch;
+  List<Order> _listSearch;
+  TextEditingController textSearchController = TextEditingController();
+  GlobalKey<RefreshIndicatorState> refreshSearch = GlobalKey();
 
   int get endScroll =>
       ((((lastOffset ?? 0) ~/ limit) == (listOrder.length ~/ limit)) &&
@@ -25,8 +30,29 @@ abstract class ListOrderViewModel extends State<ListOrderScreen>
           ? 0
           : 1;
 
-  List<Order> get listOrder =>
-      [...(controller?.filter(widget?.status) ?? []), ...(_listOrder ?? [])];
+  List<Order> get listOrder => [
+        ...(controller?.filter(widget?.status) ?? []),
+        ...((isSearch ? _listSearch : _listOrder) ?? [])
+      ];
+
+  void onSubmitSearch(String query) {
+    querySearch = query;
+    refreshSearch.currentState.show();
+  }
+
+  void onCancelSearch() {
+    isSearch = false;
+    querySearch = null;
+    lastOffset = -1;
+    textSearchController.clear();
+    setState(() {});
+  }
+
+  Future<void> actionRefreshSearch() async {
+    isSearch = true;
+    lastOffset = -1;
+    await getListOrder(offset: 0);
+  }
 
   Future<void> actionRefresh() async {
     lastOffset = null;
@@ -48,18 +74,32 @@ abstract class ListOrderViewModel extends State<ListOrderScreen>
         params: {
           'offset': offset,
           'limit': limit,
+          if (querySearch?.isNotEmpty ?? false) 'search': querySearch,
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
-      _listOrder = _listOrder ?? [];
-      if (lastOffset <= 0) {
-        _listOrder?.clear();
-      }
-      if (data['data'][status] is Map) {
-        orderModelDalamProses = OrderModel.fromJson(data['data'][status]);
-        _listOrder.addAll(orderModelDalamProses.listOrderDalamProses);
-      } else {
-        lastOffset = _listOrder.length;
-      }
+          _listOrder = _listOrder ?? [];
+          _listSearch = _listSearch ?? [];
+          if (lastOffset <= 0) {
+            if (isSearch) {
+              _listSearch?.clear();
+            } else {
+              _listOrder?.clear();
+            }
+          }
+          if (data['data'][status] is Map) {
+            orderModelDalamProses = OrderModel.fromJson(data['data'][status]);
+            if (isSearch) {
+              _listSearch.addAll(orderModelDalamProses.listOrderDalamProses);
+            } else {
+              _listOrder.addAll(orderModelDalamProses.listOrderDalamProses);
+            }
+          } else {
+            if (isSearch) {
+              lastOffset = _listSearch.length;
+            } else {
+              lastOffset = _listOrder.length;
+            }
+          }
       controller.clearOrder();
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
