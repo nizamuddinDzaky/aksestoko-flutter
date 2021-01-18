@@ -14,31 +14,60 @@ abstract class ListOrderViewModel extends State<ListOrderScreen>
   List<Order> _listOrder;
   OrderModel orderModelDalamProses;
   final ParentController controller = Get.find();
+  var scrollController = ScrollController();
+  var isLoading = 0;
+  int lastOffset;
+  int limit = 10;
+
+  int get endScroll =>
+      ((((lastOffset ?? 0) ~/ limit) == (listOrder.length ~/ limit)) &&
+              isLoading == 0)
+          ? 0
+          : 1;
 
   List<Order> get listOrder =>
       [...(controller?.filter(widget?.status) ?? []), ...(_listOrder ?? [])];
 
-  Future<void> actionRefresh(String status) async {
-    await getListOrder(status);
+  Future<void> actionRefresh() async {
+    lastOffset = null;
+    await getListOrder(offset: 0);
+    return Future.value();
   }
 
-  getListOrder(String status) async {
+  getListOrder({int offset}) async {
+    offset = offset ?? listOrder?.length ?? 0;
+    if ((lastOffset ?? -1) == offset) {
+      //limit the same request
+      return;
+    }
+    isLoading = 1;
+    lastOffset = offset;
+    setState(() {});
+    var status = widget.status;
     var request = await ApiClient.methodGet(ApiConfig.urlListOrder,
         params: {
-          'offset': '0',
-          'limit': '10',
+          'offset': offset,
+          'limit': limit,
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
+      _listOrder = _listOrder ?? [];
+      if (lastOffset <= 0) {
+        _listOrder?.clear();
+      }
       if (data['data'][status] is Map) {
         orderModelDalamProses = OrderModel.fromJson(data['data'][status]);
-        _listOrder = orderModelDalamProses.listOrderDalamProses;
+        _listOrder.addAll(orderModelDalamProses.listOrderDalamProses);
+      } else {
+        lastOffset = _listOrder.length;
       }
       controller.clearOrder();
     }, onFailed: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
     }, onError: (title, message) {
       Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+    }, onAfter: (status) {
+      isLoading = 0;
+    });
     if (mounted)
       setState(() {
         request.execute();
@@ -48,9 +77,21 @@ abstract class ListOrderViewModel extends State<ListOrderScreen>
   @override
   void initState() {
     super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        getListOrder();
+      }
+    });
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshKey?.currentState?.show();
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override

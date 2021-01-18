@@ -1,7 +1,6 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/view_model/order/list_order_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:aksestokomobile/util/my_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aksestokomobile/screen/order/list_history_order_screen.dart';
 import 'package:flutter/scheduler.dart';
@@ -9,25 +8,63 @@ import 'package:get/get.dart';
 
 class ListOrderScreen extends StatefulWidget {
   String status;
-  ListOrderScreen(String status){
+
+  ListOrderScreen(String status) {
     this.status = status;
   }
+
   @override
   _ListOrderScreenState createState() => _ListOrderScreenState(status);
 }
 
 class _ListOrderScreenState extends ListOrderViewModel {
   String status;
-  _ListOrderScreenState(String status){
+
+  _ListOrderScreenState(String status) {
     this.status = status;
   }
+
+  Widget _buildProgressIndicator() {
+    return Container(
+      height: 52,
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: endScroll == 1
+            ? CircularProgressIndicator()
+            : Text('${listOrder?.length ?? 0} data'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       key: refreshKey,
-      onRefresh: (){
-        return actionRefresh(status);
-      },
+      onRefresh: actionRefresh,
+      child: ListView.builder(
+        controller: scrollController,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        itemCount: (listOrder?.length ?? 0) + 1,
+        shrinkWrap: true,
+        physics: AlwaysScrollableScrollPhysics(),
+        itemBuilder: (buildcontext, index) {
+          if (index == listOrder?.length) {
+            return _buildProgressIndicator();
+          }
+          return ListHistoryOrderProductScreen(listOrder[index], (param) {
+            Navigator.of(context).pop();
+            Get.toNamed(confirmationAcceptScreen, arguments: param)
+                .then((value) {
+              if (value != null) {
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  refreshKey?.currentState?.show();
+                });
+              }
+            });
+          });
+        },
+      ),
+/*
       child: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -103,6 +140,7 @@ class _ListOrderScreenState extends ListOrderViewModel {
           ),
         ),
       ),
+*/
     );
   }
 }
