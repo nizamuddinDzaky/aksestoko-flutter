@@ -6,13 +6,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 const isProd = kReleaseMode;
 
-bool get isDebugQA => kDebugMode || !isProd;
+// bool get isDebugQA => valDebug == 1 || (kDebugMode || !isProd);
+bool get isDebugQA => valDebug == 1 || isDebugOnly;
 
-bool get isDebugOnly => kDebugMode;
+// bool get isDebugOnly => valDebug == 2 || kDebugMode;
+bool get isDebugOnly => valDebug == 2;
+
+int valDebug = kDebugMode ? 2 : ((kDebugMode || !isProd) ? 1 : 0);
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -30,5 +35,5 @@ void main() async {
   ApiClient.addInterceptor();
   Get.config(enableLog: false);
   await Firebase.initializeApp();
-  return runApp(MyApp());
+  return runApp(Phoenix(child: MyApp()));
 }

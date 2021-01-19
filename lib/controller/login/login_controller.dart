@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/login_model.dart';
 import 'package:aksestokomobile/view_model/login/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 abstract class LoginScreenController extends LoginViewModel {
   showDialogProgress() async {
@@ -52,6 +53,32 @@ abstract class LoginScreenController extends LoginViewModel {
       ),
     );
   }
+}
+
+Widget debugMode(Widget child, context) {
+  if (isProd) return child;
+  var mode = [
+    'Production',
+    'QA',
+    'Debug',
+  ];
+  return Material(
+    child: PopupMenuButton<int>(
+      child: child,
+      itemBuilder: (BuildContext context) => mode
+          .mapIndexed((e, i) => PopupMenuItem<int>(
+                child: Text(e),
+                value: i,
+              ))
+          .toList(),
+      onSelected: (int idx) {
+        Future.delayed(Duration(milliseconds: 300)).then((value) {
+          valDebug = idx;
+          Phoenix.rebirth(context);
+        });
+      },
+    ),
+  );
 }
 
 extension IndexedIterable<E> on Iterable<E> {

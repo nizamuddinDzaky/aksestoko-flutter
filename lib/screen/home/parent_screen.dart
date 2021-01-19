@@ -2,6 +2,7 @@ import 'package:aksestokomobile/at_icon.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -74,7 +75,7 @@ class _ParentScreenState extends State<ParentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedPage = 0;
+    selectedPage = isDebugOnly ? 3 : 0;
     triggerOnMessage = (message) {
       _showItemDialog(message);
     };

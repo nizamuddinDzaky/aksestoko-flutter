@@ -47,7 +47,7 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                     Container(
                       padding: MyDimen.marginLayout(),
                       child: TextFormField(
-                        initialValue: isDebugOnly ? '900000010' : null,
+                        initialValue: isDebugOnly ? '121212157' : null,
                         onSaved: (value) => idBisnisKokoh = value,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -75,7 +75,7 @@ class _ForgotPasswordScreenState extends ForgotPasswordController {
                     Container(
                       padding: MyDimen.marginLayout(),
                       child: TextFormField(
-                        initialValue: isDebugOnly ? '3520' : null,
+                        initialValue: isDebugOnly ? '3388' : null,
                         onSaved: (value) => phoneDigit = value,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(

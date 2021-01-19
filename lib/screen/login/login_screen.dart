@@ -221,8 +221,11 @@ class _LoginScreenState extends LoginScreenController {
                               alignment: Alignment.bottomCenter,
                               child: Container(
                                 padding: EdgeInsets.only(bottom: 8),
-                                child: MyText.textBlackSmall(
-                                    'Ⓒ 2020 PT SISI, All Right Reserved.'),
+                                child: debugMode(
+                                  MyText.textBlackSmall(
+                                      'Ⓒ 2020 PT SISI, All Right Reserved.'),
+                                  context,
+                                ),
                               )),
                         ),
                       ],
