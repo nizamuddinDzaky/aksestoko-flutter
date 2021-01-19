@@ -67,6 +67,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
       }
       chooseService(
           id: dataE['data']['id_forget_password'],
+          phone: data['data']['phone'],
           service: service.cast<String>());
       return;
     }
@@ -84,6 +85,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
       onSuccess: (data, _) {
         chooseService(
             id: data['data']['id_forget_password'],
+            phone: data['data']['phone'],
             service: data['data']['service'].cast<String>());
       },
       onFailed: (title, message) {
@@ -190,7 +192,14 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
     status.execute();
   }
 
-  chooseService({id, service = const ['SMS', 'WA']}) {
+  String checkService(String valService, phone) {
+    debugPrint('cek service $valService $phone');
+    if (!['sms', 'wa'].contains(valService)) return '';
+    if (phone?.isNotEmpty ?? false) return ' Ke $phone';
+    return '';
+  }
+
+  chooseService({id, service = const ['SMS', 'WA'], phone}) {
     Get.defaultDialog(
       title: 'Kirim OTP',
       middleText: 'Silakan pilih layanan untuk mengirimkan kode OTP.',
@@ -202,10 +211,12 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
           ),
           SizedBox(height: 8),
           ...service.map((e) {
+            var name = e?.toString()?.toLowerCase() ?? '';
+            var title = '${name.toUpperCase()}${checkService(name, phone)}';
             return FlatButton(
                 color: MyColor.greenWhatsApp,
                 child: Text(
-                  e?.toString()?.toUpperCase() ?? '',
+                  title,
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
