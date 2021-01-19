@@ -1,3 +1,5 @@
+import 'package:aksestokomobile/screen/account/reward_screen.dart';
+import 'package:aksestokomobile/screen/account/summary_screen.dart';
 import 'package:aksestokomobile/screen/home/home_screen.dart';
 import 'package:aksestokomobile/screen/home/select_distributor.dart';
 import 'package:aksestokomobile/screen/home/select_product.dart';
@@ -55,6 +57,8 @@ const salesPersonScreen = "/SalesPersonScreen";
 const changePasswordScreen = "/ChangePasswordScreen";
 const paymentKreditProScreen = "/PaymentKreditproScreen";
 const checkPermissionScreen = "/CheckPermissionScreen";
+const rewardScreen = "/RewardScreen";
+const summaryScreen = "/SummaryScreen";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -220,13 +224,25 @@ class MyRouter {
           transition: Transition.fade,
           page: ChangePasswordScreen(),
         );
+      case rewardScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: RewardScreen(),
+        );
+      case summaryScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: SummaryScreen(),
+        );
       default:
         return GetRouteBase(
             settings: settings,
             transition: Transition.fade,
             page: Scaffold(
               body:
-              Center(child: Text('No route defined for ${settings.name}')),
+                  Center(child: Text('No route defined for ${settings.name}')),
             ));
     }
   }

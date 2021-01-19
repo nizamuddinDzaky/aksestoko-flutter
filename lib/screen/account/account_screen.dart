@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/model/sales_person.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -33,6 +35,32 @@ class _AccountScreenState extends State<AccountScreen> {
     setState(() {
       status.execute();
     });
+  }
+
+  Widget debugMode(Widget child) {
+    if (isProd) return child;
+    var mode = [
+      'Production',
+      'QA',
+      'Debug',
+    ];
+    return Material(
+      child: PopupMenuButton<int>(
+        child: child,
+        itemBuilder: (BuildContext context) => mode
+            .mapIndexed((e, i) => PopupMenuItem<int>(
+                  child: Text(e),
+                  value: i,
+                ))
+            .toList(),
+        onSelected: (int idx) {
+          Future.delayed(Duration(milliseconds: 300)).then((value) {
+            valDebug = idx;
+            Phoenix.rebirth(context);
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -123,17 +151,84 @@ class _AccountScreenState extends State<AccountScreen> {
                         profile?.email ?? '',
                         textAlign: TextAlign.center,
                         style:
-                            TextStyle(fontSize: 20, color: MyColor.greyTextAT),
+                        TextStyle(fontSize: 20, color: MyColor.greyTextAT),
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
-                  VersionScreen(),
-                  Container(
-                    height: 3,
-                    color: Color(0xffEAEAEA),
-                  ),
-                  SizedBox(height: 40),
+                  if (!isDebugQA)
+                    Column(
+                      children: [
+                        SizedBox(height: 30),
+                        Container(
+                          height: 3,
+                          color: Color(0xffEAEAEA),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  if (isDebugQA)
+                    Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
+                              Get.toNamed(rewardScreen);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 16,
+                              ),
+                              height: 104,
+                              child: Row(
+                                children: [
+                                  Card(
+                                    elevation: 8,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32),
+                                    ),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      child: Image.asset(
+                                        'assets/icons/reward_gold.png',
+                                        width: 32,
+                                        height: 32,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      'Poin Saya',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    '80',
+                                    style: TextStyle(
+                                      color: MyColor.redAT,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   Column(
                     children: <Widget>[
                       Container(
@@ -177,7 +272,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
-                              onPressed: (){
+                              onPressed: () {
                                 Get.toNamed(salesPersonScreen);
                               },
                               icon: Icon(Icons.supervised_user_circle),
@@ -257,7 +352,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 40),
+                        margin: EdgeInsets.only(bottom: 10),
                         child: Row(
                           children: <Widget>[
                             FlatButton.icon(
@@ -272,7 +367,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               label: Text(
                                 "Keluar",
                                 style:
-                                    TextStyle(fontSize: 18, color: Colors.red),
+                                TextStyle(fontSize: 18, color: Colors.red),
                               ),
                             ),
                           ],
@@ -280,6 +375,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ],
                   ),
+                  debugMode(VersionScreen()),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
@@ -292,5 +389,12 @@ class _AccountScreenState extends State<AccountScreen> {
       debugShowCheckedModeBanner: false,
       home: formLayout,
     );
+  }
+}
+
+extension IndexedIterable<E> on Iterable<E> {
+  Iterable<T> mapIndexed<T>(T f(E e, int i)) {
+    var i = 0;
+    return this.map((e) => f(e, i++));
   }
 }

@@ -28,4 +28,5 @@ final String dynamixIcon = "assets/icons/dynamix.png";
 final String andalasIcon = "assets/icons/andalas.png";
 
 final String bgHeaderTop = "assets/images/bg-top.png";
+final String bgReward = "assets/images/bg-reward.png";
 final String bgLarge = "assets/images/bg-large.png";
