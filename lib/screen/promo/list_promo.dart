@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:clipboard/clipboard.dart';

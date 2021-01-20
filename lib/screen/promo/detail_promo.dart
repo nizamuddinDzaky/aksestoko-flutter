@@ -1,6 +1,6 @@
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/network/api_client.dart';

@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/app/middle_ware.dart';
 import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/app/app_config.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var config = AppConfig.of(context);
     var materialApp = MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AksesToko',
@@ -49,11 +51,11 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: MyRouter.generateRoute,
     );
 
-    if (isDebugQA) {
+    if (isDebugQA || config.isTesting != 0) {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Banner(
-          message: 'QA',
+          message: config.serverName,
           location: BannerLocation.bottomEnd,
           child: materialApp,
         ),

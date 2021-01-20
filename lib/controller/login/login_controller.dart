@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/login_model.dart';
 import 'package:aksestokomobile/view_model/login/login_view_model.dart';
 import 'package:flutter/cupertino.dart';

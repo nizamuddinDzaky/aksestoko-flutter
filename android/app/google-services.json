@@ -63,6 +63,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093412336802:android:f3576ad7bc6c8b927293fb",
+        "android_client_info": {
+          "package_name": "id.sisi.aksestokomobile.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093412336802-5egmtfka8php1aagcji5601l9hujini4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyXxVETWqfUZD6NMl1ZZb0DyIF8motzuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093412336802-5egmtfka8php1aagcji5601l9hujini4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

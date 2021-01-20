@@ -1,7 +1,7 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/controller/home/select_product_controller.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/cart.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/model/product.dart';

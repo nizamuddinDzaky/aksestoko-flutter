@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/helper/my_stateful_builder.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';

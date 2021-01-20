@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/order/confirmation_acceptance_controller.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';

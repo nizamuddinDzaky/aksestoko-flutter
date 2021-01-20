@@ -51,6 +51,23 @@ android {
         versionName flutterVersionName
     }
 
+    flavorDimensions "app"
+    productFlavors {
+        prod {
+            dimension "app"
+        }
+        qa {
+            dimension "app"
+            applicationIdSuffix ".test"
+            versionNameSuffix '-qa'
+        }
+        qaprod {
+            dimension "app"
+            applicationIdSuffix ".test"
+            versionNameSuffix '-prod'
+        }
+    }
+
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']

@@ -1,12 +1,12 @@
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 
 class ApiConfig {
   // static const String host = 'http://10.15.4.102:9090/';
   // static String host = 'http://roufdev.000webhostapp.com/';
   static const String hostDev = 'https://qp.forca.id/';
   static const String host = 'https://pos.forca.id/';
-  static const String path = '${isProd ? host : hostDev}api/v1/retailer/';
-  static const String local = '${isProd ? host : hostDev}api/Local/';
+  static String path = '${isProd ? host : hostDev}api/v1/retailer/';
+  static String local = '${isProd ? host : hostDev}api/Local/';
   static const String urlRajaAPi = 'https://x.rajaapi.com';
 
   //auth
@@ -25,13 +25,13 @@ class ApiConfig {
   static String urlGetToken = '${path}auth/user_notif_token';
 
   //profile
-  static const String urlAddAddress = '${path}Profile/add_address';
-  static const String urlDeleteAddress = '${path}Profile/delete_address';
-  static const String urlUpdateAddress = '${path}Profile/update_address';
-  static const String urlDetailProfile = '${path}Profile/detail_profile';
-  static const String urlUpdateProfile = '${path}Profile/update_profile';
-  static const String urlGenerateOTP = '${path}Profile/generate_phone_otp';
-  static const String urlVerivyOTP = '${path}Profile/verify_phone_otp';
+  static String urlAddAddress = '${path}Profile/add_address';
+  static String urlDeleteAddress = '${path}Profile/delete_address';
+  static String urlUpdateAddress = '${path}Profile/update_address';
+  static String urlDetailProfile = '${path}Profile/detail_profile';
+  static String urlUpdateProfile = '${path}Profile/update_profile';
+  static String urlGenerateOTP = '${path}Profile/generate_phone_otp';
+  static String urlVerivyOTP = '${path}Profile/verify_phone_otp';
   static String urlListProduct = '${path}Profile/list_product';
   static String urlListDistributor = '${path}Profile/list_distributor';
   static String urlDetailAddress = '${path}Profile/detail_address';
@@ -69,10 +69,10 @@ class ApiConfig {
   static String urlGetUrlKreditPro = '${path}Purchase/apply_credit';
 
   //address
-  static const String urlProvinsi = '${local}list_province';
-  static const String urlKabupaten = '${local}list_city';
-  static const String urlKecamatan = '${local}list_states';
-  static const String urlPostalCode = '${local}postal_code';
+  static String urlProvinsi = '${local}list_province';
+  static String urlKabupaten = '${local}list_city';
+  static String urlKecamatan = '${local}list_states';
+  static String urlPostalCode = '${local}postal_code';
   static String urlListProvinsi = '${path}get_list_province.php';
   static String urlListKabupaten = '${path}get_list_kabupaten.php';
   static String urlListKecamatan = '${path}get_list_kecamatan.php';

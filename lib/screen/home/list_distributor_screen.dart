@@ -1,5 +1,5 @@
 import 'package:aksestokomobile/controller/home/select_distributor_controller.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';

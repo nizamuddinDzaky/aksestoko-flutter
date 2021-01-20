@@ -1,17 +1,14 @@
 import 'dart:io';
 
-import 'package:aksestokomobile/app/my_app.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
-const isProd = kReleaseMode;
+bool isProd = kReleaseMode;
 
-// bool get isDebugQA => valDebug == 1 || (kDebugMode || !isProd);
 bool get isDebugQA => valDebug == 1 || isDebugMode;
 
 bool get isDebugOnly => kDebugMode || isDebugMode;
@@ -31,12 +28,12 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void main() async {
-  if (!isProd) HttpOverrides.global = new MyHttpOverrides();
+Future<void> mainCommon(bool newProd) async {
+  isProd = newProd;
+  if (!newProd) HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   ApiClient.addInterceptor();
   Get.config(enableLog: false);
   await Firebase.initializeApp();
-  return runApp(Phoenix(child: MyApp()));
 }

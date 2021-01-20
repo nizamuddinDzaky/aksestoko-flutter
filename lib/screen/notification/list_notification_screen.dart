@@ -1,7 +1,7 @@
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
-import 'package:aksestokomobile/main.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
 import 'package:aksestokomobile/screen/promo/detail_promo.dart';

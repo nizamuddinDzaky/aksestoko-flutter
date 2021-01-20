@@ -7,9 +7,9 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 void main() {
   var configuredApp = AppConfig(
-    serverName: "QA",
+    serverName: "Prod",
     isTesting: kReleaseMode ? 1 : 2,
-    isProd: false,
+    isProd: true,
     child: Phoenix(child: MyApp()),
   );
 

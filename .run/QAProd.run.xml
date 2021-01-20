@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration name="QAProd" default="false" factoryName="Flutter"
+        type="FlutterRunConfigurationType">
+        <option name="buildFlavor" value="qaprod" />
+        <option name="filePath" value="$PROJECT_DIR$/lib/main_qa_prod.dart" />
+        <method v="2" />
+    </configuration>
+</component>
