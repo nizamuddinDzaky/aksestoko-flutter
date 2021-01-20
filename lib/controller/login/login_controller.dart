@@ -22,7 +22,7 @@ abstract class LoginScreenController extends LoginViewModel {
   }
 
   debugOnly(Widget child) {
-    if (!isDebugOnly) return child;
+    if (isProdMode) return child;
     var login = [
       Login(username: '900000010', password: 'Indonesia2020'),
       Login(username: '000001597', password: 'Indonesia1'),

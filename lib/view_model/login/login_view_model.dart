@@ -64,7 +64,7 @@ abstract class LoginViewModel extends State<LoginScreen> {
   }
 
   developerInit() {
-    if (isDebugOnly) {
+    if (isDebugMode) {
       currentData = Login(
         // username: '000001597',
         // password: 'Indonesia1',

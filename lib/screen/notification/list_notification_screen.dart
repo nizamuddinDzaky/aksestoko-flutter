@@ -122,14 +122,14 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
     var appBar = AppBar(
       title: Text('Daftar Informasi'),
       actions: [
-        if (isDebugOnly)
+        if (isDebugMode)
           IconButton(
               icon: Icon(Icons.refresh),
               onPressed: () {
                 ParentController parentController = Get.find();
                 parentController?.updateItems();
               }),
-        if (isDebugOnly)
+        if (isDebugMode)
           IconButton(
               icon: Icon(Icons.clear),
               onPressed: () {

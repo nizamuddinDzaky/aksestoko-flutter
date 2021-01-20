@@ -21,7 +21,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   var repeatInputController = TextEditingController();
 
   void _actionResetPassword() async {
-    if (isDebugOnly) {
+    if (isDebugMode) {
       // if (false) {
       Get.back();
       Map<String, dynamic> dataE = {
@@ -145,7 +145,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   postSendOTP(data) async {
-    if (isDebugOnly) {
+    if (isDebugMode) {
       // if (false) {
       Get.back();
       showInputOTP({
@@ -314,7 +314,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   postCheckOTP(fields) async {
-    if (isDebugOnly) {
+    if (isDebugMode) {
       Get.back();
       if (false) {
         Fluttertoast.showToast(
@@ -391,7 +391,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   postChangePassword() async {
-    if (isDebugOnly) {
+    if (isDebugMode) {
       if (false) {
         Get.back();
         Fluttertoast.showToast(

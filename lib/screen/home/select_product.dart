@@ -60,14 +60,14 @@ class _SelectProductScreenState extends SelectProductViewModel {
                 ),
                 centerTitle: false,
                 actions: <Widget>[
-                  if (isDebugOnly)
+                  if (isDebugMode)
                     IconButton(
                         icon: Icon(Icons.refresh),
                         onPressed: () {
                           ParentController parentController = Get.find();
                           parentController?.addNotif();
                         }),
-                  if (isDebugOnly)
+                  if (isDebugMode)
                     IconButton(
                         icon: Icon(Icons.clear),
                         onPressed: () {

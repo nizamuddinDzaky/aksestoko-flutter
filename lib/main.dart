@@ -12,10 +12,13 @@ import 'package:get/get.dart';
 const isProd = kReleaseMode;
 
 // bool get isDebugQA => valDebug == 1 || (kDebugMode || !isProd);
-bool get isDebugQA => valDebug == 1 || isDebugOnly;
+bool get isDebugQA => valDebug == 1 || isDebugMode;
 
-// bool get isDebugOnly => valDebug == 2 || kDebugMode;
-bool get isDebugOnly => valDebug == 2;
+bool get isDebugOnly => kDebugMode || isDebugMode;
+
+bool get isDebugMode => valDebug == 2;
+
+bool get isProdMode => valDebug == 0 || isProd;
 
 int valDebug = kDebugMode ? 2 : ((kDebugMode || !isProd) ? 1 : 0);
 

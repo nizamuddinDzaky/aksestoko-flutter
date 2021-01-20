@@ -75,7 +75,7 @@ class _ParentScreenState extends State<ParentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedPage = isDebugOnly ? 3 : 0;
+    selectedPage = isDebugMode ? 3 : 0;
     triggerOnMessage = (message) {
       _showItemDialog(message);
     };

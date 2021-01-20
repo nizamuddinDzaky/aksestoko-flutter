@@ -496,7 +496,7 @@ class _RegisterScreenState extends RegisterController {
                     padding: MyDimen.marginLayout(),
                     margin: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
-                      initialValue: isDebugOnly ? '900000010' : null,
+                      initialValue: isDebugMode ? '900000010' : null,
                       onSaved: (value) => idBK = value,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
