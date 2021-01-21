@@ -63,8 +63,16 @@ android {
         }
         qaprod {
             dimension "app"
-            applicationIdSuffix ".test"
+            applicationIdSuffix ".debug"
             versionNameSuffix '-prod'
+        }
+        qadebug {
+            dimension "app"
+            versionNameSuffix '-QD'
+        }
+        qaproddebug {
+            dimension "app"
+            versionNameSuffix '-PD'
         }
     }
 
