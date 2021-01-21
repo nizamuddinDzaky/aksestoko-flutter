@@ -205,49 +205,50 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               ),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: TextFormField(
-                              controller: postalCodeTextController,
-                              onEditingComplete: (){
-                                if(postalCodeTextController.text != "")
-                                  getRegionByPostalCode();
-                              },
-                              onSaved: (value) {
-                                saveForm(kodePos: value);
-                              },
-                              keyboardType: TextInputType.numberWithOptions(
-                                decimal: false,
-                                signed: true,
-                              ),
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                              maxLength: 6,
-                              decoration: InputDecoration(
-                                contentPadding: MyDimen.paddingTxtField(),
-                                labelText: 'Kode Pos',
-                                labelStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                          if (false)
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 20),
+                                    child: TextFormField(
+                                      controller: postalCodeTextController,
+                                      onEditingComplete: () {
+                                        if (postalCodeTextController.text != "")
+                                          getRegionByPostalCode();
+                                      },
+                                      onSaved: (value) {
+                                        saveForm(kodePos: value);
+                                      },
+                                keyboardType: TextInputType.numberWithOptions(
+                                  decimal: false,
+                                  signed: true,
                                 ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: MyColor.txtField),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: MyColor.lineTxtField),
-                                ),
-                                errorText: 'Masukan Kode Pos',
-                                errorStyle: TextStyle(
-                                  color: MyColor.txtField,
-                                  fontStyle: FontStyle.italic,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                maxLength: 6,
+                                decoration: InputDecoration(
+                                  contentPadding: MyDimen.paddingTxtField(),
+                                  labelText: 'Kode Pos',
+                                  labelStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.txtField),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: MyColor.lineTxtField),
+                                  ),
+                                  errorText: 'Masukan Kode Pos',
+                                  errorStyle: TextStyle(
+                                    color: MyColor.txtField,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                           Row(
                             children: <Widget>[
                               Expanded(
@@ -255,6 +256,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: province,
+                                    enabled: (province?.length ?? 0) > 1,
                                     key: UniqueKey(),
                                     label: "Pilih Provinsi",
                                     hint: "Pilih Provinsi",
@@ -281,6 +283,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: district,
+                                    enabled: selectProvince != null,
                                     key: UniqueKey(),
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
@@ -307,6 +310,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: subDistrict,
+                                    enabled: selectDistrict != null,
                                     key: UniqueKey(),
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
@@ -333,20 +337,50 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: village,
+                                    enabled: selectSubDistrict != null,
                                     key: UniqueKey(),
                                     label: "Pilih Desa",
                                     hint: "Pilih Desa",
-                                    onChanged: (Zone data) =>
-                                    {selectVillage = data},
+                                    onChanged: (Zone data) => setZona(data, 4),
                                     selectedItem: selectVillage,
                                     showSearchBox: true,
                                     itemAsString: (Zone desa) =>
-                                        desa.name,
+                                    desa.name,
                                     searchBoxDecoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       contentPadding:
                                       EdgeInsets.fromLTRB(12, 12, 8, 0),
                                       labelText: "Pilih Desa",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(vertical: 25),
+                                  child: DropdownSearch<Zone>(
+                                    items: postalCodes,
+                                    enabled: selectVillage != null &&
+                                        (postalCodes?.length ?? 0) != 1,
+                                    key: UniqueKey(),
+                                    label: "Pilih Kodepos",
+                                    hint: "Pilih Kodepos",
+                                    onChanged: (Zone data) =>
+                                    {selectPostalCode = data},
+                                    onSaved: (Zone data) => {},
+                                    selectedItem: selectPostalCode,
+                                    showSearchBox: true,
+                                    itemAsString: (Zone postalCode) =>
+                                    postalCode.name,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding:
+                                      EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                      labelText: "Pilih Kodepos",
                                     ),
                                   ),
                                 ),

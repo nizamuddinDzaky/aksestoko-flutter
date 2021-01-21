@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/zone.dart';
@@ -26,12 +27,14 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   final List<Zone> village = [];
   final List<Zone> district = [];
   final List<Zone> subDistrict = [];
+  final List<Zone> postalCodes = [];
   final List<Address> listAddress = [];
 
   Zone selectVillage;
   Zone selectProvince;
   Zone selectSubDistrict;
   Zone selectDistrict;
+  Zone selectPostalCode;
   String tokenRajaApi;
 
   reInitText() {
@@ -115,7 +118,6 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       selectSubDistrict = null;
       selectDistrict = null;
       selectProvince = null;
-
     });
   }
 
@@ -213,29 +215,39 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     if (step == 1) {
       selectProvince = data;
       if(selectProvince.name.toLowerCase() != address.provinsi.toLowerCase()){
-        selectDistrict = null;
-        selectSubDistrict = null;
-        selectVillage = null;
+        resetStep(step);
       }
-        getKabupaten(data.id.toString(), isFirstLoad: isFirstLoad);
+      getKabupaten(data.id.toString(), isFirstLoad: isFirstLoad);
     } else if (step == 2) {
       selectDistrict = data;
       if(getKabupatenName(selectDistrict.name) != getKabupatenName(address.kabupaten)){
-        selectSubDistrict = null;
-        selectVillage = null;
+        resetStep(step);
       }
       getKecamatan(data.id.toString(), isFirstLoad: isFirstLoad);
     } else if (step == 3) {
       selectSubDistrict = data;
-      if(selectSubDistrict.name.toLowerCase() != address.kecamatan.toLowerCase()){
-        selectVillage = null;
+      if (selectSubDistrict.name.toLowerCase() !=
+          address.kecamatan.toLowerCase()) {
+        resetStep(step);
       }
       getDesa(data.id.toString(), isFirstLoad: isFirstLoad);
+    } else if (step == 4) {
+      selectVillage = data;
+      resetStep(step);
+      getPostalCode(isFirstLoad: isFirstLoad);
+    } else if (step == 5) {
+      selectPostalCode = data;
     }
   }
 
-  _getTokenRajaApi() async{
+  void resetStep(int step) {
+    selectDistrict = step < 2 ? null : selectDistrict;
+    selectSubDistrict = step < 3 ? null : selectSubDistrict;
+    selectVillage = step < 4 ? null : selectVillage;
+    selectPostalCode = step < 5 ? null : selectPostalCode;
+  }
 
+  _getTokenRajaApi() async {
     var status = await ApiClient.methodGet(
       ApiConfig.urlTokenRajaApi,
       customHandle: true,
@@ -290,7 +302,6 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
           }else{
             complete = true;
           }
-
         }
       },
       onFailed: (title, message) {
@@ -429,6 +440,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   }
 
   void getDesa(String idKecamatan, {bool isFirstLoad = false}) async {
+    debugPrint('current get postalcode $isFirstLoad');
     village.clear();
     var params = {
       "idkecamatan": idKecamatan,
@@ -445,7 +457,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
         }
       },
       onSuccess: (data, flag) {
-        complete = true;
+        // complete = true;
 
         var listData = data['data'];
         var selected;
@@ -459,8 +471,10 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
               }
             }
           });
-          if(selected != null){
-            selectVillage = selected;
+          if (selected != null) {
+            setZona(selected, 4, isFirstLoad: true);
+          } else {
+            complete = true;
           }
         }
       },
@@ -477,6 +491,64 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
           gravity: ToastGravity.CENTER,
         );
       },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  void getPostalCode({bool isFirstLoad = false}) async {
+    debugPrint('current get postalcode $isFirstLoad');
+    postalCodes.clear();
+    Map<String, dynamic> params = {
+      'kabupaten': selectDistrict?.name,
+      'kecamatan': selectSubDistrict?.name,
+      'desa': selectVillage?.name,
+    };
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlListKodepos,
+      params: params,
+      customHandle: true,
+      onBefore: (status) {
+        if (!isFirstLoad) {
+          Get.back();
+        }
+      },
+      onSuccess: (response, flag) {
+        complete = true;
+        var data = response['data'];
+        var listData = data != null ? data['data'] : null;
+        if (listData is List) {
+          listData.forEach((map) {
+            var zone = Zone.fromJson(map);
+            if (postalCodes.firstWhere((element) => element?.name == zone?.name,
+                orElse: () => null) ==
+                null) postalCodes.add(zone);
+          });
+          if ((postalCodes?.length ?? 0) == 1) {
+            selectPostalCode = postalCodes[0];
+          }
+        } else {
+          Fluttertoast.showToast(
+            msg: 'Belum ada kodepos terdaftar',
+            gravity: ToastGravity.CENTER,
+          );
+        }
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {},
     );
     setState(() {
       status.execute();
@@ -516,9 +588,12 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       address.email,
       address.noTlpn,
       address.alamat,
-      address.kodePos
+      // address.kodePos
     ];
-    if (addressData.where((element) => element.isNotEmpty).toList().length !=
+    if (addressData
+        .where((element) => element?.isNotEmpty ?? false)
+        .toList()
+        .length !=
         addressData.length) {
       Fluttertoast.showToast(
         msg: 'Mohon lengkapi data alamat toko',
@@ -526,11 +601,18 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       );
       return;
     }
-    if ([selectProvince, selectDistrict, selectSubDistrict, selectVillage]
-            .where((element) => element != null)
-            .toList()
-            .length !=
-        4) {
+    var wilayah = [
+      selectProvince,
+      selectDistrict,
+      selectSubDistrict,
+      selectVillage,
+      selectPostalCode
+    ];
+    if (wilayah
+        .where((element) => element != null)
+        .toList()
+        .length !=
+        wilayah.length) {
       Fluttertoast.showToast(
         msg: 'Mohon lengkapi data wilayah',
         gravity: ToastGravity.CENTER,
@@ -554,7 +636,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       'email': address.email,
       'no_tlp': address.noTlpn,
       'alamat': address.alamat,
-      'kode_pos': address.kodePos,
+      'kode_pos': selectPostalCode?.name,
       'provinsi': selectProvince.name,
       'kabupaten': selectDistrict.name,
       'kecamatan': selectSubDistrict.name,
@@ -564,6 +646,14 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       // 'kecamatan': address.kecamatanName,
     };
     debugPrint('action api address $body');
+    if (isDebugMode) {
+      Get.back();
+      Fluttertoast.showToast(
+        msg: '(Dummy): Ubah alamat sukses',
+        gravity: ToastGravity.CENTER,
+      );
+      return;
+    }
     _putUpdateAddress(body);
   }
 
@@ -605,7 +695,6 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
 
   @override
   void initState() {
-
     reInitText();
     /*reZona();*/
     super.initState();
