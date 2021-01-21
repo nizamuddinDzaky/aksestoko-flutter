@@ -4,7 +4,6 @@ import 'package:aksestokomobile/view_model/account/list_store_address_view_model
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:get/get.dart';
-import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/screen/account/addresses.dart'
 as listAddressLayout;
 
@@ -121,13 +120,7 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
                               'Tambah Alamat',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {
-                              Get.toNamed(addAddressScreen).then((value) {
-                                if (value == -1) {
-                                  refreshKey.currentState.show();
-                                }
-                              });
-                            },
+                            onPressed: goToAddAddress,
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(30.0))),
                       ),

@@ -1,13 +1,16 @@
+import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
-import 'package:aksestokomobile/screen/account/list_address_screen.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-abstract class ListStoreAddressViewModel <T extends StatefulWidget> extends State<T> {
+abstract class ListStoreAddressViewModel<T extends StatefulWidget>
+    extends State<T> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
   List<Alamat> listAddress;
 
@@ -67,6 +70,14 @@ abstract class ListStoreAddressViewModel <T extends StatefulWidget> extends Stat
     }, onAfter: (status) {});
     setState(() {
       status.execute();
+    });
+  }
+
+  void goToAddAddress() {
+    Get.toNamed(addAddressScreen).then((value) {
+      if (value == -1) {
+        refreshKey.currentState.show();
+      }
     });
   }
 

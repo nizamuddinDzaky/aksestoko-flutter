@@ -6,8 +6,8 @@ class Zone {
   Zone({this.kode, this.name, this.id});
 
   Zone.fromJson(Map<String, dynamic> json) {
-    kode = json['kode'];
-    name = json['name'];
+    kode = json['kode'] ?? json['postalcode'];
+    name = json['name'] ?? json['postalcode'];
     id = json['id'];
   }
 

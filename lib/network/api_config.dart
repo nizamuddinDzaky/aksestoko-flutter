@@ -73,6 +73,7 @@ class ApiConfig {
   static String urlKabupaten = '${local}list_city';
   static String urlKecamatan = '${local}list_states';
   static String urlPostalCode = '${local}postal_code';
+  static String urlListKodepos = '${local}list_kode_pos';
   static String urlListProvinsi = '${path}get_list_province.php';
   static String urlListKabupaten = '${path}get_list_kabupaten.php';
   static String urlListKecamatan = '${path}get_list_kecamatan.php';

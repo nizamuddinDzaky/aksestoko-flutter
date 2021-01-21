@@ -187,3 +187,7 @@ extension DateTimeExtension on DateTime {
     return dateFormatOut.format(this);
   }
 }
+
+void actionDelay(int milis, Function function) {
+  Future.delayed(Duration(milliseconds: milis ?? 500), () => function?.call());
+}
