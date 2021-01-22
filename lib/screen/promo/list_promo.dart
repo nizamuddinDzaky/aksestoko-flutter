@@ -143,7 +143,7 @@ class _ListPromoScreenState extends PromoViewModel {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 5),
                 child: Text(
-                  promo.name,
+                  promo?.name ?? '',
                   style: TextStyle(
                     color: MyColor.blackTextAT,
                     fontWeight: FontWeight.bold,
@@ -151,36 +151,38 @@ class _ListPromoScreenState extends PromoViewModel {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      promo.codePromo,
-                      style: TextStyle(
-                          color: MyColor.greyTextAT,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      child: CupertinoButton(
-                        padding: EdgeInsets.all(0),
-                        child: Text(
-                          'SALIN KODE',
-                          style: TextStyle(
-                            color: MyColor.redAT,
-                            fontSize: 14,
-                          ),
-                        ),
-                        onPressed: () {
-                          FlutterClipboard.copy(promo.codePromo);
-                          _showToast(context);
-                        },
+              if (promo?.typeNews?.toLowerCase() != 'info')
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        promo?.codePromo ?? '',
+                        style: TextStyle(
+                            color: MyColor.greyTextAT,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ],
+                      Container(
+                        child: CupertinoButton(
+                          padding: EdgeInsets.all(0),
+                          child: Text(
+                            'SALIN KODE',
+                            style: TextStyle(
+                              color: MyColor.redAT,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () {
+                            FlutterClipboard.copy(promo.codePromo);
+                            _showToast(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),

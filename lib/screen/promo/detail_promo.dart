@@ -197,42 +197,44 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
-                /*margin: EdgeInsets.symmetric(vertical: 5),*/
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      promo?.codePromo ?? '',
-                      style: TextStyle(
-                          color: MyColor.greyTextAT,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      child: CupertinoButton(
-                        padding: EdgeInsets.all(0),
-                        child: Text(
-                          'SALIN KODE',
-                          style: TextStyle(
-                            color: MyColor.redAT,
-                            fontSize: 14,
-                          ),
-                        ),
-                        onPressed: () {
-                          FlutterClipboard.copy(promo.codePromo);
-                        },
+              if (promo?.typeNews?.toLowerCase() != 'info')
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
+                  /*margin: EdgeInsets.symmetric(vertical: 5),*/
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        promo?.codePromo ?? '',
+                        style: TextStyle(
+                            color: MyColor.greyTextAT,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    /*Text(
+                      Container(
+                        child: CupertinoButton(
+                          padding: EdgeInsets.all(0),
+                          child: Text(
+                            'SALIN KODE',
+                            style: TextStyle(
+                              color: MyColor.redAT,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () {
+                            FlutterClipboard.copy(promo.codePromo);
+                          },
+                        ),
+                      ),
+                      /*Text(
                       "Salin Kode",
 
                       style: TextStyle(
                           color: MyColor.redAT),
                     ),*/
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               Container(
                 child: Row(
                   children: <Widget>[
@@ -257,34 +259,37 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
                   ],
                 ),
               ),
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                        height: 1,
-                        width: 100,
-                        color: MyColor.redAT,
-                        margin: EdgeInsets.only(top: 5, bottom: 0, left: 5))
-                  ],
+              if (promo?.typeNews?.toLowerCase() != 'info')
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                          height: 1,
+                          width: 100,
+                          color: MyColor.redAT,
+                          margin: EdgeInsets.only(top: 5, bottom: 0, left: 5))
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                child: Wrap(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 5, bottom: 0, left: 10),
-                      child: Text(
-                        "Min Pembelian ${MyNumber.toNumberRpStr(
-                            promo?.minPembelian ??
-                                '')} | Max Potongan ${MyNumber.toNumberRpStr(
-                            promo?.maxTotalDisc ?? '')} | Berlaku sampai ${promo
-                            ?.endDate == null ? '' : strToDate(promo.endDate)}",
-                        style: TextStyle(color: MyColor.greyTextAT),
-                      ),
-                    )
-                  ],
+              if (promo?.typeNews?.toLowerCase() != 'info')
+                Container(
+                  child: Wrap(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 5, bottom: 0, left: 10),
+                        child: Text(
+                          "Min Pembelian ${MyNumber.toNumberRpStr(
+                              promo?.minPembelian ??
+                                  '')} | Max Potongan ${MyNumber.toNumberRpStr(
+                              promo?.maxTotalDisc ??
+                                  '')} | Berlaku sampai ${promo
+                              ?.endDate == null ? '' : strToDate(promo.endDate)}",
+                          style: TextStyle(color: MyColor.greyTextAT),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),
