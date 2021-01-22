@@ -205,26 +205,24 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               ),
                             ),
                           ),
-                          if (false)
+                          if (skenario == 1)
                                   Container(
                                     margin: EdgeInsets.only(bottom: 20),
                                     child: TextFormField(
                                       controller: postalCodeTextController,
-                                      onEditingComplete: () {
-                                        if (postalCodeTextController.text != "")
-                                          getRegionByPostalCode();
-                                      },
+                                      focusNode: nodeKodePos,
                                       onSaved: (value) {
                                         saveForm(kodePos: value);
                                       },
-                                keyboardType: TextInputType.numberWithOptions(
-                                  decimal: false,
-                                  signed: true,
-                                ),
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                                maxLength: 6,
+                                      keyboardType:
+                                          TextInputType.numberWithOptions(
+                                        decimal: false,
+                                        signed: true,
+                                      ),
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly,
+                                      ],
+                                      maxLength: 6,
                                 decoration: InputDecoration(
                                   contentPadding: MyDimen.paddingTxtField(),
                                   labelText: 'Kode Pos',
@@ -283,7 +281,8 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: district,
-                                    enabled: selectProvince != null,
+                                    enabled: selectProvince != null &&
+                                        skenario == 2,
                                     key: UniqueKey(),
                                     label: "Pilih Kabupaten",
                                     hint: "Pilih Kabupaten",
@@ -310,7 +309,8 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                   margin: EdgeInsets.symmetric(vertical: 25),
                                   child: DropdownSearch<Zone>(
                                     items: subDistrict,
-                                    enabled: selectDistrict != null,
+                                    enabled: selectDistrict != null &&
+                                        skenario == 2,
                                     key: UniqueKey(),
                                     label: "Pilih Kecamatan",
                                     hint: "Pilih Kecamatan",
@@ -357,36 +357,37 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                               ),
                             ],
                           ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(vertical: 25),
-                                  child: DropdownSearch<Zone>(
-                                    items: postalCodes,
-                                    enabled: selectVillage != null &&
-                                        (postalCodes?.length ?? 0) != 1,
-                                    key: UniqueKey(),
-                                    label: "Pilih Kodepos",
-                                    hint: "Pilih Kodepos",
-                                    onChanged: (Zone data) =>
-                                    {selectPostalCode = data},
-                                    onSaved: (Zone data) => {},
-                                    selectedItem: selectPostalCode,
-                                    showSearchBox: true,
-                                    itemAsString: (Zone postalCode) =>
-                                    postalCode.name,
-                                    searchBoxDecoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      contentPadding:
-                                      EdgeInsets.fromLTRB(12, 12, 8, 0),
-                                      labelText: "Pilih Kodepos",
+                          if (skenario == 2)
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(vertical: 25),
+                                    child: DropdownSearch<Zone>(
+                                      items: postalCodes,
+                                      enabled: selectVillage != null &&
+                                          (postalCodes?.length ?? 0) != 1,
+                                      key: UniqueKey(),
+                                      label: "Pilih Kodepos",
+                                      hint: "Pilih Kodepos",
+                                      onChanged: (Zone data) =>
+                                      {selectPostalCode = data},
+                                      onSaved: (Zone data) => {},
+                                      selectedItem: selectPostalCode,
+                                      showSearchBox: true,
+                                      itemAsString: (Zone postalCode) =>
+                                      postalCode.name,
+                                      searchBoxDecoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        contentPadding:
+                                        EdgeInsets.fromLTRB(12, 12, 8, 0),
+                                        labelText: "Pilih Kodepos",
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
                           Padding(padding: EdgeInsets.only(top: 20)),
                           SizedBox(
                             width: double.infinity,

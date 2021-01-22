@@ -21,6 +21,8 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   var addressTextController = TextEditingController();
   var postalCodeTextController = TextEditingController();
 
+  FocusNode nodeKodePos = new FocusNode();
+  int skenario = 2;
   bool complete = null;
   Address address;
   final List<Zone> province = [];
@@ -45,7 +47,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     postalCodeTextController.text = address?.kodePos;
   }
 
-  getRegionByPostalCode() async {
+  getRegionByPostalCode({String postalCode}) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -59,39 +61,38 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
         });
 
     var params = {
-      'postal_code': postalCodeTextController.text,
+      'postal_code': postalCode ?? postalCodeTextController.text,
     };
     var status = await ApiClient.methodGet(
         "${ApiConfig.urlPostalCode}",
         params: params,
         customHandle: true,
         onBefore: (status) {
-          province.clear();
-          district.clear();
-          subDistrict.clear();
-          village.clear();
-          listAddress.clear();
         },
         onSuccess: (data, flag) {
-          var listData = data['data']['kodepos'];
-          if (listData is List) {
-            listData.forEach((map) {
-              var alamat = Address.fromJson(map);
-              listAddress.add(alamat);
-            });
-            _setZoneByPostalCode();
-          }
-        },
+      province.clear();
+      district.clear();
+      subDistrict.clear();
+      village.clear();
+      listAddress.clear();
+      var listData = data['data']['kodepos'];
+      if (listData is List) {
+        listData.forEach((map) {
+          var alamat = Address.fromJson(map);
+          listAddress.add(alamat);
+        });
+        _setZoneByPostalCode();
+      }
+    },
         onFailed: (title, message) {
-          var response = BaseResponse.fromString(message);
-          _resetRegion();
+          _getTokenRajaApi();
           Fluttertoast.showToast(
-            msg: response?.message ?? 'Gagal',
+            msg: 'Kodepos tidak terdaftar',
             gravity: ToastGravity.CENTER,
           );
         },
         onError: (title, message) {
-          _resetRegion();
+          // _resetRegion();
           Fluttertoast.showToast(
             msg: 'Terjadi kesalahan data / koneksi',
             gravity: ToastGravity.CENTER,
@@ -135,23 +136,29 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
         district.add(Zone(name: address.kabupaten));
       }
 
-      if(checkKecamatan.isEmpty){
+      if (checkKecamatan.isEmpty) {
         subDistrict.add(Zone(name: address.kecamatan));
       }
 
-      if(checkDesa.isEmpty){
+      if (checkDesa.isEmpty) {
         village.add(Zone(name: address.kelurahanName));
       }
     });
-    if(province.length == 1){
+
+    selectProvince = null;
+    selectDistrict = null;
+    selectSubDistrict = null;
+    selectVillage = null;
+
+    if (province.length == 1) {
       selectProvince = province.first;
     }
 
-    if(district.length == 1){
+    if (district.length == 1) {
       selectDistrict = district.first;
     }
 
-    if(subDistrict.length == 1){
+    if (subDistrict.length == 1) {
       selectSubDistrict = subDistrict.first;
     }
 
@@ -175,7 +182,12 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
         if (data['data']['detail_address'] == null) return;
         address = Address.fromJson(data['data']['detail_address']);
         reInitText();
-        _getTokenRajaApi();
+        if (skenario == 1) {
+          complete = true;
+          setState(() {});
+          getRegionByPostalCode(postalCode: address?.kodePos);
+        }
+        if (skenario == 2) _getTokenRajaApi();
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
@@ -241,6 +253,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   }
 
   void resetStep(int step) {
+    selectProvince = step < 1 ? null : selectProvince;
     selectDistrict = step < 2 ? null : selectDistrict;
     selectSubDistrict = step < 3 ? null : selectSubDistrict;
     selectVillage = step < 4 ? null : selectVillage;
@@ -248,6 +261,13 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   }
 
   _getTokenRajaApi() async {
+    if (skenario == 1) {
+      postalCodeTextController.clear();
+      resetStep(0);
+      complete = true;
+      setState(() {});
+      return;
+    }
     var status = await ApiClient.methodGet(
       ApiConfig.urlTokenRajaApi,
       customHandle: true,
@@ -499,6 +519,14 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
 
   void getPostalCode({bool isFirstLoad = false}) async {
     debugLog('current get postalcode $isFirstLoad');
+    if (skenario != 2) {
+      if (!isFirstLoad) {
+        Get.back();
+      }
+      complete = true;
+      setState(() {});
+      return;
+    }
     postalCodes.clear();
     Map<String, dynamic> params = {
       'kabupaten': selectDistrict?.name,
@@ -588,7 +616,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       address.email,
       address.noTlpn,
       address.alamat,
-      // address.kodePos
+      if (skenario == 1) address.kodePos
     ];
     if (addressData
         .where((element) => element?.isNotEmpty ?? false)
@@ -606,7 +634,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       selectDistrict,
       selectSubDistrict,
       selectVillage,
-      selectPostalCode
+      if (skenario == 2) selectPostalCode,
     ];
     if (wilayah
         .where((element) => element != null)
@@ -636,7 +664,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       'email': address.email,
       'no_tlp': address.noTlpn,
       'alamat': address.alamat,
-      'kode_pos': selectPostalCode?.name,
+      'kode_pos': skenario == 1 ? address.kodePos : selectPostalCode?.name,
       'provinsi': selectProvince.name,
       'kabupaten': selectDistrict.name,
       'kecamatan': selectSubDistrict.name,
@@ -646,7 +674,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       // 'kecamatan': address.kecamatanName,
     };
     debugLog('action api address $body');
-    if (isDebugMode) {
+    if (isDebugOnly) {
       Get.back();
       Fluttertoast.showToast(
         msg: '(Dummy): Ubah alamat sukses',
@@ -693,10 +721,18 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     });
   }
 
+  void _onFocusChange() {
+    if (!nodeKodePos.hasFocus) {
+      if (postalCodeTextController.text?.isNotEmpty ?? false) {
+        getRegionByPostalCode();
+      }
+    }
+  }
+
   @override
   void initState() {
     reInitText();
-    /*reZona();*/
+    nodeKodePos.addListener(_onFocusChange);
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _getAddress();
