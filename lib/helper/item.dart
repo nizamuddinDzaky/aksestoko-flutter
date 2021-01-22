@@ -61,6 +61,8 @@ class Item {
       case 'sms_notif_payment_partial':
       case 'sms_notif_payment_reject':
       case 'sms_notif_update_status':
+      case 'sms_notif_update_payment':
+      case 'sms_notif_reminder_payment':
         return 'Pesanan';
       default:
         return '';
