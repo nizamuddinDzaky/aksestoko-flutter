@@ -56,23 +56,23 @@ android {
         prod {
             dimension "app"
         }
-        qa {
+        serverqa {
             dimension "app"
             applicationIdSuffix ".test"
             versionNameSuffix '-qa'
         }
-        qaprod {
+        serverprod {
             dimension "app"
             applicationIdSuffix ".debug"
             versionNameSuffix '-prod'
         }
-        qadebug {
+        debugqa {
             dimension "app"
-            versionNameSuffix '-QD'
+            versionNameSuffix '-DQ'
         }
-        qaproddebug {
+        debugprod {
             dimension "app"
-            versionNameSuffix '-PD'
+            versionNameSuffix '-DP'
         }
     }
 
