@@ -96,6 +96,17 @@ android {
             versionNameSuffix '_debug'
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def alias = "ATM"
+            def version = defaultConfig.versionName
+            def code = defaultConfig.versionCode
+            def flavor = variant.getFlavorName()
+            def newName = "${alias}_${version}_${code}_${flavor}.apk"
+            outputFileName = "../../" + newName
+        }
+    }
 }
 
 flutter {
