@@ -16,6 +16,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   bool complete = null;
   TextEditingController kodePosController = TextEditingController();
   FocusNode nodeKodePos = new FocusNode();
+  int skenario = 2;
 
   Alamat address;
   Address curAddress;
@@ -42,7 +43,16 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   void initState() {
     super.initState();
     // getProvinsi();
+    nodeKodePos.addListener(_onFocusChange);
     actionRefresh();
+  }
+
+  void _onFocusChange() {
+    if (!nodeKodePos.hasFocus) {
+      if (kodePosController.text?.isNotEmpty ?? false) {
+        getRegionByPostalCode();
+      }
+    }
   }
 
   Future<void> actionRefresh() async {
@@ -71,12 +81,12 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     };
     var status = await ApiClient.methodGet("${ApiConfig.urlPostalCode}",
         params: params, customHandle: true, onBefore: (status) {
+    }, onSuccess: (data, flag) {
       province.clear();
       district.clear();
       subDistrict.clear();
       village.clear();
       listAddress.clear();
-    }, onSuccess: (data, flag) {
       var listData = data['data']['kodepos'];
       if (listData is List) {
         listData.forEach((map) {
@@ -86,14 +96,13 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
         _setZoneByPostalCode();
       }
     }, onFailed: (title, message) {
-      var response = BaseResponse.fromString(message);
-      _resetRegion();
-      Fluttertoast.showToast(
-        msg: response?.message ?? 'Gagal',
-        gravity: ToastGravity.CENTER,
-      );
-    }, onError: (title, message) {
-      _resetRegion();
+          _getTokenRajaApi();
+          Fluttertoast.showToast(
+            msg: 'Kodepos tidak terdaftar',
+            gravity: ToastGravity.CENTER,
+          );
+        }, onError: (title, message) {
+          // _resetRegion();
       Fluttertoast.showToast(
         msg: 'Terjadi kesalahan data / koneksi',
         gravity: ToastGravity.CENTER,
@@ -135,23 +144,29 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
         district.add(Zone(name: address.kabupaten));
       }
 
-      if(checkKecamatan.isEmpty){
+      if (checkKecamatan.isEmpty) {
         subDistrict.add(Zone(name: address.kecamatan));
       }
 
-      if(checkDesa.isEmpty){
+      if (checkDesa.isEmpty) {
         village.add(Zone(name: address.kelurahanName));
       }
     });
-    if(province.length == 1){
+
+    selectProvince = null;
+    selectDistrict = null;
+    selectSubDistrict = null;
+    selectVillage = null;
+
+    if (province.length == 1) {
       selectProvince = province.first;
     }
 
-    if(district.length == 1){
+    if (district.length == 1) {
       selectDistrict = district.first;
     }
 
-    if(subDistrict.length == 1){
+    if (subDistrict.length == 1) {
       selectSubDistrict = subDistrict.first;
     }
 
@@ -192,12 +207,12 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   }
 
   void resetStep(int step) {
-    // selectProvince = step < 2 ? null;
+    selectProvince = step < 1 ? null : selectProvince;
     selectDistrict = step < 2 ? null : selectDistrict;
     selectSubDistrict = step < 3 ? null : selectSubDistrict;
     selectVillage = step < 4 ? null : selectVillage;
     selectPostalCode = step < 5 ? null : selectPostalCode;
-    // if (step < 1) province.clear();
+    if (step < 1) province.clear();
     if (step < 2) district.clear();
     if (step < 3) subDistrict.clear();
     if (step < 4) village.clear();
@@ -404,6 +419,12 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   }
 
   void getPostalCode() async {
+    if (skenario != 2) {
+      Get.back();
+      complete = true;
+      setState(() {});
+      return;
+    }
     postalCodes.clear();
     if (isDebugMode) {
       Get.back();
@@ -508,7 +529,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       curAddress.email,
       curAddress.noTlpn,
       curAddress.alamat,
-      // curAddress.kodePos,
+      if (skenario == 1) curAddress.kodePos,
     ];
     if (addressData
         .where((element) => element?.isNotEmpty ?? false)
@@ -526,7 +547,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       selectDistrict,
       selectSubDistrict,
       selectVillage,
-      selectPostalCode
+      if (skenario == 2) selectPostalCode,
     ];
     if (wilayah
         .where((element) => element != null)
@@ -555,14 +576,14 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       'email': curAddress.email,
       'no_tlp': curAddress.noTlpn,
       'alamat': curAddress.alamat,
-      'kode_pos': selectPostalCode.name,
+      'kode_pos': skenario == 1 ? curAddress.kodePos : selectPostalCode.name,
       'provinsi': selectProvince.name,
       'kabupaten': selectDistrict.name,
       'kecamatan': selectSubDistrict.name,
       'desa': selectVillage.name,
     };
 
-    if (isDebugMode) {
+    if (isDebugOnly) {
       debugLog('cek data $body');
       Get.back();
       Fluttertoast.showToast(
@@ -613,6 +634,13 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   _getTokenRajaApi() async {
     if (isDebugMode) {
       getProvinsi();
+      return;
+    }
+    if (skenario == 1) {
+      kodePosController.clear();
+      resetStep(0);
+      complete = true;
+      setState(() {});
       return;
     }
     var status = await ApiClient.methodGet(
