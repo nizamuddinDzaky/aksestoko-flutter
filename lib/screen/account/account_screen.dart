@@ -7,6 +7,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/setting/version_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -66,7 +67,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     super.initState();
-    debugPrint('re init state');
+    debugLog('re init state');
     profile = Profile.fromJson(MyPref.getMap('profile'));
     if (profile?.namaToko == null) {
       getSalesPerson();

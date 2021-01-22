@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/notification/detail_page.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,6 @@ Future<void> showNotification(String title, String body,
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
   var messageData = message['data'];
-  print('on background $message');
   if (messageData is Map && messageData.isNotEmpty) {
     final data = message['data'];
     final title = data['title'];
@@ -117,7 +117,7 @@ bool isNotifValid(Map<String, dynamic> message) {
   count += data['id_promo'] == null ? 0 : 1;
   count += data['id_pemesanan'] == null ? 0 : 1;
   if (count == 0) count += data['status'] == null ? 0 : 1;
-  debugPrint('is valid $data ${count == 1}');
+  debugLog('is valid $data ${count == 1}');
   return count == 1;
 }
 
@@ -137,7 +137,7 @@ class MyNotification {
     _firebaseMessaging.configure(
       // onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
       onMessage: (Map<String, dynamic> message) async {
-        print(
+        debugLog(
             "${triggerOnResume == null} ${DateTime.now()} $triggerOnResume onMessage: $message");
         try {
           var addId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -145,11 +145,9 @@ class MyNotification {
         } catch (_) {}
         if (isNotifValid(message)) triggerOnMessage?.call(message);
         if (isNotifValid(message)) triggerOnSave?.call(message);
-        // _showItemDialog(message);
-        // showNotification('title', 'body');
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
+        debugLog("onLaunch: $message");
         try {
           var addId = DateTime
               .now()
@@ -159,11 +157,9 @@ class MyNotification {
         } catch (_) {}
         if (isNotifValid(message)) triggerOnResume?.call(message);
         if (isNotifValid(message)) triggerOnSave?.call(message);
-        // triggerOnLaunch?.call(message);
-        // _navigateToItemDetail(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
+        debugLog("onResume: $message");
         try {
           var addId = DateTime
               .now()
@@ -181,11 +177,11 @@ class MyNotification {
             sound: true, badge: true, alert: true, provisional: true));
     _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
+      debugLog("Settings registered: $settings");
     });
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
-      debugPrint("Push Messaging token: $token");
+      debugLog("Push Messaging token: $token");
       _actionGetToken(token);
     });
     fcmSubscribe();
@@ -211,13 +207,13 @@ class MyNotification {
       {},
       customHandle: true,
       onSuccess: (data, _) {
-        debugPrint("success add token: $data");
+        debugLog("success add token: $data");
       },
       onFailed: (title, message) {
-        debugPrint("fail add token: $message");
+        debugLog("fail add token: $message");
       },
       onError: (title, message) {
-        debugPrint("error add token: $message");
+        debugLog("error add token: $message");
       },
     );
     status.execute();
@@ -239,14 +235,14 @@ class MyNotification {
         'device': deviceName,
       },
       onSuccess: (data, _) async {
-        debugPrint("post token: $data");
+        debugLog("post token: $data");
         if (data['data'] != null && data['data']['token'] != null) {
           var oldToken = data['data']['token'];
           if (oldToken != token) _actionPostToken(token);
         }
       },
       onFailed: (data, _) async {
-        debugPrint("post token: $data");
+        debugLog("post token: $data");
         _actionPostToken(token);
       },
     ))
@@ -257,7 +253,7 @@ class MyNotification {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String payload) async {
       if (payload != null) {
-        debugPrint('notification payload: $payload');
+        debugLog('notification payload: $payload');
         triggerOnBackground?.call(payload);
       }
       selectNotificationSubject.add(payload);
@@ -273,14 +269,14 @@ class MyNotification {
   void _configureDidReceiveLocalNotificationSubject() {
     didReceiveLocalNotificationSubject.stream
         .listen((ReceivedNotification receivedNotification) async {
-      debugPrint('show dialog');
+      debugLog('show dialog');
     });
   }
 
   void _configureSelectNotificationSubject() {
-    debugPrint('init notif subject ${selectNotificationSubject?.length}');
+    debugLog('init notif subject ${selectNotificationSubject?.length}');
     selectNotificationSubject.stream.listen((String payload) async {
-      debugPrint('action push subject ${selectNotificationSubject?.length}');
+      debugLog('action push subject ${selectNotificationSubject?.length}');
       // triggerOnBackground?.call(payload);
       await Navigator.push(
         context,

@@ -54,7 +54,6 @@ class DataDummy {
 
   static Map<String, dynamic> getPostalcode({status, data}) {
     var rand = Random().nextDouble();
-    print('cek rand $rand');
     return {
       "status": "success",
       "code": 200,

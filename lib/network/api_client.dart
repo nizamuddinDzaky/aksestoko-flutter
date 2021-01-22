@@ -5,6 +5,7 @@ import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -172,7 +173,7 @@ class ApiClient {
           responseApi._setFailed(
               title, 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
-          print('error gan $error ${error.response}');
+          debugLog('error gan $error ${error.response}');
         }
       }
     }
@@ -230,7 +231,7 @@ class ApiClient {
           responseApi._setFailed(
               title, 'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
-          debugPrint('error gan $error ${error.response}');
+          debugLog('error gan $error ${error.response}');
           responseApi._setFailed(title, error.response.toString());
         }
       }
@@ -290,7 +291,7 @@ class ApiClient {
           responseApi._setFailed(error.request.uri.toString(),
               'Periksa Nama Pengguna & Kata Sandi, kemudian ulangi');
         } else {
-          debugPrint('error gan $error ${error.response}');
+          debugLog('error gan $error ${error.response}');
           responseApi._setFailed(title, error.response.toString());
         }
       }
@@ -396,7 +397,7 @@ class ApiResponse {
         try {
           await onSuccess(dataResponse, tagOrFlag);
         } catch (e) {
-          debugPrint('cetak $e');
+          debugLog('cetak $e');
           var message = {
             'message': 'Gagal memperoleh data.',
           };

@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/detail_payment.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/detail_payment.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -20,10 +21,10 @@ abstract class DetailPaymentViewModel extends State<DetailPaymentScreen> {
 
   getListPayment() async {
     if (Get.arguments == null) {
-      debugPrint('argument kosong');
+      debugLog('argument kosong');
       return;
     }
-    debugPrint("id_pemesanan = ${Get.arguments?.toString()}");
+    debugLog("id_pemesanan = ${Get.arguments?.toString()}");
     var status = await ApiClient.methodGet(ApiConfig.urlListProofPayment,
         customHandle: true,
         params: {

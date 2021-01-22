@@ -308,7 +308,7 @@ class SelectProductController extends GetController {
         promoCode = response.data.promo.codePromo;
         promoName = response.data.promo.name;
         promoValue = response.data.promo.value.toString();
-        debugPrint("value : ${response.data.promo.value}");
+        debugLog("value : ${response.data.promo.value}");
         update();
       },
       onFailed: (title, message) {

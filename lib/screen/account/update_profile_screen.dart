@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/helper/my_stateful_builder.dart';
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -38,18 +39,18 @@ class _UpdateProfileScreenState extends UpdateProfileController {
               var now = DateTime.now();
               var status = (endOtp?.millisecondsSinceEpoch ?? 0) >
                   now.millisecondsSinceEpoch;
-              debugPrint('status $status $now $endOtp');
+              debugLog('status $status $now $endOtp');
               if (status)
                 controller = CountdownTimerController(
                   endTime: endOtp.millisecondsSinceEpoch + 500,
                   onEnd: () {
-                    debugPrint('selesai timer');
+                    debugLog('selesai timer');
                   },
                 );
               var actionGetOTP = () {
                 getPhoneOtp(
                   onSuccess: (otp) {
-                    debugPrint('kirim kode');
+                    debugLog('kirim kode');
                     var duration = Duration(seconds: otp?.timeleft ?? 300);
                     endOtp = DateTime.now().add(duration);
                     MyPref.setOtpVerPhone(
@@ -59,7 +60,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                 );
               };
               var actionTestOTP = () {
-                debugPrint('kirim kode');
+                debugLog('kirim kode');
                 var duration = Duration(seconds: 10);
                 endOtp = DateTime.now().add(duration);
                 MyPref.setOtpVerPhone(endOtp.millisecondsSinceEpoch.toDouble());

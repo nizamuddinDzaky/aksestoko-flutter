@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/login_model.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/login/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ abstract class LoginScreenController extends LoginViewModel {
         onSelected: (int idx) {
           Future.delayed(Duration(milliseconds: 300)).then((value) {
             currentData = login[idx];
-            debugPrint('cek currentData ${currentData?.toJson()}');
+            debugLog('cek currentData ${currentData?.toJson()}');
             postLogin(skip: true);
           });
         },

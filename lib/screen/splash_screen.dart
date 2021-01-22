@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/helper/my_logo.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await MyPref.init();
     var token = MyPref.getATToken();
     var isLogin = token != null && token.isNotEmpty;
-    debugPrint('Aksestoko-Token $token');
+    debugLog('Aksestoko-Token $token');
     Future.delayed(Duration(seconds: MyDimen.timerSplash), () {
       Get.offNamed(isLogin
           ? (MyPref.isIdDistributorExist()

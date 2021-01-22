@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math' as math;
 
@@ -29,7 +30,7 @@ extension StringExtension on String {
     try {
       newDate = dateFormatIn.parse(this);
     } catch (e) {
-      debugPrint(e.message);
+      debugLog(e.message);
     }
     return newDate;
   }
@@ -108,7 +109,6 @@ Future<File> compressAndGetFile(File file, String targetPath) async {
   var max = [decodeImage.width, decodeImage.height].reduce(math.max);
   max = max > 1000 ? 1000 : max;
   var isVertical = w < h;
-  // debugPrint('ukuran awal ${decodeImage.width} ${decodeImage.height}');
   var result = await FlutterImageCompress.compressAndGetFile(
     file.absolute.path,
     targetPath,
@@ -117,8 +117,6 @@ Future<File> compressAndGetFile(File file, String targetPath) async {
     minWidth: isVertical ? (w * max ~/ h) : max,
     rotate: isVertical ? 0 : 90,
   );
-  // var decodeImage2 = await decodeImageFromList(result.readAsBytesSync());
-  // debugPrint('ukuran akhir ${decodeImage2.width} ${decodeImage2.height}');
   return result;
 }
 
@@ -151,7 +149,6 @@ String paymentIcon(String payment){
 }
 
 String strToDate(String txtDate, {BuildContext context}) {
-//  debugPrint("asdasd => ${DateTime.tryParse(txtDate)}");
   var dateFormatOut = DateFormat('dd MMMM yyyy');
   if (txtDate == null) return '';
   return dateFormatOut.format(DateTime.tryParse(txtDate));
@@ -190,4 +187,8 @@ extension DateTimeExtension on DateTime {
 
 void actionDelay(int milis, Function function) {
   Future.delayed(Duration(milliseconds: milis ?? 500), () => function?.call());
+}
+
+void debugLog(String message) {
+  if (kDebugMode) dev.log(message ?? '-emptylog-');
 }

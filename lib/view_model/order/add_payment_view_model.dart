@@ -7,6 +7,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/add_payment_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,10 +41,10 @@ abstract class AddPaymentViewModel extends State<AddPaymentScreen> {
         },
         onBefore: (status) {}, onSuccess: (data, flag) {
           completeLoad = true;
-          var response = BaseResponse.fromJson(data);
-          paymentData = response.data.paymentData;
-          debugPrint("result => ${paymentData.metodePembayaran}");
-        }, onFailed: (title, message) {
+      var response = BaseResponse.fromJson(data);
+      paymentData = response.data.paymentData;
+      debugLog("result => ${paymentData.metodePembayaran}");
+    }, onFailed: (title, message) {
           Get.defaultDialog(title: title, content: Text(message));
         }, onError: (title, message) {
           Get.defaultDialog(title: title, content: Text(message));

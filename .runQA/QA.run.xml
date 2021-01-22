@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
     <configuration name="releaseQA" default="false" factoryName="Flutter"
         type="FlutterRunConfigurationType">
-      <option name="buildFlavor" value="serverqa" />
-      <option name="filePath" value="$PROJECT_DIR$/lib/main_qa.dart" />
-      <method v="2" />
+        <option name="buildFlavor" value="serverqa" />
+        <option name="filePath" value="$PROJECT_DIR$/lib/main_qa.dart" />
+        <method v="2" />
     </configuration>
 </component>

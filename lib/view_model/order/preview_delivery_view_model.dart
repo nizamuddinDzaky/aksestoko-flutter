@@ -11,10 +11,6 @@ abstract class PreviewDeliveryViewModel extends State<PreviewDeliveryScreen> {
   OrderDetail orderDetail;
   List<DetailDelivery> listDetailDelivery = [];
   getListOrder(String idPurchase) async {
-    /*if (Get.arguments == null) {
-      debugPrint('argument kosong');
-      return;
-    }*/
     listDetailDelivery.clear();
     var status = await ApiClient.methodGet(ApiConfig.urlDetailOrder,
         params: {

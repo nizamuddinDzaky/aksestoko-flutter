@@ -5,6 +5,7 @@ import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
 import 'package:aksestokomobile/screen/promo/detail_promo.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
       elevation: 8,
       child: ListTile(
         onTap: () {
-          debugPrint('notif ${data.itemId} ${data.type}');
+          debugLog('notif ${data.itemId} ${data.type}');
           var map = data.toJson();
           if (isNotifValid(map)) {
             // triggerOnResume?.call(map);

@@ -3,6 +3,7 @@ import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
 import 'package:aksestokomobile/main_common.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -64,7 +65,7 @@ class _ParentScreenState extends State<ParentScreen> {
     // Clear away dialogs
     Navigator.popUntil(context, (Route<dynamic> route) {
       // return route is ParentScreen;
-      debugPrint("route name ${route.settings.name}");
+      debugLog("route name ${route.settings.name}");
       return route is PageRoute;
     });
     if (!item.route.isCurrent) {
@@ -87,12 +88,12 @@ class _ParentScreenState extends State<ParentScreen> {
         ParentController to = Get.find();
         to.addNotif(item: itemForMessage(message));
       } catch (e) {
-        debugPrint('$e');
+        debugLog('$e');
       }
     };
     myNotification.init(context);
     myNotification.actionTriggerOnBackground((message) {
-      debugPrint('pindah halaman ${message != null}');
+      debugLog('pindah halaman ${message != null}');
       _navigateToItemDetail(message);
     });
     _myPage = PageController(initialPage: selectedPage);

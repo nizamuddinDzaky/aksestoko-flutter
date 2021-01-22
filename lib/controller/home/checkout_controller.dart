@@ -42,13 +42,13 @@ class CheckoutController extends GetController {
       ..delivery_date = date.toStr()
       ..note = noteSales?.text
       ..delivery_method = shipment?.value;
-    debugPrint('save sales model ${salesModel.toJson()}');
+    debugLog('save sales model ${salesModel.toJson()}');
     Get.toNamed(paymentScreen, arguments: salesModel);
   }
 
   savePaymentScreen(SalesModel newSalesModel) {
     if (salesModel == null || newSalesModel == null) {
-      debugPrint('check: sales model is null');
+      debugLog('check: sales model is null');
       return;
     }
     salesModel
@@ -61,7 +61,7 @@ class CheckoutController extends GetController {
       ..payment_durasi = newSalesModel.payment_durasi
       ..bank_id = newSalesModel.bank_id
       ..input_payment_durasi = newSalesModel.input_payment_durasi;
-    debugPrint('save sales model ${salesModel.toJson()}');
+    debugLog('save sales model ${salesModel.toJson()}');
     // Get.toNamed(paymentScreen, arguments: salesModel);
     // Get.offNamedUntil(
     //     successScreen, (route) => route.settings.name == parentScreen);
@@ -118,7 +118,7 @@ class CheckoutController extends GetController {
   }
 
   void setDate(DateTime newDateTime) {
-    debugPrint("${strToDate(newDateTime.toString())}");
+    debugLog("${strToDate(newDateTime.toString())}");
     date = newDateTime ?? date;
     update();
   }

@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/screen/account/edit_alamat_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/account/list_store_address_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
@@ -87,7 +88,7 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
                                     Get.back(result: -1);
                                   }).then((value) {
                                 if (value == -1) {
-                                  debugPrint(
+                                  debugLog(
                                       'delete address ${address?.toJson()}');
                                   postDeleteAddress(address);
                                 }

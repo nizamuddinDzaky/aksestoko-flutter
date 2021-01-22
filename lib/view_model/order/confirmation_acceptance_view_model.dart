@@ -23,7 +23,7 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
     param = Get.arguments as Map<String, dynamic>;
     detailDelivery = param['delivery'] as DetailDelivery;
     detailPemesanan = param['purchase'] as DetailPemesanan;
-    debugPrint("argument => ${detailDelivery?.noSpj}");
+    debugLog("argument => ${detailDelivery?.noSpj}");
     /*controller.sumItem();
     controller.sumGoodItem();
     controller.sumBadItem();*/
@@ -66,7 +66,6 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
       "file" : base64File,
       "id_distributor" : MyPref.getIdDistributor(),
       "produk" : detailDelivery.listItemDetailDelivery.map((item) {
-        /*debugPrint("${item.buruk}");*/
         if(item.buruk != 0 && item.buruk != null){
           isSetBadItem = true;
         }
@@ -98,7 +97,6 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
             ),
           );
         });
-    /*debugPrint('body : $body');*/
     var status = await ApiClient.methodPost(
       ApiConfig.urlConfirmDelivery,
       body,
@@ -118,20 +116,4 @@ abstract class ConfimationAcceptanceViewModel extends State<ConfirmationAcceptSc
     );
     status.execute();
   }
-
-  onChangeBadItem(String badItem, ItemDetailDelivery itemDetailDelivery){
-    // debugPrint("${textEditingController.text}");
-    // itemDetailDelivery.buruk = int.parse(badItem);
-    /*setState(() {
-      int item = int.parse(badItem);
-      if(item > itemDetailDelivery.jumlah){
-        itemDetailDelivery.baik = 0;
-        itemDetailDelivery.buruk = itemDetailDelivery.jumlah;
-      }
-    });*/
-  }
-
-  /*void onFocusChange(String s){
-    debugPrint("Focus: "+focus.hasFocus.toString());
-  }*/
 }

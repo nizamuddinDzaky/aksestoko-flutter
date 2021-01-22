@@ -538,7 +538,6 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
                 ),
                 onPressed: (){
                   postConfirmDelivery();
-                  /*debugPrint("${detailDelivery.listItemDetailDelivery[0].baik}");*/
                 },
               ),
             ),
@@ -558,44 +557,18 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
             elevation: 0,
             centerTitle: false,
             title: Container(
-              //color: Colors.white,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-              ),
-              child: Text(
-                "Konfirmasi Penerimaan",
+                  //color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                  ),
+                  child: Text(
+                    "Konfirmasi Penerimaan",
                     style: TextStyle(fontSize: 20),
                   ),
-            ),
-            actions: <Widget>[
-             /* Stack(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.notifications),
-                    onPressed: () {
-                      debugPrint('klik notif');
-                    },
-                  ),
-                  Positioned(
-                    right: 5,
-                    top: 4,
-                    child: CircleAvatar(
-                      maxRadius: 10,
-                      backgroundColor: MyColor.redAT,
-                      child: Text(
-                        '20',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),*/
-            ],
-          ),
+                ),
+                actions: <Widget>[],
+              ),
           body: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
@@ -605,10 +578,4 @@ class _ConfirmationAcceptScreen extends ConfimationAcceptanceViewModel {
         )
     );
   }
-
-/*  Widget listProductShipment(ItemDetailDelivery itemDetailDelivery) {
-    itemDetailDelivery.baik = itemDetailDelivery.jumlah;
-    // itemDetailDelivery.buruk = 0;
-
-  }*/
 }

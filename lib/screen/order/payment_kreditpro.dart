@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
@@ -23,12 +24,12 @@ class _PaymentKreditproScreenState extends State<PaymentKreditproScreen> {
     idPurchase = param['idPurchase'] as String;
     // TODO: implement initState
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
-      debugPrint("current url $url");
+      debugLog("current url $url");
       if (mounted) {
-        if(url.contains("success_kreditpro#")){
+        if (url.contains("success_kreditpro#")) {
           Get.offNamedUntil(
             detailOrderScreen,
-                (route) => route.settings.name == parentScreen,
+            (route) => route.settings.name == parentScreen,
             arguments: idPurchase,
           );
         }

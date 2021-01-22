@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/model/order.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/util/notif_pref.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class ParentController extends GetController {
   void readNotif({Item item, String itemId}) {
     items?.firstWhere(
       (element) {
-        debugPrint('cek data ${element.itemId == (item?.itemId ?? itemId)}');
+        debugLog('cek data ${element.itemId == (item?.itemId ?? itemId)}');
         return element.itemId == (item?.itemId ?? itemId);
       },
       orElse: () => null,
@@ -33,7 +34,7 @@ class ParentController extends GetController {
 
   void addNotif({Item item}) {
     if (item == null) return;
-    debugPrint('add notif ${item?.toJson()}');
+    debugLog('add notif ${item?.toJson()}');
     items?.add(item);
     if (items != null && items.length > 10) {
       items.removeAt(0);
@@ -51,7 +52,6 @@ class ParentController extends GetController {
   void _getNotif() {
     var oldItems = notifPref.getNotif();
     items = oldItems ?? [];
-    print('items ${items.length} $items');
     update();
   }
 

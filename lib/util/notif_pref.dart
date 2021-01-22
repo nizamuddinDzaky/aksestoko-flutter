@@ -36,7 +36,6 @@ class NotifPref {
                 ..isRead = e['is_read']))
           .toList();
     }
-    // print('data empty ${data['items']} $data');
     return [];
   }
 }

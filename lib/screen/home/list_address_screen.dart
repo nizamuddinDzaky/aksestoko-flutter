@@ -3,6 +3,7 @@ import 'package:aksestokomobile/screen/account/address_controller.dart';
 import 'package:aksestokomobile/screen/account/addresses.dart';
 import 'package:aksestokomobile/screen/account/edit_alamat_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/account/list_store_address_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/app/my_router.dart';
@@ -48,8 +49,7 @@ class _ListAddressScreenState extends ListStoreAddressViewModel {
                                 Get.back(result: -1);
                               }).then((value) {
                             if (value == -1) {
-                              debugPrint(
-                                  'delete address ${address?.toJson()}');
+                              debugLog('delete address ${address?.toJson()}');
                               postDeleteAddress(address);
                             }
                           });

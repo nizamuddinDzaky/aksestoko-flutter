@@ -5,6 +5,7 @@ import 'package:aksestokomobile/model/principal.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/register_screen.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -135,7 +136,7 @@ abstract class RegisterController extends State<RegisterScreen> {
       'registed_by': selectPrincipal?.name,
       'sales_person': salesCode,
     };
-    debugPrint('cek fields $fields');
+    debugLog('cek fields $fields');
     var status = await ApiClient.methodPost(
       ApiConfig.urlRegisterSubmit,
       fields,
@@ -191,7 +192,7 @@ abstract class RegisterController extends State<RegisterScreen> {
       }
     } else {
       Get.back();
-      debugPrint("gagal");
+      debugLog("gagal");
       Fluttertoast.showToast(msg: 'Periksa data kembali');
     }
   }
@@ -227,7 +228,7 @@ abstract class RegisterController extends State<RegisterScreen> {
         Get.back();
       },
       onSuccess: (data, _) {
-        debugPrint('cek $data');
+        debugLog('cek $data');
         if (data != null &&
             data['data'] != null &&
             data['data']['email'] != null) {

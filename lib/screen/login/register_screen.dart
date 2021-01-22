@@ -5,6 +5,7 @@ import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/principal.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _RegisterScreenState extends RegisterController {
           ],
         ),
         onChanged: (currentPrincipal) {
-          debugPrint("${currentPrincipal.name}");
+          debugLog("${currentPrincipal.name}");
           setSelectedPrincipal(currentPrincipal);
         },
         selected: selectPrincipal == principal,

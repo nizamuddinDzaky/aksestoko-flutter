@@ -48,7 +48,6 @@ abstract class ChangePasswordViewModel extends State<ChangePasswordScreen> {
           );
         });
     _postChangePassword();
-    /*debugPrint("adsadsa $newPassword => $oldPassword => $repeatPassword }");*/
   }
 
   _postChangePassword() async{

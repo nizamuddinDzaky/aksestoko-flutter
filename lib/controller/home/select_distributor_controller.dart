@@ -2,6 +2,7 @@ import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/model/distributor.dart';
 import 'package:aksestokomobile/screen/home/select_distributor.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,10 +23,10 @@ abstract class SelectDistributorController
     MyPref.setDisributorCode(distributor.kode);
     MyPref.setMap('distributor', distributor.toJson());
     if (!MyPref.isIdDistributorExist() || !canPop) {
-      debugPrint('cek offnamed');
+      debugLog('cek offnamed');
       Get.offNamed(parentScreen);
     } else {
-      debugPrint('cek back');
+      debugLog('cek back');
       Get.back(result: distributor.id);
     }
   }

@@ -1149,33 +1149,7 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
             style: TextStyle(fontSize: 20),
           ),
         ),
-        actions: <Widget>[
-          /*Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  debugPrint('klik notif');
-                },
-              ),
-              Positioned(
-                right: 5,
-                top: 4,
-                child: CircleAvatar(
-                  maxRadius: 10,
-                  backgroundColor: MyColor.redAT,
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),*/
-        ],
+        actions: <Widget>[],
       ),
       body: GestureDetector(
         onTap: () {
@@ -1187,7 +1161,6 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
   }
 
   Widget _listDelivery(DetailDelivery detailDelivery){
-    // debugPrint("cek =>${detailDelivery.listItemDetailDelivery}");
     return new Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.only(left: 25, right: 25, top: 25),
@@ -1537,18 +1510,19 @@ class _DetailOrderScreenState extends DetailOrderViewModel {
   }
 
   Widget buttonDetailOrder(){
-    debugPrint("pilih pembayaran : ${orderDetail?.detailPemesanan?.toJson()}");
+    debugLog("pilih pembayaran : ${orderDetail?.detailPemesanan?.toJson()}");
     return Container(
       margin: EdgeInsets.only(left: 25, right: 25),
       width: double.maxFinite,
       decoration: BoxDecoration(
         color: (orderDetail?.detailPemesanan?.statusPemesanan.toLowerCase() ==
-            'menunggu konfirmasi' ? MyColor.orangeAT : MyColor.successTextAT),
+                'menunggu konfirmasi'
+            ? MyColor.orangeAT
+            : MyColor.successTextAT),
         borderRadius: BorderRadius.circular(30),
       ),
       child: FlatButton(
-        child: Text(
-            textButton(),
+        child: Text(textButton(),
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

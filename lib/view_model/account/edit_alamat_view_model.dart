@@ -393,12 +393,12 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
         /*Get.back();*/
       },
       onSuccess: (data, flag) {
-        debugPrint("kecamatan sayang : ${address.kecamatan}");
+        debugLog("kecamatan sayang : ${address.kecamatan}");
         /*if(address.kecamatan == null){
           complete = true;
         }*/
         var listData = data['data'];
-        if(!isFirstLoad){
+        if (!isFirstLoad) {
           Get.back();
         }
         var selected;
@@ -440,7 +440,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   }
 
   void getDesa(String idKecamatan, {bool isFirstLoad = false}) async {
-    debugPrint('current get postalcode $isFirstLoad');
+    debugLog('current get postalcode $isFirstLoad');
     village.clear();
     var params = {
       "idkecamatan": idKecamatan,
@@ -498,7 +498,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   }
 
   void getPostalCode({bool isFirstLoad = false}) async {
-    debugPrint('current get postalcode $isFirstLoad');
+    debugLog('current get postalcode $isFirstLoad');
     postalCodes.clear();
     Map<String, dynamic> params = {
       'kabupaten': selectDistrict?.name,
@@ -645,7 +645,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       // 'kabupaten': address.kabupatenName,
       // 'kecamatan': address.kecamatanName,
     };
-    debugPrint('action api address $body');
+    debugLog('action api address $body');
     if (isDebugMode) {
       Get.back();
       Fluttertoast.showToast(

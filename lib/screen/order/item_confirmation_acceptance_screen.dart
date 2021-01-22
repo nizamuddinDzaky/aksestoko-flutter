@@ -4,6 +4,7 @@ import 'package:aksestokomobile/model/delivery.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class _ItemConfirmationAcceptScreen
   void initState() {
     baikControllerText.text =
         (itemDetailDelivery.baik ?? itemDetailDelivery.jumlah).toString();
-    debugPrint(
+    debugLog(
         "item delivery ${itemDetailDelivery.toJson()}\n ${MyPref.getATToken()}");
     badControllerText.text = (itemDetailDelivery.buruk ?? 0).toString();
     _focus.addListener(_onFocusChange);

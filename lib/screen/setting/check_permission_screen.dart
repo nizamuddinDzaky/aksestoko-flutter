@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -17,7 +18,7 @@ class _CheckPermissionScreenState extends State<CheckPermissionScreen> {
             icon: const Icon(Icons.settings),
             onPressed: () async {
               var hasOpened = openAppSettings();
-              debugPrint('App Settings opened: ' + hasOpened.toString());
+              debugLog('App Settings opened: ' + hasOpened.toString());
             },
           ),
         ],
@@ -25,12 +26,12 @@ class _CheckPermissionScreenState extends State<CheckPermissionScreen> {
       body: Center(
         child: ListView(
             children: [
-          Permission.notification,
-          // Permission.camera,
-          // Permission.photos,
-          // Permission.mediaLibrary,
-          Permission.storage,
-        ].map((permission) => PermissionWidget(permission)).toList()),
+              Permission.notification,
+              // Permission.camera,
+              // Permission.photos,
+              // Permission.mediaLibrary,
+              Permission.storage,
+            ].map((permission) => PermissionWidget(permission)).toList()),
       ),
     );
   }
@@ -53,20 +54,20 @@ class _PermissionState extends State<PermissionWidget> {
   PermissionStatus _permissionStatus = PermissionStatus.undetermined;
 
   String get permissionStatus => {
-        PermissionStatus.undetermined: 'Belum pernah diakses',
-        PermissionStatus.granted: 'Diizinkan',
-        PermissionStatus.denied: 'Tidak diizinkan',
-        PermissionStatus.restricted: 'Dibatasi',
-        PermissionStatus.permanentlyDenied: 'Ditolak permanen',
-      }[_permissionStatus];
+    PermissionStatus.undetermined: 'Belum pernah diakses',
+    PermissionStatus.granted: 'Diizinkan',
+    PermissionStatus.denied: 'Tidak diizinkan',
+    PermissionStatus.restricted: 'Dibatasi',
+    PermissionStatus.permanentlyDenied: 'Ditolak permanen',
+  }[_permissionStatus];
 
   String get permission => {
-        Permission.notification: 'Menerima Notifikasi',
-        Permission.camera: 'Akses Kamera',
-        Permission.photos: 'Akses Foto',
-        Permission.mediaLibrary: 'Akses Media',
-        Permission.storage: 'Akses Penyimpanan',
-      }[_permission];
+    Permission.notification: 'Menerima Notifikasi',
+    Permission.camera: 'Akses Kamera',
+    Permission.photos: 'Akses Foto',
+    Permission.mediaLibrary: 'Akses Media',
+    Permission.storage: 'Akses Penyimpanan',
+  }[_permission];
 
   @override
   void initState() {

@@ -6,6 +6,7 @@ import 'package:aksestokomobile/model/sales_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -22,7 +23,7 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
   getListOrder() async {
     var idPemesanan = Get.arguments ?? widget.idPemesanan;
     if (idPemesanan == null) {
-      debugPrint('argument kosong123 ${idPemesanan}');
+      debugLog('argument kosong123 ${idPemesanan}');
       return;
     }
     var status = await ApiClient.methodGet(ApiConfig.urlDetailOrder,
@@ -69,9 +70,9 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
           Get.back();
         }, onSuccess: (data, _) {
           var baseResponse = BaseResponse.fromJson(data);
-          debugPrint("result => ${baseResponse?.data?.idPurchase}");
-          getListOrder();
-        }, onFailed: (title, message) {
+      debugLog("result => ${baseResponse?.data?.idPurchase}");
+      getListOrder();
+    }, onFailed: (title, message) {
           Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
         }, onError: (title, message) {
           Get.defaultDialog(title: title, content: Text(message ?? 'Gagal'));
@@ -121,8 +122,6 @@ abstract class DetailOrderViewModel extends State<DetailOrderScreen> {
         }, onSuccess: (data, _) {
           var baseResponse = BaseResponse.fromJson(data);
           var urlKrediPro = "${baseResponse.data.urlKreditPro}${baseResponse.data.paramKreditPro}";
-          /*debugPrint("result => ${baseResponse?.data.urlKreditPro}");*/
-          /*getListOrder();*/
           Map<String, dynamic> _portaInfoMap = {
             "urlKreditPro": urlKrediPro,
             "idPurchase": idPurchase

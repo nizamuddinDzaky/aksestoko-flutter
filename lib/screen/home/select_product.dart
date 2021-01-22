@@ -3,6 +3,7 @@ import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/screen/notification/list_notification_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _SelectProductScreenState extends SelectProductViewModel {
                       IconButton(
                         icon: Icon(Icons.notifications),
                         onPressed: () {
-                          debugPrint('klik notif');
+                          debugLog('klik notif');
                           Get.to(ListNotificationScreen());
                         },
                       ),

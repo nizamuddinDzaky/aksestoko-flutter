@@ -4,6 +4,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class AddressController extends GetController {
   setAddress(Alamat address) {
     this.address = address;
     this.isEdit = address != null;
-    debugPrint('terdeteksi ubah $isEdit');
+    debugLog('terdeteksi ubah $isEdit');
   }
 
   Alamat getAddress() {
@@ -84,7 +85,7 @@ class AddressController extends GetController {
       // 'addressId': address?.addressId,
       // 'kodePos': address?.kodePos,
     };
-    debugPrint('action api ${isEdit ? 'edit' : 'add'} customer $body');
+    debugLog('action api ${isEdit ? 'edit' : 'add'} customer $body');
     if (isEdit) {
       await actionPutEditAddress(body, context);
     } else {

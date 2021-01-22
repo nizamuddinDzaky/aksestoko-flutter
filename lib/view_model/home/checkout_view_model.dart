@@ -10,6 +10,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/home/checkout_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -64,7 +65,7 @@ abstract class CheckoutViewModel extends State<CheckoutScreen> {
           content: Text("Proses tidak bisa dilanjutkan. ${response?.message}"),
           textCancel: 'Tutup',
           onCancel: () {
-            debugPrint('back 1');
+            debugLog('back 1');
             Get.back();
             Get.back(result: {
               'errorcode': response?.code,

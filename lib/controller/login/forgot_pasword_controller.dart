@@ -5,6 +5,7 @@ import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/forgot_password_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -117,7 +118,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
       _actionResetPassword();
     } else {
       Get.back();
-      debugPrint("gagal");
+      debugLog("gagal");
     }
   }
 
@@ -193,7 +194,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
   }
 
   String checkService(String valService, phone) {
-    debugPrint('cek service $valService $phone');
+    debugLog('cek service $valService $phone');
     if (!['sms', 'wa'].contains(valService)) return '';
     if (phone?.isNotEmpty ?? false) return ' Ke $phone';
     return '';

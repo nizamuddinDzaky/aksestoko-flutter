@@ -25,7 +25,6 @@ class Cart {
   });
 
   Cart.fromJson(Map<String, dynamic> json) {
-    // debugPrint("wkwk => ${json['nama_produk']}");
     nama = json['nama'] ?? json['nama_produk'];
     satuanHargaCash = json['satuan_harga_cash'] ?? (json['harga_product'] ?? json['harga']);
     code = json['code_product'] ?? json['kode_produk'];

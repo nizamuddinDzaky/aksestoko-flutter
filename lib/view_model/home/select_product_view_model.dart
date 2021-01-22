@@ -12,6 +12,7 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/screen/home/select_product.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -66,7 +67,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
     listSearch = listProduct?.where((p) {
       var result =
           p.nama?.toLowerCase()?.contains(query?.toLowerCase()) ?? false;
-      if (result) debugPrint('filter ${p.nama} $query $result');
+      if (result) debugLog('filter ${p.nama} $query $result');
       return result;
     })?.toList();
     setState(() {});
@@ -143,7 +144,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
         listProduct.forEach((product) {
           if (cart.productId == product.productId) {
             product.idCart = cart.itemCartId;
-            debugPrint("product => ${product.productId}");
+            debugLog("product => ${product.productId}");
             controller.addToCart(product, customQty: cart.qty.toDouble());
           }
         });
@@ -161,7 +162,7 @@ abstract class SelectProductViewModel extends State<SelectProductScreen>
 
   showDetailDistributor() {
     var distributor = Distributor.fromJson(MyPref.getMap('distributor'));
-    debugPrint('klik ${distributor.imageUrl}');
+    debugLog('klik ${distributor.imageUrl}');
     Get.bottomSheet(SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),

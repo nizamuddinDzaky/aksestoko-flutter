@@ -294,7 +294,7 @@ class _DetailPromoScreenState extends State<DetailPromoScreen>
           ),
         ),
         onTap: () {
-          debugPrint("asd");
+          debugLog("asd");
           // await gotoParent(context, distributor);
         },
       ),

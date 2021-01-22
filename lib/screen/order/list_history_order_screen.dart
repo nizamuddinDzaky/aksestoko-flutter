@@ -495,7 +495,6 @@ class ListHistoryOrderProductScreen extends StatelessWidget {
                     width: double.maxFinite,
                     child: PreviewDeliveryScreen(idPurchase, (param) {
                       onSelectDelivery(param);
-                      /*debugPrint("param : $param");*/
                     })
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
   @override
   void initState() {
     super.initState();
-    debugPrint('init cart item ${widget.product.qty}');
+    debugLog('init cart item ${widget.product.qty}');
     _qtyTextController.text = widget.product.qty.toInt().toString();
     _focusNode.addListener(() {
       _actionUnFocus();
@@ -286,7 +287,7 @@ class _CartItemScreenState extends State<CartItemScreen> {
                                                   color: Colors.white,
                                                 ),
                                                 onPressed: () {
-                                                  debugPrint(
+                                                  debugLog(
                                                       "${_qtyTextController.text}");
                                                   int currentValue = widget
                                                       .product.qty

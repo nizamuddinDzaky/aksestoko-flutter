@@ -6,6 +6,7 @@ import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/data_dummy.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -160,7 +161,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
   }
 
   setZona(Zone data, int step) async {
-    debugPrint("step $step");
+    debugLog("step $step");
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -562,7 +563,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     };
 
     if (isDebugMode) {
-      debugPrint('cek data $body');
+      debugLog('cek data $body');
       Get.back();
       Fluttertoast.showToast(
         msg: '(Dummy): Tambah alamat sukses',
@@ -571,12 +572,6 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
       return;
     }
     _postAddAddress(body);
-    // debugPrint('action api ${isEdit ? 'edit' : 'add'} customer $body');
-    // if (isEdit) {
-    //   await actionPutEditAddress(body, context);
-    // } else {
-    //   await actionPostAddAddress(body, context);
-    // }
   }
 
   _postAddAddress(body) async {
