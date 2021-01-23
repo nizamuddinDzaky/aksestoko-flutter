@@ -40,3 +40,6 @@ flutter run --release --flavor serverprod -t lib/main_qa_prod.dart
 flutter build apk --flavor prod -t lib/main_prod.dart --target-platform=android-arm --split-per-abi
 flutter build apk --flavor serverqa -t lib/main_qa.dart --target-platform=android-arm --split-per-abi
 flutter build apk --flavor serverprod -t lib/main_qa_prod.dart --target-platform=android-arm --split-per-abi
+
+## Build AppBundle
+flutter build appbundle --flavor prod -t lib/main_prod.dart --target-platform=android-arm,android-arm64,android-x64
