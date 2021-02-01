@@ -22,6 +22,7 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   Profile profile;
   SalesPerson salesPerson;
+  int point;
 
   getSalesPerson() async {
     var status = await ApiClient.methodGet(
@@ -31,6 +32,23 @@ class _AccountScreenState extends State<AccountScreen> {
         profile = response?.data?.profile;
         salesPerson = response?.data?.salesPerson;
         MyPref.setMap('profile', profile?.toJson());
+        getPoint();
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  getPoint() async {
+    if (!isDebugQA) return;
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlGetPoint,
+      params: {
+        'kode_bk': profile?.kodeBk,
+      },
+      onSuccess: (data, flag) {
+        point = int.tryParse(data['data']['point']) ?? 0;
       },
     );
     setState(() {
@@ -71,6 +89,8 @@ class _AccountScreenState extends State<AccountScreen> {
     profile = Profile.fromJson(MyPref.getMap('profile'));
     if (profile?.namaToko == null) {
       getSalesPerson();
+    } else {
+      getPoint();
     }
   }
 
@@ -79,7 +99,11 @@ class _AccountScreenState extends State<AccountScreen> {
     profile = Profile.fromJson(MyPref.getMap('profile'));
 
     var formLayout = Scaffold(
-      body: SingleChildScrollView(
+        body: RefreshIndicator(
+      onRefresh: () async {
+        await getSalesPerson();
+      },
+      child: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
             Container(
@@ -214,14 +238,17 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ),
                                   ),
                                   SizedBox(width: 10),
-                                  Text(
-                                    '80',
-                                    style: TextStyle(
-                                      color: MyColor.redAT,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  point == null
+                                      // ? CircularProgressIndicator()
+                                      ? Container()
+                                      : Text(
+                                          '${point ?? '-'}',
+                                          style: TextStyle(
+                                            color: MyColor.redAT,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                 ],
                               ),
                             ),
@@ -320,7 +347,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      if (false)
+                      if (isDebugOnly)
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Row(
@@ -336,7 +363,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                      if (false)
+                      if (isDebugOnly)
                         Container(
                           margin: EdgeInsets.only(bottom: 40),
                           child: Row(
@@ -384,7 +411,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
         ),
       ),
-    );
+    ));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

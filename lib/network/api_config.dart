@@ -23,6 +23,7 @@ class ApiConfig {
   static String urlProfile = '${path}auth/profile';
   static String urlUpdateToken = '${path}auth/addorupdatetoken_notif';
   static String urlGetToken = '${path}auth/user_notif_token';
+  static String urlGetPoint = '${path}auth/point';
 
   //profile
   static String urlAddAddress = '${path}Profile/add_address';
