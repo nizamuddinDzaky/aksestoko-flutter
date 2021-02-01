@@ -4,6 +4,7 @@ import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_number.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/view_model/home/select_product_view_model.dart';
@@ -134,104 +135,131 @@ class _ListProductScreenState extends State<ListProductScreen> {
             ),
             SizedBox(height: 5),
             Flexible(child: Container()),
-            Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
-                child: Text(
-                  '${MyNumber.toNumberRpStr(_product.satuanHargaCash.toString())}',
-                  style: TextStyle(
-                    color: Color(0xffB20838),
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-            SizedBox(height: 10),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 30,
-                    width: 30,
-                    child: MaterialButton(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(7),
-                      color: Color(0xFF387C2B),
-                      onPressed: () {
-                        int minQty = _product?.minOrder ?? 1;
-                        minQty = minQty < 1 ? 1 : minQty;
-                        int currentValue =
-                        (_product.qty != null ? _product.qty : 0).toInt();
-                        _product.countChange = 1;
-                        if (currentValue <= minQty) {
-                          _showAlertDialog(context, controller, _product);
-                        } else {
-                          int multiple = _product?.isMultiple ?? 0;
-                          int min = multiple == 0 ? 1 : (multiple * minQty);
-                          currentValue -= min;
-                          controller.reduceCart(_product,
-                              customQty: currentValue.toDouble());
-                        }
-                      },
-                      child:
-                      Icon(Icons.remove, size: 16, color: Colors.white),
+            if (_product?.isSetPrice ?? false)
+              Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  child: Text(
+                    '${MyNumber.toNumberRpStr(_product.satuanHargaCash.toString())}',
+                    style: TextStyle(
+                      color: Color(0xffB20838),
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: TextFormField(
-                        focusNode: _focusNode,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF333333),
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLength: 8,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(0.0),
-                          border: InputBorder.none,
-                          isDense: true,
-                          counterText: '',
-                        ),
-                        controller: _controller,
-                        keyboardType: TextInputType.numberWithOptions(
-                          decimal: false,
-                          signed: true,
-                        ),
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
+                  )),
+            SizedBox(height: 10),
+            if (_product?.isSetPrice ?? false)
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 30,
+                      width: 30,
+                      child: MaterialButton(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(7),
+                        color: Color(0xFF387C2B),
+                        onPressed: (!(_product?.isSetPrice ?? false))
+                            ? null
+                            : () {
+                                int minQty = _product?.minOrder ?? 1;
+                                minQty = minQty < 1 ? 1 : minQty;
+                                int currentValue =
+                                    (_product.qty != null ? _product.qty : 0)
+                                        .toInt();
+                                _product.countChange = 1;
+                                if (currentValue <= minQty) {
+                                  _showAlertDialog(
+                                      context, controller, _product);
+                                } else {
+                                  int multiple = _product?.isMultiple ?? 0;
+                                  int min =
+                                      multiple == 0 ? 1 : (multiple * minQty);
+                                  currentValue -= min;
+                            controller.reduceCart(_product,
+                                customQty: currentValue.toDouble());
+                          }
+                        },
+                        child:
+                        Icon(Icons.remove, size: 16, color: Colors.white),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    child: MaterialButton(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(7),
-                      color: Color(0xFF387C2B),
-                      onPressed: () {
-                        int minQty = _product?.minOrder ?? 1;
-                        int currentValue =
-                        (_product.qty != null ? _product.qty : 0).toInt();
-                        if (currentValue < minQty) {
-                          currentValue = minQty;
-                        } else {
-                          int multiple = _product?.isMultiple ?? 0;
-                          int add = multiple == 0 ? 1 : (multiple * minQty);
-                          currentValue += add;
-                        }
-                        _product.countChange = 1;
-                        controller.addToCart(_product,
-                            customQty: currentValue.toDouble());
-                      },
-                      child: Icon(Icons.add, size: 16, color: Colors.white),
+                    Expanded(
+                      child: Container(
+                        child: TextFormField(
+                          focusNode: _focusNode,
+                          enabled: _product?.isSetPrice ?? false,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF333333),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLength: 8,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(0.0),
+                            border: InputBorder.none,
+                            isDense: true,
+                            counterText: '',
+                          ),
+                          controller: _controller,
+                          keyboardType: TextInputType.numberWithOptions(
+                            decimal: false,
+                            signed: true,
+                          ),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      width: 30,
+                      child: MaterialButton(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(7),
+                        color: Color(0xFF387C2B),
+                        onPressed: (!(_product?.isSetPrice ?? false))
+                            ? null
+                            : () {
+                                int minQty = _product?.minOrder ?? 1;
+                                int currentValue =
+                                    (_product.qty != null ? _product.qty : 0)
+                                        .toInt();
+                                if (currentValue < minQty) {
+                                  currentValue = minQty;
+                                } else {
+                                  int multiple = _product?.isMultiple ?? 0;
+                                  int add =
+                                      multiple == 0 ? 1 : (multiple * minQty);
+                                  currentValue += add;
+                                }
+                                _product.countChange = 1;
+                          controller.addToCart(_product,
+                              customQty: currentValue.toDouble());
+                        },
+                        child: Icon(Icons.add, size: 16, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            if (!(_product?.isSetPrice ?? false))
+              Container(
+                height: 30,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Center(
+                  child: Text(
+                    'Harga belum diset',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: MyColor.redAT,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
             SizedBox(height: 10),
           ],
         ),
