@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/customer.dart';
 import 'package:aksestokomobile/model/principal.dart';
@@ -37,6 +38,7 @@ abstract class RegisterController extends State<RegisterScreen> {
   bool isValid;
   Customer customer;
   bool isApprove = false;
+  String messageError;
 
   @override
   void initState() {
@@ -91,7 +93,10 @@ abstract class RegisterController extends State<RegisterScreen> {
   void _actionCekIDBK() async {
     var status = await ApiClient.methodPost(
       ApiConfig.urlRegisterCheck,
-      {'kode_bk': idBK},
+      {
+        'kode_bk': idBK,
+        if (isDebugOnly) 'flag': '1',
+      },
       {},
       customHandle: true,
       onBefore: (status) {
@@ -103,6 +108,7 @@ abstract class RegisterController extends State<RegisterScreen> {
           customer = baseResponse?.data?.customer;
           _initTextValue();
           isValid = true;
+          messageError = null;
         });
       },
       onFailed: (title, message) {
@@ -111,6 +117,7 @@ abstract class RegisterController extends State<RegisterScreen> {
           msg: response?.message ?? 'Gagal',
           gravity: ToastGravity.CENTER,
         );
+        messageError = response?.message;
       },
       onError: (title, message) {
         Fluttertoast.showToast(
@@ -120,7 +127,9 @@ abstract class RegisterController extends State<RegisterScreen> {
       },
       onAfter: (status) {},
     );
-    status.execute();
+    setState(() {
+      status.execute();
+    });
   }
 
   void _actionRegisterSubmit() async {

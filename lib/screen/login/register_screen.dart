@@ -497,6 +497,7 @@ class _RegisterScreenState extends RegisterController {
                     padding: MyDimen.marginLayout(),
                     margin: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
+                      readOnly: isValid == true,
                       initialValue: isDebugMode ? '900000010' : null,
                       onSaved: (value) => idBK = value,
                       keyboardType: TextInputType.text,
@@ -521,6 +522,14 @@ class _RegisterScreenState extends RegisterController {
                       ),
                     ),
                   ),
+                  if (messageError != null)
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(
+                        messageError,
+                        style: TextStyle(color: MyColor.redAT),
+                      ),
+                    ),
                   if (isValid) ...listField,
                   MyDivider.spaceDividerLogin(custom: 22),
                   Container(
