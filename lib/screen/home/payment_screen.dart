@@ -1641,12 +1641,12 @@ class _PaymentScreenState extends PaymentController {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  if (1000000.0 <
+                                  if (6000000.0 <
                                       (selectedKreditPro?.total?.toDouble() ??
                                           0.0))
                                     Container(
                                       padding:
-                                      EdgeInsets.only(left: 10, right: 10),
+                                          EdgeInsets.only(left: 10, right: 10),
                                       decoration: BoxDecoration(
                                         color: MyColor.greenAT,
                                         borderRadius: BorderRadius.circular(30),
