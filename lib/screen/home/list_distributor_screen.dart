@@ -35,7 +35,9 @@ class ListDistributorScreen extends SelectDistributorController {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          distributor?.nama ?? '',
+                          distributor?.namaPrincipal ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color(0xff999999),
@@ -46,6 +48,8 @@ class ListDistributorScreen extends SelectDistributorController {
                       Container(
                         child: Text(
                           distributor?.alamatLengkap ?? '',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style:
                               TextStyle(color: Color(0xff999999), fontSize: 16),
                         ),
@@ -54,6 +58,8 @@ class ListDistributorScreen extends SelectDistributorController {
                       Container(
                         child: Text(
                           distributor?.noTlpn ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style:
                               TextStyle(color: Color(0xff999999), fontSize: 18),
                         ),
