@@ -397,7 +397,7 @@ class ApiResponse {
         try {
           await onSuccess(dataResponse, tagOrFlag);
         } catch (e) {
-          debugLog('cetak $e');
+          debugLog('cetak123 $e');
           var message = {
             'message': 'Gagal memperoleh data.',
           };

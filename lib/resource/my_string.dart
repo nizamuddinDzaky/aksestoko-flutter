@@ -34,6 +34,9 @@ class MyString {
   // customer
   static const KEY_ID_CUSTOMER = "id_customers";
 
+  // issue
+  static const KEY_ID_ISSUE = "id_issue";
+
   // warehouse
   static const KEY_ID_WAREHOUSE = "id_warehouse";
 

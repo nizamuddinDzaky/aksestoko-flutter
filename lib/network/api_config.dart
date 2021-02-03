@@ -44,6 +44,12 @@ class ApiConfig {
   static String urlListPromo = '${path}Purchase/list_promo';
   static String urlAddPromo = '${path}Purchase/add_promo';
 
+  //cusstomerService
+  static String urlListIssue = '${path}Profile/cs';
+  static String urlAddIssue = '${path}Profile/add_keluhan';
+  static String urlAddComment = '${path}Profile/add_comment_keluhan';
+  static String urlDetailIssue = '${path}Profile/cs_detail';
+
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
   static String urlDeleteItemCart = '${path}Purchase/delete_item_cart';

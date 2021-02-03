@@ -353,6 +353,24 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Row(
                             children: <Widget>[
                               FlatButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(customerService);
+                                },
+                                icon: Icon(Icons.vpn_key),
+                                label: Text(
+                                  "Layanan Pelanggan",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (isDebugOnly)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            children: <Widget>[
+                              FlatButton.icon(
                                 onPressed: null,
                                 icon: Icon(Icons.info),
                                 label: Text(

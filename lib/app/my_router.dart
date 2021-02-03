@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/screen/account/reward_screen.dart';
 import 'package:aksestokomobile/screen/account/summary_screen.dart';
+import 'package:aksestokomobile/screen/customer_service/detail_issue_screen.dart';
 import 'package:aksestokomobile/screen/home/home_screen.dart';
 import 'package:aksestokomobile/screen/home/select_distributor.dart';
 import 'package:aksestokomobile/screen/home/select_product.dart';
@@ -15,6 +16,7 @@ import 'package:aksestokomobile/screen/login/otp_screen.dart';
 import 'package:aksestokomobile/screen/order/add_payment_screen.dart';
 import 'package:aksestokomobile/screen/order/payment_kreditpro.dart';
 import 'package:aksestokomobile/screen/setting/check_permission_screen.dart';
+import 'package:aksestokomobile/screen/customer_service/customer_service.dart';
 import 'package:aksestokomobile/screen/splash_screen.dart';
 import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
@@ -57,6 +59,8 @@ const salesPersonScreen = "/SalesPersonScreen";
 const changePasswordScreen = "/ChangePasswordScreen";
 const paymentKreditProScreen = "/PaymentKreditproScreen";
 const checkPermissionScreen = "/CheckPermissionScreen";
+const customerService = "/CustomerService";
+const detailIssueScreen = "/DetailIssueScreen";
 const rewardScreen = "/RewardScreen";
 const summaryScreen = "/SummaryScreen";
 
@@ -236,6 +240,18 @@ class MyRouter {
           transition: Transition.fade,
           page: SummaryScreen(),
         );
+      case detailIssueScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: DetailIssueScreen(),
+        );
+        case customerService:
+          return GetRouteBase(
+            settings: settings,
+            transition: Transition.fade,
+            page: CustomerServiceScreen(),
+          );
       default:
         return GetRouteBase(
             settings: settings,

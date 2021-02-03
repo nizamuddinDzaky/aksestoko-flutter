@@ -15,11 +15,14 @@ import 'package:aksestokomobile/model/sales_person.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 
+import 'Issue.dart';
+
 class DataResponse {
   String token;
   int idBK;
   List<Distributor> listDistributor;
   List<Promo> listPromo;
+  List<Issue> listIssue;
   List<Product> listProduct;
   List<Address> listAddress;
   List<Cart> listCart;
@@ -39,6 +42,7 @@ class DataResponse {
   OrderModel orderModelDalamProses;
   OrderDetail orderDetail;
   Distributor distributor;
+  Issue detailIssue;
   List<String> pengiriman;
   Ringkasan ringkasan;
   PaymentData paymentData;
@@ -144,9 +148,19 @@ class DataResponse {
     orderDetail = ifExistObject(json, 'detail_pemesanan', (obj) {
       return OrderDetail.fromJson(obj);
     });
+
+    detailIssue = ifExistObject(json, 'detail_issue', (obj) {
+      return Issue.fromJson(obj);
+    });
+
     listPromo = ifExistList(json, 'list_promo', (obj) {
       return Promo.fromJson(obj);
     });
+
+    listIssue = ifExistList(json, 'issue', (obj) {
+      return Issue.fromJson(obj);
+    });
+
     pengiriman = ifExistList(json, 'pengiriman', (obj) {
       return obj?.toString();
     });
