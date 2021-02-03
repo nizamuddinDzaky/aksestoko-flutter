@@ -142,7 +142,7 @@ abstract class RegisterController extends State<RegisterScreen> {
       'password': password,
       'ulangi_password': repeatPassword,
       'no_tlp': tlp,
-      'registed_by': selectPrincipal?.name,
+      'registed_by': selectPrincipal?.value ?? selectPrincipal?.name,
       'sales_person': salesCode,
     };
     debugLog('cek fields $fields');
