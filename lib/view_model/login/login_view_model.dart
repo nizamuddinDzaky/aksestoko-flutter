@@ -7,7 +7,10 @@ import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 abstract class LoginViewModel extends State<LoginScreen> {
@@ -19,6 +22,108 @@ abstract class LoginViewModel extends State<LoginScreen> {
   actionSubmit() async {
     formKey.currentState.save();
     postLogin();
+  }
+
+  List<String> checkMessage(String msg) {
+    var key = 'telepon : ';
+    if ((msg?.toLowerCase()?.contains(key) ?? false) &&
+        (msg.toLowerCase().split(key)?.length ?? 0) == 2) {
+      var data = msg.toLowerCase().split(key).last;
+      return data
+          .toLowerCase()
+          .split('user id :')
+          .map((e) => e.replaceAll(RegExp(r'[^0-9]'), ''))
+          .toList();
+    }
+    return null;
+  }
+
+  onSuccessSubmit(userId, String tlp) {
+    var controller = TextEditingController(text: tlp);
+    Get.defaultDialog(
+      title: 'Kirim Kode Aktivasi',
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Kirim ke nomor telepon berikut',
+            textAlign: TextAlign.center,
+          ),
+          TextFormField(
+            controller: controller,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline5,
+            decoration: InputDecoration(
+              hintText: 'Nomor Telepon',
+            ),
+          ),
+        ],
+      ),
+      textConfirm: 'Kirim',
+      confirmTextColor: Colors.white,
+      textCancel: 'Tutup',
+      onConfirm: () {
+        _postSendCode(userId, controller.text);
+      },
+    );
+  }
+
+  _postSendCode(userId, tlp) async {
+    var body = {
+      'user_id': userId,
+      'no_tlp': tlp,
+    };
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlSendCode,
+      body,
+      {},
+      customHandle: true,
+      onSuccess: (data, _) {
+        _dialogSuccess();
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
+  _dialogSuccess() {
+    Get.until((route) => route.settings.name == loginScreen);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("Berhasil Dikirim"),
+        content: Text("Cek informasi aktivasi dan ikuti langkah berikutnya."),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Get.back();
+            },
+            child: Text(
+              "Ya",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   postLogin({skip}) async {
@@ -44,10 +149,16 @@ abstract class LoginViewModel extends State<LoginScreen> {
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
-        Get.defaultDialog(
-          title: 'Kesalahan',
-          content: Text(response?.message ?? 'Login Gagal'),
-        );
+        var msg = response?.message;
+        var result = checkMessage(msg);
+        if (result != null) {
+          onSuccessSubmit(result.last, result.first);
+        } else {
+          Get.defaultDialog(
+            title: 'Kesalahan',
+            content: Text(response?.message ?? 'Login Gagal'),
+          );
+        }
       },
       onError: (title, message) {
         Get.defaultDialog(
