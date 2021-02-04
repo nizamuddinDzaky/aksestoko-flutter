@@ -1,25 +1,24 @@
-
-import 'package:aksestokomobile/model/Issue.dart';
+import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/resource/my_string.dart';
 import 'package:aksestokomobile/screen/customer_service/detail_issue_screen.dart';
-import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-abstract class DetailIssueViewModel extends State<DetailIssueScreen>{
-
+abstract class DetailIssueViewModel extends State<DetailIssueScreen> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   TextEditingController commentController = TextEditingController();
 
   Issue oldIssue;
   Issue newIssue;
-  Issue get issue  => newIssue ?? oldIssue;
+
+  Issue get issue => newIssue ?? oldIssue;
+
   @override
   void initState() {
     oldIssue = Get.arguments;
@@ -39,33 +38,30 @@ abstract class DetailIssueViewModel extends State<DetailIssueScreen>{
       MyString.KEY_ID_ISSUE: oldIssue.id,
     };
     var status = await ApiClient.methodGet(ApiConfig.urlDetailIssue,
-        customHandle: true, params: params, onBefore: (status) {
-          /*listIssue.clear();*/
-        }, onSuccess: (data, flag) {
-          var baseResponse = BaseResponse.fromJson(data);
-          newIssue = baseResponse?.data?.detailIssue;
-          /*listIssue.clear();
-          listIssue.addAll(newListIssue);*/
-        }, onFailed: (title, message) {
-          var response = BaseResponse.fromString(message);
-          Fluttertoast.showToast(
-            msg: response?.message ?? 'Gagal',
-            gravity: ToastGravity.CENTER,
-          );
-        }, onError: (title, message) {
-          Fluttertoast.showToast(
-            msg: 'Terjadi kesalahan data / koneksi',
-            gravity: ToastGravity.CENTER,
-          );
-        }, onAfter: (status) {});
+        customHandle: true,
+        params: params,
+        onBefore: (status) {}, onSuccess: (data, flag) {
+      var baseResponse = BaseResponse.fromJson(data);
+      newIssue = baseResponse?.data?.detailIssue;
+    }, onFailed: (title, message) {
+      var response = BaseResponse.fromString(message);
+      Fluttertoast.showToast(
+        msg: response?.message ?? 'Gagal',
+        gravity: ToastGravity.CENTER,
+      );
+    }, onError: (title, message) {
+      Fluttertoast.showToast(
+        msg: 'Terjadi kesalahan data / koneksi',
+        gravity: ToastGravity.CENTER,
+      );
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
   }
 
   void actionSubmitComment() async {
-
-    if(commentController.text.isEmpty){
+    if (commentController.text.isEmpty) {
       Fluttertoast.showToast(
         msg: 'Comment Harus Di isi',
         gravity: ToastGravity.CENTER,
@@ -74,16 +70,16 @@ abstract class DetailIssueViewModel extends State<DetailIssueScreen>{
     }
 
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (c) {
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[CircularProgressIndicator()],
-          ),
-        );
-      });
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
 
     var body = {
       'id_issue': oldIssue.id,
@@ -123,12 +119,9 @@ abstract class DetailIssueViewModel extends State<DetailIssueScreen>{
     setState(() {
       status.execute();
     });
-    /*SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      refreshKey.currentState.show();
-    });*/
   }
 
-  void refresh(){
+  void refresh() {
     commentController.text = '';
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       refreshKey.currentState.show();

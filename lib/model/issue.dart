@@ -12,15 +12,15 @@ class Issue {
 
   Issue(
       {this.id,
-        this.key,
-        this.type,
-        this.status,
-        this.subject,
-        this.description,
-        this.assignee,
-        this.created,
-        this.updated,
-        this.comments});
+      this.key,
+      this.type,
+      this.status,
+      this.subject,
+      this.description,
+      this.assignee,
+      this.created,
+      this.updated,
+      this.comments});
 
   Issue.fromJson(Map<String, dynamic> json) {
     id = json['id'];

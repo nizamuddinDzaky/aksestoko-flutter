@@ -1,6 +1,5 @@
 import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/model/Issue.dart';
-import 'package:aksestokomobile/resource/my_image.dart';
+import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/screen/customer_service/add_issue_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/view_model/customer_service/customer_service_view_model.dart';
@@ -14,8 +13,7 @@ class CustomerServiceScreen extends StatefulWidget {
 }
 
 class _CustomerServiceScreenState extends CustomerServiceViewModel {
-
-  Widget _body(){
+  Widget _body() {
     return Container(
       child: Column(
         children: <Widget>[
@@ -73,37 +71,34 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
           ),
           (listIssue?.isEmpty ?? true)
               ? Expanded(
-            child: Stack(
-              children: [
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Stack(
                     children: [
-                      Icon(
-                        Icons.new_releases_sharp,
-                        color: MyColor.redAT,
-                        size: 64,
+                      Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.new_releases_sharp,
+                              color: MyColor.redAT,
+                              size: 64,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Tidak ada Issue tersedia',
+                              style: Theme.of(context).textTheme.headline6,
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Tidak ada Issue tersedia',
-                        style: Theme.of(context).textTheme.headline6,
-                      )
+                      ListView(),
                     ],
                   ),
+                )
+              : Expanded(
+                  child: Stack(
+                    children: [_listIssue()],
+                  ),
                 ),
-                ListView(),
-              ],
-            ),
-          ) :
-          Expanded(
-              /*child:_listIssue()*/
-            child: Stack(
-              children: [
-                _listIssue()
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -115,49 +110,46 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
       itemCount: listIssue?.length ?? 0,
       shrinkWrap: true,
       addAutomaticKeepAlives: true,
-      itemBuilder: (buildcontext, index) {
+      itemBuilder: (buildContext, index) {
         return _itemIssue(listIssue[index]);
       },
     );
   }
 
-  Widget _itemIssue(Issue issue){
+  Widget _itemIssue(Issue issue) {
     return Card(
       elevation: 2,
       child: InkWell(
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Text(
-                        "${issue.subject}",
-                        style: TextStyle(
-                          color: MyColor.blackTextAT,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ]
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  "${issue.subject ?? ''}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: MyColor.blackTextAT,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ),
-              Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Text(
-                        "${issue.description}",
-                        style: TextStyle(
-                          color: MyColor.blackTextAT,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ]
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  "${issue.description ?? ''}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: MyColor.blackTextAT,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                  ),
+                ),
               ),
               Container(
                 height: 3,
@@ -166,13 +158,12 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
               ),
               Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  /*mainAxisAlignment: MainAxisAlignment.spaceBetween,*/
                   children: <Widget>[
                     Expanded(
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "Tipe Tiket",
                               style: TextStyle(
@@ -183,9 +174,9 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "${issue.type}",
+                              "${issue.type ?? ''}",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -200,7 +191,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "Kode Tiket",
                               style: TextStyle(
@@ -211,9 +202,9 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "${issue.key}",
+                              "${issue.key ?? ''}",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -228,7 +219,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "Tipe Tiket",
                               style: TextStyle(
@@ -239,9 +230,9 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "${issue.type}",
+                              "${issue.type ?? ''}",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -256,7 +247,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "Kode Tiket",
                               style: TextStyle(
@@ -267,9 +258,9 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "${issue.key}",
+                              "${issue.key ?? ''}",
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -280,14 +271,12 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                         ],
                       ),
                     ),
-                  ]
-              ),
+                  ]),
             ],
           ),
         ),
         onTap: () {
           Get.toNamed(detailIssueScreen, arguments: issue);
-          /*Get.toNamed(detailPromo, arguments: promo);*/
         },
       ),
     );
@@ -295,22 +284,18 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
 
   @override
   Widget build(BuildContext context) {
-    /*super.build(context);*/
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Container(
-          //color: Colors.white,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-          ),
-          child: Text(
-            "Layanan Pelanggan",
-            style: TextStyle(fontSize: 20),
-          )
-        ),
-        centerTitle: true,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+            ),
+            child: Text(
+              "Layanan Pelanggan",
+            )),
+        centerTitle: false,
         actions: <Widget>[],
       ),
       body: GestureDetector(
@@ -337,12 +322,11 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
               Expanded(
                 child: Container(
                     width: double.maxFinite,
-                    child: AddIssueScreen((param){
-                      if(param){
+                    child: AddIssueScreen((param) {
+                      if (param) {
                         actionRefresh();
                       }
-                    })
-                ),
+                    })),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -357,7 +341,6 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 }

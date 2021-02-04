@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/Issue.dart';
+import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
@@ -11,19 +11,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 abstract class CustomerServiceViewModel extends State<CustomerServiceScreen> {
-
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   List<Issue> listIssue = [];
   String dropdownValue = 'One';
-  List _myFriends = [
-    "Clara",
-    "John",
-    "Rizal",
-    "Steve",
-    "Laurel",
-    "Bernard",
-    "Miechel"
-  ];
+
   Future<void> actionRefresh() async {
     getListIssue();
   }
@@ -44,24 +35,24 @@ abstract class CustomerServiceViewModel extends State<CustomerServiceScreen> {
     };
     var status = await ApiClient.methodGet(ApiConfig.urlListIssue,
         customHandle: true, params: params, onBefore: (status) {
-          listIssue.clear();
-        }, onSuccess: (data, flag) {
-          var baseResponse = BaseResponse.fromJson(data);
-          List<Issue> newListIssue = baseResponse?.data?.listIssue ?? [];
-          listIssue.clear();
-          listIssue.addAll(newListIssue);
-        }, onFailed: (title, message) {
-          var response = BaseResponse.fromString(message);
-          Fluttertoast.showToast(
-            msg: response?.message ?? 'Gagal',
-            gravity: ToastGravity.CENTER,
-          );
-        }, onError: (title, message) {
-          Fluttertoast.showToast(
-            msg: 'Terjadi kesalahan data / koneksi',
-            gravity: ToastGravity.CENTER,
-          );
-        }, onAfter: (status) {});
+      listIssue.clear();
+    }, onSuccess: (data, flag) {
+      var baseResponse = BaseResponse.fromJson(data);
+      List<Issue> newListIssue = baseResponse?.data?.listIssue ?? [];
+      listIssue.clear();
+      listIssue.addAll(newListIssue);
+    }, onFailed: (title, message) {
+      var response = BaseResponse.fromString(message);
+      Fluttertoast.showToast(
+        msg: response?.message ?? 'Gagal',
+        gravity: ToastGravity.CENTER,
+      );
+    }, onError: (title, message) {
+      Fluttertoast.showToast(
+        msg: 'Terjadi kesalahan data / koneksi',
+        gravity: ToastGravity.CENTER,
+      );
+    }, onAfter: (status) {});
     setState(() {
       status.execute();
     });

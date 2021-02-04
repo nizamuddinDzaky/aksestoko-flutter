@@ -36,6 +36,7 @@ abstract class PaymentController extends State<PaymentScreen> {
   int indexTempo;
   bool isFirst = true;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
+  double minimumKreditPro = 6000000.0;
 
   bool get isEmptyCredit =>
       paymentModel != null &&

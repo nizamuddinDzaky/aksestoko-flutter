@@ -1,4 +1,4 @@
-import 'package:aksestokomobile/model/Issue.dart';
+import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/view_model/customer_service/detail_issue_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,10 +10,9 @@ class DetailIssueScreen extends StatefulWidget {
 }
 
 class _DetailIssueScreenState extends DetailIssueViewModel {
-
-  Widget _body(){
+  Widget _body() {
     return SingleChildScrollView(
-        child: Container(
+      child: Container(
           padding: EdgeInsets.symmetric(vertical: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,25 +20,23 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
               Container(
                 margin: EdgeInsets.only(bottom: 5, left: 25, right: 25),
                 child: Text(
-                  "${issue?.subject}",
+                  issue?.subject ?? '',
                   style: TextStyle(
                       color: MyColor.blackTextAT,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
               ),
-
               Container(
                 margin: EdgeInsets.only(bottom: 25, left: 25, right: 25),
                 child: Text(
-                  "${issue?.description}",
+                  issue?.description ?? '',
                   style: TextStyle(
                       color: MyColor.blackTextAT,
                       fontSize: 16,
                       fontWeight: FontWeight.normal),
                 ),
               ),
-
               Container(
                 padding: EdgeInsets.all(15),
                 margin: EdgeInsets.symmetric(horizontal: 25),
@@ -55,218 +52,209 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
                     )
                   ],
                 ),
-                child: Column(
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Tipe Tiket",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                child: Column(children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Tipe Tiket",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${issue?.type}",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Kode Tiket",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  issue?.type ?? '',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${issue?.key}",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-
-                        ]
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Status Tiket",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Kode Tiket",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${issue?.status}",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Di Tangani Oleh",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  issue?.key ?? '',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${issue?.assignee}",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ]
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Dibuat Pada",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                            ],
+                          ),
+                        ),
+                      ]),
+                  SizedBox(height: 10),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Status Tiket",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${issue?.created}",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Diperbarui Pada",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  issue?.status ?? '',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${issue?.updated}",
-                                      style: TextStyle(
-                                        color: MyColor.blackTextAT,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-
-                          ]
-                      ),
-
-                    ]
-                ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Di Tangani Oleh",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  issue?.assignee ?? '',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
+                  SizedBox(height: 10),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Dibuat Pada",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  issue?.created ?? '\n',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Diperbarui Pada",
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  issue?.updated ?? '\n',
+                                  style: TextStyle(
+                                    color: MyColor.blackTextAT,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
+                ]),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 10, left: 25, right: 25, top: 25),
+                margin:
+                    EdgeInsets.only(bottom: 10, left: 25, right: 25, top: 25),
                 child: Text(
                   "Komentar",
                   style: TextStyle(
@@ -275,20 +263,20 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              if(issue.comments != null)
-              Container(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: issue?.comments.length,
-                  itemBuilder: (buildcontext, index) {
-                    return _listComment(
-                        issue.comments[index]);
-                  },
+              if (issue?.comments != null)
+                Container(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: issue?.comments?.length ?? 0,
+                    itemBuilder: (buildContext, index) {
+                      return _listComment(issue.comments[index]);
+                    },
+                  ),
                 ),
-              ),
               Container(
-                margin: EdgeInsets.only(bottom: 10, left: 25, right: 25,top : 20),
+                margin:
+                    EdgeInsets.only(bottom: 10, left: 25, right: 25, top: 20),
                 child: TextFormField(
                   controller: commentController,
                   keyboardType: TextInputType.multiline,
@@ -302,7 +290,7 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
                     contentPadding: const EdgeInsets.only(left: 20, top: 30),
                     enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Color(0xffC8C8C8), width: 2.0),
+                          BorderSide(color: Color(0xffC8C8C8), width: 2.0),
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(5.0),
                         bottomRight: Radius.circular(5.0),
@@ -323,8 +311,11 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 10, left: 25, right: 25,),
-                // margin: EdgeInsets.only(left: 25, right: 25),
+                margin: EdgeInsets.only(
+                  bottom: 10,
+                  left: 25,
+                  right: 25,
+                ),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   color: MyColor.redAT,
@@ -342,16 +333,13 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
                 ),
               ),
             ],
-          )
-        ),
+          )),
     );
   }
 
-  Widget _listComment(Comments comments){
-
+  Widget _listComment(Comments comments) {
     var backgroud = comments.isUser ? MyColor.redAT : Colors.white;
     var colorText = comments.isUser ? Colors.white : Colors.black;
-    var crossAxisAlignment = comments.isUser ? CrossAxisAlignment.start : CrossAxisAlignment.end;
     return Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.only(left: 25, right: 25, top: 5),
@@ -363,7 +351,7 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
             color: MyColor.greyTextAT,
             spreadRadius: 0,
             blurRadius: 8,
-            offset: Offset(0, 2), // changes position of shadow
+            offset: Offset(0, 2),
           )
         ],
       ),
@@ -376,9 +364,7 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
             child: Text(
               "${comments?.body}",
               style: TextStyle(
-                  color: colorText,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+                  color: colorText, fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -386,9 +372,7 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
             child: Text(
               "Oleh ${comments?.author} pada ${comments.created}",
               style: TextStyle(
-                  color: colorText,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold),
+                  color: colorText, fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -398,21 +382,18 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Container(
-          //color: Colors.white,
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
             child: Text(
-              "Tiket ${issue.key}",
+              "Tiket ${issue?.key ?? ''}",
               style: TextStyle(fontSize: 20),
-            )
-        ),
+            )),
         centerTitle: true,
         actions: <Widget>[],
       ),
@@ -428,5 +409,4 @@ class _DetailIssueScreenState extends DetailIssueViewModel {
       ),
     );
   }
-
 }

@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/cart.dart';
@@ -14,8 +15,6 @@ import 'package:aksestokomobile/model/ringkasan.dart';
 import 'package:aksestokomobile/model/sales_person.dart';
 import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/util/my_util.dart';
-
-import 'Issue.dart';
 
 class DataResponse {
   String token;
@@ -85,8 +84,8 @@ class DataResponse {
     });
     message = ifExist(json, 'message');
     salesPerson = ifExistObject(json, 'sales_person', (obj) {
-          return SalesPerson.fromJson(obj);
-        }) ??
+      return SalesPerson.fromJson(obj);
+    }) ??
         ifExistObject(json, 'detail_sales_person', (obj) {
           return SalesPerson.fromJson(obj);
         });

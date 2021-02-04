@@ -7,6 +7,7 @@ class AddIssueScreen extends StatefulWidget {
   final Function(bool) onSelectDelivery;
 
   AddIssueScreen(this.onSelectDelivery);
+
   @override
   _AddIssueScreen createState() => _AddIssueScreen();
 }
@@ -14,7 +15,6 @@ class AddIssueScreen extends StatefulWidget {
 class _AddIssueScreen extends AddIssueViewModel {
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
       child: Padding(
           padding: const EdgeInsets.all(1.0),
@@ -44,7 +44,7 @@ class _AddIssueScreen extends AddIssueViewModel {
                       hint: Text("Pilih Subject"),
                       isExpanded: true,
                       items: subjectList.map(
-                            (val) {
+                        (val) {
                           return DropdownMenuItem(
                             value: val,
                             child: Text(val),
@@ -91,7 +91,7 @@ class _AddIssueScreen extends AddIssueViewModel {
                   contentPadding: const EdgeInsets.only(left: 20, top: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Color(0xffC8C8C8), width: 2.0),
+                        BorderSide(color: Color(0xffC8C8C8), width: 2.0),
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(5.0),
                       bottomRight: Radius.circular(5.0),
@@ -111,7 +111,6 @@ class _AddIssueScreen extends AddIssueViewModel {
                 ),
               ),
               Container(
-                // margin: EdgeInsets.only(left: 25, right: 25),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   color: MyColor.redAT,
@@ -129,9 +128,7 @@ class _AddIssueScreen extends AddIssueViewModel {
                 ),
               ),
             ],
-          )
-      ),
+          )),
     );
   }
-
 }

@@ -3,6 +3,7 @@ import 'package:aksestokomobile/resource/my_image.dart';
 class Principal {
   int principalId;
   String name;
+  String value;
   String iconPrincipal1;
   String iconPrincipal2;
   String iconPrincipal3;
@@ -10,6 +11,7 @@ class Principal {
   Principal(
       {this.principalId,
       this.name,
+      this.value,
       this.iconPrincipal1,
       this.iconPrincipal2,
       this.iconPrincipal3});
@@ -19,6 +21,7 @@ class Principal {
       Principal(
           principalId: 1,
           name: "SIG",
+          value: "SMI",
           iconPrincipal1: sgIcon,
           iconPrincipal2: stIcon,
           iconPrincipal3: spIcon),

@@ -19,8 +19,8 @@ abstract class AddIssueViewModel extends State<AddIssueScreen> {
     "Umum",
   ];
 
-  actionSubmitIssue(){
-    if(subjectValue == null){
+  actionSubmitIssue() {
+    if (subjectValue == null) {
       Fluttertoast.showToast(
         msg: 'Subject Belum dipilih',
         gravity: ToastGravity.CENTER,
@@ -28,7 +28,7 @@ abstract class AddIssueViewModel extends State<AddIssueScreen> {
       return;
     }
 
-    if(issueController.text.isEmpty){
+    if (issueController.text.isEmpty) {
       Fluttertoast.showToast(
         msg: 'Keluhan Tidak Boleh Kosong',
         gravity: ToastGravity.CENTER,
@@ -57,7 +57,7 @@ abstract class AddIssueViewModel extends State<AddIssueScreen> {
     /*debugPrint("body : $body");*/
   }
 
-  _postAddIssue(body)async{
+  _postAddIssue(body) async {
     var status = await ApiClient.methodPost(
       ApiConfig.urlAddIssue,
       body,

@@ -384,7 +384,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      if (isDebugOnly)
+                      if (isDebugQA)
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Row(
@@ -393,7 +393,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 onPressed: () {
                                   Get.toNamed(customerService);
                                 },
-                                icon: Icon(Icons.vpn_key),
+                                icon: Icon(Icons.live_help),
                                 label: Text(
                                   "Layanan Pelanggan",
                                   style: TextStyle(fontSize: 18),
@@ -421,22 +421,6 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      if (isDebugOnly)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton.icon(
-                                onPressed: null,
-                                icon: Icon(Icons.info),
-                                label: Text(
-                                  "Petunjuk Penggunaan",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       if (isDebugOnly)
                         Container(
                           margin: EdgeInsets.only(bottom: 40),

@@ -192,3 +192,7 @@ void actionDelay(int milis, Function function) {
 void debugLog(String message) {
   if (kDebugMode) dev.log(message ?? '-emptylog-');
 }
+
+void debugLogs(List message) {
+  if (kDebugMode) dev.log('printLog ${message?.join(' | ') ?? '-emptylog-'}');
+}
