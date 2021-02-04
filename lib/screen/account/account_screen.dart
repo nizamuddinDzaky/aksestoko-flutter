@@ -40,6 +40,43 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
+  goToFaq(){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[CircularProgressIndicator()],
+            ),
+          );
+        });
+    getUrlFaq();
+  }
+
+  getUrlFaq() async{
+    var status = await ApiClient.methodGet(
+      ApiConfig.urlFaq,
+      onBefore: (status) {
+        Get.back();
+      },
+      onSuccess: (data, flag) {
+        var response = BaseResponse.fromJson(data);
+        // debugPrint("url FAQ = ${response.data.urlFaq}");
+        Map<String, dynamic> _param = {
+          "url": response.data.urlFaq,
+          "title" : "F A Q"
+        };
+
+        Get.toNamed(webView, arguments: _param);
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+  }
+
   getPoint() async {
     if (!isDebugQA) return;
     var status = await ApiClient.methodGet(
@@ -365,6 +402,25 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
+                      if (isDebugQA)
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
+                                goToFaq();
+                                // getUrlFaq();
+                              },
+                              icon: Icon(Icons.vpn_key),
+                              label: Text(
+                                "F A Q",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       if (isDebugOnly)
                         Container(
                           margin: EdgeInsets.only(bottom: 10),

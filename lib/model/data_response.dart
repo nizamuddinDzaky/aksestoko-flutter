@@ -50,6 +50,7 @@ class DataResponse {
   Promo promo;
   String statusPromo;
   String message;
+  String urlFaq;
 
   DataResponse({this.token});
 
@@ -191,6 +192,8 @@ class DataResponse {
     paramKreditPro = ifExist(json, 'param');
 
     statusPromo = ifExist(json, 'status_promo');
+
+    urlFaq = ifExist(json, 'redirect');
 
     /*detailPayment = ifExistObject(json, 'data_pembayaran', (obj) {
       return PaymentData.fromJson(obj);

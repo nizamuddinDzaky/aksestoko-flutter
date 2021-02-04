@@ -50,6 +50,8 @@ class ApiConfig {
   static String urlAddComment = '${path}Profile/add_comment_keluhan';
   static String urlDetailIssue = '${path}Profile/cs_detail';
 
+  static String urlFaq = '${path}Profile/faq';
+
   //purchase
   static String urlCart = '${path}Purchase/list_cart';
   static String urlDeleteItemCart = '${path}Purchase/delete_item_cart';
