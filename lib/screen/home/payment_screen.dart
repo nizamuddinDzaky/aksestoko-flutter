@@ -1641,7 +1641,7 @@ class _PaymentScreenState extends PaymentController {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  if (6000000.0 <
+                                  if (minimumKreditPro <
                                       (selectedKreditPro?.total?.toDouble() ??
                                           0.0))
                                     Container(
@@ -1668,12 +1668,12 @@ class _PaymentScreenState extends PaymentController {
                                     Container(
                                         child: Flexible(
                                           child: Text(
-                                            'Total pesanan harus melebihi Rp 1.000.000 untuk dapat memilih metode ini.',
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(
-                                                color: Colors.red,
-                                                fontStyle: FontStyle.italic),
-                                          ),
+                                            'Total pesanan harus melebihi ${MyNumber.toNumberRp(minimumKreditPro)} untuk dapat memilih metode ini.',
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontStyle: FontStyle.italic),
+                                      ),
                                         )),
                                 ],
                               ),
