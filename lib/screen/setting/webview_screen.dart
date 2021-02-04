@@ -1,6 +1,6 @@
-
 import 'dart:async';
 
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -13,33 +13,39 @@ class WebViewScreen extends StatefulWidget {
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
-
   StreamSubscription<String> _onUrlChanged;
+  StreamSubscription<WebViewStateChanged> _onStateChanged;
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   String url;
-  String title = "Web View";
+  String title;
+
   @override
   void initState() {
     var param = Get.arguments as Map<String, dynamic>;
     url = param['url'] as String;
-    title = param['title'] as String;
-    /*urlKreditPro = param['urlKreditPro'] as String;
-    idPurchase = param['idPurchase'] as String;*/
-    // TODO: implement initState
-    debugPrint("url : $url");
+    title = param['title'] as String ?? 'Web View';
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
-      /*if (mounted) {
-        if (url.contains("success_kreditpro#")) {
-          Get.offNamedUntil(
-            detailOrderScreen,
-                (route) => route.settings.name == parentScreen,
-            arguments: idPurchase,
-          );
+      if (mounted) {}
+    });
+    _onStateChanged =
+        flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+      if (mounted) {
+        if (!url.contains(RegExp('\baksestoko.*\b'))) {
+          debugLogs([url, state.type == WebViewState.shouldStart, state.type]);
+          flutterWebViewPlugin.goBack();
         }
-      }*/
+      }
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _onUrlChanged?.cancel();
+    _onStateChanged?.cancel();
+    flutterWebViewPlugin?.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,15 +53,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return WebviewScaffold(
       appBar: AppBar(
         title: Text(title),
-          backgroundColor: Colors.black,
+        backgroundColor: Colors.black,
       ),
       url: url,
       withJavascript: true,
-      ignoreSSLErrors: isDebugQA ? true : false,
+      ignoreSSLErrors: isDebugQA,
       withLocalStorage: true,
       withZoom: false,
-      /*javascriptChannels: ,*/
-
+      invalidUrlRegex: '\baksestoko.*\b',
     );
   }
 }

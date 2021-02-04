@@ -403,34 +403,17 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ),
                       if (isDebugQA)
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: () {
-                                goToFaq();
-                                // getUrlFaq();
-                              },
-                              icon: Icon(Icons.vpn_key),
-                              label: Text(
-                                "F A Q",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (isDebugOnly)
                         Container(
-                          margin: EdgeInsets.only(bottom: 40),
+                          margin: EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: <Widget>[
                               FlatButton.icon(
-                                onPressed: null,
-                                icon: Icon(Icons.live_help),
+                                onPressed: () {
+                                  goToFaq();
+                                },
+                                icon: Icon(Icons.info),
                                 label: Text(
-                                  "Syarat dan Ketentuan",
+                                  "F A Q",
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ),
