@@ -347,16 +347,18 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      if (isDebugOnly)
+                      if (isDebugQA)
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: <Widget>[
                               FlatButton.icon(
-                                onPressed: null,
-                                icon: Icon(Icons.info),
+                                onPressed: () {
+                                  Get.toNamed(customerService);
+                                },
+                                icon: Icon(Icons.live_help),
                                 label: Text(
-                                  "Petunjuk Penggunaan",
+                                  "Layanan Pelanggan",
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ),

@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/alamat.dart';
 import 'package:aksestokomobile/model/cart.dart';
@@ -20,6 +21,7 @@ class DataResponse {
   int idBK;
   List<Distributor> listDistributor;
   List<Promo> listPromo;
+  List<Issue> listIssue;
   List<Product> listProduct;
   List<Address> listAddress;
   List<Cart> listCart;
@@ -39,6 +41,7 @@ class DataResponse {
   OrderModel orderModelDalamProses;
   OrderDetail orderDetail;
   Distributor distributor;
+  Issue detailIssue;
   List<String> pengiriman;
   Ringkasan ringkasan;
   PaymentData paymentData;
@@ -80,8 +83,8 @@ class DataResponse {
     });
     message = ifExist(json, 'message');
     salesPerson = ifExistObject(json, 'sales_person', (obj) {
-          return SalesPerson.fromJson(obj);
-        }) ??
+      return SalesPerson.fromJson(obj);
+    }) ??
         ifExistObject(json, 'detail_sales_person', (obj) {
           return SalesPerson.fromJson(obj);
         });
@@ -144,9 +147,19 @@ class DataResponse {
     orderDetail = ifExistObject(json, 'detail_pemesanan', (obj) {
       return OrderDetail.fromJson(obj);
     });
+
+    detailIssue = ifExistObject(json, 'detail_issue', (obj) {
+      return Issue.fromJson(obj);
+    });
+
     listPromo = ifExistList(json, 'list_promo', (obj) {
       return Promo.fromJson(obj);
     });
+
+    listIssue = ifExistList(json, 'issue', (obj) {
+      return Issue.fromJson(obj);
+    });
+
     pengiriman = ifExistList(json, 'pengiriman', (obj) {
       return obj?.toString();
     });
