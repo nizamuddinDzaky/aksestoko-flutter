@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:aksestokomobile/helper/my_stateful_builder.dart';
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/util/my_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +18,7 @@ import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
@@ -188,6 +192,102 @@ class _UpdateProfileScreenState extends UpdateProfileController {
       controller?.disposeTimer();
       controller?.dispose();
     });
+  }
+
+  Widget _decideImageView() {
+    if (imageFile == null) {
+      return (profile?.imgKtp?.isEmpty ?? true)
+          ? Container(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: Text(
+                "Belum ada gambar KTP",
+                style: TextStyle(
+                    color: MyColor.greyTextAT, fontStyle: FontStyle.italic),
+              ),
+            )
+          : AspectRatio(
+              aspectRatio: 2 / 1,
+              child: Container(
+                child: CachedNetworkImage(
+                  imageUrl: profile?.imgKtp ?? '',
+                  placeholder: (context, url) => Image.asset(kNoImageLandscape),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(kNoImageLandscape),
+                ),
+              ),
+            );
+    } else {
+      return Image.file(
+        imageFile,
+        width: 200,
+        height: 200,
+      );
+    }
+  }
+
+  _processPicture(PickedFile picture) async {
+    Navigator.of(context).pop();
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[CircularProgressIndicator()],
+              ),
+            ),
+          );
+        });
+    final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = picture.path.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
+    imageFile = await compressAndGetFile(File(picture.path), outPath);
+    setState(() {});
+    Navigator.of(context).pop();
+  }
+
+  _openGallery(BuildContext context) async {
+    ImagePicker().getImage(source: ImageSource.gallery).then((picture) {
+      if (picture != null) _processPicture(picture);
+    });
+  }
+
+  _openCamera(BuildContext context) async {
+    ImagePicker().getImage(source: ImageSource.camera).then((picture) {
+      if (picture != null) _processPicture(picture);
+    });
+  }
+
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Silahkan Pilih"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text("Gallery"),
+                    onTap: () {
+                      _openGallery(context);
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.all(15)),
+                  GestureDetector(
+                    child: Text("Camera"),
+                    onTap: () {
+                      _openCamera(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -431,7 +531,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                   },
                                 ),
                               ),
-                            MyDivider.spaceDividerLogin(custom: 22),
+                            MyDivider.spaceDividerLogin(custom: 10),
                             SizedBox(
                               width: double.infinity,
                               height: 46,
@@ -444,9 +544,96 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                   onPressed: putUpdateProfile,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
-                                      new BorderRadius.circular(30.0))),
+                                          new BorderRadius.circular(30.0))),
                             ),
-                            MyDivider.spaceDividerLogin(custom: 22),
+                            if (isDebugQA)
+                              Container(
+                                margin: EdgeInsets.only(top: 15),
+                                padding: EdgeInsets.only(
+                                    top: 15, bottom: 0, left: 15, right: 15),
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                    color: Color(0xfff5f5f5),
+                                    border:
+                                        Border.all(color: MyColor.greyTextAT),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 15),
+                                      child: Column(
+                                        children: <Widget>[_decideImageView()],
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      width: double.maxFinite,
+                                      height: 40,
+                                      child: FlatButton(
+                                        color: MyColor.redAT,
+                                        shape: StadiumBorder(),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.camera_alt,
+                                              color: Colors.white,
+                                              size: 18,
+                                            ),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 5)),
+                                            Text(
+                                              "Pilih File",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                        onPressed: () {
+                                          _showChoiceDialog(context);
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      width: double.maxFinite,
+                                      height: 40,
+                                      child: FlatButton(
+                                        color: MyColor.redAT,
+                                        disabledColor: Colors.grey,
+                                        shape: StadiumBorder(),
+                                        onPressed:
+                                            imageFile == null ? null : saveFile,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.save,
+                                              color: Colors.white,
+                                              size: 18,
+                                            ),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 5)),
+                                            Text(
+                                              "Simpan File KTP",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
                       ),

@@ -7,6 +7,7 @@ class Profile {
   String namaToko;
   String noTlp;
   String phoneIsVerified;
+  String imgKtp;
 
   bool get isVerified => phoneIsVerified?.toLowerCase() == 'terverifikasi';
 
@@ -18,7 +19,8 @@ class Profile {
       this.kodeBk,
       this.namaToko,
       this.noTlp,
-      this.phoneIsVerified});
+      this.phoneIsVerified,
+      this.imgKtp});
 
   Profile.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -29,6 +31,7 @@ class Profile {
     namaToko = json['nama_toko'];
     noTlp = json['no_tlp'];
     phoneIsVerified = json['phone_is_verified'];
+    imgKtp = json['img_ktp'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +44,7 @@ class Profile {
     data['nama_toko'] = this.namaToko;
     data['no_tlp'] = this.noTlp;
     data['phone_is_verified'] = this.phoneIsVerified;
+    data['img_ktp'] = this.imgKtp;
     return data;
   }
 }
