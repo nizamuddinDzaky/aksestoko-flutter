@@ -24,6 +24,7 @@ class ApiConfig {
   static String urlUpdateToken = '${path}auth/addorupdatetoken_notif';
   static String urlGetToken = '${path}auth/user_notif_token';
   static String urlGetPoint = '${path}auth/point';
+  static String urlGetReward = '${path}auth/reward';
 
   //profile
   static String urlAddAddress = '${path}Profile/add_address';
