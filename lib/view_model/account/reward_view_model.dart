@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/profile.dart';
+import 'package:aksestokomobile/model/reward.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/account/reward_screen.dart';
@@ -11,6 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 abstract class RewardViewModel extends State<RewardScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
   Profile profile;
+  List<Reward> listReward = [];
 
   Future<void> actionRefresh() async {
     await getListReward();
@@ -25,7 +27,12 @@ abstract class RewardViewModel extends State<RewardScreen> {
       params: params,
       customHandle: true,
       onBefore: (status) {},
-      onSuccess: (data, flag) {},
+      onSuccess: (data, flag) {
+        var baseResponse = BaseResponse.fromJson(data);
+        List<Reward> newListReward = baseResponse?.data?.listReward ?? [];
+        listReward.clear();
+        listReward.addAll(newListReward);
+      },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);
         Fluttertoast.showToast(

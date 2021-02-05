@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
-
 import 'my_color.dart';
 import 'my_number.dart';
 
@@ -33,6 +32,16 @@ extension StringExtension on String {
       debugLog(e.message);
     }
     return newDate;
+  }
+
+  String htmlToStr(){
+    RegExp exp = RegExp(
+        r"<[^>]*>",
+        multiLine: true,
+        caseSensitive: true
+    );
+
+    return this.replaceAll(exp, '');
   }
 
   String toRp() {

@@ -1,11 +1,14 @@
 import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/account/reward_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
+import '../../main_common.dart';
 
 class RewardScreen extends StatefulWidget {
   @override
@@ -213,6 +216,7 @@ class _RewardScreenState extends RewardViewModel {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (bc, idx) {
+                                var reward = listReward[idx];
                                 return Card(
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -234,10 +238,23 @@ class _RewardScreenState extends RewardViewModel {
                                               topLeft: Radius.circular(12),
                                               topRight: Radius.circular(12),
                                             ),
-                                            child: Image.asset(
+                                            child:
+                                            AspectRatio(
+                                              aspectRatio: 2 / 1,
+                                              child: Container(
+                                                child: (reward.image.isEmpty ?? true) || isDebugOnly
+                                                    ? Image.asset(kNoImageLandscape, fit: BoxFit.cover)
+                                                    : FadeInImage.assetNetwork(
+                                                  placeholder: kNoImageLandscape,
+                                                  image: reward.image ?? '',
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                              ),
+                                            ) /*:Image.asset(
                                               bgReward,
                                               fit: BoxFit.cover,
-                                            ),
+                                            ),*/
+                                            /*,*/
                                           ),
                                         ),
                                         Container(
@@ -253,7 +270,7 @@ class _RewardScreenState extends RewardViewModel {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      'Title CMS',
+                                                      '${reward?.title}',
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -263,7 +280,7 @@ class _RewardScreenState extends RewardViewModel {
                                                     ),
                                                     SizedBox(height: 4),
                                                     Text(
-                                                      'Deskripsi: Lorem ipsum',
+                                                      '${reward?.description.htmlToStr()}',
                                                       style: TextStyle(
                                                         color:
                                                             MyColor.greyTextAT,
@@ -271,7 +288,7 @@ class _RewardScreenState extends RewardViewModel {
                                                     ),
                                                     SizedBox(height: 4),
                                                     Text(
-                                                      '1 Juni 2021',
+                                                      '${strToDate(reward.validUntil)}',
                                                       style: TextStyle(
                                                         color:
                                                             MyColor.greyTextAT,
@@ -299,7 +316,7 @@ class _RewardScreenState extends RewardViewModel {
                               separatorBuilder: (bc, idx) {
                                 return SizedBox(height: 12);
                               },
-                              itemCount: 5,
+                              itemCount: listReward?.length,
                             ),
 /*
                             ...[0,1,2,3].map((e) {
