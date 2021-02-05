@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aksestokomobile/helper/my_stateful_builder.dart';
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
@@ -15,12 +17,14 @@ import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
 }
 
 class _UpdateProfileScreenState extends UpdateProfileController {
+
   _verifikasiNoTelepon() {
     var otpTextController = TextEditingController();
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -189,6 +193,105 @@ class _UpdateProfileScreenState extends UpdateProfileController {
       controller?.dispose();
     });
   }
+
+  Widget _decideImageView() {
+    if (imageFile == null) {
+      return (profile?.imgKtp?.isEmpty ?? true) ?
+      Text(
+        "Belum ada gambar terpilih",
+        style:
+        TextStyle(color: MyColor.greyTextAT, fontStyle: FontStyle.italic),
+      ) :
+      AspectRatio(
+        aspectRatio: 2 / 1,
+        child: Container(
+          child: isDebugOnly
+              ? Image.asset(kNoImageLandscape)
+              : FadeInImage.assetNetwork(
+            placeholder: kNoImageLandscape,
+            image: profile?.imgKtp ?? '',
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      );
+    } else {
+      return Image.file(
+        imageFile,
+        width: 200,
+        height: 200,
+      );
+    }
+  }
+
+  _processPicture(PickedFile picture) async {
+    Navigator.of(context).pop();
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (c) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[CircularProgressIndicator()],
+              ),
+            ),
+          );
+        });
+    // base64File = "data:image/png;base64,";
+    final lastIndex = picture.path.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = picture.path.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${picture.path.substring(lastIndex)}";
+    imageFile = await compressAndGetFile(File(picture.path), outPath);
+    debugPrint("imageFile : ${imageFile}");
+    /*final bytes = imageFile.readAsBytesSync();
+    base64File += base64Encode(bytes);*/
+    setState(() {});
+    Navigator.of(context).pop();
+  }
+
+  _openGallery(BuildContext context) async {
+    ImagePicker().getImage(source: ImageSource.gallery).then((picture) {
+      if (picture != null) _processPicture(picture);
+    });
+  }
+
+  _openCamera(BuildContext context) async {
+    ImagePicker().getImage(source: ImageSource.camera).then((picture) {
+      if (picture != null) _processPicture(picture);
+    });
+  }
+
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Silahkan Pilih"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text("Gallery"),
+                    onTap: () {
+                      _openGallery(context);
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.all(15)),
+                  GestureDetector(
+                    child: Text("Camera"),
+                    onTap: () {
+                      _openCamera(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -431,7 +534,7 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                   },
                                 ),
                               ),
-                            MyDivider.spaceDividerLogin(custom: 22),
+                            MyDivider.spaceDividerLogin(custom: 10),
                             SizedBox(
                               width: double.infinity,
                               height: 46,
@@ -446,7 +549,97 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                       borderRadius:
                                       new BorderRadius.circular(30.0))),
                             ),
-                            MyDivider.spaceDividerLogin(custom: 22),
+                            if(isDebugOnly)
+                            // MyDivider.spaceDividerLogin(custom: 22),
+                            Container(
+                              margin: EdgeInsets.only(top: 15),
+                              padding: EdgeInsets.only(top: 40, bottom: 0, left: 15, right: 15),
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                  color: Color(0xfff5f5f5),
+                                  border: Border.all(color: MyColor.greyTextAT),
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 15),
+                                    child: Column(
+                                      children: <Widget>[
+                                        _decideImageView()
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    /*margin: EdgeInsets.only(left: 25, right: 25),*/
+                                    width: double.maxFinite,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: MyColor.redAT,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: FlatButton(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                          Padding(padding: EdgeInsets.only(right: 5)),
+                                          Text(
+                                            "Pilih File",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        _showChoiceDialog(context);
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    /*margin: EdgeInsets.only(left: 25, right: 25),*/
+                                    width: double.maxFinite,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: MyColor.redAT,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: FlatButton(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.save,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                          Padding(padding: EdgeInsets.only(right: 5)),
+                                          Text(
+                                            "Simpan File",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        saveFile();
+                                        /*_showChoiceDialog(context);*/
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),

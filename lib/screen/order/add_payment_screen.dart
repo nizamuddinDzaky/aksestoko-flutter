@@ -558,11 +558,11 @@ class _AddPaymentScreenState extends AddPaymentViewModel {
                           padding: EdgeInsets.only(top: 15, bottom: 15),
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-//                      color: Color(0xfff5f5f5),
-//                      borderRadius: BorderRadius.circular(5),
-//                            border: Border(
-//                              bottom: BorderSide(width: 1, color: MyColor.greyTextAT,),
-//                            ),
+                             // color: Color(0xfff5f5f5),
+                             /*borderRadius: BorderRadius.circular(5),
+                                   border: Border(
+                                     bottom: BorderSide(width: 1, color: MyColor.greyTextAT,),
+                                   ),*/
                           ),
                           child: Column(
                             children: <Widget>[

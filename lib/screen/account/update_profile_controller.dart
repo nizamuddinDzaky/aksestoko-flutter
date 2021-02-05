@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/otp_response.dart';
 import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/screen/account/update_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +14,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
 
 abstract class UpdateProfileController extends State<UpdateProfileScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
@@ -22,6 +27,8 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
   Profile profile;
   DateTime endOtp;
   bool isDialogShowing;
+
+  File imageFile;
 
   Future<void> actionRefresh() async {
     await getProfile();
@@ -187,6 +194,59 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
     setState(() {
       status.execute();
     });
+  }
+
+  saveFile() async {
+    Map<String, dynamic> data = {};
+    Map<String, File> files = {
+      'ktp' : imageFile
+    };
+    Map<String, MultipartFile> fileMap = {};
+    for (MapEntry fileEntry in files.entries) {
+      File file = fileEntry.value;
+      String fileName = basename(file.path);
+      fileMap[fileEntry.key] =
+          MultipartFile(file.openRead(), await file.length(), filename: fileName);
+    }
+    data.addAll(fileMap);
+    var formData = FormData.fromMap(data);
+    var status = await ApiClient.methodPost(
+      ApiConfig.urlUploadKtp,
+      formData,
+      {},
+      customHandle: true,
+      onBefore: (status) {},
+      onSuccess: (data, flag) {
+        var response = BaseResponse.fromJson(data);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onFailed: (title, message) {
+        var response = BaseResponse.fromString(message);
+        Fluttertoast.showToast(
+          msg: response?.message ?? 'Gagal',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onError: (title, message) {
+        Fluttertoast.showToast(
+          msg: 'Terjadi kesalahan data / koneksi',
+          gravity: ToastGravity.CENTER,
+        );
+      },
+      onAfter: (status) {
+        saveProfile();
+        reInitText();
+      },
+    );
+    setState(() {
+      status.execute();
+    });
+    // debugPrint("saveFile : ${imageFile.openRead()}");
+    /*FormData formdata = new FormData();
+    formdata.add*/
   }
 
   @override
