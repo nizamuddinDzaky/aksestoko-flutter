@@ -1,8 +1,7 @@
 import 'package:aksestokomobile/app/my_router.dart';
-import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
-import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/view_model/account/reward_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,15 +12,7 @@ class RewardScreen extends StatefulWidget {
   _RewardScreenState createState() => _RewardScreenState();
 }
 
-class _RewardScreenState extends State<RewardScreen> {
-  Profile profile;
-
-  @override
-  void initState() {
-    super.initState();
-    profile = Profile.fromJson(MyPref.getMap('profile'));
-  }
-
+class _RewardScreenState extends RewardViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,18 +36,21 @@ class _RewardScreenState extends State<RewardScreen> {
                 title: Text('Reward'),
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        margin: EdgeInsets.only(bottom: 20),
-                        padding: EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
+                child: RefreshIndicator(
+                    key: refreshKey,
+                    onRefresh: actionRefresh,
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 80,
+                            width: 80,
+                            margin: EdgeInsets.only(bottom: 20),
+                            padding: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(60)),
                           boxShadow: [
                             BoxShadow(
@@ -389,13 +383,13 @@ class _RewardScreenState extends State<RewardScreen> {
                               );
                             }).toList(),
 */
-                            SizedBox(height: 10),
-                          ],
-                        ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    )),
               ),
             ],
           ),

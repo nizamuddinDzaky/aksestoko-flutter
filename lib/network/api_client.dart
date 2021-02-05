@@ -401,7 +401,7 @@ class ApiResponse {
           var message = {
             'message': 'Gagal memperoleh data.',
           };
-          onFailed('Kesalahan', jsonEncode(message));
+          onFailed?.call('Kesalahan', jsonEncode(message));
         }
       }
     } else if (responseStatus == ResponseStatus.failed) {

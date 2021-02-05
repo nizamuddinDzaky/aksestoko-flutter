@@ -24,6 +24,7 @@ class ApiConfig {
   static String urlUpdateToken = '${path}auth/addorupdatetoken_notif';
   static String urlGetToken = '${path}auth/user_notif_token';
   static String urlGetPoint = '${path}auth/point';
+  static String urlGetReward = '${path}auth/reward';
 
   //profile
   static String urlAddAddress = '${path}Profile/add_address';
@@ -70,6 +71,8 @@ class ApiConfig {
   static String urlDetailCheckout = '${path}Purchase/detail_checkout';
   static String urlActionOrder = '${path}Purchase/action_checkout';
   static String urlShipmentPrice = '${path}Purchase/shipment_group_price';
+
+  static String urlGetSummaryOrder = '${path}Purchase/summary';
 
   //payment
   static String urlListPayment = '${path}Purchase/list_payment';

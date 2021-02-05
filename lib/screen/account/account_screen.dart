@@ -22,7 +22,8 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   Profile profile;
   SalesPerson salesPerson;
-  int point;
+  double point;
+  bool loyaltyStatus;
 
   getSalesPerson() async {
     var status = await ApiClient.methodGet(
@@ -85,7 +86,10 @@ class _AccountScreenState extends State<AccountScreen> {
         'kode_bk': profile?.kodeBk,
       },
       onSuccess: (data, flag) {
-        point = int.tryParse(data['data']['point']) ?? 0;
+        if (data['data']['type'] == 'point') {
+          loyaltyStatus = data['data']['loyalty_status'];
+          point = data['data']['loyalty'];
+        }
       },
     );
     setState(() {
@@ -217,7 +221,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   ),
-                  if (!isDebugQA)
+                  if (!isDebugQA && loyaltyStatus != true)
                     Column(
                       children: [
                         SizedBox(height: 30),
@@ -228,7 +232,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         SizedBox(height: 20),
                       ],
                     ),
-                  if (isDebugQA)
+                  if (isDebugQA && loyaltyStatus == true)
                     Column(
                       children: [
                         SizedBox(height: 20),
@@ -403,34 +407,17 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ),
                       if (isDebugQA)
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: () {
-                                goToFaq();
-                                // getUrlFaq();
-                              },
-                              icon: Icon(Icons.vpn_key),
-                              label: Text(
-                                "F A Q",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (isDebugOnly)
                         Container(
-                          margin: EdgeInsets.only(bottom: 40),
+                          margin: EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: <Widget>[
                               FlatButton.icon(
-                                onPressed: null,
-                                icon: Icon(Icons.live_help),
+                                onPressed: () {
+                                  goToFaq();
+                                },
+                                icon: Icon(Icons.info),
                                 label: Text(
-                                  "Syarat dan Ketentuan",
+                                  "F A Q",
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ),

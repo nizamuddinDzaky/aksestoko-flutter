@@ -166,6 +166,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "Tipe Tiket",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.bold,
@@ -177,6 +178,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "${issue.type ?? ''}",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -194,6 +196,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "Kode Tiket",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.bold,
@@ -205,6 +208,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               "${issue.key ?? ''}",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -221,7 +225,8 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "Tipe Tiket",
+                              "Status Tiket",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.bold,
@@ -232,7 +237,8 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "${issue.type ?? ''}",
+                              "${issue.status ?? ''}",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
@@ -249,7 +255,8 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "Kode Tiket",
+                              "Ditangani oleh",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.bold,
@@ -260,7 +267,8 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "${issue.key ?? ''}",
+                              "${issue.assignee ?? ''}",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: MyColor.blackTextAT,
                                 fontWeight: FontWeight.normal,
