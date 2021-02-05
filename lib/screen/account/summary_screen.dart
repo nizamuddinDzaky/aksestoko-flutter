@@ -1,12 +1,113 @@
+import 'package:aksestokomobile/model/summary.dart';
 import 'package:aksestokomobile/util/my_color.dart';
+import 'package:aksestokomobile/view_model/account/summary_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SummaryScreen extends StatefulWidget {
   @override
   _SummaryScreenState createState() => _SummaryScreenState();
 }
 
-class _SummaryScreenState extends State<SummaryScreen> {
+class _SummaryScreenState extends SummaryViewModel {
+  Widget _summaryItem(Summary summary) {
+    var total = [
+      summary?.kuantitas,
+      summary?.satuan,
+    ];
+    total.removeWhere((element) => element == null);
+    return Card(
+      elevation: 6,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 10,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          summary?.tanggal ?? '',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColor.greyTextAT,
+                          ),
+                        ),
+                        Text(
+                          summary?.nomorTransaksi ?? '',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: MyColor.redAT,
+                          ),
+                        ),
+                        Text(
+                          summary?.namaDistributor ?? '',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          summary?.namaProduk ?? '',
+                          style: TextStyle(
+                            fontSize: 16,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  /*Text(
+                    '${(0 + 1) * 15} Ton',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: MyColor.greenAT,
+                    ),
+                  ),*/
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Divider(height: 0),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 10,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'TOTAL',
+                  ),
+                  Expanded(
+                    child: Text(
+                      total.join(' '),
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,101 +124,59 @@ class _SummaryScreenState extends State<SummaryScreen> {
       ),
       body: Stack(
         children: [
-          ListView.separated(
-            physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 70),
-            itemBuilder: (bc, idx) {
-              return Card(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        child: Row(
+          Column(
+            children: [
+              SizedBox(height: 54),
+              Expanded(
+                child: RefreshIndicator(
+                  key: refreshKey,
+                  onRefresh: actionRefresh,
+                  child: (listSummary?.length ?? 0) == 0
+                      ? Stack(
                           children: [
-                            Expanded(
+                            Center(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(
-                                    '${idx + 1} Juni 2021',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: MyColor.greyTextAT,
-                                    ),
+                                  Icon(
+                                    Icons.info_outline,
+                                    color: MyColor.redAT,
+                                    size: 64,
                                   ),
+                                  SizedBox(height: 8),
                                   Text(
-                                    'SALE/AT/${(idx + 1).toString().padLeft(4, '0')}',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: MyColor.redAT,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Akses Toko',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                    'Tidak ada data transaksi',
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  )
                                 ],
                               ),
                             ),
-                            Text(
-                              '${(idx + 1) * 15} Ton',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: MyColor.greenAT,
-                              ),
-                            ),
+                            ListView(),
                           ],
+                        )
+                      : ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          padding: EdgeInsets.all(16),
+                          itemBuilder: (bc, idx) {
+                            final size = (listSummary?.length ?? 0);
+                            if (idx == size) {
+                              return Center(child: Text('$size data'));
+                            }
+                            final summary = listSummary[idx];
+                            return _summaryItem(summary);
+                          },
+                          separatorBuilder: (bc, idx) {
+                            return SizedBox(height: 12);
+                          },
+                          itemCount: (listSummary?.length ?? 0) + 1,
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Divider(height: 0),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              'TOTAL',
-                            ),
-                            Expanded(
-                              child: Text(
-                                'TOTAL',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              );
-            },
-            separatorBuilder: (bc, idx) {
-              return SizedBox(height: 12);
-            },
-            itemCount: 9,
+              ),
+            ],
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
@@ -132,25 +191,21 @@ class _SummaryScreenState extends State<SummaryScreen> {
             ),
             height: 50,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                    child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                  child: Center(child: Text('Januari')),
-                )),
-                SizedBox(width: 8),
-                Expanded(
-                    child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                  child: Center(child: Text('2021')),
-                )),
-                SizedBox(width: 8),
+                Row(
+                  children: [
+                    Text(
+                      'Pilih Periode ',
+                    ),
+                    OutlineButton(
+                      child: Text(DateFormat('MMMM yyyy').format(currentDate)),
+                      borderSide: BorderSide(color: MyColor.blueDio),
+                      onPressed: pickMonth,
+                    ),
+                  ],
+                ),
+/*
                 RaisedButton(
                   color: MyColor.redAT,
                   child: Text(
@@ -164,6 +219,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(20.0)),
                 ),
+*/
               ],
             ),
           ),

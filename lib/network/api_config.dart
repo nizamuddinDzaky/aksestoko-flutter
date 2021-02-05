@@ -70,6 +70,8 @@ class ApiConfig {
   static String urlActionOrder = '${path}Purchase/action_checkout';
   static String urlShipmentPrice = '${path}Purchase/shipment_group_price';
 
+  static String urlGetSummaryOrder = '${path}Purchase/summary';
+
   //payment
   static String urlListPayment = '${path}Purchase/list_payment';
   static String urlDetailAddPayment = '${path}Purchase/detail_payment';
