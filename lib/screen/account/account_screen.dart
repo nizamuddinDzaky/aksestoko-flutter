@@ -221,7 +221,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   ),
-                  if (!isDebugQA && loyaltyStatus != true)
+                  if (!isDebugQA || loyaltyStatus != true)
                     Column(
                       children: [
                         SizedBox(height: 30),
