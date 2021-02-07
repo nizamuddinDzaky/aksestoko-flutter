@@ -303,7 +303,10 @@ class _RewardScreenState extends RewardViewModel {
                                                 child: Text(
                                                   'Detail',
                                                 ),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Get.toNamed(detailRewardScreen, arguments: reward);
+                                                  //
+                                                },
                                               ),
                                             ],
                                           ),
