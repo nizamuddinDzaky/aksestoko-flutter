@@ -35,6 +35,12 @@ extension StringExtension on String {
     return newDate;
   }
 
+  String htmlToStr() {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+    return this.replaceAll(exp, '');
+  }
+
   String toRp() {
     return MyNumber.toNumberRpStr(this);
   }

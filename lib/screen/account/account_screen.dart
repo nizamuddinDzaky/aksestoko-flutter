@@ -244,7 +244,12 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
-                              Get.toNamed(rewardScreen);
+                              Get.toNamed(
+                                rewardScreen,
+                                arguments: {
+                                  'point': point,
+                                },
+                              );
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(

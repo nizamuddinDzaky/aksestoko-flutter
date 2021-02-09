@@ -1,5 +1,6 @@
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/profile.dart';
+import 'package:aksestokomobile/model/reward.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/account/reward_screen.dart';
@@ -7,10 +8,13 @@ import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 abstract class RewardViewModel extends State<RewardScreen> {
   GlobalKey<RefreshIndicatorState> refreshKey = GlobalKey();
   Profile profile;
+  List<Reward> listReward = [];
+  double point;
 
   Future<void> actionRefresh() async {
     await getListReward();
@@ -25,8 +29,14 @@ abstract class RewardViewModel extends State<RewardScreen> {
       params: params,
       customHandle: true,
       onBefore: (status) {},
-      onSuccess: (data, flag) {},
+      onSuccess: (data, flag) {
+        var baseResponse = BaseResponse.fromJson(data);
+        List<Reward> newListReward = baseResponse?.data?.listReward ?? [];
+        listReward.clear();
+        listReward.addAll(newListReward);
+      },
       onFailed: (title, message) {
+        listReward.clear();
         var response = BaseResponse.fromString(message);
         Fluttertoast.showToast(
           msg: response?.message ?? 'Gagal',
@@ -51,6 +61,10 @@ abstract class RewardViewModel extends State<RewardScreen> {
     super.initState();
     profile = Profile.fromJson(MyPref.getMap('profile'));
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      var argument = Get.arguments;
+      if (argument is Map) {
+        point = argument['point'];
+      }
       refreshKey.currentState.show();
     });
   }

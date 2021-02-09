@@ -11,6 +11,7 @@ import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/model/payment_data.dart';
+import 'package:aksestokomobile/model/reward.dart';
 import 'package:aksestokomobile/model/ringkasan.dart';
 import 'package:aksestokomobile/model/sales_person.dart';
 import 'package:aksestokomobile/model/zone.dart';
@@ -29,6 +30,7 @@ class DataResponse {
   List<Zone> listKabupaten;
   List<Zone> listKecamatan;
   List<Zone> listDesa;
+  List<Reward> listReward;
   Profile profile;
   SalesPerson salesPerson;
   Address address;
@@ -155,6 +157,10 @@ class DataResponse {
 
     listPromo = ifExistList(json, 'list_promo', (obj) {
       return Promo.fromJson(obj);
+    });
+
+    listReward = ifExistList(json, 'reward', (obj) {
+      return Reward.fromJson(obj);
     });
 
     listIssue = ifExistList(json, 'issue', (obj) {
