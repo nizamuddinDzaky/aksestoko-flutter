@@ -388,42 +388,40 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      if (isDebugQA)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(customerService);
-                                },
-                                icon: Icon(Icons.live_help),
-                                label: Text(
-                                  "Layanan Pelanggan",
-                                  style: TextStyle(fontSize: 18),
-                                ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
+                                Get.toNamed(customerService);
+                              },
+                              icon: Icon(Icons.live_help),
+                              label: Text(
+                                "Layanan Pelanggan",
+                                style: TextStyle(fontSize: 18),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      if (isDebugQA)
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton.icon(
-                                onPressed: () {
-                                  goToFaq();
-                                },
-                                icon: Icon(Icons.info),
-                                label: Text(
-                                  "F A Q",
-                                  style: TextStyle(fontSize: 18),
-                                ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
+                                goToFaq();
+                              },
+                              icon: Icon(Icons.info),
+                              label: Text(
+                                "F A Q",
+                                style: TextStyle(fontSize: 18),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
+                      ),
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Row(
