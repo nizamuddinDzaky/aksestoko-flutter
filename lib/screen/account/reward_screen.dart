@@ -188,7 +188,8 @@ class _RewardScreenState extends RewardViewModel {
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: pointLayout(),
                           ),
-                          if (isDebugOnly && point == null)
+                          // if (isDebugOnly && point == null)
+                          if (false)
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               child: Column(
@@ -352,7 +353,6 @@ class _RewardScreenState extends RewardViewModel {
                                           children: [
                                             Container(
                                               width: double.infinity,
-                                              height: 121,
                                               child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.only(
@@ -438,7 +438,12 @@ class _RewardScreenState extends RewardViewModel {
                                                     child: Text(
                                                       'Detail',
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Get.toNamed(
+                                                        detailRewardScreen,
+                                                        arguments: reward,
+                                                      );
+                                                    },
                                                   ),
                                                 ],
                                               ),

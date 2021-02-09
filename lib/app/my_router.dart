@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/screen/account/reward_screen.dart';
+import 'package:aksestokomobile/screen/account/detail_reward_screen.dart';
 import 'package:aksestokomobile/screen/account/summary_screen.dart';
 import 'package:aksestokomobile/screen/customer_service/detail_issue_screen.dart';
 import 'package:aksestokomobile/screen/home/home_screen.dart';
@@ -64,6 +65,7 @@ const checkPermissionScreen = "/CheckPermissionScreen";
 const customerService = "/CustomerService";
 const detailIssueScreen = "/DetailIssueScreen";
 const rewardScreen = "/RewardScreen";
+const detailRewardScreen = "/DetailRewardScreen";
 const summaryScreen = "/SummaryScreen";
 
 class MyRouter {
@@ -250,15 +252,21 @@ class MyRouter {
         );
         case customerService:
           return GetRouteBase(
-            settings: settings,
-            transition: Transition.fade,
-            page: CustomerServiceScreen(),
-          );
+          settings: settings,
+          transition: Transition.fade,
+          page: CustomerServiceScreen(),
+        );
       case webView:
         return GetRouteBase(
           settings: settings,
           transition: Transition.fade,
           page: WebViewScreen(),
+        );
+      case detailRewardScreen:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: DetailRewardScreen(),
         );
       default:
         return GetRouteBase(
