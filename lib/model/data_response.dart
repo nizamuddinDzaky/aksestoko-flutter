@@ -54,6 +54,8 @@ class DataResponse {
   String message;
   String urlFaq;
   List<Question> listQuestion;
+  bool isSetSurvey;
+  String imageSurvey;
 
   DataResponse({this.token});
 
@@ -193,6 +195,10 @@ class DataResponse {
       });
 
     idPurchase = ifExist(json, 'purchase_id');
+
+    isSetSurvey = ifExist(json, 'survey');
+
+    imageSurvey = ifExist(json, 'img');
 
     urlKreditPro = ifExist(json, 'url');
 

@@ -42,35 +42,7 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
-  _dialogCustomerSurvei(){
-    return showDialog(
-        context: context,
-        child: AlertDialog(
-          title: Text('Survei Pelanggan'),
-          content: Column(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                    width: double.maxFinite,
-                    child: CustomerSurveyScreen()
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text('Cancel'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-    );
-  }
+
 
   goToFaq(){
     showDialog(

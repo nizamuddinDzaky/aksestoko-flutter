@@ -1,8 +1,10 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/resource/at_icon.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
 import 'package:aksestokomobile/main_common.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,10 @@ import 'package:aksestokomobile/screen/order/history_order_screen.dart'
 import 'package:aksestokomobile/screen/promo/list_promo.dart' as listPromo;
 import 'package:aksestokomobile/screen/account/account_screen.dart' as Account;
 import 'package:get/get.dart';
+import 'package:aksestokomobile/network/api_client.dart';
+import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/model/base_response.dart';
+import 'package:aksestokomobile/model/question.dart';
 
 class ParentScreen extends StatefulWidget {
   @override
@@ -23,6 +29,7 @@ class ParentScreen extends StatefulWidget {
 class _ParentScreenState extends State<ParentScreen> {
   int selectedPage;
   PageController _myPage;
+  List<Question> listQuestion = [];
   var myNotification = MyNotification();
 
   Widget _buildDialog(BuildContext context, Item item) {
@@ -73,6 +80,109 @@ class _ParentScreenState extends State<ParentScreen> {
     }
   }
 
+  _dialogCustomerSurvei(){
+    debugPrint("asdasdasdsadsdasdas12312");
+    return showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text('Survei Pelanggan'),
+          content: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                    width: double.maxFinite,
+                    child: Column(
+                      children: <Widget>[
+                        AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Container(
+                            child: FadeInImage.assetNetwork(
+                              placeholder: kNoImageLandscape,
+                              image: 'https://qp.forca.id/themes/aksestoko/assets/img/help/survey-at.png',
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          child: Text(
+                            "Berikan pengalaman terbaik anda bersama AksesToko agar kami dapat terus memberikan pelayanan yang terbaik bagi anda",
+                            style: TextStyle(
+                              color: MyColor.blackTextAT,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          child: Text(
+                            "15 pengguna telah berpatisipasi dalam survei ini.",
+                            style: TextStyle(
+                              color: MyColor.blackTextAT,
+                              fontStyle: FontStyle.italic,
+                              // fontWeight: FontWeight.,
+                              fontSize: 14,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    )
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text('Skip'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    color: MyColor.redAT,
+                    child: Text(
+                        'Ya',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      Get.toNamed(customerSurvey);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+    );
+  }
+
+  _getSurvei() async{
+    listQuestion.clear();
+    var status = await ApiClient.methodGet(ApiConfig.urlGetCustomerSurvey,
+        params: {},
+        onBefore: (status) {}, onSuccess: (data, flag) {
+          var baseResponse = BaseResponse.fromJson(data);
+          listQuestion = baseResponse.data.listQuestion;
+          /*if(baseResponse.data.isSetSurvey){*/
+            _dialogCustomerSurvei();
+          /*}*/
+        }, onFailed: (title, message) {
+          debugPrint("failed");
+          Get.defaultDialog(title: title, content: Text(message));
+        }, onError: (title, message) {
+          debugPrint("error");
+          Get.defaultDialog(title: title, content: Text(message));
+        }, onAfter: (status) {});
+    setState(() {
+      status.execute();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,6 +207,7 @@ class _ParentScreenState extends State<ParentScreen> {
       _navigateToItemDetail(message);
     });
     _myPage = PageController(initialPage: selectedPage);
+    _getSurvei();
   }
 
   @override
