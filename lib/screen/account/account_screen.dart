@@ -42,7 +42,7 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
-  goToFaq(){
+  goToFaq() {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -57,7 +57,7 @@ class _AccountScreenState extends State<AccountScreen> {
     getUrlFaq();
   }
 
-  getUrlFaq() async{
+  getUrlFaq() async {
     var status = await ApiClient.methodGet(
       ApiConfig.urlFaq,
       onBefore: (status) {
@@ -221,7 +221,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         profile?.email ?? '',
                         textAlign: TextAlign.center,
                         style:
-                        TextStyle(fontSize: 20, color: MyColor.greyTextAT),
+                            TextStyle(fontSize: 20, color: MyColor.greyTextAT),
                       ),
                     ),
                   ),
@@ -431,6 +431,24 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
+                      if (isDebugQA)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            children: <Widget>[
+                              FlatButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(customerSurvey);
+                                },
+                                icon: Icon(Icons.description),
+                                label: Text(
+                                  "Survei Pelanggan",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Row(
@@ -447,7 +465,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               label: Text(
                                 "Keluar",
                                 style:
-                                TextStyle(fontSize: 18, color: Colors.red),
+                                    TextStyle(fontSize: 18, color: Colors.red),
                               ),
                             ),
                           ],

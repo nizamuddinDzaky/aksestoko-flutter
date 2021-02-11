@@ -1,9 +1,12 @@
+import 'package:aksestokomobile/app/my_router.dart';
 import 'package:aksestokomobile/resource/at_icon.dart';
 import 'package:aksestokomobile/controller/parent_controller.dart';
 import 'package:aksestokomobile/helper/item.dart';
 import 'package:aksestokomobile/helper/my_notification.dart';
 import 'package:aksestokomobile/main_common.dart';
+import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/util/my_color.dart';
@@ -14,6 +17,9 @@ import 'package:aksestokomobile/screen/order/history_order_screen.dart'
 import 'package:aksestokomobile/screen/promo/list_promo.dart' as listPromo;
 import 'package:aksestokomobile/screen/account/account_screen.dart' as Account;
 import 'package:get/get.dart';
+import 'package:aksestokomobile/network/api_client.dart';
+import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/model/base_response.dart';
 
 class ParentScreen extends StatefulWidget {
   @override
@@ -73,6 +79,117 @@ class _ParentScreenState extends State<ParentScreen> {
     }
   }
 
+  Widget _layoutDialog({String img, String feedbackTotal}) {
+    return AlertDialog(
+      title: Text('Survei Pelanggan'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Flexible(
+            child: Container(
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      child: CachedNetworkImage(
+                        height: 128,
+                        width: 128,
+                        imageUrl: img ??
+                            'https://qp.forca.id/themes/aksestoko/assets/img/help/survey-at.png',
+                        placeholder: (context, url) =>
+                            Image.asset(kNoImageLandscape),
+                        errorWidget: (context, url, error) =>
+                            Image.asset(kNoImageLandscape),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Text(
+                        "Berikan pengalaman terbaik anda bersama AksesToko agar kami dapat terus memberikan pelayanan yang terbaik bagi anda",
+                        style: TextStyle(
+                          color: MyColor.blackTextAT,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Text(
+                        "${feedbackTotal ?? '0'} pengguna telah berpatisipasi dalam survei ini.",
+                        style: TextStyle(
+                          color: MyColor.warningTextAT,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                )),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FlatButton(
+                child: Text('Skip'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                color: MyColor.redAT,
+                child: Text(
+                  'Ya',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () {
+                  Get.toNamed(customerSurvey);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  _dialogCustomerSurvei({String img, String feedbackTotal}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return _layoutDialog(img: img, feedbackTotal: feedbackTotal);
+      },
+    );
+  }
+
+  _getSurvei() async {
+    var status = await ApiClient.methodGet(ApiConfig.urlGetCustomerSurvey,
+        params: {}, onBefore: (status) {}, onSuccess: (data, flag) {
+      var baseResponse = BaseResponse.fromJson(data);
+      if (isDebugOnly || (baseResponse?.data?.isSetSurvey ?? false)) {
+        _dialogCustomerSurvei(
+          img: baseResponse?.data?.imageSurvey,
+          feedbackTotal: baseResponse?.data?.feedbackTotal,
+        );
+      }
+    }, onFailed: (title, message) {
+      debugPrint("failed");
+      Get.defaultDialog(title: title, content: Text(message));
+    }, onError: (title, message) {
+      debugPrint("error");
+      Get.defaultDialog(title: title, content: Text(message));
+    }, onAfter: (status) {});
+    setState(() {
+      status.execute();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,6 +214,7 @@ class _ParentScreenState extends State<ParentScreen> {
       _navigateToItemDetail(message);
     });
     _myPage = PageController(initialPage: selectedPage);
+    if (isDebugQA) _getSurvei();
   }
 
   @override

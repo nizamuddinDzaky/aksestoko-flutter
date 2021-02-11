@@ -46,6 +46,10 @@ class ApiConfig {
   static String urlListPromo = '${path}Purchase/list_promo';
   static String urlAddPromo = '${path}Purchase/add_promo';
 
+  //survei
+  static String urlGetCustomerSurvey = '${path}Survey/survey_pelanggan';
+  static String urlAddCustomerSurvey = '${path}Survey/add_survey_pelanggan';
+
   //cusstomerService
   static String urlListIssue = '${path}Profile/cs';
   static String urlAddIssue = '${path}Profile/add_keluhan';
