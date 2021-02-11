@@ -202,3 +202,9 @@ void debugLog(String message) {
 void debugLogs(List message) {
   if (kDebugMode) dev.log('printLog ${message?.join(' | ') ?? '-emptylog-'}');
 }
+
+bool checkHost(String url, {String domain = 'aksestoko.id'}) {
+  if (url?.isEmpty ?? true) return false;
+  var uri = Uri.tryParse(url);
+  return uri.host.endsWith(domain ?? 'aksestoko.id');
+}

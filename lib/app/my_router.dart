@@ -18,7 +18,6 @@ import 'package:aksestokomobile/screen/order/add_payment_screen.dart';
 import 'package:aksestokomobile/screen/order/payment_kreditpro.dart';
 import 'package:aksestokomobile/screen/setting/check_permission_screen.dart';
 import 'package:aksestokomobile/screen/customer_service/customer_service.dart';
-import 'package:aksestokomobile/screen/setting/webview_screen.dart';
 import 'package:aksestokomobile/screen/splash_screen.dart';
 import 'package:aksestokomobile/screen/order/history_order_screen.dart';
 import 'package:aksestokomobile/screen/order/detail_order_screen.dart';
@@ -60,7 +59,6 @@ const editAddressScreen = "/EditAddressScreen";
 const salesPersonScreen = "/SalesPersonScreen";
 const changePasswordScreen = "/ChangePasswordScreen";
 const paymentKreditProScreen = "/PaymentKreditproScreen";
-const webView = "/FaqWebview";
 const checkPermissionScreen = "/CheckPermissionScreen";
 const customerService = "/CustomerService";
 const detailIssueScreen = "/DetailIssueScreen";
@@ -255,12 +253,6 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: CustomerServiceScreen(),
-        );
-      case webView:
-        return GetRouteBase(
-          settings: settings,
-          transition: Transition.fade,
-          page: WebViewScreen(),
         );
       case detailRewardScreen:
         return GetRouteBase(

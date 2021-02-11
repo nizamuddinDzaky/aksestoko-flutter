@@ -6,6 +6,7 @@ import 'package:aksestokomobile/model/sales_person.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/setting/version_screen.dart';
+import 'package:aksestokomobile/screen/setting/webview_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/util/my_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,13 +65,16 @@ class _AccountScreenState extends State<AccountScreen> {
       },
       onSuccess: (data, flag) {
         var response = BaseResponse.fromJson(data);
-        // debugPrint("url FAQ = ${response.data.urlFaq}");
         Map<String, dynamic> _param = {
-          "url": response.data.urlFaq,
-          "title" : "F A Q"
+          "url": response?.data?.urlFaq,
+          "title": "F A Q"
         };
 
-        Get.toNamed(webView, arguments: _param);
+        if (response?.data?.urlFaq?.isNotEmpty ?? false)
+          Get.to(
+            WebViewScreen(response.data.urlFaq),
+            arguments: _param,
+          );
       },
     );
     setState(() {
