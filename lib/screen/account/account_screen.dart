@@ -5,6 +5,7 @@ import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/model/sales_person.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
+import 'package:aksestokomobile/screen/customer_service/customer_survey_screen.dart';
 import 'package:aksestokomobile/screen/setting/version_screen.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
 import 'package:aksestokomobile/util/my_util.dart';
@@ -39,6 +40,36 @@ class _AccountScreenState extends State<AccountScreen> {
     setState(() {
       status.execute();
     });
+  }
+
+  _dialogCustomerSurvei(){
+    return showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text('Survei Pelanggan'),
+          content: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                    width: double.maxFinite,
+                    child: CustomerSurveyScreen()
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+    );
   }
 
   goToFaq(){
@@ -418,6 +449,25 @@ class _AccountScreenState extends State<AccountScreen> {
                                 icon: Icon(Icons.info),
                                 label: Text(
                                   "F A Q",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (isDebugQA)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            children: <Widget>[
+                              FlatButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(customerSurvey);
+                                  /*goToFaq();*/
+                                },
+                                icon: Icon(Icons.info),
+                                label: Text(
+                                  "Survei Pelanggan",
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ),

@@ -1,6 +1,7 @@
 import 'package:aksestokomobile/screen/account/reward_screen.dart';
 import 'package:aksestokomobile/screen/account/detail_reward_screen.dart';
 import 'package:aksestokomobile/screen/account/summary_screen.dart';
+import 'package:aksestokomobile/screen/customer_service/customer_survey_screen.dart';
 import 'package:aksestokomobile/screen/customer_service/detail_issue_screen.dart';
 import 'package:aksestokomobile/screen/home/home_screen.dart';
 import 'package:aksestokomobile/screen/home/select_distributor.dart';
@@ -67,6 +68,7 @@ const detailIssueScreen = "/DetailIssueScreen";
 const rewardScreen = "/RewardScreen";
 const detailRewardScreen = "/DetailRewardScreen";
 const summaryScreen = "/SummaryScreen";
+const customerSurvey = "/CustomerSurvey";
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -267,6 +269,12 @@ class MyRouter {
           settings: settings,
           transition: Transition.fade,
           page: DetailRewardScreen(),
+        );
+      case customerSurvey:
+        return GetRouteBase(
+          settings: settings,
+          transition: Transition.fade,
+          page: CustomerSurveyScreen(),
         );
       default:
         return GetRouteBase(

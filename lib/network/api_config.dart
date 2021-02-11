@@ -74,6 +74,9 @@ class ApiConfig {
 
   static String urlGetSummaryOrder = '${path}Purchase/summary';
 
+  static String urlGetCustomerSurvey = '${path}Survey/survey_pelanggan';
+  static String urlAddCustomerSurvey = '${path}Survey/add_survey_pelanggan';
+
   //payment
   static String urlListPayment = '${path}Purchase/list_payment';
   static String urlDetailAddPayment = '${path}Purchase/detail_payment';

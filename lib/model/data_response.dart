@@ -11,6 +11,7 @@ import 'package:aksestokomobile/model/product.dart';
 import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/model/promo.dart';
 import 'package:aksestokomobile/model/payment_data.dart';
+import 'package:aksestokomobile/model/question.dart';
 import 'package:aksestokomobile/model/reward.dart';
 import 'package:aksestokomobile/model/ringkasan.dart';
 import 'package:aksestokomobile/model/sales_person.dart';
@@ -52,6 +53,7 @@ class DataResponse {
   String statusPromo;
   String message;
   String urlFaq;
+  List<Question> listQuestion;
 
   DataResponse({this.token});
 
@@ -199,6 +201,10 @@ class DataResponse {
     statusPromo = ifExist(json, 'status_promo');
 
     urlFaq = ifExist(json, 'redirect');
+
+    listQuestion = ifExistList(json, 'question', (obj) {
+      return Question.fromJson(obj);
+    });
 
     /*detailPayment = ifExistObject(json, 'data_pembayaran', (obj) {
       return PaymentData.fromJson(obj);
