@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
-
   WebViewScreen(this.url);
 
   _WebViewScreenState createState() => _WebViewScreenState();
@@ -52,6 +51,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("asdsa ${widget.url}");
     return WebviewScaffold(
       appBar: AppBar(
         title: Text(title),

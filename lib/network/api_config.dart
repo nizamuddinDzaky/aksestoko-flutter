@@ -50,6 +50,9 @@ class ApiConfig {
   static String urlGetCustomerSurvey = '${path}Survey/survey_pelanggan';
   static String urlAddCustomerSurvey = '${path}Survey/add_survey_pelanggan';
 
+  static String urlListCreditProgram = '${path}Profile/programs';
+  static String urlWebViewCreditProgram = 'https://qa.aksestoko.id/auth/loginWithToken';
+
   //cusstomerService
   static String urlListIssue = '${path}Profile/cs';
   static String urlAddIssue = '${path}Profile/add_keluhan';

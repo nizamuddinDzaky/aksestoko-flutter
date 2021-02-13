@@ -449,6 +449,24 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
+                      if (isDebugQA)
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
+                                Get.toNamed(creditProgram);
+                              },
+                              icon: Icon(Icons.description),
+                              label: Text(
+                                "Program Kredit",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Row(

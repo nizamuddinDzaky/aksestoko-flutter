@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/model/credit_program.dart';
 import 'package:aksestokomobile/model/issue.dart';
 import 'package:aksestokomobile/model/address.dart';
 import 'package:aksestokomobile/model/alamat.dart';
@@ -54,6 +55,7 @@ class DataResponse {
   String message;
   String urlFaq;
   List<Question> listQuestion;
+  List<CreditProgram> listCreditProgram;
   bool isSetSurvey;
   String imageSurvey;
   String feedbackTotal;
@@ -213,6 +215,9 @@ class DataResponse {
 
     listQuestion = ifExistList(json, 'question', (obj) {
       return Question.fromJson(obj);
+    });
+    listCreditProgram = ifExistList(json, 'programs', (obj) {
+      return CreditProgram.fromJson(obj);
     });
   }
 
