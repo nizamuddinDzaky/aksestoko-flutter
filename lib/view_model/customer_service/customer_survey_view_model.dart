@@ -215,7 +215,7 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
   }
 
   Widget getRadioButton(Question question) {
-    if (question?.answer == null)
+    if (question?.answer == null && (question?.optionList?.isNotEmpty ?? false))
       question.answer = question.optionList.first.option;
 
     return Container(
