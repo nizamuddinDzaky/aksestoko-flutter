@@ -181,8 +181,6 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                         ),
                         onPressed: () {
                           var url = "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectForm}";
-                          debugPrint("url : $url");
-                          var testUrl = "https://ps.uci.edu/~franklin/doc/file_upload.html";
                           Map<String, dynamic> _param = {
                             "url": url,
                             "title": "${creditProgram.title}"
@@ -209,8 +207,6 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                         ),
                         onPressed: () {
                           var url = "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectView}";
-                          debugPrint("url : $url");
-                          var testUrl = "https://ps.uci.edu/~franklin/doc/file_upload.html";
                           Map<String, dynamic> _param = {
                             "url": url,
                             "title": "${creditProgram.title}"
