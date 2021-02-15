@@ -19,7 +19,7 @@ class CreditProgram {
     description = json['description'];
     image = json['image'];
     providedBy = json['provided_by'];
-    redirectView = json['redirect_view'];
+    redirectView = json['redirect_view'] ??json['redirect'];
     redirectForm = json['redirect_form'];
   }
 

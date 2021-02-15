@@ -101,7 +101,7 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
               AspectRatio(
                 aspectRatio: 2 / 1,
                 child: Container(
-                  child: (creditProgram?.image?.isEmpty ?? true) || isDebugOnly
+                  child: (creditProgram?.image?.isEmpty ?? true)
                       ? Image.asset(kNoImageLandscape)
                       : FadeInImage.assetNetwork(
                     placeholder: kNoImageLandscape,
@@ -144,25 +144,59 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Oleh :",
-                            style: TextStyle(color: MyColor.greyTextAT),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4),
-                          ),
-                          Text(
-                            creditProgram.providedBy,
-                            style: TextStyle(
-                                color: MyColor.greyTextAT,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                    Container(
+                      margin: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
+                      child: Expanded(
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Oleh :",
+                              style: TextStyle(color: MyColor.greyTextAT),
+
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                            ),
+                            Container(
+                              child: Text(
+                                creditProgram.providedBy,
+                                style: TextStyle(
+                                    color: MyColor.greyTextAT,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    Container(
+                      child: CupertinoButton(
+                        padding: EdgeInsets.all(0),
+                        child: Text(
+                          'ISI FORM',
+                          style: TextStyle(
+                            color: MyColor.redAT,
+                            fontSize: 14,
+                          ),
+                        ),
+                        onPressed: () {
+                          var url = "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectForm}";
+                          debugPrint("url : $url");
+                          var testUrl = "https://ps.uci.edu/~franklin/doc/file_upload.html";
+                          Map<String, dynamic> _param = {
+                            "url": url,
+                            "title": "${creditProgram.title}"
+                          };
+                          Get.to(
+                            WebViewScreen(url),
+                            arguments: _param,
+                          );
+                          /*Get.toNamed(
+                              detailOrderScreen, arguments: _order?.idPemesanan);*/
+                        },
+                      ),
+                    ),
+
                     Container(
                       child: CupertinoButton(
                         padding: EdgeInsets.all(0),
@@ -174,12 +208,15 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                           ),
                         ),
                         onPressed: () {
+                          var url = "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectView}";
+                          debugPrint("url : $url");
+                          var testUrl = "https://ps.uci.edu/~franklin/doc/file_upload.html";
                           Map<String, dynamic> _param = {
-                            "url": "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectView}",
+                            "url": url,
                             "title": "${creditProgram.title}"
                           };
                             Get.to(
-                              WebViewScreen("${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectView}"),
+                              WebViewScreen(url),
                               arguments: _param,
                             );
                           /*Get.toNamed(

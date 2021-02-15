@@ -20,11 +20,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   String title;
 
+  List<String> listUrl = [];
   @override
   void initState() {
     var param = Get.arguments as Map<String, dynamic>;
     title = param['title'] as String ?? 'AksesToko';
+
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
+      listUrl.add(url);
       if (mounted) {}
     });
     _onStateChanged =
@@ -51,7 +54,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("asdsa ${widget.url}");
     return WebviewScaffold(
       appBar: AppBar(
         title: Text(title),
