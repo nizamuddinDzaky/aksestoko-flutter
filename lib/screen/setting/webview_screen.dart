@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
-
   WebViewScreen(this.url);
 
   _WebViewScreenState createState() => _WebViewScreenState();
@@ -21,11 +20,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   String title;
 
+  List<String> listUrl = [];
   @override
   void initState() {
     var param = Get.arguments as Map<String, dynamic>;
     title = param['title'] as String ?? 'AksesToko';
+
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
+      listUrl.add(url);
       if (mounted) {}
     });
     _onStateChanged =

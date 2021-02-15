@@ -154,7 +154,7 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
                       text: TextSpan(children: [
                     TextSpan(
                         text: question?.question != null
-                            ? '${question?.question} - Kode ${question.id}'
+                            ? '${question?.question}'
                             : '',
                         style: Theme.of(context).textTheme.subtitle1.copyWith(
                               fontWeight: FontWeight.bold,
