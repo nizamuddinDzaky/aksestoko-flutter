@@ -24,6 +24,6 @@ class _MyStatefulBuilderState extends State<MyStatefulBuilder> {
   @override
   void dispose() {
     super.dispose();
-    widget.dispose();
+    widget.dispose?.call();
   }
 }

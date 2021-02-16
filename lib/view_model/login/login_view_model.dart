@@ -1,11 +1,14 @@
 import 'package:aksestokomobile/app/my_router.dart';
+import 'package:aksestokomobile/helper/my_stateful_builder.dart';
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:aksestokomobile/model/login_model.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/screen/login/login_screen.dart';
+import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,36 +41,87 @@ abstract class LoginViewModel extends State<LoginScreen> {
     return null;
   }
 
-  onSuccessSubmit(userId, String tlp) {
-    var controller = TextEditingController(text: tlp);
-    Get.defaultDialog(
-      title: 'Kirim Kode Aktivasi',
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Kirim ke nomor telepon berikut',
-            textAlign: TextAlign.center,
-          ),
-          TextFormField(
-            controller: controller,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly,
-            ],
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline5,
-            decoration: InputDecoration(
-              hintText: 'Nomor Telepon',
+  Widget _layoutPopupPhone(userId, String tlp) {
+    final _formKey = GlobalKey<FormState>();
+    var controller = TextEditingController(text: trimMobilePhoneNumber(tlp));
+    return AlertDialog(
+      title: Text("Kirim Kode Aktivasi"),
+      content: MyStatefulBuilder(
+        dispose: null,
+        builder: (bc, st) {
+          return Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Kirim ke nomor telepon berikut\n'
+                  'Contoh: +62812345678',
+                  textAlign: TextAlign.center,
+                ),
+                TextFormField(
+                  controller: controller,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  keyboardType: TextInputType.phone,
+                  onChanged: (text) {
+                    controller = cursorToEnd(trimMobilePhoneNumber(text));
+                    st(() {});
+                  },
+                  autovalidateMode: AutovalidateMode.always,
+                  validator: (text) {
+                    if (!validateMobilePhoneNumber(text)) {
+                      return 'Masukkan no telepon yang valid';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.headline5,
+                  maxLines: 1,
+                  maxLength: 12,
+                  decoration: InputDecoration(
+                    hintText: 'Nomor Telepon',
+                    prefixText: '+62',
+                    prefixStyle: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FlatButton(
+                      child: Text('Tutup'),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                    FlatButton(
+                      color: MyColor.redAT,
+                      child: Text(
+                        'Kirim',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        debugLogs(['cek nomor ', '+62${controller.text}']);
+                        if (_formKey.currentState.validate()) {
+                          _postSendCode(userId, '+62${controller.text}');
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
-      textConfirm: 'Kirim',
-      confirmTextColor: Colors.white,
-      textCancel: 'Tutup',
-      onConfirm: () {
-        _postSendCode(userId, controller.text);
-      },
+    );
+  }
+
+  onSuccessSubmit(userId, String tlp) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => _layoutPopupPhone(userId, tlp),
     );
   }
 

@@ -84,10 +84,22 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
         Get.back();
       },
       onSuccess: (data, _) {
+        var service = data['data']['service'];
+        if (service == null || service is String) {
+          Get.defaultDialog(
+            title: 'Gagal',
+            content: Text(
+              service ?? 'Belum ada layanan OTP tersedia.',
+              textAlign: TextAlign.center,
+            ),
+            textCancel: 'OK',
+          );
+          return;
+        }
         chooseService(
             id: data['data']['id_forget_password'],
             phone: data['data']['phone'],
-            service: data['data']['service'].cast<String>());
+            service: service.cast<String>());
       },
       onFailed: (title, message) {
         var response = BaseResponse.fromString(message);

@@ -208,3 +208,27 @@ bool checkHost(String url, {String domain = 'aksestoko.id'}) {
   var uri = Uri.tryParse(url);
   return uri.host.endsWith(domain ?? 'aksestoko.id');
 }
+
+bool validateMobilePhoneNumber(String value) {
+  String pattern = r'^8[0-9]{8,11}$';
+  RegExp regExp = new RegExp(pattern);
+  return regExp.hasMatch(value);
+}
+
+String trimMobilePhoneNumber(String tlp) {
+  var newTlp = tlp ?? '';
+  if (newTlp.startsWith('0')) return newTlp.substring(1);
+  if (newTlp.startsWith('62')) return newTlp.substring(2);
+  if (newTlp.startsWith('+62')) return newTlp.substring(3);
+  if (newTlp.startsWith('+')) return newTlp.substring(1);
+  return newTlp;
+}
+
+TextEditingController cursorToEnd(String newText) {
+  return TextEditingController()
+    ..text = newText
+    ..selection = TextSelection(
+      baseOffset: newText.length,
+      extentOffset: newText.length,
+    );
+}
