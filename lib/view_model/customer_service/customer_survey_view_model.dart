@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:aksestokomobile/model/order_detail.dart';
@@ -20,20 +21,27 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
 
   bool isRadioSelected = false;
 
+  void actionSubmit() {
+    _submit();
+  }
+
   getListOrder() async {
     listQuestion.clear();
     var status = await ApiClient.methodGet(ApiConfig.urlGetCustomerSurvey,
         params: {}, onBefore: (status) {}, onSuccess: (data, flag) {
       var baseResponse = BaseResponse.fromJson(data);
       listQuestion = baseResponse.data.listQuestion;
+      listQuestion?.forEach((question) {
+        question?.key = GlobalKey();
+      });
       debugLogs([data]);
     }, onFailed: (title, message) {
-      debugPrint("failed");
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onError: (title, message) {
-      debugPrint("error");
-      Get.defaultDialog(title: title, content: Text(message));
-    }, onAfter: (status) {});
+          debugPrint("failed");
+          Get.defaultDialog(title: title, content: Text(message));
+        }, onError: (title, message) {
+          debugPrint("error");
+          Get.defaultDialog(title: title, content: Text(message));
+        }, onAfter: (status) {});
     setState(() {
       status.execute();
     });
@@ -42,27 +50,30 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
   _submit() {
     formKey.currentState.save();
     var questionBody = [];
-    listQuestion.forEach((question) {
-      debugPrint('Kode ${question.id} : ${question.answer}');
-      if (question.isRequired == '1') {
-        if (question.type != 'checkbox') {
-          if (question.answer.isEmpty) {
-            Fluttertoast.showToast(
-              msg: 'Kode ${question.id} Tidak Boleh Kosong',
-              gravity: ToastGravity.CENTER,
-            );
-            return;
-          }
-        } else {
-          if (question.multiAnswer.length == 0 ||
-              question.multiAnswer.length > question.maxCheck.toInt()) {
-            Fluttertoast.showToast(
-              msg: 'Kode ${question.id} Tidak Boleh Kosong',
-              gravity: ToastGravity.CENTER,
-            );
-            return;
-          }
-        }
+    for (var question in listQuestion) {
+      bool error = question.isRequired == '1' &&
+          (question.answer?.isEmpty ?? true) &&
+          question.type != 'checkbox';
+      error |= question.isRequired == '1' &&
+          question.type == 'checkbox' &&
+          (question.multiAnswer?.length ?? 0) != question.maxCheck.toInt();
+      if (error) {
+        Fluttertoast.showToast(
+          msg: '${question.question} Tidak Boleh Kosong',
+          gravity: ToastGravity.CENTER,
+        );
+        Scrollable.ensureVisible(
+          question?.key?.currentContext,
+          duration: Duration(
+            seconds: 1,
+          ),
+        );
+        return;
+      }
+      if (question.isRequired != '1' &&
+          question.answer.isEmpty &&
+          question.multiAnswer.isEmpty) {
+        continue;
       }
       questionBody.add({
         'question_type': question.type,
@@ -71,20 +82,26 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
             : question.multiAnswer,
         'question': question.id,
       });
-    });
-    var body = {'jumlah': questionBody.length, 'question': questionBody};
-
+    }
+    ;
+    var body = {
+      'flag': isDebugOnly,
+      'jumlah': questionBody.length,
+      'question': questionBody,
+    };
+    debugLogs(['hasil', checkJsonEncode(body)]);
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (c) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[CircularProgressIndicator()],
-            ),
-          );
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (c) {
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[CircularProgressIndicator()],
+          ),
+        );
+      },
+    );
 
     _postAddIssue(body);
   }
@@ -136,40 +153,51 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
         input = getRatingField(question);
       if (question.type.toString() == "checkbox")
         input = getMultiChoiceField(question);
-      _listInput.add(Card(
+      var content = Container(
+        key: question.key,
+        child: Card(
           elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 16,
-              ),
-              width: double.maxFinite,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 16,
+            ),
+            width: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
                         text: question?.question != null
                             ? '${question?.question}'
                             : '',
                         style: Theme.of(context).textTheme.subtitle1.copyWith(
                               fontWeight: FontWeight.bold,
-                            )),
-                    if ((question?.isRequired == '1' ?? 0))
-                      TextSpan(
+                            ),
+                      ),
+                      if ((question?.isRequired == '1' ?? 0))
+                        TextSpan(
                           text: ' (wajib isi)',
                           style: Theme.of(context).textTheme.caption.copyWith(
                                 color: Colors.red,
                                 fontStyle: FontStyle.italic,
-                              )),
-                  ])),
-                  input
-                ],
-              ))));
+                              ),
+                        ),
+                    ],
+                  ),
+                ),
+                input,
+              ],
+            ),
+          ),
+        ),
+      );
+      _listInput.add(content);
     });
 
     _listInput.add(Container(
@@ -230,7 +258,7 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
                 });
               },
               color:
-                  (e.option == question.answer) ? MyColor.redAT : Colors.white,
+              (e.option == question.answer) ? MyColor.redAT : Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4.0),
                   side: BorderSide(
@@ -265,28 +293,28 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
               onPressed: status
                   ? null
                   : () {
-                      setState(() {
-                        if (question.multiAnswer.contains(e.option))
-                          question.multiAnswer
-                              .removeWhere((ans) => ans == e.option);
-                        else {
-                          if (question.multiAnswer.length < maxCheck) {
-                            question.multiAnswer.add(e.option);
-                          } else {
-                            Get.defaultDialog(
-                                title: "",
-                                content: Text("Maksimal ${question.maxCheck}"));
-                          }
-                        }
-                      });
-                    },
+                setState(() {
+                  if (question.multiAnswer.contains(e.option))
+                    question.multiAnswer
+                        .removeWhere((ans) => ans == e.option);
+                  else {
+                    if (question.multiAnswer.length < maxCheck) {
+                      question.multiAnswer.add(e.option);
+                    } else {
+                      Get.defaultDialog(
+                          title: "",
+                          content: Text("Maksimal ${question.maxCheck}"));
+                    }
+                  }
+                });
+              },
               color: (question.multiAnswer.contains(e.option))
                   ? MyColor.redAT
                   : Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4.0),
                   side:
-                      BorderSide(color: status ? Colors.white : MyColor.redAT)),
+                  BorderSide(color: status ? Colors.white : MyColor.redAT)),
               child: Text(
                 e.option,
                 style: TextStyle(

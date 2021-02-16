@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/view_model/customer_service/customer_survey_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +40,7 @@ class _CustomerSurveyScreenState extends CustomerSurveyViewModel {
         Expanded(
           child: Container(
               margin: EdgeInsets.only(top: 20),
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -57,26 +58,26 @@ class _CustomerSurveyScreenState extends CustomerSurveyViewModel {
               ),
               child: listQuestion.length == 0
                   ? Center(
-                      child: CircularProgressIndicator(),
-                    )
+                child: CircularProgressIndicator(),
+              )
                   : RefreshIndicator(
-                      key: refreshKey,
-                      onRefresh: actionRefresh,
-                      child: SingleChildScrollView(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 50),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Form(
-                                  key: formKey,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: generateInput()))
-                            ],
-                          )),
+                key: refreshKey,
+                onRefresh: actionRefresh,
+                child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 50),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Form(
+                            key: formKey,
+                            child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: generateInput()))
+                      ],
                     )),
+              )),
         )
       ]),
     );
@@ -94,6 +95,15 @@ class _CustomerSurveyScreenState extends CustomerSurveyViewModel {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
+            actions: [
+              if (isDebugOnly)
+                IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: () {
+                    actionSubmit();
+                  },
+                ),
+            ],
           ),
           body: GestureDetector(
             onTap: () {

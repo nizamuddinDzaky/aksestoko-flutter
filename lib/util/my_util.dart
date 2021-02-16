@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math' as math;
@@ -196,7 +197,7 @@ void actionDelay(int milis, Function function) {
 }
 
 void debugLog(String message) {
-  if (kDebugMode) dev.log(message ?? '-emptylog-');
+  if (kDebugMode) dev.log('printLog ${message ?? '-emptylog-'}');
 }
 
 void debugLogs(List message) {
@@ -231,4 +232,12 @@ TextEditingController cursorToEnd(String newText) {
       baseOffset: newText.length,
       extentOffset: newText.length,
     );
+}
+
+String checkJsonEncode(object) {
+  return jsonEncode(object);
+}
+
+dynamic checkJsonDecode(String source) {
+  return jsonDecode(source);
 }

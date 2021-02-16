@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Question {
   String id;
   String categoryId;
@@ -15,6 +17,7 @@ class Question {
   List<String> multiAnswer = [];
   bool isRadioSelected = false;
   List<OptionList> optionList;
+  GlobalKey key;
 
   Question(
       {this.id,
@@ -26,10 +29,10 @@ class Question {
       this.singleLine,
       this.isRequired,
       this.isActive,
-      this.isDeleted,
-      this.createdAt,
-      this.updatedAt,
-      this.optionList});
+    this.isDeleted,
+    this.createdAt,
+    this.updatedAt,
+    this.optionList});
 
   Question.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,14 +85,13 @@ class OptionList {
   String createdAt;
   String updatedAt;
 
-  OptionList(
-      {this.id,
-      this.questionId,
-      this.option,
-      this.isActive,
-      this.isDeleted,
-      this.createdAt,
-      this.updatedAt});
+  OptionList({this.id,
+    this.questionId,
+    this.option,
+    this.isActive,
+    this.isDeleted,
+    this.createdAt,
+    this.updatedAt});
 
   OptionList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
