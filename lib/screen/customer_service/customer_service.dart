@@ -32,43 +32,35 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
               ],
             ),
             height: 50,
-            child: Row(
-              children: [
-                RaisedButton(
-                  color: MyColor.redAT,
-                  child: Text(
-                    'Tambah Keluhan',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onPressed: () {
-                    _dialogAddIssue(context);
-                  },
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20.0)),
+            child: Center(
+              child: Text(
+                "Hanya menampilkan 5 keluhan terbaruaa",
+                style: TextStyle(
+                  color: MyColor.blackTextAT,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
                 ),
-              ],
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 8),
-                SizedBox(height: 8),
-                Text(
-                  'Hanya menampilkan 5 keluhan terbaru',
-                  style: TextStyle(
-                    color: MyColor.blackTextAT,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16,
-                  ),
-                )
-              ],
-            ),
-          ),
+          // Center(
+          //   child: Column(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       SizedBox(height: 8),
+          //       SizedBox(height: 8),
+          //       Text(
+          //         'Hanya menampilkan 5 keluhan terbaruaa',
+          //         style: TextStyle(
+          //           color: MyColor.blackTextAT,
+          //           fontWeight: FontWeight.normal,
+          //           fontSize: 16,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           (listIssue?.isEmpty ?? true)
               ? Expanded(
                   child: Stack(
@@ -315,6 +307,42 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
           onRefresh: actionRefresh,
           child: _body(),
         ),
+      ),
+      bottomNavigationBar: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding:
+                  EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: Offset(0, 9), // changes position of shadow
+                  )
+                ],
+              ),
+              child: RaisedButton(
+                color: MyColor.redAT,
+                child: Text(
+                  'Tambah Keluhan',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                onPressed: () {
+                  _dialogAddIssue(context);
+                },
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0)),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
