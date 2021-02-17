@@ -1,3 +1,4 @@
+import 'package:aksestokomobile/helper/my_stateful_builder.dart';
 import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/model/base_response.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -29,13 +30,13 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
     listQuestion.clear();
     var status = await ApiClient.methodGet(ApiConfig.urlGetCustomerSurvey,
         params: {}, onBefore: (status) {}, onSuccess: (data, flag) {
-      var baseResponse = BaseResponse.fromJson(data);
-      listQuestion = baseResponse.data.listQuestion;
-      listQuestion?.forEach((question) {
-        question?.key = GlobalKey();
-      });
-      debugLogs([data]);
-    }, onFailed: (title, message) {
+          var baseResponse = BaseResponse.fromJson(data);
+          listQuestion = baseResponse.data.listQuestion;
+          listQuestion?.forEach((question) {
+            question?.key = GlobalKey();
+          });
+          debugLogs([data]);
+        }, onFailed: (title, message) {
           debugPrint("failed");
           Get.defaultDialog(title: title, content: Text(message));
         }, onError: (title, message) {
@@ -177,16 +178,16 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
                             ? '${question?.question}'
                             : '',
                         style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       if ((question?.isRequired == '1' ?? 0))
                         TextSpan(
                           text: ' (wajib isi)',
                           style: Theme.of(context).textTheme.caption.copyWith(
-                                color: Colors.red,
-                                fontStyle: FontStyle.italic,
-                              ),
+                            color: Colors.red,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                     ],
                   ),
@@ -222,21 +223,19 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
   }
 
   Widget getTexField(Question question) {
-    return TextFormField(
-      onSaved: (value) => question?.answer = value,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        contentPadding: MyDimen.paddingTxtField(),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: MyColor.txtField),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: MyColor.lineTxtField),
-        ),
-        errorText: '',
-        errorStyle: TextStyle(
-          color: MyColor.txtField,
-          fontStyle: FontStyle.italic,
+    return Container(
+      padding: EdgeInsets.only(bottom: 8),
+      child: TextFormField(
+        onSaved: (value) => question?.answer = value,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          contentPadding: MyDimen.paddingTxtField(),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: MyColor.txtField),
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: MyColor.lineTxtField),
+          ),
         ),
       ),
     );
@@ -246,107 +245,154 @@ abstract class CustomerSurveyViewModel extends State<CustomerSurveyScreen> {
     if (question?.answer == null && (question?.optionList?.isNotEmpty ?? false))
       question.answer = question.optionList.first.option;
 
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...(question?.optionList ?? []).map((e) {
-            return RaisedButton(
-              onPressed: () {
-                setState(() {
-                  question.answer = e.option;
-                });
-              },
-              color:
-              (e.option == question.answer) ? MyColor.redAT : Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                  side: BorderSide(
-                      color: (e.option == question.answer)
-                          ? Colors.white
-                          : MyColor.redAT)),
-              child: Text(
-                e.option,
-                style: TextStyle(
-                    color: (e.option == question.answer)
-                        ? Colors.white
-                        : MyColor.redAT),
-              ),
-            );
-          }).toList(),
-        ],
-      ),
+    return MyStatefulBuilder(
+      dispose: null,
+      builder: (newContext, newState) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...(question?.optionList ?? []).map((e) {
+                return RaisedButton(
+                  onPressed: () {
+                    newState(() {
+                      question.answer = e.option;
+                    });
+                  },
+                  color: (e.option == question.answer)
+                      ? MyColor.redAT
+                      : Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                      side: BorderSide(
+                          color: (e.option == question.answer)
+                              ? Colors.white
+                              : MyColor.redAT)),
+                  child: Text(
+                    e.option,
+                    style: TextStyle(
+                        color: (e.option == question.answer)
+                            ? Colors.white
+                            : MyColor.redAT),
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      },
     );
   }
 
   Widget getMultiChoiceField(Question question) {
     var maxCheck =
         int.tryParse(question?.maxCheck ?? '') ?? question.multiAnswer.length;
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...(question?.optionList ?? []).map((e) {
-            bool status = question.multiAnswer.length >= maxCheck &&
-                !question.multiAnswer.contains(e.option);
-            return RaisedButton(
-              onPressed: status
-                  ? null
-                  : () {
-                setState(() {
-                  if (question.multiAnswer.contains(e.option))
-                    question.multiAnswer
-                        .removeWhere((ans) => ans == e.option);
-                  else {
-                    if (question.multiAnswer.length < maxCheck) {
-                      question.multiAnswer.add(e.option);
-                    } else {
-                      Get.defaultDialog(
-                          title: "",
-                          content: Text("Maksimal ${question.maxCheck}"));
-                    }
-                  }
-                });
-              },
-              color: (question.multiAnswer.contains(e.option))
-                  ? MyColor.redAT
-                  : Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                  side:
-                  BorderSide(color: status ? Colors.white : MyColor.redAT)),
-              child: Text(
-                e.option,
-                style: TextStyle(
-                    color: status || question.multiAnswer.contains(e.option)
-                        ? Colors.white
-                        : MyColor.redAT),
-              ),
-            );
-          }).toList(),
-        ],
-      ),
+    return MyStatefulBuilder(
+      dispose: null,
+      builder: (newContext, newState) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...(question?.optionList ?? []).map((e) {
+                bool status = question.multiAnswer.length >= maxCheck &&
+                    !question.multiAnswer.contains(e.option);
+                return RaisedButton(
+                  onPressed: status
+                      ? null
+                      : () {
+                          newState(() {
+                            if (question.multiAnswer.contains(e.option))
+                              question.multiAnswer
+                                  .removeWhere((ans) => ans == e.option);
+                            else {
+                              if (question.multiAnswer.length < maxCheck) {
+                                question.multiAnswer.add(e.option);
+                              } else {
+                                Get.defaultDialog(
+                                    title: "",
+                                    content:
+                                        Text("Maksimal ${question.maxCheck}"));
+                              }
+                            }
+                          });
+                        },
+                  color: (question.multiAnswer.contains(e.option))
+                      ? MyColor.redAT
+                      : Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                      side: BorderSide(
+                          color: status ? Colors.white : MyColor.redAT)),
+                  child: Text(
+                    e.option,
+                    style: TextStyle(
+                        color: status || question.multiAnswer.contains(e.option)
+                            ? Colors.white
+                            : MyColor.redAT),
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      },
     );
   }
 
   Widget getRatingField(Question question) {
     if (question?.answer == null) question.answer = 3.toString();
 
-    return RatingBar.builder(
-      initialRating: 3,
-      minRating: 1,
-      direction: Axis.horizontal,
-      allowHalfRating: true,
-      itemCount: 5,
-      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      itemBuilder: (context, _) => Icon(
-        Icons.star,
-        color: Colors.amber,
-      ),
-      onRatingUpdate: (rating) {
-        question.answer = rating.toString();
+    return MyStatefulBuilder(
+      dispose: null,
+      builder: (newContext, newState) {
+        return Container(
+          child: Column(
+            children: [
+              RatingBar.builder(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  question.answer = rating.toString();
+                  newState(() {});
+                },
+              ),
+              Text(
+                label(question),
+              ),
+            ],
+          ),
+        );
       },
     );
+  }
+
+  String label(Question question) {
+    var label = question?.label;
+    if (label?.isEmpty ?? true) label = 'Setuju';
+    var rating = question.answer.toDouble().toInt();
+    switch (rating) {
+      case 1:
+        return 'Tidak $label';
+      case 2:
+        return 'Kurang $label';
+      case 3:
+        return 'Netral';
+      case 4:
+        return label;
+      case 5:
+        return 'Sangat $label';
+      default:
+        return '';
+    }
   }
 
   Future<void> actionRefresh() async {
