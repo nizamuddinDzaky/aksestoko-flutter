@@ -161,7 +161,25 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
     if (isDebugMode) {
       // if (false) {
       Get.back();
-      showInputOTP({
+      var newData = {
+        "status": "success",
+        "code": 200,
+        "message": "Berhasil melakukan pengiriman otp.",
+        "request_time": "2021-02-17 07:44:12",
+        "response_time": "2021-02-17 07:44:13",
+        "rows": 3,
+        "data": {
+          "id_forget_password": 190,
+          "phone": "6282174490686",
+          "message": {
+            "message":
+                "AksesToko - Gunakan 04040 untuk lupa kata sandi. Berlaku sampai 2021-02-17 08:09:41",
+            "header": "AksesToko - Foget password",
+            "footer": "AksesToko"
+          }
+        }
+      };
+      var newData2 = {
         "status": "success",
         "code": 200,
         "message": "Berhasil melakukan pengiriman otp.",
@@ -171,9 +189,10 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
         "data": {
           "id_forget_password": 150,
           "message":
-          "QA AKSESTOKO - Gunakan 20336 untuk lupa kata sandi. Berlaku sampai 2021-01-14 21:53:34"
+              "QA AKSESTOKO - Gunakan 20336 untuk lupa kata sandi. Berlaku sampai 2021-01-14 21:53:34"
         }
-      });
+      };
+      showInputOTP(newData2);
       return;
     }
     var status = await ApiClient.methodPost(
@@ -249,14 +268,16 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
 
   showInputOTP(data) {
     var countError = 0;
-    if (data == null || data['data'] == null ||
+    if (data == null ||
+        data['data'] == null ||
         data['data']['message'] == null) {
       countError++;
     }
-    if (!(data['data']['message'] is String)) {
-      countError++;
+    var message = (data['data']['message']);
+    if (message is Map) {
+      message = message['message'];
     }
-    var message = (data['data']['message']).split('Berlaku sampai ');
+    message = message.split('Berlaku sampai ');
     if (message.length < 2) {
       countError++;
     }
@@ -268,8 +289,7 @@ abstract class ForgotPasswordController extends State<ForgotPasswordScreen> {
       return;
     }
     var date = message[1];
-    date = DateFormat("dd MMM yy HH:mm").format(
-        DateTime.tryParse(date)); //?.add(Duration(minutes: 5)));
+    date = DateFormat("dd MMM yy HH:mm").format(DateTime.tryParse(date));
     var otpTextController = TextEditingController();
     Get.defaultDialog(
       title: 'Reset Password',
