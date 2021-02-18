@@ -34,7 +34,7 @@ class _CustomerServiceScreenState extends CustomerServiceViewModel {
             height: 50,
             child: Center(
               child: Text(
-                "Hanya menampilkan 5 keluhan terbaruaa",
+                "Hanya menampilkan 5 keluhan terbaru",
                 style: TextStyle(
                   color: MyColor.blackTextAT,
                   fontWeight: FontWeight.normal,
