@@ -65,6 +65,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
       withLocalStorage: true,
       withZoom: false,
       invalidUrlRegex: '\baksestoko.*\b',
+      initialChild: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
