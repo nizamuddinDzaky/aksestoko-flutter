@@ -20,6 +20,7 @@ import 'package:get/get.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/model/base_response.dart';
+import 'package:upgrader/upgrader.dart';
 
 class ParentScreen extends StatefulWidget {
   @override
@@ -225,26 +226,34 @@ class _ParentScreenState extends State<ParentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: GetBuilder<ParentController>(
-          init: ParentController(),
-          builder: (controller) =>
-              PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: _myPage,
-                children: <Widget>[
-                  selectProduct.SelectProductScreen(),
-                  listPromo.ListPromoScreen(),
-                  historyOrder.HistoryOrderScreen(),
-                  Account.AccountScreen(),
-                ],
-              ),
+    var body = GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: GetBuilder<ParentController>(
+        init: ParentController(),
+        builder: (controller) => PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _myPage,
+          children: <Widget>[
+            selectProduct.SelectProductScreen(),
+            listPromo.ListPromoScreen(),
+            historyOrder.HistoryOrderScreen(),
+            Account.AccountScreen(),
+          ],
         ),
       ),
+    );
+    var upgrader = UpgradeAlert(
+      // appcastConfig: cfg,
+      debugLogging: isDebugOnly,
+      showIgnore: false,
+      showLater: false,
+      child: body,
+    );
+
+    return Scaffold(
+      body: upgrader,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

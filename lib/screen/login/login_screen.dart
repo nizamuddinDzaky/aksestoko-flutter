@@ -4,11 +4,13 @@ import 'package:aksestokomobile/helper/empty_app_bar.dart';
 import 'package:aksestokomobile/helper/my_divider.dart';
 import 'package:aksestokomobile/helper/my_logo.dart';
 import 'package:aksestokomobile/helper/my_text.dart';
+import 'package:aksestokomobile/main_common.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:upgrader/upgrader.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -185,58 +187,68 @@ class _LoginScreenState extends LoginScreenController {
       ),
     );
 
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: EmptyAppBar(),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: constraints.copyWith(
-                  minHeight: constraints.maxHeight,
-                  maxHeight: double.infinity,
-                ),
-                child: SafeArea(
-                  child: IntrinsicHeight(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: Get.width * 0.15),
-                          height: Get.height * 0.25,
-                          child: Center(
-                            child: Hero(
-                              tag: 'logoForcaPoS',
-                              child: debugOnly(MyLogo.logoForcaPoSColor()),
-                            ),
+    var body = GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: constraints.copyWith(
+                minHeight: constraints.maxHeight,
+                maxHeight: double.infinity,
+              ),
+              child: SafeArea(
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: Get.width * 0.15),
+                        height: Get.height * 0.25,
+                        child: Center(
+                          child: Hero(
+                            tag: 'logoForcaPoS',
+                            child: debugOnly(MyLogo.logoForcaPoSColor()),
                           ),
                         ),
-                        formLayout,
-                        Expanded(
-                          child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: 8),
-                                child: debugMode(
-                                  MyText.textBlackSmall(
-                                      'Ⓒ 2020 PT SISI, All Right Reserved.'),
-                                  context,
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
+                      ),
+                      formLayout,
+                      Expanded(
+                        child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 8),
+                              child: debugMode(
+                                MyText.textBlackSmall(
+                                    'Ⓒ 2020 PT SISI, All Right Reserved.'),
+                                context,
+                              ),
+                            )),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
+    );
+
+    var upgrader = UpgradeAlert(
+      // appcastConfig: cfg,
+      debugLogging: isDebugOnly,
+      showIgnore: false,
+      showLater: false,
+      child: body,
+    );
+
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: EmptyAppBar(),
+      body: upgrader,
     );
   }
 }
