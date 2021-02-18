@@ -334,6 +334,23 @@ class _AccountScreenState extends State<AccountScreen> {
                           children: <Widget>[
                             FlatButton.icon(
                               onPressed: () {
+                                Get.toNamed(changePasswordScreen);
+                              },
+                              icon: Icon(Icons.settings),
+                              label: Text(
+                                "Ganti Password",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
                                 Get.toNamed(listAddressScreen);
                               },
                               icon: Icon(Icons.person_pin_circle),
@@ -362,41 +379,24 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: () {
-                                Get.toNamed(changePasswordScreen);
-                              },
-                              // onPressed: null,
-                              icon: Icon(Icons.settings),
-                              label: Text(
-                                "Ganti Password",
-                                style: TextStyle(fontSize: 18),
+                      if (isDebugQA)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            children: <Widget>[
+                              FlatButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(creditProgram);
+                                },
+                                icon: Icon(Icons.description),
+                                label: Text(
+                                  "Program Kredit",
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: () {
-                                Get.toNamed(checkPermissionScreen);
-                              },
-                              icon: Icon(Icons.vpn_key),
-                              label: Text(
-                                "Periksa Izin",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Row(
@@ -431,6 +431,23 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            FlatButton.icon(
+                              onPressed: () {
+                                Get.toNamed(checkPermissionScreen);
+                              },
+                              icon: Icon(Icons.vpn_key),
+                              label: Text(
+                                "Periksa Izin",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       if (isDebugQA)
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
@@ -449,24 +466,6 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                      if (isDebugQA)
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: <Widget>[
-                            FlatButton.icon(
-                              onPressed: () {
-                                Get.toNamed(creditProgram);
-                              },
-                              icon: Icon(Icons.description),
-                              label: Text(
-                                "Program Kredit",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Row(
