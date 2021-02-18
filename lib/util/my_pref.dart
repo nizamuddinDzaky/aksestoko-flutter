@@ -82,6 +82,9 @@ class MyPref {
   //get value
   static String getATToken() => getString(MyString.KEY_AT_TOKEN);
 
+  static String getATTokenEncode() =>
+      Uri.encodeComponent(getString(MyString.KEY_AT_TOKEN));
+
   static int getIdBk() => getInt(MyString.KEY_ID_BK);
 
   static int getIdDistributor() => getInt(MyString.KEY_ID_DISTRIBUTOR);

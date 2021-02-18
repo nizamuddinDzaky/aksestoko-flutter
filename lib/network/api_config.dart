@@ -7,9 +7,9 @@ class ApiConfig {
   static const String host = 'https://pos.forca.id/';
 
   static const String hostDevAt = "https://qa.aksestoko.id/";
-  static const String hostAt = "https://www.aksestoko.id/";
+  static const String hostAt = "https://aksestoko.id/";
 
-  static String pathAt = '${isProd ? host : hostDev}';
+  static String pathAt = '${isProd ? hostAt : hostDevAt}';
 
   static String path = '${isProd ? host : hostDev}api/v1/retailer/';
   static String local = '${isProd ? host : hostDev}api/Local/';
@@ -57,7 +57,7 @@ class ApiConfig {
   static String urlAddCustomerSurvey = '${path}Survey/add_survey_pelanggan';
 
   static String urlListCreditProgram = '${path}Profile/programs';
-  static String urlWebViewCreditProgram = '${pathAt}/auth/loginWithToken';
+  static String urlWebViewCreditProgram = '${pathAt}auth/loginWithToken';
 
   //cusstomerService
   static String urlListIssue = '${path}Profile/cs';

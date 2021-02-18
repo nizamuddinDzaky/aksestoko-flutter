@@ -5,6 +5,7 @@ import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/screen/setting/webview_screen.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/credit_program/credit_program_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class CreditProgramScreen extends StatefulWidget {
 }
 
 class _CreditProgramScreenState extends CreditProgramViewModel {
-
   Widget _body() {
     return Container(
       child: Column(
@@ -47,32 +47,32 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
           ),
           (listCreditProgram?.isEmpty ?? true)
               ? Expanded(
-            child: Stack(
-              children: [
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Stack(
                     children: [
-                      Icon(
-                        Icons.new_releases_sharp,
-                        color: MyColor.redAT,
-                        size: 64,
+                      Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.new_releases_sharp,
+                              color: MyColor.redAT,
+                              size: 64,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Tidak ada Program Kredit',
+                              style: Theme.of(context).textTheme.headline6,
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Tidak ada Program Kredit',
-                        style: Theme.of(context).textTheme.headline6,
-                      )
+                      ListView(),
                     ],
                   ),
-                ),
-                ListView(),
-              ],
-            ),
-          )
+                )
               : Expanded(
-            child: _listCreditProgram(),
-          ),
+                  child: _listCreditProgram(),
+                ),
         ],
       ),
     );
@@ -97,6 +97,7 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               AspectRatio(
                 aspectRatio: 2 / 1,
@@ -104,16 +105,17 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                   child: (creditProgram?.image?.isEmpty ?? true)
                       ? Image.asset(kNoImageLandscape)
                       : FadeInImage.assetNetwork(
-                    placeholder: kNoImageLandscape,
-                    image: creditProgram?.image ?? '',
-                    fit: BoxFit.fitWidth,
-                  ),
+                          placeholder: kNoImageLandscape,
+                          image: creditProgram?.image ?? '',
+                          fit: BoxFit.fitWidth,
+                        ),
                 ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 5),
                 child: Text(
                   creditProgram?.title ?? '',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: MyColor.blackTextAT,
                     fontWeight: FontWeight.bold,
@@ -121,80 +123,74 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                   ),
                 ),
               ),
-
               Container(
-                margin:
-                EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
+                margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   creditProgram?.description ?? '',
                   style: TextStyle(
-                      color: MyColor.blackTextAT,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 13,),
+                    color: MyColor.blackTextAT,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 13,
+                  ),
                 ),
               ),
               Container(
                 height: 3,
-
                 color: Color(0xffEAEAEA),
-                margin: EdgeInsets.only(top: 10, bottom: 0, left: 10, right: 10),
+                margin: EdgeInsets.only(top: 10),
               ),
               Container(
                 margin: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
-                      child: Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              "Oleh :",
-                              style: TextStyle(color: MyColor.greyTextAT),
-
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 4),
-                            ),
-                            Container(
-                              child: Text(
-                                creditProgram.providedBy,
-                                style: TextStyle(
-                                    color: MyColor.greyTextAT,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: CupertinoButton(
-                        padding: EdgeInsets.all(0),
-                        child: Text(
-                          'ISI FORM',
-                          style: TextStyle(
-                            color: MyColor.redAT,
-                            fontSize: 14,
+                    Expanded(
+                      child: RichText(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        text: TextSpan(children: [
+                          TextSpan(
+                            style: TextStyle(color: MyColor.greyTextAT),
+                            text: 'Oleh : ',
                           ),
-                        ),
-                        onPressed: () {
-                          var url = "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectForm}";
-                          Map<String, dynamic> _param = {
-                            "url": url,
-                            "title": "${creditProgram.title}"
-                          };
-                          Get.to(
-                            WebViewScreen(url),
-                            arguments: _param,
-                          );
-                          /*Get.toNamed(
-                              detailOrderScreen, arguments: _order?.idPemesanan);*/
-                        },
+                          TextSpan(
+                            style: TextStyle(
+                              color: MyColor.greyTextAT,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            text: creditProgram?.providedBy ?? '',
+                          ),
+                        ]),
                       ),
                     ),
-
+                    SizedBox(width: 8),
+                    if (isDebugOnly)
+                      Container(
+                        padding: EdgeInsets.only(right: 8),
+                        child: CupertinoButton(
+                          padding: EdgeInsets.all(0),
+                          child: Text(
+                            'ISI FORM',
+                            style: TextStyle(
+                              color: MyColor.redAT,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () {
+                            var url =
+                                "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATTokenEncode()}&redirect=${creditProgram.redirectForm}";
+                            Map<String, dynamic> _param = {
+                              "url": url,
+                              "title": "${creditProgram.title}"
+                            };
+                            Get.to(
+                              WebViewScreen(url),
+                              arguments: _param,
+                            );
+                            /*Get.toNamed(
+                              detailOrderScreen, arguments: _order?.idPemesanan);*/
+                          },
+                        ),
+                      ),
                     Container(
                       child: CupertinoButton(
                         padding: EdgeInsets.all(0),
@@ -206,17 +202,17 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
                           ),
                         ),
                         onPressed: () {
-                          var url = "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATToken()}&redirect=${creditProgram.redirectView}";
+                          var url =
+                              "${ApiConfig.urlWebViewCreditProgram}?token=${MyPref.getATTokenEncode()}&redirect=${creditProgram.redirectView}";
                           Map<String, dynamic> _param = {
                             "url": url,
                             "title": "${creditProgram.title}"
                           };
-                            Get.to(
-                              WebViewScreen(url),
-                              arguments: _param,
-                            );
-                          /*Get.toNamed(
-                              detailOrderScreen, arguments: _order?.idPemesanan);*/
+                          debugLog('$_param');
+                          Get.to(
+                            WebViewScreen(url),
+                            arguments: _param,
+                          );
                         },
                       ),
                     ),
@@ -226,9 +222,7 @@ class _CreditProgramScreenState extends CreditProgramViewModel {
             ],
           ),
         ),
-        onTap: () {
-          /*Get.toNamed(detailPromo, arguments: promo);*/
-        },
+        // onTap: () {},
       ),
     );
   }
