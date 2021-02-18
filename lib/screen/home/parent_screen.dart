@@ -80,12 +80,13 @@ class _ParentScreenState extends State<ParentScreen> {
     }
   }
 
-  Widget _layoutDialog({String img, String feedbackTotal}) {
+  Widget _layoutDialog({String img, String feedbackTotal, bool status}) {
     return AlertDialog(
       title: Text('Survei Pelanggan'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          if (isDebugOnly) Text('Status: $status'),
           Flexible(
             child: Container(
                 width: double.maxFinite,
@@ -160,11 +161,15 @@ class _ParentScreenState extends State<ParentScreen> {
     );
   }
 
-  _dialogCustomerSurvei({String img, String feedbackTotal}) {
+  _dialogCustomerSurvei({String img, String feedbackTotal, bool status}) {
     return showDialog(
       context: context,
       builder: (context) {
-        return _layoutDialog(img: img, feedbackTotal: feedbackTotal);
+        return _layoutDialog(
+          img: img,
+          feedbackTotal: feedbackTotal,
+          status: status,
+        );
       },
     );
   }
@@ -177,6 +182,7 @@ class _ParentScreenState extends State<ParentScreen> {
         _dialogCustomerSurvei(
           img: baseResponse?.data?.imageSurvey,
           feedbackTotal: baseResponse?.data?.feedbackTotal,
+          status: (baseResponse?.data?.isSetSurvey ?? false),
         );
       }
     }, onFailed: (title, message) {
