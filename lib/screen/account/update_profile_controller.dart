@@ -6,6 +6,7 @@ import 'package:aksestokomobile/model/profile.dart';
 import 'package:aksestokomobile/network/api_client.dart';
 import 'package:aksestokomobile/network/api_config.dart';
 import 'package:aksestokomobile/util/my_pref.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:aksestokomobile/screen/account/update_profile_screen.dart';
@@ -37,7 +38,7 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
     firstNameTextController.text = profile?.namaDepan;
     lastNameTextController.text = profile?.namaBelakang;
     emailTextController.text = profile?.email;
-    phoneTextController.text = profile?.noTlp;
+    phoneTextController.text = trimMobilePhoneNumber(profile?.noTlp);
   }
 
   saveProfile() {
@@ -48,7 +49,7 @@ abstract class UpdateProfileController extends State<UpdateProfileScreen> {
     var body = {
       'nama_toko': profile?.namaToko,
       'email': emailTextController.text,
-      'no_tlp': phoneTextController.text,
+      'no_tlp': '+62${phoneTextController.text}',
       'nama_depan': firstNameTextController.text,
       'nama_belakang': lastNameTextController.text,
     };
