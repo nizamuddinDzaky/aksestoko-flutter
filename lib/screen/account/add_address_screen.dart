@@ -1,4 +1,5 @@
 import 'package:aksestokomobile/model/zone.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/account/address_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,11 @@ class _AddAddressScreenState extends AddressViewModel {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
+                              controller: noTlpnController,
+                              onChanged: (text){
+                                noTlpnController = cursorToEnd(trimMobilePhoneNumber(text));
+                                setState(() {});
+                              },
                               onSaved: (value) {
                                       // vm?.saveForm(noTlpn: value);
                                       saveForm(noTlpn: value);
@@ -147,6 +153,7 @@ class _AddAddressScreenState extends AddressViewModel {
                                     decoration: InputDecoration(
                                       contentPadding: MyDimen.paddingTxtField(),
                                       labelText: 'No. Telepon',
+                                      prefixText: '+62',
                                       labelStyle: TextStyle(
                                         color: MyColor.txtField,
                                         fontWeight: FontWeight.bold,

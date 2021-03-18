@@ -42,7 +42,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
   reInitText() {
     nameTextController.text = address?.namaPenerima;
     emailTextController.text = address?.email;
-    phoneTextController.text = address?.noTlpn;
+    phoneTextController.text = trimMobilePhoneNumber(address?.noTlpn);
     addressTextController.text = address?.alamat;
     postalCodeTextController.text = address?.kodePos;
   }
@@ -600,7 +600,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
     address = address ?? Address();
     address.namaPenerima = namaPenerima ?? address.namaPenerima;
     address.email = email ?? address.email;
-    address.noTlpn = noTlpn ?? address.noTlpn;
+    address.noTlpn = noTlpn ?? trimMobilePhoneNumber(address.noTlpn);
     address.alamat = alamat ?? address.alamat;
     address.kodePos = kodePos ?? address.kodePos;
   }
@@ -662,7 +662,7 @@ abstract class EditAlamatViewModel extends State<EditAlamatScreen> {
       'address_id': widget.address.addressId,
       'nama': address.namaPenerima,
       'email': address.email,
-      'no_tlp': address.noTlpn,
+      'no_tlp': '+62${address.noTlpn}',
       'alamat': address.alamat,
       'kode_pos': skenario == 1 ? address.kodePos : selectPostalCode?.name,
       'provinsi': selectProvince.name,

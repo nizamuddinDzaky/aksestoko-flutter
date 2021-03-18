@@ -3,6 +3,7 @@ import 'package:aksestokomobile/model/zone.dart';
 import 'package:aksestokomobile/resource/my_image.dart';
 import 'package:aksestokomobile/util/my_color.dart';
 import 'package:aksestokomobile/util/my_dimen.dart';
+import 'package:aksestokomobile/util/my_util.dart';
 import 'package:aksestokomobile/view_model/account/edit_alamat_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,10 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                             margin: EdgeInsets.only(bottom: 20),
                             child: TextFormField(
                               controller: phoneTextController,
+                              onChanged: (text) {
+                                phoneTextController = cursorToEnd(trimMobilePhoneNumber(text));
+                                setState(() {});
+                              },
                                     onSaved: (value) {
                                       saveForm(noTlpn: value);
                                     },
@@ -149,6 +154,7 @@ class _EditAlamatScreenState extends EditAlamatViewModel {
                                     ],
                                     maxLength: 13,
                                     decoration: InputDecoration(
+                                      prefixText: '+62',
                                       contentPadding: MyDimen.paddingTxtField(),
                                       labelText: 'No. Telepon',
                                       labelStyle: TextStyle(

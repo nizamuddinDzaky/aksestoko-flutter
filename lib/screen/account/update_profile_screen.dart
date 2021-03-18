@@ -462,11 +462,16 @@ class _UpdateProfileScreenState extends UpdateProfileController {
                                       decimal: false,
                                       signed: true,
                                     ),
+                                    onChanged: (text) {
+                                      phoneTextController = cursorToEnd(trimMobilePhoneNumber(text));
+                                      setState(() {});
+                                    },
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly,
                                     ],
                                     maxLength: 13,
                                     decoration: InputDecoration(
+                                      prefixText: '+62',
                                       contentPadding: MyDimen.paddingTxtField(),
                                       labelText: 'No. Telepon',
                                       labelStyle: TextStyle(

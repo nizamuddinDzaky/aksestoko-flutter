@@ -15,6 +15,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
 
   bool complete = null;
   TextEditingController kodePosController = TextEditingController();
+  TextEditingController noTlpnController = TextEditingController();
   FocusNode nodeKodePos = new FocusNode();
   int skenario = 2;
 
@@ -524,6 +525,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     // } else {
     //   return;
     // }
+    debugPrint("asdasd : ${curAddress.noTlpn} ");
     var addressData = [
       curAddress.namaPenerima,
       curAddress.email,
@@ -574,7 +576,7 @@ abstract class AddressViewModel<T extends StatefulWidget> extends State<T> {
     var body = {
       'nama': curAddress.namaPenerima,
       'email': curAddress.email,
-      'no_tlp': curAddress.noTlpn,
+      'no_tlp': '+62${curAddress.noTlpn}',
       'alamat': curAddress.alamat,
       'kode_pos': skenario == 1 ? curAddress.kodePos : selectPostalCode.name,
       'provinsi': selectProvince.name,
